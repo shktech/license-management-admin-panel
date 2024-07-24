@@ -1,0 +1,11 @@
+<svg fill="#000000" width="24" height="24" viewBox="0 0 24 24" id="shipping-box" data-name="Flat Line"
+    xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
+    <path id="secondary" d="M16,5H12v6H8V5H4A1,1,0,0,0,3,6V18a1,1,0,0,0,1,1H16a1,1,0,0,0,1-1V6A1,1,0,0,0,16,5Z"
+        style="fill: rgb(44, 169, 188); stroke-width: 2;"></path>
+    <path id="primary" d="M17,17v1a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V6A1,1,0,0,1,4,5H15"
+        style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+    </path>
+    <path id="primary-2" data-name="primary" d="M12,11H8V5h4Zm9-2H17m4,4H16"
+        style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+    </path>
+</svg>

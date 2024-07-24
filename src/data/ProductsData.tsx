@@ -1,0 +1,86 @@
+import { Product } from "@/types/types";
+
+const productData: Product[] = [
+    {
+        osc_product_id: 1546297163,
+        part_type: 'part_type_1',
+        duration: 'duration_1',
+        product_description: 'description_1',
+        vendor_name: 'vendor_name_1',
+        vendor_part_number: 'vendor_part_number_1',
+        license_source_set: 'license_source_set_1',
+        email_template_source: 'email_template_source_1',
+        active: "true",
+        attribute1: 'attribute1',
+        attribute2: 'attribute2',
+        attribute3: 'attribute3',
+        attribute4: 'attribute4',
+        attribute5: 'attribute5'
+    },
+    {
+        osc_product_id: 5629713215,
+        part_type: 'part_type_2',
+        duration: 'duration_2',
+        product_description: 'description_2',
+        vendor_name: 'vendor_name_2',
+        vendor_part_number: 'vendor_part_number_2',
+        license_source_set: 'license_source_set_2',
+        email_template_source: 'email_template_source_2',
+        active: "false",
+        attribute1: 'attribute_1',
+        attribute2: 'attribute_2',
+        attribute3: 'attribute_3',
+        attribute4: 'attribute_4',
+        attribute5: 'attribute_5'
+    },
+    {
+        osc_product_id: 5123794681,
+        part_type: 'part_type_3',
+        duration: 'duration_3',
+        product_description: 'description_3',
+        vendor_name: 'vendor_name_3',
+        vendor_part_number: 'vendor_part_number_3',
+        license_source_set: 'license_source_set_3',
+        email_template_source: 'email_template_source_3',
+        active: "false",
+        attribute1: 'attribute_1',
+        attribute2: 'attribute_2',
+        attribute3: 'attribute_3',
+        attribute4: 'attribute_4',
+        attribute5: 'attribute_5'
+    },
+    {
+        osc_product_id: 2643871359,
+        part_type: 'part_type_4',
+        duration: 'duration_4',
+        product_description: 'description_4',
+        vendor_name: 'vendor_name_4',
+        vendor_part_number: 'vendor_part_number_4',
+        license_source_set: 'license_source_set_4',
+        email_template_source: 'email_template_source_4',
+        active: "true",
+        attribute1: 'attribute_1',
+        attribute2: 'attribute_2',
+        attribute3: 'attribute_3',
+        attribute4: 'attribute_4',
+        attribute5: 'attribute_5'
+    },
+    {
+        osc_product_id: 9451356487,
+        part_type: 'part_type_5',
+        duration: 'duration_5',
+        product_description: 'description_5',
+        vendor_name: 'vendor_name_5',
+        vendor_part_number: 'vendor_part_number_5',
+        license_source_set: 'license_source_set_5',
+        email_template_source: 'email_template_source_5',
+        active: "true",
+        attribute1: 'attribute_1',
+        attribute2: 'attribute_2',
+        attribute3: 'attribute_3',
+        attribute4: 'attribute_4',
+        attribute5: 'attribute_5'
+    },
+];
+
+export default productData;

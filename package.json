@@ -1,0 +1,68 @@
+{
+  "name": "admin-dash-app",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 refine dev",
+    "build": "refine build",
+    "start": "refine start",
+    "lint": "next lint",
+    "refine": "refine"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/roboto": "^5.0.13",
+    "@mui/base": "^5.0.0-beta.40",
+    "@mui/icons-material": "^5.16.4",
+    "@mui/material": "^5.16.4",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@refinedev/cli": "^2.16.21",
+    "@refinedev/core": "^4.47.1",
+    "@refinedev/devtools": "^1.1.32",
+    "@refinedev/kbar": "^1.3.6",
+    "@refinedev/mui": "^5.19.0",
+    "@refinedev/nextjs-router": "^6.0.0",
+    "@refinedev/simple-rest": "^5.0.1",
+    "apexcharts": "^3.45.2",
+    "dayjs": "^1.11.12",
+    "flatpickr": "^4.6.13",
+    "js-cookie": "^3.0.5",
+    "jsvectormap": "^1.6.0",
+    "material-react-table": "^2.13.0",
+    "next": "^14.2.4",
+    "react": "^18.0.0",
+    "react-apexcharts": "^1.4.1",
+    "react-dom": "^18.0.0",
+    "react-router": "^6.24.1",
+    "react-router-dom": "^6.24.1",
+    "styled-components": "^6.1.11",
+    "uuid": "^10.0.0",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "autoprefixer": "^10.0.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.2",
+    "url-loader": "^4.1.1"
+  },
+  "refine": {
+    "projectId": "yQDllt-kCjnj9-HEZp4G"
+  }
+}

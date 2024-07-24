@@ -1,0 +1,178 @@
+import { FieldConfig } from "../FormControlWrapper";
+
+const BillingPartnerInformationFormFields: FieldConfig[] = [
+  {
+    name: "bill_customer_name",
+    label: "Billing Customer Name",
+    placeholder: "Billing Customer Name",
+    rules: { required: "Billing Customer Name is required" },
+    type: "text",
+  },
+  {
+    name: "bill_customer_account",
+    label: "Billing Customer Account",
+    placeholder: "Billing Customer Account",
+    rules: { required: "Billing Customer Account is required" },
+    type: "text",
+  },
+  {
+    name: "bill_address1",
+    label: "Billing Address 1",
+    placeholder: "Billing Address 1",
+    rules: { required: "Billing Address 1 is required" },
+    type: "text",
+  },
+  {
+    name: "bill_address2",
+    label: "Billing Address 2",
+    placeholder: "Billing Address 2",
+    type: "text",
+  },
+  {
+    name: "bill_city",
+    label: "Billing City",
+    placeholder: "Billing City",
+    rules: { required: "Billing City is required" },
+    type: "text",
+  },
+  {
+    name: "bill_state",
+    label: "Billing State",
+    placeholder: "Billing State",
+    rules: { required: "Billing State is required" },
+    type: "text",
+  },
+  {
+    name: "bill_postal_code",
+    label: "Billing Postal Code",
+    placeholder: "Billing Postal Code",
+    rules: { required: "Billing Postal Code is required" },
+    type: "text",
+  },
+  {
+    name: "bill_country",
+    label: "Billing Country",
+    placeholder: "Billing Country",
+    rules: { required: "Billing Country is required" },
+    type: "text",
+  },
+  {
+    name: "bill_contact_first_name",
+    label: "Billing Contact First Name",
+    placeholder: "Billing Contact First Name",
+    rules: { required: "Billing Contact First Name is required" },
+    type: "text",
+  },
+  {
+    name: "bill_contact_last_name",
+    label: "Billing Contact Last Name",
+    placeholder: "Billing Contact Last Name",
+    rules: { required: "Billing Contact Last Name is required" },
+    type: "text",
+  },
+  {
+    name: "bill_contact_phone",
+    label: "Billing Contact Phone",
+    placeholder: "Billing Contact Phone",
+    rules: { required: "Billing Contact Phone is required" },
+    type: "text",
+  },
+  {
+    name: "bill_contact_email",
+    label: "Billing Contact Email",
+    placeholder: "Billing Contact Email",
+    rules: { required: "Billing Contact Email is required" },
+    type: "text",
+  },
+];
+
+const ShippingPartnerInformationFormFields: FieldConfig[] = [
+  {
+    name: "ship_customer_name",
+    label: "Shipping Customer Name",
+    placeholder: "Shipping Customer Name",
+    rules: { required: "Shipping Customer Name is required" },
+    type: "text",
+  },
+  {
+    name: "ship_customer_account",
+    label: "Shipping Customer Account",
+    placeholder: "Shipping Customer Account",
+    rules: { required: "Shipping Customer Account is required" },
+    type: "text",
+  },
+  {
+    name: "ship_address1",
+    label: "Shipping Address 1",
+    placeholder: "Shipping Address 1",
+    rules: { required: "Shipping Address 1 is required" },
+    type: "text",
+  },
+  {
+    name: "ship_address2",
+    label: "Shipping Address 2",
+    placeholder: "Shipping Address 2",
+    type: "text",
+  },
+  {
+    name: "ship_city",
+    label: "Shipping City",
+    placeholder: "Shipping City",
+    rules: { required: "Shipping City is required" },
+    type: "text",
+  },
+  {
+    name: "ship_state",
+    label: "Shipping State",
+    placeholder: "Shipping State",
+    rules: { required: "Shipping State is required" },
+    type: "text",
+  },
+  {
+    name: "ship_postal_code",
+    label: "Shipping Postal Code",
+    placeholder: "Shipping Postal Code",
+    rules: { required: "Shipping Postal Code is required" },
+    type: "text",
+  },
+  {
+    name: "ship_country",
+    label: "Shipping Country",
+    placeholder: "Shipping Country",
+    rules: { required: "Shipping Country is required" },
+    type: "text",
+  },
+  {
+    name: "ship_contact_first_name",
+    label: "Shipping Contact First Name",
+    placeholder: "Shipping Contact First Name",
+    rules: { required: "Shipping Contact First Name is required" },
+    type: "text",
+  },
+  {
+    name: "ship_contact_last_name",
+    label: "Shipping Contact Last Name",
+    placeholder: "Shipping Contact Last Name",
+    rules: { required: "Shipping Contact Last Name is required" },
+    type: "text",
+  },
+  {
+    name: "ship_contact_phone",
+    label: "Shipping Contact Phone",
+    placeholder: "Shipping Contact Phone",
+    rules: { required: "Shipping Contact Phone is required" },
+    type: "text",
+  },
+  {
+    name: "ship_contact_email",
+    label: "Shipping Contact Email",
+    placeholder: "Shipping Contact Email",
+    rules: { required: "Shipping Contact Email is required" },
+    type: "text",
+  },
+];
+
+export default {
+  BillingPartnerInformationFormFields,
+  ShippingPartnerInformationFormFields,
+};
