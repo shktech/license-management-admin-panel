@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import SidebarDropdown from "@/components/Sidebar/SidebarDropdown";
 import { usePathname } from "next/navigation";
+import { Button } from "@mui/material";
 
 const SidebarItem = ({ item, pageName, setPageName }: any) => {
   const handleClick = () => {
@@ -20,22 +21,45 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
     return false;
   };
 
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (pageName === item.label.toLowerCase()) {
+      setOpen(true);
+    }
+  }, [pageName, item.label]);
   const isItemActive = isActive(item);
 
   return (
     <>
       <li>
-        <Link
+        <Button
           href={item.route}
           onClick={handleClick}
-          className={`${isItemActive ? "bg-new-blue-1 text-new-blue-2" : ""} group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-new-blue-1 hover:text-new-blue-2 dark:hover:bg-meta-4`}
+          sx={{
+            backgroundColor: isItemActive ? '#ebf0fa' : 'transparent',
+            color: isItemActive ? '#4580ff' : 'inherit',
+            borderRadius: '0.375rem', // rounded-md
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: '0.625rem', // gap-2.5
+            paddingX: '1rem', // px-4
+            paddingY: '0.75rem', // py-3
+            textTransform: 'none',
+            transition: 'background-color 0.3s ease-in-out', // duration-300 ease-in-out
+            '&:hover': {
+              backgroundColor: 'slate.100', // hover:bg-slate-100
+            },
+          }}
         >
           {item.icon}
-          {item.label}
+          <span className={`${isItemActive ? 'font-medium' : 'font-normal'}`}>
+            {item.label}
+          </span>
           {item.children && (
             <svg
-              className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${pageName === item.label.toLowerCase() && "rotate-180"
-                }`}
+              className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${pageName === item.label.toLowerCase() ? " rotate-180" : ""}`}
               width="20"
               height="20"
               viewBox="0 0 20 20"
@@ -50,7 +74,7 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
               />
             </svg>
           )}
-        </Link>
+        </Button>
 
         {item.children && (
           <div

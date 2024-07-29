@@ -7,6 +7,7 @@ import { MRT_ColumnDef } from "material-react-table";
 import ProductIcon from "@/assets/icons/products.svg?icon";
 import Loader from "@components/common/Loader";
 import DetailDrawer from "@components/common/View/GeneralPanel";
+import { Box } from "@mui/material";
 
 const Page = () => {
   const {
@@ -31,7 +32,7 @@ const Page = () => {
       {
         accessorKey: "osc_part_number",
         header: "OSC Part number",
-        size: 150,
+        size: 200,
       },
       {
         accessorKey: "product_type",
@@ -46,12 +47,12 @@ const Page = () => {
       {
         accessorKey: "vendor_name",
         header: "Vender name",
-        size: 120,
+        size: 180,
       },
       {
         accessorKey: "vendor_part_number",
         header: "Vendor part number",
-        size: 200,
+        size: 220,
       },
       {
         accessorKey: "license_source_set",
@@ -66,7 +67,24 @@ const Page = () => {
       {
         accessorKey: "active",
         header: "Active",
-        size: 200,
+        size: 100,
+        Cell: ({ cell }) => {
+          console.log(cell);
+          return (
+            <Box
+              component="span"
+              sx={(theme) => ({
+                backgroundColor: cell.getValue<boolean>() == true ? 'bg-meta-3/[0.08]' : 'bg-red/[0.08]',
+                borderRadius: '0.25rem',
+                color: '#fff',
+                maxWidth: '9ch',
+                p: '0.25rem',
+              })}
+            >
+              {cell.getValue<boolean>() ? "Active" : "Closed"}
+            </Box>
+          )
+        },
       },
     ],
     []
@@ -115,15 +133,12 @@ const Page = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex justify-between">
-            <div className="text-xl font-semibold text-black flex items-center gap-2">
-              <ProductIcon />
-              Products
-            </div>
-          </div>
+        <div className="rounded-xl border border-stroke bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
             <GenericTable
+              title={
+                <div className="flex items-center justify-center gap-2"> <ProductIcon />Products </div>
+              }
               data={data?.data}
               columns={columns}
               onRowClick={handleRowClick}

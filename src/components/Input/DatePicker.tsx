@@ -36,19 +36,20 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
 
     return (
         <div>
-            <label
-                htmlFor={props.id}
-                className="mb-1.5 block font-medium text-black dark:text-white"
-            >
-                {label}
-            </label>
+
             <div className="relative">
+                <label
+                    htmlFor={props.id}
+                    className="mb-1.5 block font-medium text-[#0000009c] dark:text-white absolute text-sm left-4 top-2"
+                >
+                    {label}
+                </label>
                 <Input
                     {...props}
                     slotProps={{
                         input: {
                             className:
-                                'form-datepicker w-full rounded-lg border border-stroke bg-transparent disabled:bg-whiter py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                                'border border-transparent focus:border-black bg-[#dfe5ec6e] form-datepicker w-full rounded-lg border border-stroke disabled:bg-whiter pb-2 pt-8 pl-4 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
                         },
                     }}
                 />

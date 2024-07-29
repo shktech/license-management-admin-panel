@@ -85,6 +85,15 @@ export type AssetTransaction = {
     end_date?: string,
 };
 
+export interface EmailTemplate {
+    id?: string
+    title?: string;
+    subject?: string;
+    cc?: string;
+    bcc?: string;
+    body?: string;
+};
+
 export interface Transaction {
     id: string;
     organization: string;

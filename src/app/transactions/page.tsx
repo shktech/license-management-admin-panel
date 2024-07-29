@@ -6,6 +6,8 @@ import { Transaction } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
+import TransactionWithColorIcon from "@/assets/icons/transactionWithColor.svg?icon";
+import { Button } from "@mui/material";
 
 const Page = () => {
   const {
@@ -76,17 +78,36 @@ const Page = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="rounded-xl border border-stroke bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-between">
-          <div className="text-xl font-semibold text-black flex items-center">
+          <div className="text-xl font-semibold text-black flex gap-2 items-center">
+            <TransactionWithColorIcon />
             Transactions
           </div>
           <Link
             href={"/transactions/create"}
-            className="bg-primary px-10 py-2 text-white rounded-lg my-2 hover:bg-opacity-90"
+            passHref
+            className=""
           >
-            + New Transaction
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: '#4580ff', // Background color
+                px: 4, // Horizontal padding
+                py: 1,  // Vertical padding
+                color: 'white', // Text color
+                borderRadius: '8px', // Rounded corners
+                textTransform: 'none',
+                '&:hover': {
+                  bgcolor: '#4580ff', // Background color on hover
+                  opacity: 0.9, // Adjust opacity on hover
+                },
+              }}
+            >
+              Add New
+            </Button>
           </Link>
+
         </div>
         <div className="max-w-full overflow-x-auto">
           {isLoading ? (
