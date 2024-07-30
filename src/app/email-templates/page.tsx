@@ -44,7 +44,7 @@ const Page = () => {
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#f2f5f7' // Set your desired background color here
+        'editor.background': '#e6eaed' // Set your desired background color here
       }
     });
     monaco.editor.setTheme('custom-theme');
@@ -52,7 +52,7 @@ const Page = () => {
 
   return (
     <div className="flex w-full justify-center text-black text-sm">
-      <div className="min-w-[800px] rounded-xl px-8 py-8 border border-stroke bg-white">
+      <div className="min-w-[800px] rounded-xl px-8 py-8 drop-shadow-md bg-[#f7f9fa]">
         <div className="text-base">Configure common settings for sending emails.</div>
         <div className="flex gap-4 w-full py-8">
           <FormControl className="w-full">
@@ -90,6 +90,7 @@ const Page = () => {
                     '&::before': {
                       display: 'none',
                     },
+                    backgroundColor: '#f7f9fa'
                   }}
                 >
                   <AccordionSummary
@@ -149,7 +150,7 @@ const Page = () => {
                         </div>
                       </FormControl>
                       <div className="">
-                        <div className="bg-[#f2f5f7] font-medium text-sm p-4 text-[#0000009c]">Body(HTML)</div>
+                        <div className="bg-[#e6eaed] rounded-t-lg border-r-ful font-medium text-sm p-4 text-[#0000009c]">Body(HTML)</div>
                         <Editor
                           defaultValue={et.body}
                           height="300px"
@@ -161,6 +162,28 @@ const Page = () => {
                         <div className="pl-2 mt-1 text-[0.75rem]">
                           Available placeholder parameters: <span className="text-[0.6rem] bg-[#d5dce3] rounded-full py-0.5 px-2">{`{ APP_NAME }`}</span>, <span className="text-[0.6rem] bg-[#d5dce3] rounded-full py-0.5 px-2">{`{ APP_URL }`}</span>
                         </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: 'white', // Custom background color
+                            color: '#65758c',
+                            border: '2px solid #65758c', // Custom text color
+                            padding: '4px 20px', // Custom padding
+                            borderRadius: '8px', // Custom border radius
+                            boxShadow: 'none',
+                            '&:hover': {
+                              backgroundColor: '#65758c',
+                              boxShadow: 'none', // Custom hover background color
+                              color: 'white',
+                            },
+                            textTransform: 'none',
+                            fontSize: '0.875rem'
+                          }}
+                        >
+                          Save
+                        </Button>
                       </div>
                     </div>
                   </AccordionDetails>

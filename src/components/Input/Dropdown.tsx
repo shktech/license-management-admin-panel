@@ -92,7 +92,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           size="small"
           sx={{
             pt: 3,
-            backgroundColor: '#dfe5ec6e',
+            backgroundColor: '#e6eaed',
             ".MuiOutlinedInput-notchedOutline": { border: 0 },
             "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0, },
             "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":

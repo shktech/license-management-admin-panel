@@ -22,7 +22,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`border-dashed border-r border-slate-400 fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-[#f7f9fa] duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`border-r border-slate-200 shadow-md fixed left-0 top-0 z-9999 flex h-screen w-64 flex-col overflow-y-hidden bg-[#f7f9fa] duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
@@ -31,28 +31,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <LogoIcon /> 
             <div className="font-bold pl-4 text-3xl">License</div>
           </Link>
-          {/* <button
-            aria-controls="sidebar"
-            onClick={(e) => {
-              console.log(sidebarOpen);
-              setSidebarOpen(!sidebarOpen);
-            }}
-            className="z-9999 block rounded-sm bg-white p-1.5 shadow-sm"
-          >
-            <span className="relative block h-5.5 w-5.5 cursor-pointer">
-              <span className="du-block absolute right-0 h-full w-full">
-                <span
-                  className={`relative left-0 top-0 my-1 block h-0.5 w-full bg-black rounded-sm }`}
-                ></span>
-                <span
-                  className={`relative left-0 top-0 my-1 block h-0.5 w-full bg-black rounded-sm }`}
-                ></span>
-                <span
-                  className={`relative left-0 top-0 my-1 block h-0.5 w-full bg-black rounded-sm }`}
-                ></span>
-              </span>
-            </span>
-          </button> */}
         </div>
         {/* <!-- SIDEBAR HEADER --> */}
 

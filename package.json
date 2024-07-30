@@ -13,12 +13,6 @@
     "refine": "refine"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^42.0.2",
-    "@ckeditor/ckeditor5-react": "^8.0.0",
-    "@codemirror/basic-setup": "^0.20.0",
-    "@codemirror/lang-javascript": "^6.2.2",
-    "@codemirror/state": "^6.4.1",
-    "@codemirror/view": "^6.29.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.13",
@@ -37,7 +31,6 @@
     "@refinedev/simple-rest": "^5.0.1",
     "@uiw/react-codemirror": "^4.23.0",
     "apexcharts": "^3.45.2",
-    "codemirror": "^6.0.1",
     "dayjs": "^1.11.12",
     "flatpickr": "^4.6.13",
     "js-cookie": "^3.0.5",
@@ -50,6 +43,7 @@
     "react-router": "^6.24.1",
     "react-router-dom": "^6.24.1",
     "styled-components": "^6.1.11",
+    "tailwind-scrollbar": "^3.1.0",
     "uuid": "^10.0.0",
     "zustand": "^4.5.4"
   },

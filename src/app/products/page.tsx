@@ -7,7 +7,7 @@ import { MRT_ColumnDef } from "material-react-table";
 import ProductIcon from "@/assets/icons/products.svg?icon";
 import Loader from "@components/common/Loader";
 import DetailDrawer from "@components/common/View/GeneralPanel";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const Page = () => {
   const {
@@ -69,16 +69,16 @@ const Page = () => {
         header: "Active",
         size: 100,
         Cell: ({ cell }) => {
-          console.log(cell);
           return (
             <Box
               component="span"
               sx={(theme) => ({
-                backgroundColor: cell.getValue<boolean>() == true ? 'bg-meta-3/[0.08]' : 'bg-red/[0.08]',
+                backgroundColor: cell.getValue<boolean>() == true ? '#11ba82' : '#fa5252',
                 borderRadius: '0.25rem',
-                color: '#fff',
+                color: 'white',
                 maxWidth: '9ch',
-                p: '0.25rem',
+                fontSize: '0.75rem',
+                p: '0.375rem',
               })}
             >
               {cell.getValue<boolean>() ? "Active" : "Closed"}
@@ -133,7 +133,7 @@ const Page = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="rounded-xl border border-stroke bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="rounded-xl drop-shadow-md bg-[#f7f9fa] px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
             <GenericTable
               title={

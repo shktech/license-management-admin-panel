@@ -45,7 +45,7 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
             justifyContent: 'flex-start',
             gap: '0.625rem', // gap-2.5
             paddingX: '1rem', // px-4
-            paddingY: '0.75rem', // py-3
+            paddingY: '0.5rem', // py-3
             textTransform: 'none',
             transition: 'background-color 0.3s ease-in-out', // duration-300 ease-in-out
             '&:hover': {
