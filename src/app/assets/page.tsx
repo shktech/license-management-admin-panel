@@ -4,7 +4,7 @@ import { useNavigation, useTable } from "@refinedev/core";
 import { Asset } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
-import AssetIcon from "@/assets/icons/products.svg?icon";
+import AssetIcon from "@/assets/icons/asset.svg?icon";
 import Loader from "@components/common/Loader";
 
 const Page = () => {
@@ -56,15 +56,21 @@ const Page = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex justify-between">
+        <div className="rounded-xl drop-shadow-md bg-[#f7f9fa] px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          {/* <div className="flex justify-between">
             <div className="text-xl font-semibold text-black flex items-center gap-2">
               <AssetIcon />
               Assets
             </div>
-          </div>
+          </div> */}
           <div className="max-w-full overflow-x-auto">
             <GenericTable
+              title={
+                <div className="flex items-center justify-center gap-2">
+                  <AssetIcon />
+                  Assets
+                </div>
+              }
               data={data?.data}
               columns={columns}
               onRowClick={handleRowClick}

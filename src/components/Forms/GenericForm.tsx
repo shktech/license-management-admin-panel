@@ -13,7 +13,7 @@ interface GenericFormProps {
 
 const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) => {
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+    <div className="grid grid-cols-2 gap-x-8 gap-y-6">
       {fields.map((field) => (
         <FormControlWrapper
           key={field.name}
@@ -31,7 +31,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                     {...fieldProps}
                     type={field.type}
                     label={field.label}
-                    placeholder={field.placeholder}
+                    // placeholder={field.placeholder}
                     disabled={false}
                   />
                 );

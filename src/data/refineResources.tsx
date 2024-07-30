@@ -119,8 +119,8 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
-    name: "emailtemplates",
-    list: "/maintenance/email-templates",
+    name: "email-templates",
+    // list: "/email-templates",
     meta: {
       label: "Email Templates",
       parent: "maintenance",

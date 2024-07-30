@@ -25,8 +25,8 @@ export const authProvider: AuthProvider = {
     },
     getIdentity: async () => {
         return {
-            firstname: "Sung-Hyun",
-            lastname: "Kang"
+            firstname: "Nazar",
+            lastname: "Khoros"
         }
     }
 }

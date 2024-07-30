@@ -43,6 +43,8 @@ const Dropdown: React.FC<DropdownProps> = ({
     props.options || []
   );
 
+  console.log(value, props.options, label);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   if (resource && valueKey && labelKey) {
@@ -62,7 +64,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         setDropdownOptions(options);
       }
       setLoading(isLoading);
-      console.log("isLoading", isLoading);
     }, [data, isLoading, valueKey, labelKey]);
   }
 
@@ -86,13 +87,13 @@ const Dropdown: React.FC<DropdownProps> = ({
           {label}
         </label>
         <Select
-          value={value ? value : ''}
+          value={value}
           onChange={handleChange}
           displayEmpty
           size="small"
           sx={{
             pt: 3,
-            backgroundColor: '#e6eaed',
+            backgroundColor: '#dfe5ec6e',
             ".MuiOutlinedInput-notchedOutline": { border: 0 },
             "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0, },
             "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
