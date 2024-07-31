@@ -59,9 +59,9 @@ export const menuGroups = [
           label: "Settings",
           route: "#",
           children: [
-            { label: "Profile", route: "/settings/profile" },
-            { label: "User", route: "/settings/user" },
-            { label: "Org Setup", route: "/settings/org-setup" },
+            { label: "Profile", route: "/profile" },
+            { label: "User", route: "/users" },
+            { label: "Org Setup", route: "/org-setup" },
           ],
         },
       ],

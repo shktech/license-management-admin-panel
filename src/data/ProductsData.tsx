@@ -1,6 +1,6 @@
 import { Product } from "@/types/types";
 
-const productData: Product[] = [
+const productData = [
     {
         osc_product_id: 1546297163,
         part_type: 'part_type_1',

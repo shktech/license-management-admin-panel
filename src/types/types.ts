@@ -94,6 +94,15 @@ export interface EmailTemplate {
     body?: string;
 };
 
+export interface User {
+    id?: string;
+    email?:string;
+    avatar?:string;
+    isLogIn?:boolean;
+    name?: string;
+    role?: string[]
+};
+
 export interface Transaction {
     id: string;
     organization: string;

@@ -13,7 +13,7 @@ export async function GET(req: any, res: any) {
 
 export async function POST(req: any, res:any) {
   const transactionData = await req.json();
-
+  console.log(transactionData);
   // Find the product based on the part number provided
   const product = products.find(p => p.osc_part_number === transactionData.osc_product.osc_part_number);
 

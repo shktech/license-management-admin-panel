@@ -133,7 +133,7 @@ const Page = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="rounded-xl drop-shadow-md bg-[#f7f9fa] px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="rounded-xl drop-shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
             <GenericTable
               title={

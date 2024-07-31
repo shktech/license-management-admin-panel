@@ -183,8 +183,8 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
-    name: "user",
-    list: "/settings/user",
+    name: "users",
+    list: "/users",
     meta: {
       label: "User",
       parent: "settings",

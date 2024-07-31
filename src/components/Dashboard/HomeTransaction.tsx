@@ -1,11 +1,4 @@
 import React from "react";
-import { Transaction } from "../../types/types";
-
-import {
-    Drawer,
-    TextField
-} from '@mui/material';
-import { LineAxis } from "@mui/icons-material";
 import transactionData from "@/data/TransactionsData";
 
 const HomeTransaction = () => {

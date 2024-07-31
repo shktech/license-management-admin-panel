@@ -1,6 +1,6 @@
 import { Transaction } from "@/types/types";
 
-const transactionData: Transaction[] = [
+const transactionData = [
     {
         id: 1,
         organization: 'PAI',

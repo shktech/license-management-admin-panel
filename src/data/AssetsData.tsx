@@ -1,6 +1,6 @@
 import { Asset } from "@/types/types";
 
-const assetsData: Asset[] = [
+const assetsData = [
     {
         asset_id: 1,
         organization: "PAI",
