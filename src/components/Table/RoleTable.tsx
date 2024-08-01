@@ -1,14 +1,8 @@
 "use client"
-import { Box, Button, FormControl, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
+import { Box, Button, Checkbox, FormControl, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
 import {
-    MaterialReactTable,
-    MRT_GlobalFilterTextField,
-    MRT_ShowHideColumnsButton,
     MRT_TableContainer,
     MRT_TablePagination,
-    MRT_ToggleDensePaddingButton,
-    MRT_ToggleFiltersButton,
-    MRT_ToggleFullScreenButton,
     MRT_ToolbarAlertBanner,
     useMaterialReactTable,
     type MRT_ColumnDef,
@@ -16,21 +10,55 @@ import {
 } from 'material-react-table';
 import React, { useEffect } from 'react';
 import SearchIcon from "@/assets/icons/search.svg?icon";
+import { AnyAaaaRecord } from 'dns';
 
-interface GenericTableProps<T extends MRT_RowData> {
+interface RoleTableProps<T extends MRT_RowData> {
     title?: React.ReactNode;
     data?: T[];
     columns: MRT_ColumnDef<T>[];
-    onRowClick?: (row: T) => void;
+    handleCreate: () => void
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick }: GenericTableProps<T>) => {
+const permissions = [1, 2, 3, 4]; //Read, Create, Update, Delete
 
-    const handleRowClick = (row: T) => {
-        if (!!onRowClick) {
-            onRowClick(row);
-        }
-    };
+const checkboxGroupInfo = [
+    {
+        title: "Users",
+        key: "users",
+    },
+    {
+        title: "Assets",
+        key: "assets",
+    },
+    {
+        title: "Transactions",
+        key: "transactions",
+    },
+    {
+        title: "Products",
+        key: "products",
+    },
+]
+
+const MyCheckbox = ({ checked }: any) => {
+    return (
+        <div className='text-center flex-1'>
+            <Checkbox
+                defaultChecked={checked}
+                sx={{
+                    color: '#4580ff',
+                    '&.Mui-checked': {
+                        color: '#4580ff',
+                    },
+                    '& .MuiSvgIcon-root': {
+                        fontSize: 20, // Change this to adjust the size
+                    },
+                }}
+            />
+        </div>
+    )
+}
+const RoleTable = <T extends MRT_RowData>({ title, data, columns, handleCreate }: RoleTableProps<T>) => {
 
     const enhancedColumns = columns.map((col) => {
         if (col.Cell) return col;
@@ -47,12 +75,12 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick 
         data: data || [],
         enableColumnActions: false,
         enableColumnPinning: true,
+        enableRowSelection: true,
         muiTableBodyRowProps: ({ row }) => ({
-            onClick: () => handleRowClick(row.original),
-            className: `${!!onRowClick && 'cursor-pointer hover:bg-[#f6fbff]'}`,
+            className: `${'hover:bg-[#f6fbff]'} bg-[#f7f9fa]`,
         }),
         muiTableHeadCellProps: () => ({
-            className: 'align-middle',
+            className: 'align-middle bg-[#f7f9fa]',
         }),
         muiPaginationProps: {
             color: 'primary',
@@ -83,7 +111,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick 
                                 ),
                             }}
                             sx={{
-                                backgroundColor: '#e6eaed',
+                                backgroundColor: '#e6eaed', // Change to your desired color
                                 borderRadius: 8, // Optional: Add border-radius for rounded corners,
                                 '& .MuiOutlinedInput-root': {
                                     '& fieldset': {
@@ -99,9 +127,27 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick 
                             }}
                         />
                     </FormControl>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <MRT_ShowHideColumnsButton table={table} />
-                    </Box>
+                    <Button
+                        variant="contained"
+                        onClick={handleCreate}
+                        sx={{
+                            bgcolor: '#db1a34', // Background color
+                            color: 'white', // Text color
+                            '&:hover': {
+                                bgcolor: '#db1a34', // Background color on hover
+                                opacity: 0.9, // Adjust opacity on hover
+                                boxShadow: 'none',
+                            },
+                            px: 4, // Horizontal padding
+                            borderRadius: '50px', // Rounded corners
+                            boxShadow: 'none',
+                            textTransform: 'none',
+                            fontWeight: '500',
+                            fontSize: '0.75rem',
+                        }}
+                    >
+                        Add New
+                    </Button>
                 </div>
             </div>
             <MRT_TableContainer
@@ -119,4 +165,4 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick 
     );
 };
 
-export default GenericTable;
+export default RoleTable;

@@ -12,13 +12,17 @@ interface CustomizedInputProps {
 type BaseInputProps = CustomizedInputProps & InputProps
 
 const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
+
     const handleChange = (date: any, dateStr: string) => {
-        onChange && onChange({
-            target: {
-                name: props.name,
-                value: dateStr,
-            },
-        } as unknown as React.ChangeEvent<HTMLInputElement>);
+        if (onChange) {
+            console.log('datepicker', props, dateStr);
+            onChange({
+                target: {
+                    name: props.name,
+                    value: dateStr,
+                },
+            } as React.ChangeEvent<HTMLInputElement>);
+        }
     };
     useEffect(() => {
         flatpickr('.form-datepicker', {
@@ -36,10 +40,9 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
 
     return (
         <div>
-
             <div className="relative">
                 <label
-                    htmlFor={props.id}
+                    htmlFor={props.name}
                     className="mb-1.5 block font-medium text-[#0000009c] dark:text-white absolute text-sm left-4 top-2"
                 >
                     {label}

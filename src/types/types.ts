@@ -94,6 +94,26 @@ export interface EmailTemplate {
     body?: string;
 };
 
+export interface User {
+    user_id?: string;
+    username?: string;
+    email?:string;
+    first_name?:string;
+    last_name?:string;
+    organization?:string;
+    active?:boolean;
+    groups?: string[]
+};
+
+export interface Role {
+    id?: string;
+    name?: string;
+    bgColor: string;
+    textColor: string;
+    description?: string;
+    permission?: any
+};
+
 export interface Transaction {
     id: string;
     organization: string;

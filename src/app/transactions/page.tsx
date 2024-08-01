@@ -116,7 +116,7 @@ const Page = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-xl drop-shadow-md bg-[#f7f9fa] px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="rounded-xl drop-shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-between">
           <div className="text-xl font-semibold text-black flex gap-2 items-center">
             <TransactionWithColorIcon />

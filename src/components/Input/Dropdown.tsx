@@ -1,22 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import {
-//   Select as BaseSelect,
-//   SelectProps,
-//   SelectRootSlotProps,
-// } from "@mui/base/Select";
-// import {
-//   Option as BaseOption,
-//   OptionProps,
-//   OptionOwnerState,
-// } from "@mui/base/Option";
 import clsx from "clsx";
 import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import { BaseInputProps } from "./InputProps";
 import { useFetchOptions } from "@hooks/useFetchOptions";
 import { useList } from "@refinedev/core";
-import { FormControl, makeStyles, MenuItem, Select } from "@mui/material";
+import { FormControl, makeStyles, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 interface DropdownOption {
   value: string;
@@ -62,16 +52,15 @@ const Dropdown: React.FC<DropdownProps> = ({
         setDropdownOptions(options);
       }
       setLoading(isLoading);
-      console.log("isLoading", isLoading);
     }, [data, isLoading, valueKey, labelKey]);
   }
 
-  const handleChange = (event: any, newValue: any) => {
+  const handleChange = (event: SelectChangeEvent) => {
     onChange &&
       onChange({
         target: {
           name: props.name,
-          value: newValue,
+          value: event.target.value as string,
         },
       } as unknown as React.ChangeEvent<HTMLInputElement>);
   };
@@ -86,7 +75,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {label}
         </label>
         <Select
-          value={value ? value : ''}
+          value={value ? value as string : ''}
           onChange={handleChange}
           displayEmpty
           size="small"
@@ -103,6 +92,10 @@ const Dropdown: React.FC<DropdownProps> = ({
           }}
         >
           {
+            loading ? 
+            <MenuItem key='loading'>
+              Loading...
+            </MenuItem> : 
             dropdownOptions.map((option, index) => (
               <MenuItem key={index} value={option.value}>
                 {option.label}

@@ -8,7 +8,6 @@ import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 
 const TransactionEdit = () => {
-  const [isLastStep, setIsLastStep] = useState(false);
   const {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
@@ -35,7 +34,7 @@ const TransactionEdit = () => {
       canDelete={false}
       breadcrumb={false}
       headerButtons={<></>}
-      saveButtonProps={{ ...saveButtonProps, hidden: !isLastStep }}
+      saveButtonProps={{ ...saveButtonProps, hidden: false }}
     >
       {formLoading ? (
         <Loader />
@@ -43,7 +42,6 @@ const TransactionEdit = () => {
         <div className="bg-white px-8 rounded-xl">
           <TransactionForm
             {...{ control, errors, trigger, transaction }}
-            onStepChange={(isLast) => setIsLastStep(isLast)}
           />
         </div>
       )}

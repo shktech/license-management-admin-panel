@@ -12,18 +12,17 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoteIcon from "@/assets/icons/note.svg?icon";
-import Editor, { Monaco } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
 
 const Page = () => {
   const { data, isLoading } = useOne({
     resource: 'email-templates', id: 'all'
   })
 
-  const editorOptions = {
+  const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
     lineNumbers: 'off' // This hides the line numbers
   };
-
-  const [emailTemplatesInfo, setEmailTemplateInfo] = useState(null);
 
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
@@ -32,13 +31,8 @@ const Page = () => {
       setExpanded(isExpanded ? panel : false);
     };
 
-  useEffect(() => {
-    if (data && data.data) {
-      setEmailTemplateInfo(data.data);
-    }
-  }, [isLoading])
 
-  const handleEditorDidMount = (editor: Monaco.editor.IStandaloneCodeEditor, monaco: typeof Monaco) => {
+  const handleEditorDidMount = (editor: any, monaco: any) => {
     monaco.editor.defineTheme('custom-theme', {
       base: 'vs', // or 'vs-dark'
       inherit: true,
@@ -52,7 +46,7 @@ const Page = () => {
 
   return (
     <div className="flex w-full justify-center text-black text-sm">
-      <div className="min-w-[800px] rounded-xl px-8 py-8 drop-shadow-md bg-[#f7f9fa]">
+      <div className="min-w-[800px] rounded-xl px-8 py-8 drop-shadow-md bg-white">
         <div className="text-base">Configure common settings for sending emails.</div>
         <div className="flex gap-4 w-full py-8">
           <FormControl className="w-full">
@@ -61,7 +55,7 @@ const Page = () => {
               name="senderName"
               label="Sender Name"
               type="text"
-              defaultValue={emailTemplatesInfo?.sender.name}
+              defaultValue={data?.data.sender.name}
               disabled={false}
             />
           </FormControl>
@@ -71,14 +65,14 @@ const Page = () => {
               name="senderAddress"
               label="Sender Address"
               type="text"
-              defaultValue={emailTemplatesInfo?.sender.address}
+              defaultValue={data?.data.sender.address}
               disabled={false}
             />
           </FormControl>
         </div>
         <div>
           {
-            emailTemplatesInfo?.emailTemplates.map((et, i) => {
+            data?.data?.emailTemplates.map((et: any, i: number) => {
               return (
                 <Accordion
                   elevation={0}
@@ -90,7 +84,6 @@ const Page = () => {
                     '&::before': {
                       display: 'none',
                     },
-                    backgroundColor: '#f7f9fa'
                   }}
                 >
                   <AccordionSummary

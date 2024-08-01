@@ -12,7 +12,7 @@ const Header = (props: {
     // console.log(props.sidebarOpen);
   }, [props.sidebarOpen])
   return (
-    <header className="sticky top-0 z-999 flex w-full my-header">
+    <header className="sticky top-0 z-99 flex w-full my-header">
       <div className="flex items-center justify-between w-full px-4 py-4 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
