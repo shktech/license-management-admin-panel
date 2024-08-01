@@ -183,6 +183,14 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
+    name: "roles",
+    list: "/roles",
+    meta: {
+      label: "Roles",
+      parent: "settings",
+    },
+  },
+  {
     name: "users",
     list: "/users",
     meta: {

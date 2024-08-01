@@ -60,6 +60,7 @@ export const menuGroups = [
           route: "#",
           children: [
             { label: "Profile", route: "/profile" },
+            { label: "Roles", route: "/roles" },
             { label: "User", route: "/users" },
             { label: "Org Setup", route: "/org-setup" },
           ],

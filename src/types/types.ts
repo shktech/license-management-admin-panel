@@ -95,12 +95,23 @@ export interface EmailTemplate {
 };
 
 export interface User {
-    id?: string;
+    user_id?: string;
+    username?: string;
     email?:string;
-    avatar?:string;
-    isLogIn?:boolean;
+    first_name?:string;
+    last_name?:string;
+    organization?:string;
+    active?:boolean;
+    groups?: string[]
+};
+
+export interface Role {
+    id?: string;
     name?: string;
-    role?: string[]
+    bgColor: string;
+    textColor: string;
+    description?: string;
+    permission?: any
 };
 
 export interface Transaction {

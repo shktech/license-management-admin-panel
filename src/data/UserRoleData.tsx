@@ -1,14 +1,14 @@
 export const userRoles = [
   {
-    title: 'Admin',
+    name: 'Admin',
     className: 'bg-[#face5f] text-black',
   },
   {
-    title: 'SuperUser',
+    name: 'SuperUser',
     className: 'bg-[#003133] text-white',
   },
   {
-    title: 'User',
+    name: 'User',
     className: 'bg-[#1c9151] text-white',
   }
 ]

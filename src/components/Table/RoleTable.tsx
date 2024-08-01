@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, FormControl, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
+import { Box, Button, Checkbox, FormControl, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
 import {
     MRT_TableContainer,
     MRT_TablePagination,
@@ -10,15 +10,55 @@ import {
 } from 'material-react-table';
 import React, { useEffect } from 'react';
 import SearchIcon from "@/assets/icons/search.svg?icon";
+import { AnyAaaaRecord } from 'dns';
 
-interface UserTableProps<T extends MRT_RowData> {
+interface RoleTableProps<T extends MRT_RowData> {
     title?: React.ReactNode;
     data?: T[];
     columns: MRT_ColumnDef<T>[];
-    handleCreateUser: () => void
+    handleCreate: () => void
 }
 
-const UserTable = <T extends MRT_RowData>({ title, data, columns, handleCreateUser }: UserTableProps<T>) => {
+const permissions = [1, 2, 3, 4]; //Read, Create, Update, Delete
+
+const checkboxGroupInfo = [
+    {
+        title: "Users",
+        key: "users",
+    },
+    {
+        title: "Assets",
+        key: "assets",
+    },
+    {
+        title: "Transactions",
+        key: "transactions",
+    },
+    {
+        title: "Products",
+        key: "products",
+    },
+]
+
+const MyCheckbox = ({ checked }: any) => {
+    return (
+        <div className='text-center flex-1'>
+            <Checkbox
+                defaultChecked={checked}
+                sx={{
+                    color: '#4580ff',
+                    '&.Mui-checked': {
+                        color: '#4580ff',
+                    },
+                    '& .MuiSvgIcon-root': {
+                        fontSize: 20, // Change this to adjust the size
+                    },
+                }}
+            />
+        </div>
+    )
+}
+const RoleTable = <T extends MRT_RowData>({ title, data, columns, handleCreate }: RoleTableProps<T>) => {
 
     const enhancedColumns = columns.map((col) => {
         if (col.Cell) return col;
@@ -89,7 +129,7 @@ const UserTable = <T extends MRT_RowData>({ title, data, columns, handleCreateUs
                     </FormControl>
                     <Button
                         variant="contained"
-                        onClick={handleCreateUser}
+                        onClick={handleCreate}
                         sx={{
                             bgcolor: '#db1a34', // Background color
                             color: 'white', // Text color
@@ -125,4 +165,4 @@ const UserTable = <T extends MRT_RowData>({ title, data, columns, handleCreateUs
     );
 };
 
-export default UserTable;
+export default RoleTable;

@@ -50,9 +50,8 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({ openModal, handleClos
       <Box sx={modalStyle}>
         <div className="flex justify-center items-center">
           <div className="flex gap-2 py-2">
-            <img src={selectedUser?.avatar} alt="" width={60} height={60} />
             <div className="flex flex-col justify-center font-medium">
-              <div className="text-md text-black">{selectedUser?.name}</div>
+              <div className="text-md text-black">{selectedUser?.first_name} {selectedUser?.last_name}</div>
               <div className="text-base text-[#818f99]">{selectedUser?.email}</div>
             </div>
           </div>
