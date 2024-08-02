@@ -17,6 +17,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        'active': '#11ba82',
+        'inactive': '#c2c2c2',
         'new-blue-1': '#ebf0fa',
         'new-blue-2': '#4580ff',
         current: 'currentColor',
