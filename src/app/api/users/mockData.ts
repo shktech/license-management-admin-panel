@@ -16,7 +16,7 @@ export const mockUsers = [
         last_name: 'Cotton',
         email: 'tallah@email.com',
         groups: ['1', '2'],
-        active: true,
+        active: false,
         organization: "PAI"
     },
     {
@@ -46,7 +46,7 @@ export const mockUsers = [
         last_name: 'Leason',
         email: 'teana@email.com',
         groups: ['3'],
-        active: true,
+        active: false,
         organization: "PAI"
     },
 ];

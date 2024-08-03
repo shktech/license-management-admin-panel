@@ -1,17 +1,14 @@
 "use client";
 import React, { useMemo } from "react";
-import { useNavigation, useTable } from "@refinedev/core";
+import { useTable } from "@refinedev/core";
 import { Role } from "@/types/types";
-import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
-import ProductIcon from "@/assets/icons/products.svg?icon";
 import Loader from "@components/common/Loader";
-import DetailDrawer from "@components/common/View/GeneralPanel";
-import SettingIcon from "@/assets/icons/setting.svg?icon";
-import RemoveIcon from "@/assets/icons/remove.svg?icon";
-import { Box, Button } from "@mui/material";
-import RoleDrawer from "@components/common/View/RoleDrawer";
-import RoleTable from "@components/Table/RoleTable";
+import CommonTable from "@components/Table/CommonTable";
+import { RoleColors } from "@data/ColorData";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import RoleDrawer from "@components/Role/RoleDrawer";
 
 const Page = () => {
   const {
@@ -20,8 +17,6 @@ const Page = () => {
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [clickedRole, setClickedRole] = React.useState<any>();
-
-  const roles: Role[] = data?.data as Role[];
 
   const handleClickItem = (role: Role) => {
     setClickedRole(role);
@@ -39,42 +34,29 @@ const Page = () => {
         accessorKey: "name",
         header: "Name",
         size: 100,
-        Cell: ({ cell, row }) => {
-          return (
-            <span
-              className="px-4 py-1 text-xs font-bold rounded-full"
-              style={{ backgroundColor: row.original.bgColor, color: row.original.textColor }}
-            >
-              {cell.getValue<string>()}
-            </span>
-          )
-        },
+        Cell: ({ renderedCellValue, row }) => (
+          <span className={`${RoleColors[Number(row.original.id) % 4 - 1]} text-white px-4 py-1 text-xs font-bold rounded-full`}>
+            {renderedCellValue}
+          </span>
+        ),
       },
 
       {
         accessorKey: "description",
         header: "Description",
-        size: 250,
+        size: 400,
       },
       {
         accessorKey: "action",
         header: "Action",
-        size: 200,
+        size: 100,
         enableSorting: false,
-        Cell: ({ cell, row }) => {
-          return (
-            <div className="flex gap-8">
-              <div onClick={() => handleClickItem(row.original)} className="flex gap-1 text-xs items-center cursor-pointer text-[#818f99] hover:text-black duration-500">
-                <SettingIcon />
-                Modifiy Roles
-              </div>
-              <div className="flex gap-1 text-xs items-center cursor-pointer text-[#818f99] hover:text-black duration-500">
-                <RemoveIcon />
-                Remove
-              </div>
-            </div>
-          )
-        },
+        Cell: ({ row }) => (
+          <div className="flex gap-4">
+            <EditOutlinedIcon onClick={() => handleClickItem(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+            <DeleteIcon fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+          </div>
+        ),
       },
     ],
     []
@@ -87,7 +69,7 @@ const Page = () => {
       ) : (
         <div className="rounded-xl drop-shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
-            <RoleTable
+            <CommonTable
               title="Role & Permission"
               data={data?.data}
               columns={columns}

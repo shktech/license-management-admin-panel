@@ -1,28 +1,41 @@
 "use client";
-import { useList, useOne, useTable } from "@refinedev/core";
-import { EmailTemplate } from "@/types/types";
-import React, { useEffect, useMemo, useState } from "react";
-import Loader from "@components/common/Loader";
-import { useForm } from "react-hook-form";
+import { useOne } from "@refinedev/core";
+import React, { useEffect, useState } from "react";
 import GeneralInput from "@components/Input/GeneralInput";
-import { Button, Collapse, FormControl, FormControlLabel, FormGroup, FormHelperText, Switch } from '@mui/material';
+import { Button, FormControl } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoteIcon from "@/assets/icons/note.svg?icon";
 import Editor from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
+import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
+
+const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+  lineNumbers: 'off' // This hides the line numbers
+};
+
+const handleEditorDidMount = (editor: any, monaco: any) => {
+  monaco.editor.defineTheme('custom-theme', {
+    base: 'vs',
+    inherit: true,
+    rules: [],
+    colors: { 'editor.background': '#e6eaed' }
+  });
+  monaco.editor.setTheme('custom-theme');
+};
 
 const Page = () => {
   const { data, isLoading } = useOne({
     resource: 'email-templates', id: 'all'
   })
 
-  const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-    lineNumbers: 'off' // This hides the line numbers
-  };
+  const [eTData, setETData] = useState<any>();
+
+  useEffect(() => {
+    setETData(data?.data);
+  }, [isLoading])
 
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
@@ -31,23 +44,10 @@ const Page = () => {
       setExpanded(isExpanded ? panel : false);
     };
 
-
-  const handleEditorDidMount = (editor: any, monaco: any) => {
-    monaco.editor.defineTheme('custom-theme', {
-      base: 'vs', // or 'vs-dark'
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': '#e6eaed' // Set your desired background color here
-      }
-    });
-    monaco.editor.setTheme('custom-theme');
-  };
-
   return (
     <div className="flex w-full justify-center text-black text-sm">
       <div className="min-w-[800px] rounded-xl px-8 py-8 drop-shadow-md bg-white">
-        <div className="text-base">Configure common settings for sending emails.</div>
+        <div className="text-lg font-medium"> Configure common settings for sending emails </div>
         <div className="flex gap-4 w-full py-8">
           <FormControl className="w-full">
             <GeneralInput
@@ -55,7 +55,7 @@ const Page = () => {
               name="senderName"
               label="Sender Name"
               type="text"
-              defaultValue={data?.data.sender.name}
+              defaultValue={eTData?.sender.name}
               disabled={false}
             />
           </FormControl>
@@ -65,25 +65,25 @@ const Page = () => {
               name="senderAddress"
               label="Sender Address"
               type="text"
-              defaultValue={data?.data.sender.address}
+              defaultValue={eTData?.sender.address}
               disabled={false}
             />
           </FormControl>
         </div>
         <div>
           {
-            data?.data?.emailTemplates.map((et: any, i: number) => {
+            eTData?.emailTemplates?.map((et: any, i: number) => {
               return (
                 <Accordion
+                  key={i}
                   elevation={0}
-                  // disableGutters
+                  disableGutters
                   expanded={expanded == et.id}
                   onChange={handleChangeAccordian(et.id)}
                   sx={{
                     border: '1px solid #d7dde4',
-                    '&::before': {
-                      display: 'none',
-                    },
+                    borderBottom: eTData?.emailTemplates?.length == i + 1 ? '1' : 'none',
+                    '&::before': { display: 'none' },
                   }}
                 >
                   <AccordionSummary
@@ -101,7 +101,7 @@ const Page = () => {
                     <div className="pl-2 text-black">{et.title}</div>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div className="flex flex-col gap-4 w-full py-2">
+                    <div className="flex flex-col gap-4 w-full py-2 px-2">
                       <FormControl className="w-full">
                         <GeneralInput
                           id={'subject' + i}
@@ -115,7 +115,6 @@ const Page = () => {
                           Available placeholder parameters: <span className="text-[0.6rem] bg-[#d5dce3] rounded-full py-0.5 px-2">{`{ APP_NAME }`}</span>, <span className="text-[0.6rem] bg-[#d5dce3] rounded-full py-0.5 px-2">{`{ APP_URL }`}</span>
                         </div>
                       </FormControl>
-
                       <FormControl className="w-full">
                         <GeneralInput
                           id={'cc' + i}
@@ -157,26 +156,7 @@ const Page = () => {
                         </div>
                       </div>
                       <div className="flex justify-end">
-                        <Button
-                          variant="contained"
-                          sx={{
-                            backgroundColor: 'white', // Custom background color
-                            color: '#65758c',
-                            border: '2px solid #65758c', // Custom text color
-                            padding: '4px 20px', // Custom padding
-                            borderRadius: '8px', // Custom border radius
-                            boxShadow: 'none',
-                            '&:hover': {
-                              backgroundColor: '#65758c',
-                              boxShadow: 'none', // Custom hover background color
-                              color: 'white',
-                            },
-                            textTransform: 'none',
-                            fontSize: '0.875rem'
-                          }}
-                        >
-                          Save
-                        </Button>
+                        <Button variant="contained" sx={modalOkBtnStyle}>Save</Button>
                       </div>
                     </div>
                   </AccordionDetails>
@@ -186,22 +166,7 @@ const Page = () => {
           }
         </div>
         <div className="flex justify-end mt-10">
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#007bff', // Custom background color
-              color: '#fff', // Custom text color
-              padding: '8px 20px', // Custom padding
-              borderRadius: '8px', // Custom border radius
-              '&:hover': {
-                backgroundColor: '#0056b3', // Custom hover background color
-              },
-              textTransform: 'none',
-              fontSize: '0.875rem'
-            }}
-          >
-            Send test email
-          </Button>
+          <Button variant="contained" sx={sendEmailBtnStyle}> Send test email </Button>
         </div>
       </div>
     </div>

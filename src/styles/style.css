@@ -161,6 +161,6 @@
     opacity: 1;
 }
 
-.Mui-TableBodyCell-DetailPanel {
-    background-color: white !important;
+.MuiTableRow-root:hover {
+    background-color: #f6fbff !important;
 }

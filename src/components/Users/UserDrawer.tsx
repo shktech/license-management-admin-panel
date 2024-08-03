@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Divider, Drawer, FormControl, Modal } from '@mui/material';
+import { Button, Divider, Drawer, FormControl } from '@mui/material';
 import { userRoles } from '@data/UserRoleData';
 import { Role, User } from '../../types/types';
 import GeneralInput from '@components/Input/GeneralInput';
+import { modalCancelBtnStyle, modalOkBtnStyle } from '@data/MuiStyles';
 
 
 interface UserDrawerProps {
@@ -10,16 +11,6 @@ interface UserDrawerProps {
   handleCloseModal: () => void;
   selectedUser: any;
 }
-
-const buttonStyle = {
-  px: 4, // Horizontal padding
-  py: 0.5,  // Vertical padding
-  borderRadius: '4px', // Rounded corners
-  boxShadow: 'none',
-  textTransform: 'none',
-  fontWeight: '500',
-  fontSize: '1rem',
-};
 
 const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, selectedUser }) => {
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
@@ -32,7 +23,6 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
   const handleEachRole = (roleName: string) => {
     let newRoles = selectedRoles?.includes(roleName) ? selectedRoles.filter(sr => sr != roleName) : [...(selectedRoles ?? []), roleName]
     setSelectedRoles(newRoles);
-    setUserChanged(true);
   }
   const handleClose = () => {
     setUserChanged(false);
@@ -120,36 +110,8 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
           </div>
         </div>
         <div className='flex justify-end gap-4'>
-          <Button
-            variant="contained"
-            onClick={handleClose}
-            sx={{
-              bgcolor: 'white', // Background color
-              color: 'black', // Text color
-              '&:hover': {
-                bgcolor: '#edf0f2', // Background color on hover
-                opacity: 0.9, // Adjust opacity on hover
-                boxShadow: 'none',
-              },
-              ...buttonStyle
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleClose}
-            // disabled={!userChanged}
-            sx={{
-              bgcolor: '#003133', // Background color
-              color: 'white', // Text color
-              '&:hover': {
-                bgcolor: '#003133', // Background color on hover
-                opacity: 0.9, // Adjust opacity on hover
-                boxShadow: 'none',
-              },
-              ...buttonStyle
-            }}
+          <Button variant="contained" onClick={handleClose} sx={modalCancelBtnStyle}>Cancel</Button>
+          <Button variant="contained" onClick={handleClose} sx={modalOkBtnStyle}
           >
             {selectedUser ? "Save" : "Create"}
           </Button>

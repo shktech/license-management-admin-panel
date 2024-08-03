@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Divider, Drawer, FormControl } from '@mui/material';
-import { Role } from '@types/types';
 import GeneralInput from '@components/Input/GeneralInput';
+import { Role } from '../../types/types';
+import { RoleColors } from '@data/ColorData';
+import { modalCancelBtnStyle, modalOkBtnStyle } from '@data/MuiStyles';
 
 interface RoleDrawerProps {
   open: boolean;
@@ -31,16 +33,6 @@ const checkboxGroupInfo = [
   },
 ]
 
-const buttonStyle = {
-  px: 4, // Horizontal padding
-  py: 0.5,  // Vertical padding
-  borderRadius: '4px', // Rounded corners
-  boxShadow: 'none',
-  textTransform: 'none',
-  fontWeight: '500',
-  fontSize: '1rem',
-};
-
 const MyCheckbox = ({ checked }: any) => {
   return (
     <div className='text-center flex-1'>
@@ -68,10 +60,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ open, onClose, role }) => {
         <div>
           <div className='py-4 text-lg font-bold text-[#65758c] flex items-center'>
             { role ? 'Edit Role': 'Create Role'}
-            <span
-              className='px-4 mx-4 py-1 text-xs font-bold rounded-full'
-              style={{ backgroundColor: role?.bgColor, color: role?.textColor }}
-            >
+            <span className={`px-4 mx-4 py-1 text-xs font-bold rounded-full text-white ${RoleColors[Number(role?.id) - 1]}`}>
               {role?.name}
             </span>
           </div>
@@ -123,39 +112,8 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ open, onClose, role }) => {
           </div>
         </div>
         <div className='flex justify-end gap-4'>
-          <Button
-            variant="contained"
-            onClick={onClose}
-            sx={{
-              bgcolor: 'white', // Background color
-              color: 'black', // Text color
-              '&:hover': {
-                bgcolor: '#edf0f2', // Background color on hover
-                opacity: 0.9, // Adjust opacity on hover
-                boxShadow: 'none',
-              },
-              ...buttonStyle
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={onClose}
-            // disabled={!roleChanged}
-            sx={{
-              bgcolor: '#003133', // Background color
-              color: 'white', // Text color
-              '&:hover': {
-                bgcolor: '#003133', // Background color on hover
-                opacity: 0.9, // Adjust opacity on hover
-                boxShadow: 'none',
-              },
-              ...buttonStyle
-            }}
-          >
-            { role ? 'Save': 'Create'}
-          </Button>
+          <Button variant="contained" onClick={onClose} sx={modalCancelBtnStyle}>Cancel</Button>
+          <Button variant="contained" onClick={onClose} sx={modalOkBtnStyle}>{ role ? 'Save': 'Create'}</Button>
         </div>
       </div>
 

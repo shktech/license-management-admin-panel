@@ -108,8 +108,6 @@ export interface User {
 export interface Role {
     id?: string;
     name?: string;
-    bgColor: string;
-    textColor: string;
     description?: string;
     permission?: any
 };

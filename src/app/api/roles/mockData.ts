@@ -26,8 +26,6 @@ export const mockRoles = [
         id: "1",
         name: 'Admin',
         description: 'This is Admin',
-        bgColor: '#face5f',
-        textColor: '#000000',
         permission: {
             users: [1, 2, 3, 4],
             assets: [1, 2, 3, 4],
@@ -39,8 +37,6 @@ export const mockRoles = [
         id: "2",
         name: 'SuperUser',
         description: 'This is SuperUser',
-        bgColor: '#003133',
-        textColor: '#ffffff',
         permission: {
             users: [1],
             assets: [1, 2, 3],
@@ -52,8 +48,6 @@ export const mockRoles = [
         id: "3",
         name: 'User',
         description: 'This is User',
-        bgColor: '#1c9151',
-        textColor: '#ffffff',
         permission: {
             users: [1],
             assets: [1],
