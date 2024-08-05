@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
-import { useNavigation, useTable } from "@refinedev/core";
-import { Transaction } from "@/types/types";
+import React, { useMemo } from "react";
+import { useNavigation, usePermissions, useTable } from "@refinedev/core";
+import { Permission, Transaction } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
 import TransactionWithColorIcon from "@/assets/icons/transactionWithColor.svg?icon";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { useRouter } from "next/navigation";
 import { tagStyle } from "@data/MuiStyles";
@@ -24,6 +24,8 @@ const Page = () => {
   const handleCreate = () => router.push('/transactions/create')
 
   const handleRowClick = (row: Transaction) => show("transactions", row.id)
+
+  const { data: permissionsData } = usePermissions<Permission>({params: {codename: "transaction"}});
 
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
     () => [
@@ -115,7 +117,8 @@ const Page = () => {
               data={data?.data}
               columns={columns}
               onRowClick={handleRowClick}
-              handleCreate={handleCreate} />
+              handleCreate={handleCreate}
+              canCreate={permissionsData?.create} />
           )}
         </div>
       </div>

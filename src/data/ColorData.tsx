@@ -25,9 +25,9 @@ export const TxtStatusColor: { [key: string]: string } = {
     "Hold": "#fac107",
 }
 
-export const RoleColors = [
-    'bg-[#3d50e0]',  // Primary
-    'bg-[#11ba82]', // Secondary
-    'bg-[#003133]', //Dark
-    'bg-[#dc3545]' //Danger
-]
+export const RoleColors: { [key: string]: string } = {
+    "Admin": 'bg-[#3d50e0]',
+    "SuperUser": 'bg-[#11ba82]',
+    "User": 'bg-[#003133]',
+    "default": 'bg-[#4580ff]',
+}

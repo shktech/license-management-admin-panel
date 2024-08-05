@@ -1,12 +1,15 @@
 "use client";
 import { useState } from 'react';
-import { useGetIdentity } from "@refinedev/core";
+import { useGetIdentity, useLogout } from "@refinedev/core";
 import ClickOutside from '../ClickOutside';
 import Link from 'next/link';
+import { User } from '@/types/types';
 
 const DropdownUser = () => {
-  const { data: identity } = useGetIdentity<any>();
+  const { data: identity } = useGetIdentity<User>();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { mutate: logout } = useLogout();
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -17,12 +20,15 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {`${identity?.firstname} ${identity?.lastname}`}
+            {`${identity?.first_name} ${identity?.last_name}`}
+          </span>
+          <span className="block text-xs font-light text-black dark:text-white">
+            {`Organization: ${identity?.organization}`}
           </span>
         </span>
 
         <span className="h-12 w-12 rounded-full flex items-center justify-center text-white font-bold rounded-full bg-primary ">
-          {`${identity?.firstname?.[0]} ${identity?.lastname?.[0]}`}
+          {`${identity?.first_name?.[0]} ${identity?.last_name?.[0]}`}
         </span>
 
         <svg
@@ -99,7 +105,7 @@ const DropdownUser = () => {
               </Link>
             </li>
           </ul>
-          <Link href={'/auth/signin'} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <Link onClick={() => logout()} href="#" className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
             <svg
               className="fill-current"
               width="22"

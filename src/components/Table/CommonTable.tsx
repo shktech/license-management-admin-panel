@@ -18,9 +18,10 @@ interface CommonTableProps<T extends MRT_RowData> {
     data?: T[];
     columns: MRT_ColumnDef<T>[];
     handleCreate: () => void
+    addText?: string;
 }
 
-const CommonTable = <T extends MRT_RowData>({ title, data, columns, handleCreate }: CommonTableProps<T>) => {
+const CommonTable = <T extends MRT_RowData>({ title, data, columns, handleCreate, addText }: CommonTableProps<T>) => {
     const table = useMaterialReactTable({
         columns: columns,
         data: data || [],
@@ -42,7 +43,7 @@ const CommonTable = <T extends MRT_RowData>({ title, data, columns, handleCreate
                 <div className="text-xl text-xl font-semibold text-black">{title}</div>
                 <div className='flex gap-2'>
                     <SearchInput />
-                    <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>
+                    <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> {addText ?? "Add"}</Button>
                 </div>
             </div>
             <MRT_TableContainer table={table} />

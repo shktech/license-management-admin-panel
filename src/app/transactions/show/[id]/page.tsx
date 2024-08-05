@@ -3,7 +3,7 @@
 import { useShow } from "@refinedev/core";
 import Link from "next/link";
 import GeneralInformation from "@components/common/View/GeneralInformation";
-import { Transaction } from "@/types/types";
+import { Permission, Transaction } from "@/types/types";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { Box, Button } from "@mui/material";
@@ -17,10 +17,12 @@ import {
   DeleteButton,
   RefreshButton,
 } from "@refinedev/mui";
+import { usePermissions } from "@refinedev/core";
 
 const TransactionShow = () => {
   const { queryResult } = useShow<Transaction>();
   const { data, isLoading } = queryResult;
+  const { data: permissionsData } = usePermissions<Permission>({params: {codename: "transaction"}});
 
   const transaction = data?.data;
 
@@ -38,12 +40,10 @@ const TransactionShow = () => {
       headerButtons={({
         deleteButtonProps,
         editButtonProps,
-        refreshButtonProps,
       }) => (
         <div className="flex gap-2 pr-10">
-          <EditButton {...editButtonProps} sx={editRefineBtnStyle}/>
-          <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle}/>
-          <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle}/>
+          {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle}/>}
+          {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle}/>}
         </div>
       )}
     >

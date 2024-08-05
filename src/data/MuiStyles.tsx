@@ -1,10 +1,9 @@
 import { colors } from "@mui/material";
 
 export const tableAddButton = {
-    bgcolor: '#db1a34', // Background color
+    bgcolor: '#3c50e0', // Background color
     color: 'white', // Text color
     '&:hover': {
-        bgcolor: '#db1a34', // Background color on hover
         opacity: 0.9, // Adjust opacity on hover
         boxShadow: 'none',
     },
