@@ -12,6 +12,8 @@ export interface FieldConfig {
   resource?: string;
   valueKey?: string;
   labelKey?: string;
+  size?: number,
+  disabled?: boolean
 }
 
 export interface GenericFormProps {

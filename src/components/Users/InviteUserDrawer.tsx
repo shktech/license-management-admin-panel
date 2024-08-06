@@ -13,7 +13,7 @@ interface UserDrawerProps {
 
 const InviteUserDrawer: React.FC<UserDrawerProps> = ({  handleCloseModal, inactiveUser }) => {
   const { mutate } = useCreate();
-  const [invitationEmail, setInvitationEmail] = React.useState<string>('');
+  const [invitationEmail, setInvitationEmail] = React.useState<string>(inactiveUser?.email as string);
 
   const handleSave = () => {
     mutate({

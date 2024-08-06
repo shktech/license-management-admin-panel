@@ -19,7 +19,7 @@ interface GenericTableProps<T extends MRT_RowData> {
     data?: T[];
     columns: MRT_ColumnDef<T>[];
     onRowClick?: (row: T) => void;
-    handleCreate?: () => void;
+    handleCreate?: () => void
     canCreate?: boolean;
 }
 
@@ -55,7 +55,13 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
             showRowsPerPage: false,
             variant: 'outlined',
         },
-        paginationDisplayMode: 'pages'
+        paginationDisplayMode: 'pages',
+        initialState: {
+            columnPinning: {
+                left: [],
+                right: ['actions'],
+            },
+        },
     });
 
     return (

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Button, Drawer, Modal } from '@mui/material';
 import { User } from '../../types/types';
-import { userRoles } from '@data/UserRoleData';
 
 
 interface DeleteUserModalProps {

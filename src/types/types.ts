@@ -122,12 +122,11 @@ export interface User {
     last_name?: string;
     organization?: string;
     is_active?: boolean;
-    groups?: Role[]
+    roles?: Role[]
 };
 
 export interface Role {
-    id?: string;
-    group_id?: string;
+    role_id?: string;
     description?: string;
     name?: string;
     permissions?: Permission[];

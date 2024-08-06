@@ -45,7 +45,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     useEffect(() => {
       if (data && valueKey && labelKey) {
         const options =
-          data?.data.map((item: any) => ({
+          data?.data?.map((item: any) => ({
             value: item[valueKey],
             label: item[labelKey],
           })) || [];

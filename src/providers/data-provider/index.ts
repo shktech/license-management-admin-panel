@@ -12,11 +12,20 @@ const API_URL =
 
 // export const dataProvider = dataProviderSimpleRest(API_URL);
 
+const replaceUrlIfNeeded = (url: string | undefined): string | undefined => {
+  if (!url) return url;
+  if (url.includes('register-admin')) {
+    return url;
+  }
+  if (url.includes('transactions') || url.includes('assets') || url.includes('products')) {
+    return url.replace('localhost:8000', 'localhost:3000/api');
+  }
+  return url;
+}
+
 axiosInstance.interceptors.request.use(
   (config) => {
-    if (config.url?.includes("register-admin")) {
-      return config;
-    }
+    config.url = replaceUrlIfNeeded(config.url);
     const token = localStorage.getItem("accessToken");
     config.headers["Authorization"] = `Bearer ${token}`;
     return config;

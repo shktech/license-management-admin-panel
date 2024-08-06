@@ -4,11 +4,12 @@ import GeneralInput from "@components/Input/GeneralInput";
 import { Permission, Role } from "@/types/types";
 import { RoleColors } from "@data/ColorData";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { useUpdate } from "@refinedev/core";
+import { useCreate, useUpdate } from "@refinedev/core";
 
 interface RoleDrawerProps {
   onClose: () => void;
   role: Role;
+  create: boolean;
 }
 
 const checkboxGroupInfo = [
@@ -30,7 +31,7 @@ const MyCheckbox = ({ checked, onChange }: any) => {
             color: "#003133",
           },
           "& .MuiSvgIcon-root": {
-            fontSize: 20, // Change this to adjust the size
+            fontSize: 20,
           },
         }}
       />
@@ -38,7 +39,7 @@ const MyCheckbox = ({ checked, onChange }: any) => {
   );
 };
 
-const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role }) => {
+const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
   const initializePermissions = () => {
     return checkboxGroupInfo.map(({ key }) => {
       const permission = role?.permissions?.find((p) => p.codename === key);
@@ -58,7 +59,8 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role }) => {
   const [permissions, setPermissions] = useState<Permission[]>(
     initializePermissions()
   );
-  const { mutate } = useUpdate();
+  const { mutate: updateRole } = useUpdate();
+  const { mutate: createRole } = useCreate();
 
   const handleCheckboxChange = (
     codename: string,
@@ -76,19 +78,35 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role }) => {
 
   const handleSubmit = () => {
     const payload = { name, description, permissions };
-    mutate(
-      {
-        resource: "roles",
-        id: `${(role?.group_id as string)}/`,
-        values: payload,
-      },
-      {
-        onError: (error) => {
-          console.log(error);
+    if (create) {
+      createRole(
+        {
+          resource: "roles/",
+          values: payload,
         },
-        onSuccess: () => onClose(),
-      }
-    );
+        {
+          onError: (error) => {
+            console.log(error);
+          },
+          onSuccess: () => onClose(),
+        }
+      );
+      return;
+    } else {
+      updateRole(
+        {
+          resource: "roles",
+          id: `${(role?.role_id as string)}/`,
+          values: payload,
+        },
+        {
+          onError: (error) => {
+            console.log(error);
+          },
+          onSuccess: () => onClose(),
+        }
+      );
+    }
   };
 
   return (
@@ -96,12 +114,12 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role }) => {
       <div className="min-w-[600px] min-h-screen px-7 pb-4 font-med flex flex-col justify-between">
         <div>
           <div className="py-4 text-lg font-bold text-[#65758c] flex items-center">
-            {role ? "Edit Role" : "Create Role"}
-            <span
+            {create ? "Create Role" : "Edit Role"}
+            {!create && <span
               className={`px-4 mx-4 py-1 text-xs font-bold rounded-full text-white ${RoleColors[role?.name as string] || RoleColors.default}`}
             >
               {role?.name}
-            </span>
+            </span>}
           </div>
           <div className="flex flex-col gap-4">
             <Divider

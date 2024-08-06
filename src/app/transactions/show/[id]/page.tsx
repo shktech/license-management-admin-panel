@@ -41,13 +41,13 @@ const TransactionShow = () => {
         deleteButtonProps,
         editButtonProps,
       }) => (
-        <div className="flex gap-2 pr-10">
+        <div className="flex gap-12 px-12">
           {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle}/>}
           {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle}/>}
         </div>
       )}
     >
-      <div className="flex">
+      <div className="flex gap-4">
         <GeneralInformation
           header="Transaction information"
           headerIcon={<FeedOutlinedIcon />}

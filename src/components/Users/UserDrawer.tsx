@@ -18,7 +18,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
   const { mutate } = useUpdate();
 
   useEffect(() => {
-    setSelectedRoles(selectedUser?.groups ?? []);
+    setSelectedRoles(selectedUser?.roles ?? []);
   }, [selectedUser]);
 
   const handleEachRole = (role: Role) => {
@@ -30,7 +30,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
 
   const handleSave = () => {
     const payload = {
-      group_ids: selectedRoles.map(role => role.group_id),
+      role_ids: selectedRoles.map(role => role.role_id),
     }
     mutate({
       resource: "users",

@@ -162,6 +162,6 @@ export const authProvider: AuthProvider = {
     },
     getPermissions: async (params) => {
         const user: User | null = await getCurrentUser();
-        return aggregatePermissionsByCodename(user?.groups || [], params?.codename)
+        return aggregatePermissionsByCodename(user?.roles || [], params?.codename)
     }
 }
