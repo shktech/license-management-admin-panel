@@ -1,41 +1,85 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Divider, Drawer, FormControl } from '@mui/material';
-import { userRoles } from '@data/UserRoleData';
-import { Role, User } from '../../types/types';
+import { Role, User, Permission } from '../../types/types';
 import GeneralInput from '@components/Input/GeneralInput';
 import { modalCancelBtnStyle, modalOkBtnStyle } from '@data/MuiStyles';
-
+import { RoleColors } from '@data/ColorData';
+import { useUpdate } from '@refinedev/core';
+import PermissionsTable from '@components/Role/PermissionsTable';
 
 interface UserDrawerProps {
   openModal: boolean;
   handleCloseModal: () => void;
-  selectedUser: any;
+  selectedUser: User;
+  userRoles: Role[];
 }
 
-const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, selectedUser }) => {
-  const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
-  const [userChanged, setUserChanged] = React.useState<boolean>(false);
+const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, selectedUser, userRoles }) => {
+  const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
+  const [permissions, setPermissions] = useState<Permission[]>([]);
+  const { mutate } = useUpdate();
 
   useEffect(() => {
-    setSelectedRoles(selectedUser?.groups.map((g: Role) => g.name));
-  }, [selectedUser])
+    setSelectedRoles(selectedUser?.roles ?? []);
+  }, [selectedUser]);
 
-  const handleEachRole = (roleName: string) => {
-    let newRoles = selectedRoles?.includes(roleName) ? selectedRoles.filter(sr => sr != roleName) : [...(selectedRoles ?? []), roleName]
+  useEffect(() => {
+    updatePermissions();
+  }, [selectedRoles]);
+
+  const handleEachRole = (role: Role) => {
+    const newRoles = selectedRoles.some(selectedRole => selectedRole.name === role.name)
+      ? selectedRoles.filter(selectedRole => selectedRole.name !== role.name)
+      : [...selectedRoles, role];
     setSelectedRoles(newRoles);
-  }
-  const handleClose = () => {
-    setUserChanged(false);
-    setSelectedRoles([]);
-    handleCloseModal();
-  }
+  };
+
+  const updatePermissions = () => {
+    const aggregatedPermissions: Permission[] = [];
+    console.log(selectedRoles)
+
+    selectedRoles.forEach(role => {
+      role?.permissions?.forEach(rolePermission => {
+        const existingPermission = aggregatedPermissions.find(
+          perm => perm.codename === rolePermission.codename
+        );
+
+        if (existingPermission) {
+          existingPermission.create = existingPermission.create || rolePermission.create;
+          existingPermission.read = existingPermission.read || rolePermission.read;
+          existingPermission.update = existingPermission.update || rolePermission.update;
+          existingPermission.delete = existingPermission.delete || rolePermission.delete;
+        } else {
+          aggregatedPermissions.push({ ...rolePermission });
+        }
+      });
+    });
+    console.log(aggregatedPermissions);
+    setPermissions(aggregatedPermissions);
+  };
+
+  const handleSave = () => {
+    const payload = {
+      role_ids: selectedRoles.map(role => role.role_id),
+    };
+    mutate({
+      resource: "users",
+      id: `${selectedUser.user_id}/roles/`,
+      values: payload
+    }, {
+      onError: (error) => {
+        console.log(error);
+      },
+      onSuccess: () => handleCloseModal(),
+    });
+  };
 
   return (
-    <Drawer anchor="right" open={openModal} onClose={handleClose}>
+    <Drawer anchor="right" open={openModal} onClose={handleCloseModal}>
       <div className="min-w-[800px] min-h-screen px-7 pb-4 font-med flex flex-col justify-between">
         <div>
           <div className='py-4 text-lg font-bold text-[#65758c] flex items-center'>
-            {selectedUser ? "Edit user" : "Create User"}
+            {selectedUser ? "Edit User" : "Create User"}
           </div>
           <div className='flex flex-col gap-6'>
             <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}>General Information</Divider>
@@ -43,7 +87,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
               <GeneralInput
                 id="user_id"
                 name="user_id"
-                label="user_id"
+                label="User ID"
                 type="text"
                 defaultValue={selectedUser?.user_id}
                 disabled={true}
@@ -54,20 +98,20 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                 <GeneralInput
                   id="first_name"
                   name="first_name"
-                  label="First name"
+                  label="First Name"
                   type="text"
                   defaultValue={selectedUser?.first_name}
-                  disabled={false}
+                  disabled={true}
                 />
               </FormControl>
               <FormControl className="w-full">
                 <GeneralInput
                   id="last_name"
                   name="last_name"
-                  label="Last name"
+                  label="Last Name"
                   type="text"
                   defaultValue={selectedUser?.last_name}
-                  disabled={false}
+                  disabled={true}
                 />
               </FormControl>
             </div>
@@ -79,7 +123,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                   label="Email"
                   type="text"
                   defaultValue={selectedUser?.email}
-                  disabled={false}
+                  disabled={true}
                 />
               </FormControl>
               <FormControl className="w-full">
@@ -89,35 +133,42 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                   label="Organization"
                   type="text"
                   defaultValue={selectedUser?.organization}
-                  disabled={false}
+                  disabled={true}
                 />
               </FormControl>
             </div>
             <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}>User Role</Divider>
             <div className='flex items-center justify-center'>
               <div className="flex gap-2">
-                {
-                  userRoles.map(ur => {
-                    const cName = selectedRoles?.find(sr => sr == ur.name) ? `${ur.className} border border-transparent` : 'bg-white text-[#818f99] border border-[#818f99]'
-                    return (
-                      <div key={ur.name} onClick={() => handleEachRole(ur.name)} className={`${cName} text-sm rounded-full px-4 py-1 cursor-pointer `}>{ur.name}</div>
-                    )
-                  })
-                }
+                {userRoles.map(role => {
+                  const isSelected = selectedRoles.some(selectedRole => selectedRole.name === role.name);
+                  const className = isSelected
+                    ? `${RoleColors[role.name as string] || RoleColors.default} border border-transparent text-white`
+                    : 'bg-white text-[#818f99] border border-[#818f99]';
+                  return (
+                    <div
+                      key={role.name}
+                      onClick={() => handleEachRole(role)}
+                      className={`${className} text-sm rounded-full px-4 py-1 cursor-pointer`}
+                    >
+                      {role.name}
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}></Divider>
+            {/* <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}></Divider> */}
+            <PermissionsTable permissions={permissions} handleCheckboxChange={() => {}} readonly />
           </div>
         </div>
         <div className='flex justify-end gap-4'>
-          <Button variant="contained" onClick={handleClose} sx={modalCancelBtnStyle}>Cancel</Button>
-          <Button variant="contained" onClick={handleClose} sx={modalOkBtnStyle}
-          >
+          <Button variant="contained" onClick={handleCloseModal} sx={modalCancelBtnStyle}>Cancel</Button>
+          <Button variant="contained" onClick={handleSave} sx={modalOkBtnStyle}>
             {selectedUser ? "Save" : "Create"}
           </Button>
         </div>
       </div>
-    </Drawer >
+    </Drawer>
   );
 };
 

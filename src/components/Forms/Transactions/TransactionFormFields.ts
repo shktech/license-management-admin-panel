@@ -8,6 +8,7 @@ const TransactionFormFields: FieldConfig[] = [
         placeholder: "Select option",
         rules: { required: "Transaction source is required" },
         type: "dropdown",
+        size: 2,
         options: [
             { value: "Oracle ERP", label: "Oracle ERP" },
             { value: "Prod Reg", label: "Prod Reg" },
@@ -20,6 +21,7 @@ const TransactionFormFields: FieldConfig[] = [
         placeholder: "Select option",
         rules: { required: "Transaction type is required" },
         type: "dropdown",
+        size: 2,
         options: [
             { value: "Sales", label: "Sales" },
             { value: "Eval", label: "Eval" },
@@ -33,6 +35,7 @@ const TransactionFormFields: FieldConfig[] = [
         placeholder: "Select option",
         rules: { required: "Transaction action is required" },
         type: "dropdown",
+        size: 2,
         options: [
             { value: "New", label: "New" },
             { value: "Update", label: "Update" },
@@ -62,45 +65,6 @@ const TransactionFormFields: FieldConfig[] = [
         type: "text",
     },
     {
-        name: "asset.id",
-        label: "Asset ID",
-        placeholder: "Asset ID",
-        rules: { required: "Asset id is required" },
-        type: "text",
-    },
-    {
-        name: "osc_product.osc_part_number",
-        label: "Product part number",
-        placeholder: "Product part number",
-        rules: { required: "Part number is required" },
-        // type: "text",
-        type: "dropdown",
-        resource: "products",
-        valueKey: "osc_part_number",
-        labelKey: "osc_part_number"
-    },
-    {
-        name: "osc_product.vendor_name",
-        label: "Vendor name",
-        placeholder: "Vendor name",
-        rules: { required: "Vendor name is required" },
-        type: "text",
-    },
-    {
-        name: "osc_product.vendor_part_number",
-        label: "Vendor part number",
-        placeholder: "Vendor part number",
-        rules: { required: "Vendor part number is required" },
-        type: "text",
-    },
-    {
-        name: "reference_code",
-        label: "Reference code",
-        placeholder: "Reference code",
-        rules: { required: "Reference code is required" },
-        type: "text",
-    },
-    {
         name: "quantity",
         label: "Transaction quantity (Seats)",
         placeholder: "Transaction quantity",
@@ -121,6 +85,7 @@ const TransactionFormFields: FieldConfig[] = [
         rules: { required: "End date is required" },
         type: "date",
     },
+
 ];
 
 export default TransactionFormFields;

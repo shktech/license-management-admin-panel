@@ -19,10 +19,17 @@ interface GenericTableProps<T extends MRT_RowData> {
     data?: T[];
     columns: MRT_ColumnDef<T>[];
     onRowClick?: (row: T) => void;
-    handleCreate?: () => void
+    handleCreate?: () => void;
+    canCreate?: boolean;
+    canDelete?: boolean;
+    canEdit?: boolean;
+    maxWidth?: string | number;
+    minWidth?: string | number;
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick, handleCreate }: GenericTableProps<T>) => {
+const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick, handleCreate, canCreate, maxWidth,
+    minWidth,
+}: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
         if (!!onRowClick) {
             onRowClick(row);
@@ -54,7 +61,13 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
             showRowsPerPage: false,
             variant: 'outlined',
         },
-        paginationDisplayMode: 'pages'
+        paginationDisplayMode: 'pages',
+        initialState: {
+            columnPinning: {
+                left: [],
+                right: ['actions'],
+            },
+        },
     });
 
     return (
@@ -63,21 +76,25 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
                     <SearchInput />
-                    <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>
+                    {canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />
                     </Box>
                 </div>
             </div>
-            <MRT_TableContainer table={table} />
-            <Box>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <MRT_TablePagination table={table} />
-                </Box>
-                <Box sx={{ display: 'grid', width: '100%' }}>
-                    <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
-                </Box>
-            </Box>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                <div style={{ maxWidth, minWidth, width: '100%' }}>
+                    <MRT_TableContainer table={table} />
+                    <Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <MRT_TablePagination table={table} />
+                        </Box>
+                        <Box sx={{ display: 'grid', width: '100%' }}>
+                            <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
+                        </Box>
+                    </Box>
+                </div>
+            </div>
         </div>
     );
 };

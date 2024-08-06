@@ -8,7 +8,7 @@ import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import Link from "next/link";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { useBack } from "@refinedev/core";
+import { useBack, useList } from "@refinedev/core";
 import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
 
 const TransactionEdit = () => {
@@ -18,10 +18,24 @@ const TransactionEdit = () => {
     control,
     reset,
     trigger,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<Transaction>();
 
   const transaction: Transaction = queryResult?.data?.data as Transaction;
+
+  const {data: productsData, isLoading: productDataLoading} = useList({
+    resource: 'products'
+  })
+  const product_part_number = watch('osc_product.osc_part_number');
+
+  useEffect(() => {
+    const vendor_name = productsData?.data.find((pd: any) => pd.osc_part_number == product_part_number)?.vendor_name;
+    const vendor_part_number = productsData?.data.find((pd: any) => pd.osc_part_number == product_part_number)?.vendor_part_number;
+    setValue('osc_product.vendor_name', vendor_name);
+    setValue('osc_product.vendor_part_number', vendor_part_number);
+  }, [product_part_number])
 
   useEffect(() => {
     if (!formLoading && transaction) {
@@ -50,12 +64,12 @@ const TransactionEdit = () => {
         <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle}/>
       )}
     >
-      {formLoading ? (
+      {formLoading || productDataLoading ? (
         <Loader />
       ) : (
         <div className="bg-white px-8 rounded-xl">
           <TransactionForm
-            {...{ control, errors, trigger, transaction }}
+            {...{ control, errors, trigger }}
           />
         </div>
       )}

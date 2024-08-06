@@ -9,12 +9,10 @@ export const dashboardResources: ResourceProps[] = [
       label: "Dashboard",
     },
   },
-  {
-    name: "transaction",
-    meta: {
-      label: "Transaction",
-    },
-  },
+  // {
+  //   name: "organization",
+  //   create: "/authenticate/"
+  // },
   {
     name: "transactions",
     list: "/transactions",
@@ -184,7 +182,9 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "roles",
-    list: "/roles",
+    list: "/roles/",
+    create: "/roles/",
+    edit: "/roles/:id",
     meta: {
       label: "Roles",
       parent: "settings",

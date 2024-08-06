@@ -42,7 +42,7 @@ const SignIn: React.FC = () => {
                   <h2 className="text-2xl font-bold text-black">
                     Sign In
                   </h2>
-                  <Link href={'/auth/signup'} className='text-sm text-primary font-medium'>Don&apos;t have any account</Link>
+                  <Link href={'/register-admin'} className='text-sm text-primary font-medium'>Don&apos;t have any account</Link>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="flex flex-col space-y-4">
@@ -74,12 +74,13 @@ const SignIn: React.FC = () => {
                     >{(field) => (
                       <GeneralInput
                         {...field}
-                        type={'text'}
+                        type={'password'}
                         label="Password"
                         placeholder="Enter your password"
                         disabled={false}
                         icon={<PasswordIcon className="fill-current" />}
                       />
+                      
                     )}
                     </FormControlWrapper>
                     <Button type="submit" className="text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90">Sign in</Button>

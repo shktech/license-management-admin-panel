@@ -8,6 +8,9 @@ import ProductIcon from "@/assets/icons/products.svg?icon";
 import Loader from "@components/common/Loader";
 import DetailDrawer from "@components/common/View/GeneralPanel";
 import { Box, Button } from "@mui/material";
+import { useRouter } from "next/navigation";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const Page = () => {
   const {
@@ -18,6 +21,9 @@ const Page = () => {
   const [clickedProduct, setClickedProduct] = React.useState<Product>();
 
   const products: Product[] = data?.data as Product[];
+
+  const router = useRouter();
+  const handleCreate = () => router.push('/products/create')
 
   const handleClickItem = (id: string) => {
     const product = products.find((pd) => pd.id === id);
@@ -86,6 +92,19 @@ const Page = () => {
           )
         },
       },
+      {
+        accessorKey: "actions",
+        header: "Action",
+        size: 100,
+        enableSorting: false,
+        pin: 'right',
+        Cell: ({ row }) => (
+          <div className="flex gap-4">
+            <EditOutlinedIcon onClick={() => console.log("Edit")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+            <DeleteIcon onClick={() => console.log("Delete")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+          </div>
+        ),
+      },
     ],
     []
   );
@@ -133,7 +152,7 @@ const Page = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="rounded-xl drop-shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
             <GenericTable
               title={
@@ -142,6 +161,7 @@ const Page = () => {
               data={data?.data}
               columns={columns}
               onRowClick={handleRowClick}
+              handleCreate={handleCreate}
             />
           </div>
           <DetailDrawer

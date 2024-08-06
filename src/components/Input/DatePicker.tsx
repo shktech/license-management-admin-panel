@@ -12,10 +12,10 @@ interface CustomizedInputProps {
 type BaseInputProps = CustomizedInputProps & InputProps
 
 const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
-
+    console.log(props);
     const handleChange = (date: any, dateStr: string) => {
         if (onChange) {
-            console.log('datepicker', props, dateStr);
+            // console.log('datepicker', props, dateStr, label);
             onChange({
                 target: {
                     name: props.name,
