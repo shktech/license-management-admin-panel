@@ -1,6 +1,6 @@
 "use client";
 
-import { useShow } from "@refinedev/core";
+import { usePermissions, useShow } from "@refinedev/core";
 import {
   Show,
   EditButton,
@@ -9,7 +9,7 @@ import {
 } from "@refinedev/mui";
 import Link from "next/link";
 import GeneralInformation from "@components/common/View/GeneralInformation";
-import { Asset, Seat } from "@/types/types";
+import { Asset, Permission, Seat } from "@/types/types";
 import GeneralInformationIcon from "@/assets/icons/generalinfo.svg?icon";
 import TransactionIcon from "@/assets/icons/transaction.svg?icon";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
@@ -94,6 +94,7 @@ const StyledTab = styled((props: StyledTabProps) => (
 
 const Page = () => {
   const [value, setValue] = useState(0);
+  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "asset" } });
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -163,8 +164,8 @@ const Page = () => {
           refreshButtonProps,
         }) => (
           <div className="flex gap-2 pr-10">
-            <EditButton {...editButtonProps} sx={editRefineBtnStyle} />
-            <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle} />
+            {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle} />}
+            {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle} />}
             <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
           </div>
         )}

@@ -19,11 +19,17 @@ interface GenericTableProps<T extends MRT_RowData> {
     data?: T[];
     columns: MRT_ColumnDef<T>[];
     onRowClick?: (row: T) => void;
-    handleCreate?: () => void
+    handleCreate?: () => void;
     canCreate?: boolean;
+    canDelete?: boolean;
+    canEdit?: boolean;
+    maxWidth?: string | number;
+    minWidth?: string | number;
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick, handleCreate, canCreate }: GenericTableProps<T>) => {
+const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick, handleCreate, canCreate, maxWidth,
+    minWidth,
+}: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
         if (!!onRowClick) {
             onRowClick(row);
@@ -76,15 +82,19 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
                     </Box>
                 </div>
             </div>
-            <MRT_TableContainer table={table} />
-            <Box>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <MRT_TablePagination table={table} />
-                </Box>
-                <Box sx={{ display: 'grid', width: '100%' }}>
-                    <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
-                </Box>
-            </Box>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                <div style={{ maxWidth, minWidth, width: '100%' }}>
+                    <MRT_TableContainer table={table} />
+                    <Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <MRT_TablePagination table={table} />
+                        </Box>
+                        <Box sx={{ display: 'grid', width: '100%' }}>
+                            <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
+                        </Box>
+                    </Box>
+                </div>
+            </div>
         </div>
     );
 };

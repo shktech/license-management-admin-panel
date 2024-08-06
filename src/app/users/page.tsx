@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo } from "react";
-import { HttpError, useList, useTable } from "@refinedev/core";
-import { Role, User } from "@/types/types";
+import { HttpError, useList, usePermissions, useTable } from "@refinedev/core";
+import { Permission, Role, User } from "@/types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
 import DeleteUserModal from "@components/Users/DeleteUserModal";
@@ -11,6 +11,7 @@ import UserDrawer from "@components/Users/UserDrawer";
 import { RoleColors } from "@data/ColorData";
 import CommonTable from "@components/Table/CommonTable";
 import InviteUserDrawer from "@components/Users/InviteUserDrawer";
+import Unauthorized from "@components/Error/Unauthorized";
 
 const Page = () => {
   const {
@@ -24,6 +25,8 @@ const Page = () => {
   } = useList<Role, HttpError>({
     resource: "roles",
   });
+
+  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "user" } });
 
   const userRoles = rolesData?.data || [];
 
@@ -119,16 +122,16 @@ const Page = () => {
         enableSorting: false,
         Cell: ({ row }) => (
           <div className="flex gap-4">
-            <EditOutlinedIcon
+            {permissionsData?.update && <EditOutlinedIcon
               onClick={() => handleModifyUser(row.original)}
               fontSize="small"
               className="text-[#818f99] hover:text-black cursor-pointer"
-            />
-            <DeleteIcon
+            />}
+            {permissionsData?.delete && <DeleteIcon
               onClick={() => handleDeleteUser(row.original)}
               fontSize="small"
               className="text-[#818f99] hover:text-black cursor-pointer"
-            />
+            />}
           </div>
         ),
       },
@@ -137,49 +140,54 @@ const Page = () => {
   );
 
   return (
-    <div className="flex flex-col gap-10">
-      {isLoading || isRolesLoading ? (
-        <Loader />
-      ) : (
-        <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="max-w-full overflow-x-auto">
-            <CommonTable
-              title={
-                <div className="flex items-center justify-center gap-2">
-                  {" "}
-                  User Management{" "}
-                </div>
-              }
-              data={data?.data}
-              columns={columns}
-              handleCreate={handleCreateUser}
-              addText={"Invite user"}
-            />
+    permissionsData?.read ? (
+      <div className="flex flex-col gap-10">
+        {isLoading || isRolesLoading ? (
+          <Loader />
+        ) : (
+          <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+            <div className="max-w-full overflow-x-auto">
+              <CommonTable
+                title={
+                  <div className="flex items-center justify-center gap-2">
+                    {" "}
+                    User Management{" "}
+                  </div>
+                }
+                data={data?.data}
+                columns={columns}
+                handleCreate={handleCreateUser}
+                addText={"Invite user"}
+                canCreate={permissionsData?.create}
+              />
+            </div>
           </div>
-        </div>
-      )}
-      {
-        openCreateUserDrawer && (
-          <InviteUserDrawer inactiveUser={selectedUser} handleCloseModal={handleCloseCreateUserDrawer} />
-        )
-      }
-      {openUserDrawer && (
-        <UserDrawer
-          openModal={openUserDrawer}
-          handleCloseModal={handleCloseUserDrawer}
-          selectedUser={selectedUser}
-          userRoles={userRoles}
-        />
-      )}
-      {openDeleteModal && (
-        <DeleteUserModal
-          openModal={openDeleteModal}
-          handleCloseModal={handleCloseDeleteModal}
-          selectedUser={selectedUser}
-        />
-      )}
-    </div>
-  );
+        )}
+        {
+          openCreateUserDrawer && (
+            <InviteUserDrawer inactiveUser={selectedUser} handleCloseModal={handleCloseCreateUserDrawer} />
+          )
+        }
+        {openUserDrawer && (
+          <UserDrawer
+            openModal={openUserDrawer}
+            handleCloseModal={handleCloseUserDrawer}
+            selectedUser={selectedUser}
+            userRoles={userRoles}
+          />
+        )}
+        {openDeleteModal && (
+          <DeleteUserModal
+            openModal={openDeleteModal}
+            handleCloseModal={handleCloseDeleteModal}
+            selectedUser={selectedUser}
+          />
+        )}
+      </div>
+    ) : (
+      <Unauthorized />
+    )
+  );  
 };
 
 export default Page;

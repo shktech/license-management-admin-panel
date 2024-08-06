@@ -25,7 +25,7 @@ const Page = () => {
 
   const handleRowClick = (row: Transaction) => show("transactions", row.id)
 
-  const { data: permissionsData } = usePermissions<Permission>({params: {codename: "transaction"}});
+  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "transaction" } });
 
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
     () => [
@@ -118,7 +118,9 @@ const Page = () => {
               columns={columns}
               onRowClick={handleRowClick}
               handleCreate={handleCreate}
-              canCreate={permissionsData?.create} />
+              canCreate={permissionsData?.create}
+              canDelete={false}
+              canEdit={permissionsData?.update} />
           )}
         </div>
       </div>

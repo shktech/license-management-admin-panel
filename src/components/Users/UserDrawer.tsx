@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Divider, Drawer, FormControl } from '@mui/material';
-import { Role, User } from '../../types/types';
+import { Role, User, Permission } from '../../types/types';
 import GeneralInput from '@components/Input/GeneralInput';
 import { modalCancelBtnStyle, modalOkBtnStyle } from '@data/MuiStyles';
 import { RoleColors } from '@data/ColorData';
 import { useUpdate } from '@refinedev/core';
+import PermissionsTable from '@components/Role/PermissionsTable';
 
 interface UserDrawerProps {
   openModal: boolean;
@@ -14,12 +15,17 @@ interface UserDrawerProps {
 }
 
 const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, selectedUser, userRoles }) => {
-  const [selectedRoles, setSelectedRoles] = React.useState<Role[]>([]);
+  const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
+  const [permissions, setPermissions] = useState<Permission[]>([]);
   const { mutate } = useUpdate();
 
   useEffect(() => {
     setSelectedRoles(selectedUser?.roles ?? []);
   }, [selectedUser]);
+
+  useEffect(() => {
+    updatePermissions();
+  }, [selectedRoles]);
 
   const handleEachRole = (role: Role) => {
     const newRoles = selectedRoles.some(selectedRole => selectedRole.name === role.name)
@@ -28,10 +34,34 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
     setSelectedRoles(newRoles);
   };
 
+  const updatePermissions = () => {
+    const aggregatedPermissions: Permission[] = [];
+    console.log(selectedRoles)
+
+    selectedRoles.forEach(role => {
+      role?.permissions?.forEach(rolePermission => {
+        const existingPermission = aggregatedPermissions.find(
+          perm => perm.codename === rolePermission.codename
+        );
+
+        if (existingPermission) {
+          existingPermission.create = existingPermission.create || rolePermission.create;
+          existingPermission.read = existingPermission.read || rolePermission.read;
+          existingPermission.update = existingPermission.update || rolePermission.update;
+          existingPermission.delete = existingPermission.delete || rolePermission.delete;
+        } else {
+          aggregatedPermissions.push({ ...rolePermission });
+        }
+      });
+    });
+    console.log(aggregatedPermissions);
+    setPermissions(aggregatedPermissions);
+  };
+
   const handleSave = () => {
     const payload = {
       role_ids: selectedRoles.map(role => role.role_id),
-    }
+    };
     mutate({
       resource: "users",
       id: `${selectedUser.user_id}/roles/`,
@@ -41,7 +71,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
         console.log(error);
       },
       onSuccess: () => handleCloseModal(),
-    })
+    });
   };
 
   return (
@@ -127,7 +157,8 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                 })}
               </div>
             </div>
-            <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}></Divider>
+            {/* <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}></Divider> */}
+            <PermissionsTable permissions={permissions} handleCheckboxChange={() => {}} readonly />
           </div>
         </div>
         <div className='flex justify-end gap-4'>
