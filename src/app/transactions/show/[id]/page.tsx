@@ -12,7 +12,6 @@ import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import DatasetOutlinedIcon from '@mui/icons-material/DatasetOutlined';
 import {
   Show,
-  ListButton,
   EditButton,
   DeleteButton,
   RefreshButton,
@@ -47,7 +46,7 @@ const TransactionShow = () => {
         </div>
       )}
     >
-      <div className="flex gap-4">
+      <div className="flex gap-12 px-12">
         <GeneralInformation
           header="Transaction information"
           headerIcon={<FeedOutlinedIcon />}
