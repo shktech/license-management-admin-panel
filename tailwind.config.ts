@@ -21,6 +21,7 @@ module.exports = {
         'inactive': '#c2c2c2',
         'new-blue-1': '#ebf0fa',
         'new-blue-2': '#4580ff',
+        'sidebar': '#1f325c',
         current: 'currentColor',
         transparent: 'transparent',
         white: '#FFFFFF',

@@ -26,6 +26,9 @@ const replaceUrlIfNeeded = (url: string | undefined): string | undefined => {
 axiosInstance.interceptors.request.use(
   (config) => {
     config.url = replaceUrlIfNeeded(config.url);
+    if (config.url?.includes('register-admin')) {
+      return config;
+    }  
     const token = localStorage.getItem("accessToken");
     config.headers["Authorization"] = `Bearer ${token}`;
     return config;

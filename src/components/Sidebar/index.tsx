@@ -22,14 +22,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`border-r border-slate-200 shadow-md fixed left-0 top-0 z-999 flex h-screen w-64 flex-col overflow-y-hidden bg-white duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`border-r border-slate-200 shadow-md fixed left-0 top-0 z-999 flex h-screen w-64 flex-col overflow-y-hidden bg-sidebar duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
           <Link href="/" className="text-[#4580ff] font-bold flex justify-center items-center">
-            <LogoIcon /> 
-            <div className="font-bold pl-4 text-3xl">License</div>
+            <LogoIcon />
+            <div className="font-semibold pl-4 text-2xl text-slate-400">OSC License Management Portal</div> 
           </Link>
         </div>
         {/* <!-- SIDEBAR HEADER --> */}

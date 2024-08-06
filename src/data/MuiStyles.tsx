@@ -1,10 +1,10 @@
 import { colors } from "@mui/material";
 
 export const tableAddButton = {
-    bgcolor: '#db1a34', // Background color
+    bgcolor: '#4580ff', // Background color
     color: 'white', // Text color
     '&:hover': {
-        bgcolor: '#db1a34', // Background color on hover
+        bgcolor: '#4580ff', // Background color on hover
         opacity: 0.9, // Adjust opacity on hover
         boxShadow: 'none',
     },
@@ -105,7 +105,7 @@ export const deleteRefineBtnStyle = {
     // color: '#fa5252',
     // borderColor: '#fa5252',
     color: '#003133',
-    // borderColor: '#003133',
+    borderColor: '#003133',
     ...refineBtnStyle
 }
 

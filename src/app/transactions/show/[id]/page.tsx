@@ -41,7 +41,7 @@ const TransactionShow = () => {
         deleteButtonProps,
         editButtonProps,
       }) => (
-        <div className="flex gap-12 px-12">
+        <div className="flex gap-2 px-12">
           {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle}/>}
           {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle}/>}
         </div>

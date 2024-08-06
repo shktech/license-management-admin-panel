@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Divider, Drawer, FormControl } from "@mui/material";
+import { Button, Divider, Drawer, FormControl } from "@mui/material";
 import GeneralInput from "@components/Input/GeneralInput";
 import { Permission, Role } from "@/types/types";
 import { RoleColors } from "@data/ColorData";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import { useCreate, useUpdate } from "@refinedev/core";
+import PermissionsTable from "./PermissionsTable";
 
 interface RoleDrawerProps {
   onClose: () => void;
@@ -12,34 +13,15 @@ interface RoleDrawerProps {
   create: boolean;
 }
 
-const checkboxGroupInfo = [
-  { title: "Users", key: "user" },
-  { title: "Assets", key: "asset" },
-  { title: "Transactions", key: "transaction" },
-  { title: "Products", key: "product" },
-];
-
-const MyCheckbox = ({ checked, onChange }: any) => {
-  return (
-    <div className="text-center flex-1">
-      <Checkbox
-        defaultChecked={checked}
-        onChange={onChange}
-        sx={{
-          color: "#003133",
-          "&.Mui-checked": {
-            color: "#003133",
-          },
-          "& .MuiSvgIcon-root": {
-            fontSize: 20,
-          },
-        }}
-      />
-    </div>
-  );
-};
-
 const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
+  const checkboxGroupInfo = [
+    { title: "Users", key: "user" },
+    { title: "Role", key: "role" },
+    { title: "Assets", key: "asset" },
+    { title: "Transactions", key: "transaction" },
+    { title: "Products", key: "product" },
+  ];
+
   const initializePermissions = () => {
     return checkboxGroupInfo.map(({ key }) => {
       const permission = role?.permissions?.find((p) => p.codename === key);
@@ -56,17 +38,11 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
 
   const [name, setName] = useState(role?.name || "");
   const [description, setDescription] = useState(role?.description || "");
-  const [permissions, setPermissions] = useState<Permission[]>(
-    initializePermissions()
-  );
+  const [permissions, setPermissions] = useState<Permission[]>(initializePermissions());
   const { mutate: updateRole } = useUpdate();
   const { mutate: createRole } = useCreate();
 
-  const handleCheckboxChange = (
-    codename: string,
-    field: keyof Permission,
-    checked: boolean
-  ) => {
+  const handleCheckboxChange = (codename: string, field: keyof Permission, checked: boolean) => {
     setPermissions((prevPermissions) =>
       prevPermissions.map((permission) =>
         permission.codename === codename
@@ -115,11 +91,11 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
         <div>
           <div className="py-4 text-lg font-bold text-[#65758c] flex items-center">
             {create ? "Create Role" : "Edit Role"}
-            {!create && <span
-              className={`px-4 mx-4 py-1 text-xs font-bold rounded-full text-white ${RoleColors[role?.name as string] || RoleColors.default}`}
-            >
-              {role?.name}
-            </span>}
+            {!create && (
+              <span className={`px-4 mx-4 py-1 text-xs font-bold rounded-full text-white ${RoleColors[role?.name as string] || RoleColors.default}`}>
+                {role?.name}
+              </span>
+            )}
           </div>
           <div className="flex flex-col gap-4">
             <Divider
@@ -152,59 +128,10 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </FormControl>
-            <div className="flex flex-col gap-2">
-              <Divider
-                sx={{
-                  fontSize: "1rem",
-                  py: "1rem",
-                  fontWeight: "bold",
-                  color: "#65758c",
-                }}
-              >
-                Roles Permission
-              </Divider>
-              <div className="flex-1 flex text-base font-medium text-[#65758c] px-8">
-                <div className="w-20"></div>
-                <div className="flex-1 text-center">Create</div>
-                <div className="flex-1 text-center">Read</div>
-                <div className="flex-1 text-center">Update</div>
-                <div className="flex-1 text-center">Delete</div>
-              </div>
-              {checkboxGroupInfo.map(({ title, key }) => {
-                const permission = permissions.find((p) => p.codename === key);
-                return (
-                  <div className="flex-1 flex items-center px-8" key={key}>
-                    <div className="w-20 text-[#65758c] font-medium">
-                      {title}
-                    </div>
-                    <MyCheckbox
-                      checked={permission?.create}
-                      onChange={(e: any) =>
-                        handleCheckboxChange(key, "create", e.target.checked)
-                      }
-                    />
-                    <MyCheckbox
-                      checked={permission?.read}
-                      onChange={(e: any) =>
-                        handleCheckboxChange(key, "read", e.target.checked)
-                      }
-                    />
-                    <MyCheckbox
-                      checked={permission?.update}
-                      onChange={(e: any) =>
-                        handleCheckboxChange(key, "update", e.target.checked)
-                      }
-                    />
-                    <MyCheckbox
-                      checked={permission?.delete}
-                      onChange={(e: any) =>
-                        handleCheckboxChange(key, "delete", e.target.checked)
-                      }
-                    />
-                  </div>
-                );
-              })}
-            </div>
+            <PermissionsTable
+              permissions={permissions}
+              handleCheckboxChange={handleCheckboxChange}
+            />
           </div>
         </div>
         <div className="flex justify-end gap-4">
@@ -220,7 +147,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
             onClick={handleSubmit}
             sx={modalOkBtnStyle}
           >
-            {role ? "Save" : "Create"}
+            {create ? "Create" : "Save"}
           </Button>
         </div>
       </div>
