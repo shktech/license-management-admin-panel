@@ -105,7 +105,7 @@ export const deleteRefineBtnStyle = {
     // color: '#fa5252',
     // borderColor: '#fa5252',
     color: '#003133',
-    borderColor: '#003133',
+    // borderColor: '#003133',
     ...refineBtnStyle
 }
 

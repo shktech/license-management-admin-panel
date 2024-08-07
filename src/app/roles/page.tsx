@@ -26,7 +26,7 @@ const Page = () => {
       return 1;
     }
     return 0;
-  });  
+  });
 
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "role" } });
 
@@ -106,22 +106,20 @@ const Page = () => {
 
   return (
     permissionsData?.read ? (
-      <div className="flex flex-col gap-10">
+      <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-            <div className="max-w-full overflow-x-auto">
-              <GenericTable
-                title="Role & Permission"
-                data={sortedData}
-                columns={columns}
-                handleCreate={handleCreate}
-                canCreate={permissionsData?.create}
-                onRowClick={handleRowClick}
-                maxWidth={"1000px"}
-              />
-            </div>
+          <div>
+            <GenericTable
+              title="Role & Permission"
+              data={sortedData}
+              columns={columns}
+              handleCreate={handleCreate}
+              canCreate={permissionsData?.create}
+              onRowClick={handleRowClick}
+              maxWidth={"1000px"}
+            />
             {openDrawer && (
               <RoleDrawer
                 onClose={handleClose}

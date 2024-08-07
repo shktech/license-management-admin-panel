@@ -99,9 +99,11 @@ const Page = () => {
         enableSorting: false,
         pin: 'right',
         Cell: ({ row }) => (
-          <div className="flex gap-4">
-            <EditOutlinedIcon onClick={() => console.log("Edit")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-            <DeleteIcon onClick={() => console.log("Delete")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+          <div className="w-full h-full">
+            <div className="flex gap-4">
+              <EditOutlinedIcon onClick={() => console.log("Edit")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+              <DeleteIcon onClick={() => console.log("Delete")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+            </div>
           </div>
         ),
       },
@@ -148,29 +150,27 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col gap-10">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="max-w-full overflow-x-auto">
-            <GenericTable
-              title={
-                <div className="flex items-center justify-center gap-2"> <ProductIcon />Products </div>
-              }
-              data={data?.data}
-              columns={columns}
-              onRowClick={handleRowClick}
-              handleCreate={handleCreate}
-            />
-          </div>
-          <DetailDrawer
-            open={openDrawer}
-            onClose={() => setOpenDrawer(false)}
-            groups={getPanelInput()}
-          />
-        </div>
-      )}
+    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
+      {
+        isLoading ?
+          <Loader /> :
+          <GenericTable
+            title={
+              <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+                Products
+              </div>
+            }
+            data={data?.data}
+            columns={columns}
+            onRowClick={handleRowClick}
+            handleCreate={handleCreate} />
+      }
+
+      <DetailDrawer
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        groups={getPanelInput()}
+      />
     </div>
   );
 };

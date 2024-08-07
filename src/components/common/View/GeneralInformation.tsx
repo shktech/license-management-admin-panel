@@ -15,7 +15,7 @@ const GeneralInformationCard: React.FC<GeneralInformationCardProps> = ({
   items,
 }) => {
   return (
-    <div className='bg-white rounded-xl shadow-sm flex-1'>
+    <div className='bg-white shadow-sm flex-1'>
       {
         header ?
           <Divider sx={{ fontSize: '1.25rem', pb: '1.5rem', fontWeight: 'bold', color: '#65758c' }}>
@@ -24,9 +24,9 @@ const GeneralInformationCard: React.FC<GeneralInformationCardProps> = ({
             </div>
           </Divider> : null
       }
-      <div className="border rounded-xl border-[#d5dce3]">
+      <div className="">
         {items.map((item, index) => (
-          <div className={`flex gap-2 px-6 py-3 items-center ${items.length != index + 1 ? 'border-b border-[#d5dce3]' : ''}`}>
+          <div className={`flex gap-2 px-12 py-3 items-center ${items.length != index + 1 ? 'border-b border-[#d5dce3]' : ''}`}>
             <div className="text-base font-medium text-[#666f75] min-w-96">{item.label}</div>
             <div className="text-base">{item.value || ""}</div>
           </div>

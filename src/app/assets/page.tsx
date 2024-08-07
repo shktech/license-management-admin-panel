@@ -53,34 +53,25 @@ const Page = () => {
     show("assets", row.id);
   };
 
+
   return (
-    <div className="flex flex-col gap-10">
+    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          {/* <div className="flex justify-between">
-            <div className="text-xl font-semibold text-black flex items-center gap-2">
+        <GenericTable
+          title={
+            <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
               <AssetIcon />
               Assets
             </div>
-          </div> */}
-          <div className="max-w-full overflow-x-auto">
-            <GenericTable
-              title={
-                <div className="flex items-center justify-center gap-2">
-                  <AssetIcon />
-                  Assets
-                </div>
-              }
-              data={data?.data}
-              columns={columns}
-              onRowClick={handleRowClick}
-              canCreate={permissionsData?.create}
-              canEdit={permissionsData?.update}
-            />
-          </div>
-        </div>
+          }
+          data={data?.data}
+          columns={columns}
+          onRowClick={handleRowClick}
+          canCreate={permissionsData?.create}
+          canEdit={permissionsData?.update}
+        />
       )}
     </div>
   );

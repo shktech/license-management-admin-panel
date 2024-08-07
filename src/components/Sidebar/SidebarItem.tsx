@@ -36,8 +36,8 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
           href={item.route}
           onClick={handleClick}
           sx={{
-            backgroundColor: isItemActive ? '#ebf0fa' : 'transparent',
-            color: isItemActive ? '#4580ff' : 'inherit',
+            // backgroundColor: isItemActive ? '#ebf0fa' : 'transparent',
+            color: isItemActive ? '#e3ebff' : '#7184ab',
             borderRadius: '0.375rem', // rounded-md
             position: 'relative',
             display: 'flex',

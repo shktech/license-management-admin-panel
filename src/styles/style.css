@@ -164,3 +164,8 @@
 .MuiTableRow-root:hover {
     background-color: #f6fbff !important;
 }
+
+
+.no-padding-card .MuiCardContent-root, .no-padding-card .MuiCardHeader-root {
+    padding: 0;
+}
