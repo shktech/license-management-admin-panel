@@ -24,11 +24,10 @@ const Page = () => {
     };
 
   return (
-    <div className="flex w-full justify-center text-black text-sm">
+    <div className="flex w-full justify-center text-black text-sm py-8">
       <div className="min-w-[800px] rounded-xl px-8 py-8 shadow-md bg-white">
-        <div className="text-lg font-medium pb-4">
-          {" "}
-          Configure common settings for sending emails{" "}
+        <div className="text-lg font-medium pb-4 text-[#515f72]">
+          Configure common settings for sending emails
         </div>
         <div>
           {eTData?.map((et: EmailTemplate, i: number) => (
