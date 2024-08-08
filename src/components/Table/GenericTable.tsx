@@ -2,6 +2,7 @@
 import { Box, Button, Pagination } from '@mui/material';
 import {
     MRT_ShowHideColumnsButton,
+    MRT_SortingFns,
     MRT_TableContainer,
     MRT_TablePagination,
     MRT_ToolbarAlertBanner,
@@ -28,7 +29,7 @@ interface GenericTableProps<T extends MRT_RowData> {
     canEdit?: boolean;
     maxWidth?: string | number;
     minWidth?: string | number;
-    
+
 }
 
 const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, onRowClick, handleCreate, handleSearch, handlePage, canCreate, maxWidth,
@@ -56,6 +57,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
             handlePage(value);
         }
     };
+
 
     const table = useMaterialReactTable({
         columns: enhancedColumns,
@@ -104,7 +106,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
             <div className='flex justify-between px-12 py-4 gap-2'>
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
-                    <SearchInput handleChange={handleSearch}/>
+                    <SearchInput handleChange={handleSearch} />
                     {canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />

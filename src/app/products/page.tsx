@@ -83,7 +83,7 @@ const Page = () => {
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <Box component="span" sx={{ backgroundColor: ProductActiveColor(renderedCellValue), ...tagStyle }} >
+          <Box component="span" sx={{ backgroundColor: ProductActiveColor(renderedCellValue as boolean), ...tagStyle }} >
             {renderedCellValue ? "Active" : "Closed"}
           </Box>
         ),

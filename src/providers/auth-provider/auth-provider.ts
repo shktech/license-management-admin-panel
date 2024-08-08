@@ -57,7 +57,7 @@ const getCurrentUser = async (): Promise<User | null> => {
 
 export const authProvider: AuthProvider = {
     login: async ({ email, password }) => {
-        const response = await fetch("http://localhost:8000/login/", {
+        const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/login/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -81,7 +81,7 @@ export const authProvider: AuthProvider = {
         // }
     },
     register: async ({ token, username, password, first_name, last_name }) => {
-        const response = await fetch("http://localhost:8000/register/", {
+        const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/register/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export const authProvider: AuthProvider = {
         }
     },
     check: async () => {
-        const response = await fetch("http://localhost:8000/token/refresh/", {
+        const response = await fetch("http://license-management-server-lysrkspm1.vercel.app/token/refresh/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -142,7 +142,7 @@ export const authProvider: AuthProvider = {
     getIdentity: async () => {
         const user: User | null = useStore.getState().user ?? null;
         if (!user) {
-            const response = await fetch("http://localhost:8000/user/", {
+            const response = await fetch("http://license-management-server-lysrkspm1.vercel.app/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

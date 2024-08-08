@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 const API_URL =
   process.env.NODE_ENV === "development"
     // ? "http://localhost:3000/api"
-    ? "http://localhost:8000"
+    ? "https://license-management-server-lysrkspm1.vercel.app"
     : "https://lic-refine.vercel.app/api";
 
 // export const dataProvider = dataProviderSimpleRest(API_URL);
@@ -18,7 +18,7 @@ const replaceUrlIfNeeded = (url: string | undefined): string | undefined => {
     return url;
   }
   if (url.includes('transactions') || url.includes('assets') || url.includes('products')) {
-    return url.replace('localhost:8000', 'localhost:3000/api');
+    return url.replace('license-management-server-lysrkspm1.vercel.app', 'localhost:3000/api');
   }
   return url;
 }
