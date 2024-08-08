@@ -115,7 +115,7 @@ export const authProvider: AuthProvider = {
         }
     },
     check: async () => {
-        const response = await fetch("http://license-management-server-lysrkspm1.vercel.app/token/refresh/", {
+        const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/token/refresh/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -142,7 +142,7 @@ export const authProvider: AuthProvider = {
     getIdentity: async () => {
         const user: User | null = useStore.getState().user ?? null;
         if (!user) {
-            const response = await fetch("http://license-management-server-lysrkspm1.vercel.app/user/", {
+            const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
