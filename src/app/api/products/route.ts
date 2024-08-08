@@ -1,14 +1,26 @@
 import { v4 as uuidv4 } from "uuid";
 import { mockProducts } from "./mockData";
+import { NextRequest } from "next/server";
 
 const products = mockProducts;
 
-export async function GET(req: any, res: any) {
+export async function GET(
+  req: NextRequest,
+  { params }: {
+    params: {
+      limit: string,
+      page: string,
+      offset: string,
+    }
+  }
+) {
+  console.log(params);
   return new Response(JSON.stringify(products));
 }
 
 export async function POST(req: any, res: any) {
   const newProduct = await req.json();
+  console.log(newProduct);
   const randomId = uuidv4();
   const newProductWithId = {
     ...newProduct,

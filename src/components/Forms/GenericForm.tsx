@@ -12,13 +12,11 @@ interface GenericFormProps {
 }
 
 const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) => {
-  console.log({ control, errors, fields });
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-6">
       {fields.map((field) => (
-        <div className={field.size == 2 ? 'col-span-2' : ''}>
+        <div key={field.name} className={field.size == 2 ? 'col-span-2' : ''}>
           <FormControlWrapper
-            key={field.name}
             name={field.name}
             control={control}
             rules={field.rules}
