@@ -1,21 +1,43 @@
 import { v4 as uuidv4 } from "uuid";
 import { mockProducts } from "./mockData";
-import { NextRequest } from "next/server";
 
 const products = mockProducts;
 
-export async function GET(
-  req: NextRequest,
-  { params }: {
-    params: {
-      limit: string,
-      page: string,
-      offset: string,
+export async function GET(req: any, res: any) {
+  const url = new URL(req.url || '', 'http://localhost:3000'); // Use the full URL
+  const limit = parseInt(url.searchParams.get('limit') as string);
+  const page = parseInt(url.searchParams.get('page') as string);
+  const offset = parseInt(url.searchParams.get('offset') as string);
+  const s = url.searchParams.get('s');
+  let searchKey = '';
+
+  if (s) {
+    try {
+      const parsed = JSON.parse(s);
+      if (parsed.$and && parsed.$and[0] && parsed.$and[0].searchKey) {
+        searchKey = parsed.$and[0].searchKey.$contL || '';
+      }
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
     }
   }
-) {
-  console.log(params);
-  return new Response(JSON.stringify(products));
+
+  let testProducts = products;
+  if (searchKey != '') {
+    console.log(searchKey);
+    testProducts = testProducts.filter(product => {
+      return Object.values(product).some(value =>
+        String(value).toLowerCase().includes(searchKey.toLowerCase())
+      )
+    })
+  }
+
+  const responseProducts = testProducts.slice(offset, offset + limit);
+
+  return new Response(JSON.stringify({
+    total: testProducts.length,
+    data: responseProducts
+  }));
 }
 
 export async function POST(req: any, res: any) {

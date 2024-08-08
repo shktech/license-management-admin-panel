@@ -1,6 +1,6 @@
 "use client";
-import React, { useMemo } from "react";
-import { useNavigation, useTable } from "@refinedev/core";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigation, useTable, HttpError } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
@@ -11,28 +11,29 @@ import { useRouter } from "next/navigation";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";
+import { ProductActiveColor } from "@data/ColorData";
+import { tagStyle } from "@data/MuiStyles";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-  } = useTable<Product>();
+    setCurrent,
+    setFilters,
+  } = useTable<Product, HttpError>();
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
+  
+  const handleCreate = () => setOpenDrawer(true);
 
-  const products: Product[] = data?.data as Product[];
-
-  const router = useRouter();
-
-  const handleCreate = () => {
-    setOpenDrawer(true);
-  }
-
-
-  const handleRowClick = (row: Product) => {
+  const handleEditClick = (row: Product) => {
     setClickedProduct(row);
     setOpenDrawer(true);
   };
+
+  const handlePage = (value: number) => setCurrent(value);
+
+  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
 
   const handleClose = () => {
     refetch();
@@ -81,23 +82,11 @@ const Page = () => {
         accessorKey: "active",
         header: "Active",
         size: 100,
-        Cell: ({ cell }) => {
-          return (
-            <Box
-              component="span"
-              sx={(theme) => ({
-                backgroundColor: cell.getValue<boolean>() == true ? '#11ba82' : '#fa5252',
-                borderRadius: '0.25rem',
-                color: 'white',
-                maxWidth: '9ch',
-                fontSize: '0.75rem',
-                p: '0.375rem',
-              })}
-            >
-              {cell.getValue<boolean>() ? "Active" : "Closed"}
-            </Box>
-          )
-        },
+        Cell: ({ renderedCellValue }) => (
+          <Box component="span" sx={{ backgroundColor: ProductActiveColor(renderedCellValue), ...tagStyle }} >
+            {renderedCellValue ? "Active" : "Closed"}
+          </Box>
+        ),
       },
       {
         accessorKey: "actions",
@@ -108,7 +97,7 @@ const Page = () => {
         Cell: ({ row }) => (
           <div className="w-full h-full">
             <div className="flex gap-4">
-              <EditOutlinedIcon onClick={() => handleRowClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+              <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
               <DeleteIcon onClick={() => console.log("Delete")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
             </div>
           </div>
@@ -132,6 +121,9 @@ const Page = () => {
             data={data?.data}
             columns={columns}
             canCreate={true}
+            totalCount={data?.total}
+            handlePage={handlePage}
+            handleSearch={handleSearch}
             handleCreate={handleCreate} />
       }
 

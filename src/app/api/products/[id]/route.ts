@@ -4,8 +4,7 @@ import { mockProducts } from "../mockData";
 const products = mockProducts;
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  req: NextRequest, { params }
 ) {
   const product = products.find((product) => product.id === params.id);
   return NextResponse.json(product);
