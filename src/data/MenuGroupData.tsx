@@ -20,7 +20,6 @@ export const menuGroups = [
           route: "#",
           children: [
             { label: "Transactions", route: "/transactions" },
-            { label: "Collection", route: "/collection" },
           ],
         },
         {

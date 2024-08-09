@@ -2,10 +2,21 @@ import React, { useEffect } from 'react';
 import { FormControl, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@/assets/icons/search.svg?icon";
 
-const SearchInput = () => {
+interface SearchInputProps {
+  handleChange?: (value: string) => void
+}
+
+
+const SearchInput = ({ handleChange }: SearchInputProps) => {
+  const handleInputChange = (event: any) => {
+    if (handleChange) {
+      handleChange(event.target.value)
+    }
+  }
   return (
     <FormControl className=''>
       <TextField
+        onChange={handleInputChange}
         placeholder='Search'
         InputProps={{
           startAdornment: (

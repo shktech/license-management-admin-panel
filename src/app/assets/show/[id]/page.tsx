@@ -72,11 +72,21 @@ const Page = () => {
     []
   );
 
-  const summaries = [
-    'start_date',
-    'end_date',
-    'seat_count',
+  const summaryfields = [
+    { title: "Start Date", key: "start_date" },
+    { title: "End Date", key: "end_date" },
+    { title: "License Key", key: "license_key" },
+    { title: "License Status", key: "osc_license_status" },
+    { title: "License server status", key: "license_server_status" },
+    { title: "Owner Name", key: "owner_name" },
+    { title: "Product Part Name", key: "osc_part_number" },
+    { title: "Vender Part Name", key: "osc_part_number" },
   ]
+
+  const getNestedValue = (obj: any, key: string) => {
+    return key.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
+
   return (
     <div className="no-padding-card">
       <Show
@@ -85,8 +95,12 @@ const Page = () => {
         breadcrumb={false}
         wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
         title={
-          <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center px-12">
-            Asset {asset?.license_key}
+          <div className="!font-satoshi px-12">
+            <div className="text-2xl font-semibold text-[#515f72]">Asset</div>
+            <div className="flex gap-4 text-sm text-[#656f7c] mt-2">
+              <div className="">Asset ID</div>
+              <div className="">{asset?.id}</div>
+            </div>
           </div>
         }
         headerButtons={({
@@ -101,13 +115,23 @@ const Page = () => {
           </div>
         )}
       >
+        <div className="flex gap-16 px-12 mt-8">
+          {
+            summaryfields.map(field => (
+              <div className="flex flex-col gap-1">
+                <div className="text-[#778599]">{field.title}</div>
+                <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(asset, field.key)}</div>
+              </div>
+            ))
+          }
+        </div>
         <div className="">
           <div className="px-12 pt-4">
             <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <StyledTab label="General Information" />
-              <StyledTab label="Last Transaction Detail" />
-              <StyledTab label="Asset Status" />
+              {/* <StyledTab label="Last Transaction Detail" /> */}
               <StyledTab label="Seats" />
+              <StyledTab label="Asset Status" />
             </StyledTabs>
           </div>
 
@@ -140,7 +164,7 @@ const Page = () => {
               ]}
             />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          {/* <CustomTabPanel value={value} index={1}>
             <GeneralInformation
               singleColumn={true}
               items={[
@@ -178,8 +202,8 @@ const Page = () => {
                 },
               ]}
             />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
+          </CustomTabPanel> */}
+          <CustomTabPanel value={value} index={1}>
             <GeneralInformation
               singleColumn={true}
               items={[
@@ -223,7 +247,7 @@ const Page = () => {
               ]}
             />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={3}>
+          <CustomTabPanel value={value} index={2}>
             <div className="flex justify-between">
               <div className="text-xl font-semibold text-black flex items-center gap-2">
                 <LicenseIcon />

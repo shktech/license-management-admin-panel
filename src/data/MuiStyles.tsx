@@ -69,7 +69,6 @@ export const sendEmailBtnStyle = {
 export const tagStyle = {
     borderRadius: '1.25rem',
     color: 'white',
-    maxWidth: '9ch',
     fontSize: '0.75rem',
     py: '0.375rem',
     px: '0.75rem',

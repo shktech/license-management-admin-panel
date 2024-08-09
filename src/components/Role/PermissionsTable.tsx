@@ -5,7 +5,7 @@ import { Permission } from "@/types/types";
 
 interface PermissionsTableProps {
   permissions: Permission[];
-  handleCheckboxChange: (codename: string, field: keyof Permission, checked: boolean) => void;
+  handleCheckboxChange?: (codename: string, field: keyof Permission, checked: boolean) => void;
   readonly?: boolean;
 }
 
@@ -25,9 +25,9 @@ const MyCheckbox = ({ checked, onChange, readonly }: { checked: boolean; onChang
         onChange={onChange}
         disabled={readonly}
         sx={{
-          color: readonly ? "#9e9e9e" : "#003133",
+          color: "#003133",
           "&.Mui-checked": {
-            color: readonly ? "#9e9e9e" : "#003133",
+            color: "#003133",
           },
           "& .MuiSvgIcon-root": {
             fontSize: 20,
@@ -41,16 +41,6 @@ const MyCheckbox = ({ checked, onChange, readonly }: { checked: boolean; onChang
 const PermissionsTable: React.FC<PermissionsTableProps> = ({ permissions, handleCheckboxChange, readonly }) => {
   return (
     <div className="flex flex-col gap-2">
-      <Divider
-        sx={{
-          fontSize: "1rem",
-          py: "1rem",
-          fontWeight: "bold",
-          color: "#65758c",
-        }}
-      >
-        Roles Permission
-      </Divider>
       <div className="flex-1 flex text-base font-medium text-[#65758c] px-8">
         <div className="w-20"></div>
         <div className="flex-1 text-center">Create</div>
@@ -59,28 +49,28 @@ const PermissionsTable: React.FC<PermissionsTableProps> = ({ permissions, handle
         <div className="flex-1 text-center">Delete</div>
       </div>
       {checkboxGroupInfo.map(({ title, key }) => {
-        const permission = permissions.find((p) => p.codename === key);
+        const permission = (permissions ?? []).find((p) => p.codename === key);
         return (
           <div className="flex-1 flex items-center px-8" key={key}>
             <div className="w-20 text-[#65758c] font-medium">{title}</div>
             <MyCheckbox
               checked={!!permission?.create}
-              onChange={(e: any) => handleCheckboxChange(key, "create", e.target.checked)}
+              onChange={(e: any) => handleCheckboxChange?.(key, "create", e.target.checked)}
               readonly={readonly}
             />
             <MyCheckbox
               checked={!!permission?.read}
-              onChange={(e: any) => handleCheckboxChange(key, "read", e.target.checked)}
+              onChange={(e: any) => handleCheckboxChange?.(key, "read", e.target.checked)}
               readonly={readonly}
             />
             <MyCheckbox
               checked={!!permission?.update}
-              onChange={(e: any) => handleCheckboxChange(key, "update", e.target.checked)}
+              onChange={(e: any) => handleCheckboxChange?.(key, "update", e.target.checked)}
               readonly={readonly}
             />
             <MyCheckbox
               checked={!!permission?.delete}
-              onChange={(e: any) => handleCheckboxChange(key, "delete", e.target.checked)}
+              onChange={(e: any) => handleCheckboxChange?.(key, "delete", e.target.checked)}
               readonly={readonly}
             />
           </div>

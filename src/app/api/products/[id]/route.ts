@@ -15,10 +15,10 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const updatedProduct = req.body as any;
+  const updatedProduct = await req.json();
   const index = products.findIndex((product) => product.id === params.id);
   products[index] = updatedProduct;
-  return NextResponse.json(updatedProduct);
+  return NextResponse.json(products[index]);
 }
 
 export async function DELETE(

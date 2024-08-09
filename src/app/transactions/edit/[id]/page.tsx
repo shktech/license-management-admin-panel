@@ -59,7 +59,7 @@ const TransactionEdit = () => {
       breadcrumb={false}
       headerButtons={<></>}
       wrapperProps={{ className: "pt-6" }}
-      // saveButtonProps={{ ...saveButtonProps, hidden: false }}
+      saveButtonProps={{ ...saveButtonProps, hidden: false }}
       footerButtons={({ saveButtonProps }) => (
         <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle}/>
       )}

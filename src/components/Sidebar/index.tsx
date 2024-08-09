@@ -9,6 +9,8 @@ import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { menuGroups } from "@/data/MenuGroupData";
 import LogoIcon from "@/assets/icons/logo.svg?icon";
+import DropdownUser from "@components/Header/DropdownUser";
+import UserItem from "./UserItem";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -34,7 +36,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </div>
         {/* <!-- SIDEBAR HEADER --> */}
 
-        <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear font-base">
+        <div className="no-scrollbar flex-1 flex flex-col overflow-y-auto duration-300 ease-linear font-base">
           {/* <!-- Sidebar Menu --> */}
           <nav className="px-4 py-4 lg:px-4">
             {menuGroups.map((group, groupIndex) => (
@@ -58,6 +60,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           </nav>
           {/* <!-- Sidebar Menu --> */}
         </div>
+        <UserItem />
       </aside>
     </ClickOutside>
   );

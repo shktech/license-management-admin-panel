@@ -128,6 +128,16 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </FormControl>
+            <Divider
+              sx={{
+                fontSize: "1rem",
+                py: "1rem",
+                fontWeight: "bold",
+                color: "#65758c",
+              }}
+            >
+              Roles Permission
+            </Divider>
             <PermissionsTable
               permissions={permissions}
               handleCheckboxChange={handleCheckboxChange}
