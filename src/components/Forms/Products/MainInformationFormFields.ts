@@ -8,8 +8,7 @@ const MainInformationFormFields: FieldConfig[] = [
         placeholder: "Product part number",
         rules: { required: "Part number is required" },
         // type: "text",
-        type: "dropdown",
-        resource: "products",
+        type: "text",
         valueKey: "osc_part_number",
         labelKey: "osc_part_number",
         size: 2,
@@ -34,7 +33,13 @@ const MainInformationFormFields: FieldConfig[] = [
         label: "UOM(Duration)",
         placeholder: "UOM(Duration)",
         rules: { required: "UOM(Duration) is required" },
-        type: "text",
+        type: "dropdown",
+        options: [ 
+            { value: "EA", label: "EA" },
+            { value: "1YR", label: "1YR" },
+            { value: "2YR", label: "2YR" },
+            { value: "3YR", label: "3YR" },
+        ],
     },
     
     {
@@ -43,13 +48,7 @@ const MainInformationFormFields: FieldConfig[] = [
         placeholder: "Vender Part Number",
         rules: { required: "Vender Part Number is required" },
         type: "text",
-    },
-    {
-        name: "license_source_set",
-        label: "License Source",
-        placeholder: "License Source",
-        rules: { required: "License Source is required" },
-        type: "text",
+        size: 2
     },
 ];
 

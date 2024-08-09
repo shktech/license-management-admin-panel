@@ -6,10 +6,15 @@ import GeneralInformation from "@components/common/View/GeneralInformation";
 import { Permission, Transaction } from "@/types/types";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import { Box, Button } from "@mui/material";
+import { alpha, Box, Button, Menu, MenuItem, MenuProps, styled } from "@mui/material";
 import { deleteRefineBtnStyle, editRefineBtnStyle, modalOkBtnStyle, refineBtnStyle, refreshRefineBtnStyle, tagStyle } from "@data/MuiStyles";
 import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import DatasetOutlinedIcon from '@mui/icons-material/DatasetOutlined';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import {
   Show,
   EditButton,
@@ -19,6 +24,9 @@ import {
 import { usePermissions } from "@refinedev/core";
 import { useState } from "react";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
+
+
+
 
 const TransactionShow = () => {
 
@@ -52,7 +60,18 @@ const TransactionShow = () => {
         wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
         title={
           <div className="!font-satoshi px-12">
-            <div className="text-2xl font-semibold text-[#515f72]">Transaction {transaction?.transaction_number}</div>
+            <div className="flex gap-4 items-center">
+              <div className="text-2xl font-semibold text-[#515f72]">Transaction {transaction?.transaction_number}</div>
+              <Box component="span" sx={{ backgroundColor: TxtTypeColor[transaction?.transaction_type as string], ...tagStyle }} >
+                {transaction?.transaction_type}
+              </Box>
+              <Box component="span" sx={{ backgroundColor: TxtActionColor[transaction?.transaction_action as string], ...tagStyle }} >
+                {transaction?.transaction_action}
+              </Box>
+              <Box component="span" sx={{ backgroundColor: TxtStatusColor[transaction?.transaction_status as string], ...tagStyle }} >
+                {transaction?.transaction_status}
+              </Box>
+            </div>
             <div className="flex gap-4 text-sm text-[#656f7c] mt-2">
               <div className="">Asset ID</div>
               <div className="">{transaction?.asset?.id}</div>
@@ -70,6 +89,8 @@ const TransactionShow = () => {
           <div className="flex gap-2 px-12">
             {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle} />}
             {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle} />}
+            <div>
+            </div>
           </div>
         )}
       >

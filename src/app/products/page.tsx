@@ -74,11 +74,6 @@ const Page = () => {
         size: 200,
       },
       {
-        accessorKey: "Email template source",
-        header: "Email template source",
-        size: 200,
-      },
-      {
         accessorKey: "active",
         header: "Active",
         size: 100,
