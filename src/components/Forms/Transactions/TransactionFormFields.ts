@@ -35,7 +35,7 @@ const TransactionFormFields: FieldConfig[] = [
         placeholder: "Select option",
         rules: { required: "Transaction action is required" },
         type: "dropdown",
-        size: 2,
+        size: 1,
         options: [
             { value: "New", label: "New" },
             { value: "Update", label: "Update" },
@@ -64,27 +64,27 @@ const TransactionFormFields: FieldConfig[] = [
         rules: { required: "Source ref id is required" },
         type: "text",
     },
-    {
-        name: "quantity",
-        label: "Transaction quantity (Seats)",
-        placeholder: "Transaction quantity",
-        rules: { required: "Transaction quantity is required" },
-        type: "number",
-    },
-    {
-        name: "start_date",
-        label: "Start date",
-        placeholder: "Transaction quantity",
-        rules: { required: "Start date is required" },
-        type: "date",
-    },
-    {
-        name: "end_date",
-        label: "End date",
-        placeholder: "Transaction quantity",
-        rules: { required: "End date is required" },
-        type: "date",
-    },
+    // {
+    //     name: "quantity",
+    //     label: "Transaction quantity (Seats)",
+    //     placeholder: "Transaction quantity",
+    //     rules: { required: "Transaction quantity is required" },
+    //     type: "number",
+    // },
+    // {
+    //     name: "start_date",
+    //     label: "Start date",
+    //     placeholder: "Transaction quantity",
+    //     rules: { required: "Start date is required" },
+    //     type: "date",
+    // },
+    // {
+    //     name: "end_date",
+    //     label: "End date",
+    //     placeholder: "Transaction quantity",
+    //     rules: { required: "End date is required" },
+    //     type: "date",
+    // },
 
 ];
 
