@@ -4,6 +4,7 @@ import FormControlWrapper from "./FormControlWrapper";
 import DatePicker from "@components/Input/DatePicker";
 import Dropdown from "@components/Input/Dropdown";
 import { FieldConfig } from "./FormControlWrapper";
+import GeneralSwitch from "@components/Input/GeneralSwitch";
 
 interface GenericFormProps {
   control: any;
@@ -32,7 +33,17 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       type={field.type}
                       label={field.label}
                       disabled={field.disabled}
-                      // placeholder={field.placeholder}
+                    // placeholder={field.placeholder}
+                    />
+                  );
+                case 'switch':
+                  return (
+                    <GeneralSwitch
+                      {...fieldProps}
+                      type={field.type}
+                      label={field.label}
+                      disabled={field.disabled}
+                    // placeholder={field.placeholder}
                     />
                   );
                 case 'date':
@@ -53,7 +64,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       resource={field.resource}
                       valueKey={field.valueKey}
                       labelKey={field.labelKey}
-                      // fetchOptions={field.fetchOptions}
+                    // fetchOptions={field.fetchOptions}
                     />
                   );
                 default:
