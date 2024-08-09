@@ -76,6 +76,11 @@ const Page = () => {
     { title: "Start Date", key: "start_date" },
     { title: "End Date", key: "end_date" },
     { title: "License Key", key: "license_key" },
+    { title: "License Status", key: "osc_license_status" },
+    { title: "License server status", key: "license_server_status" },
+    { title: "Owner Name", key: "owner_name" },
+    { title: "Product Part Name", key: "osc_part_number" },
+    { title: "Vender Part Name", key: "osc_part_number" },
   ]
 
   const getNestedValue = (obj: any, key: string) => {
@@ -124,9 +129,9 @@ const Page = () => {
           <div className="px-12 pt-4">
             <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <StyledTab label="General Information" />
-              <StyledTab label="Last Transaction Detail" />
-              <StyledTab label="Asset Status" />
+              {/* <StyledTab label="Last Transaction Detail" /> */}
               <StyledTab label="Seats" />
+              <StyledTab label="Asset Status" />
             </StyledTabs>
           </div>
 
@@ -159,7 +164,7 @@ const Page = () => {
               ]}
             />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          {/* <CustomTabPanel value={value} index={1}>
             <GeneralInformation
               singleColumn={true}
               items={[
@@ -197,8 +202,8 @@ const Page = () => {
                 },
               ]}
             />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
+          </CustomTabPanel> */}
+          <CustomTabPanel value={value} index={1}>
             <GeneralInformation
               singleColumn={true}
               items={[
@@ -242,7 +247,7 @@ const Page = () => {
               ]}
             />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={3}>
+          <CustomTabPanel value={value} index={2}>
             <div className="flex justify-between">
               <div className="text-xl font-semibold text-black flex items-center gap-2">
                 <LicenseIcon />

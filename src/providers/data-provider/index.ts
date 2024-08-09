@@ -5,8 +5,8 @@ import nestjsxDataProvider, { axiosInstance } from "@refinedev/nestjsx-crud";
 
 const API_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3000/api"
-    // ? "https://license-management-server-lysrkspm1.vercel.app"
+    // ? "http://localhost:3000/api"
+    ? "https://license-management-server-lysrkspm1.vercel.app"
     : "https://lic-refine.vercel.app/api";
 
 // export const dataProvider = dataProviderSimpleRest(API_URL);
@@ -17,7 +17,7 @@ const replaceUrlIfNeeded = (url: string | undefined): string | undefined => {
     return url;
   }
   if (url.includes('transactions') || url.includes('assets') || url.includes('products')) {
-    return url.replace('license-management-server-lysrkspm1.vercel.app', 'localhost:3000/api');
+    return url.replace('license-management-server-lysrkspm1.vercel.app', 'https://lic-refine.vercel.app/api');
   }
   return url;
 }
