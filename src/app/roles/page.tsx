@@ -118,7 +118,6 @@ const Page = () => {
               handleCreate={handleCreate}
               canCreate={permissionsData?.create}
               onRowClick={handleRowClick}
-              maxWidth={"1000px"}
             />
             {openDrawer && (
               <RoleDrawer
