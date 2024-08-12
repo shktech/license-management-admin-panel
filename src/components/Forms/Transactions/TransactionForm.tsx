@@ -19,6 +19,7 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import DetailsIcon from '@mui/icons-material/Details';
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
@@ -52,11 +53,11 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <ProductionQuantityLimitsOutlinedIcon />,
       title: 'Reseller Information',
       description: 'Setup your Reseller Information',
-      fields: ResellerFormFields
+      fields: PartnerFormFields.ResellerPartnerInformationFormFields
     },
     {
-      icon: <ProductionQuantityLimitsOutlinedIcon />,
-      title: 'Reseller Information',
+      icon: <DetailsIcon />,
+      title: 'Licensing Details',
       description: 'Setup your Reseller Information',
       fields: LicensingDetailFormFields
     },

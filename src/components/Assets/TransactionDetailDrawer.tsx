@@ -1,97 +1,53 @@
-"use client";
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Drawer } from '@mui/material';
+import { useCreate, useOne, GetOneResponse } from '@refinedev/core';
+import { useForm } from "@refinedev/react-hook-form";
+import { modalCancelBtnStyle, modalOkBtnStyle, tagStyle } from "@data/MuiStyles";
+import { Product, Transaction } from '../../types/types';
+import ProductForm from '@components/Forms/Products/ProductForm';
+import { CustomTabPanel, StyledTab, StyledTabs } from '@components/Tab/CustomizedTab';
+import GeneralInformation from '@components/common/View/GeneralInformation';
+import { TxtActionColor, TxtStatusColor, TxtTypeColor } from '@data/ColorData';
 
-import { useShow } from "@refinedev/core";
-import Link from "next/link";
-import GeneralInformation from "@components/common/View/GeneralInformation";
-import { Permission, Transaction } from "@/types/types";
-import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import { alpha, Box, Button, Menu, MenuItem, MenuProps, styled } from "@mui/material";
-import { deleteRefineBtnStyle, editRefineBtnStyle, modalOkBtnStyle, refineBtnStyle, refreshRefineBtnStyle, tagStyle } from "@data/MuiStyles";
-import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
-import DatasetOutlinedIcon from '@mui/icons-material/DatasetOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-import {
-  Show,
-  EditButton,
-  DeleteButton,
-  RefreshButton,
-} from "@refinedev/mui";
-import { usePermissions } from "@refinedev/core";
-import { useState } from "react";
-import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
+interface TransactionDetailDrawerProps {
+  open: boolean;
+  onClose: () => void;
+  transaction_id: string | null
+}
 
-const TransactionShow = () => {
-
+const TransactionDetailDrawer: React.FC<TransactionDetailDrawerProps> = ({ open, onClose, transaction_id }) => {
+  const { data, isLoading, error } = useOne({
+    resource: "transactions",
+    id: transaction_id as string
+  });
+  
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const { queryResult } = useShow<Transaction>();
-  const { data, isLoading } = queryResult;
-  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "transaction" } });
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-  const getNestedValue = (obj: any, key: string) => {
-    return key.split('.').reduce((acc, part) => acc && acc[part], obj);
-  }
-  const transaction = data?.data;
-
+  const transaction = data?.data as Transaction
   const summaryfields = [
     { title: "Start Date", key: "start_date" },
     { title: "End Date", key: "end_date" },
     { title: "Seat Count", key: "asset.osc_seat_count" },
   ]
+  const getNestedValue = (obj: any, key: string) => {
+    return key.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
 
   return (
-    <div className="no-padding-card">
-      <Show
-        goBack={null}
-        isLoading={isLoading}
-        breadcrumb={false}
-        wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
-        title={
-          <div className="!font-satoshi px-12">
-            <div className="flex gap-4 items-center">
-              <div className="text-2xl font-semibold text-[#515f72]">Transaction {transaction?.transaction_number}</div>
-              <Box component="span" sx={{ backgroundColor: TxtTypeColor[transaction?.transaction_type as string], ...tagStyle }} >
-                {transaction?.transaction_type}
-              </Box>
-              <Box component="span" sx={{ backgroundColor: TxtActionColor[transaction?.transaction_action as string], ...tagStyle }} >
-                {transaction?.transaction_action}
-              </Box>
-              <Box component="span" sx={{ backgroundColor: TxtStatusColor[transaction?.transaction_status as string], ...tagStyle }} >
-                {transaction?.transaction_status}
-              </Box>
-            </div>
-            <div className="flex gap-4 text-sm text-[#656f7c] mt-2">
-              <div className="">Asset ID</div>
-              <div className="">{transaction?.asset?.id}</div>
-            </div>
-            <div className="flex gap-4 text-sm text-[#656f7c]">
-              <div className="">License Key</div>
-              <div className="">{transaction?.asset?.license_key}</div>
-            </div>
-          </div>
-        }
-        headerButtons={({
-          deleteButtonProps,
-          editButtonProps,
-        }) => (
-          <div className="flex gap-2 px-12">
-            {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle} />}
-            {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle} />}
-            <div>
-            </div>
-          </div>
-        )}
-      >
-        <div className="flex gap-16 px-12 mt-8">
+    <Drawer anchor="right" open={open} onClose={onClose}>
+      <div className="min-w-[700px] pb-4 flex flex-col min-h-screen">
+        <div className="pt-4 px-4 text-lg font-bold text-[#65758c] flex items-center">
+          Detail Information
+        </div>
+        <div className="flex gap-16 px-8 mt-6">
           {
             summaryfields.map(field => (
               <div className="flex flex-col gap-1">
@@ -248,9 +204,9 @@ const TransactionShow = () => {
           >
           </GeneralInformation>
         </CustomTabPanel>
-      </Show>
-    </div>
+      </div>
+    </Drawer>
   );
 };
 
-export default TransactionShow;
+export default TransactionDetailDrawer;

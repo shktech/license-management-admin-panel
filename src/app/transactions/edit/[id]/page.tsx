@@ -58,7 +58,7 @@ const TransactionEdit = () => {
       }
       breadcrumb={false}
       headerButtons={<></>}
-      wrapperProps={{ className: "pt-6" }}
+      wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
       saveButtonProps={{ ...saveButtonProps, hidden: false }}
       footerButtons={({ saveButtonProps }) => (
         <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle}/>
@@ -67,7 +67,7 @@ const TransactionEdit = () => {
       {formLoading || productDataLoading ? (
         <Loader />
       ) : (
-        <div className="bg-white px-8 rounded-xl">
+        <div className="px-8">
           <TransactionForm
             {...{ control, errors, trigger }}
           />

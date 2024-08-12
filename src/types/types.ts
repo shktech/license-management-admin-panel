@@ -47,11 +47,29 @@ export interface Asset {
     terminated_seats: number;
     status: string;
     status_update_date: string;
-    last_transaction: Partial<Transaction>;
+    transactions: Transaction[];
     osc_product: Partial<Product>;
     seats?: Seat[];
+    license_owner: Partial<LicenseOwner>
 }
 
+export interface LicenseOwner {
+    address1?: string,
+    address2?: string,
+    address_id?: string,
+    ship_city?: string,
+    ship_contact_email?: string,
+    contact_first_name?: string,
+    contact_id?: string,
+    contact_last_name?: string,
+    contact_phone?: string,
+    country?: string,
+    customer_account?: string,
+    customer_id?: string,
+    customer_name?: string,
+    postal_code?: string,
+    state?: string,
+}
 export interface Seat {
     seat_id: string;
     seat_number: string;

@@ -1,0 +1,107 @@
+'use client'
+
+import { useMemo, useState } from 'react';
+import {
+    MaterialReactTable,
+    useMaterialReactTable,
+    type MRT_ColumnDef,
+} from 'material-react-table';
+import { Transaction } from '@/types/types';
+import { useRouter } from 'next/navigation';
+import GenericTable from '@components/Table/GenericTable';
+import { Box } from '@mui/material';
+import { TxtStatusColor, TxtTypeColor } from '@data/ColorData';
+import { tagStyle } from '@data/MuiStyles';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import TransactionDetailDrawer from './TransactionDetailDrawer';
+
+interface TransactionHistoryTableProps {
+    transactions?: Transaction[];
+}
+
+const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ transactions }) => {
+
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [clickedTransaction, setClickedTransaction] = useState<string | null>(null);
+    const handleShowClick = (row: Transaction) => {
+        setClickedTransaction(row.id);
+        setOpenDrawer(true);
+    };
+    const handleClose = () => {
+        setOpenDrawer(false);
+    }
+    const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
+        () => [
+            {
+                accessorKey: 'id',
+                header: 'ID',
+                size: 150,
+            },
+            {
+                accessorKey: 'transaction_date',
+                header: 'Txn Date',
+                size: 100,
+            },
+            {
+                accessorKey: 'transaction_number',
+                header: 'Txn Number',
+                size: 100,
+            },
+            {
+                accessorKey: 'transaction_source',
+                header: 'Txn Source',
+                size: 100,
+            },
+            {
+                accessorKey: 'transaction_type',
+                header: 'Txn Type',
+                size: 100,
+                Cell: ({ renderedCellValue }) => (
+                    <Box component="span" sx={{ backgroundColor: TxtTypeColor[renderedCellValue as string], ...tagStyle }} >
+                        {renderedCellValue}
+                    </Box>
+                ),
+            },
+            {
+                accessorKey: 'transaction_status',
+                header: 'Txn Status',
+                size: 150,
+                Cell: ({ renderedCellValue }) => (
+                    <Box component="span" sx={(theme) => ({ backgroundColor: TxtStatusColor[renderedCellValue as string], ...tagStyle })} >
+                        {renderedCellValue}
+                    </Box>
+                ),
+            },
+            {
+                accessorKey: "actions",
+                header: "Action",
+                size: 50,
+                enableSorting: false,
+                pin: 'right',
+                Cell: ({ row }) => (
+                    <div className="w-full h-full">
+                        <RemoveRedEyeIcon onClick={() => handleShowClick(row.original)} fontSize='small' className="text-[#818f99] hover:text-black cursor-pointer" />
+                    </div>
+                ),
+            },
+        ],
+        [],
+    );
+
+    return (
+        <>
+            <GenericTable
+                data={transactions}
+                title="Transaction History"
+                columns={columns}
+            />
+            <TransactionDetailDrawer
+                open={openDrawer}
+                onClose={() => handleClose()}
+                transaction_id={clickedTransaction}
+            />
+        </>
+    )
+};
+
+export default TransactionHistoryTable;

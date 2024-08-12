@@ -66,7 +66,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
         enableColumnPinning: true,
         muiTableBodyRowProps: ({ row }) => ({
             onClick: () => handleRowClick(row.original),
-            className: `${!!onRowClick && 'cursor-pointer'} bg-[#f2f6fa]`,
+            className: `${!!onRowClick && 'cursor-pointer'} bg-transparent`,
         }),
         muiTableHeadRowProps: {
             sx: {
@@ -76,13 +76,13 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
         muiTableBodyCellProps: ({ cell }) => ({
             sx: {
                 padding: cell.column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '', // Set padding for the first column
-                backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
+                // backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
             }
         }),
         muiTableHeadCellProps: ({ column }) => ({
             sx: {
                 padding: column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '',
-                backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
+                // backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
                 verticalAlign: 'middle'
             }
         }),

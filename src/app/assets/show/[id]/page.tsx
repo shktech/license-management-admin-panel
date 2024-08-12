@@ -9,7 +9,7 @@ import {
 } from "@refinedev/mui";
 import Link from "next/link";
 import GeneralInformation from "@components/common/View/GeneralInformation";
-import { Asset, Permission, Seat } from "@/types/types";
+import { Asset, LicenseOwner, Permission, Product, Seat, Transaction } from "@/types/types";
 import GeneralInformationIcon from "@/assets/icons/generalinfo.svg?icon";
 import TransactionIcon from "@/assets/icons/transaction.svg?icon";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
@@ -22,8 +22,7 @@ import AssetIcon from "@/assets/icons/asset.svg?icon"
 import { Box, Fade, styled, Tab, Tabs } from "@mui/material";
 import { deleteRefineBtnStyle, editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
-
-
+import TransactionHistoryTable from "@components/Assets/TransactionHistoryTable";
 
 const Page = () => {
   const [value, setValue] = useState(0);
@@ -36,8 +35,18 @@ const Page = () => {
   const { data, isLoading } = queryResult;
 
   const asset: Asset = data?.data as Asset;
+  const transactions: Transaction[] = data?.data?.transactions as Transaction[];
   const seats: Seat[] = data?.data?.seats as Seat[];
-  const columns = useMemo<MRT_ColumnDef<Seat>[]>(
+  const toTitleCase = (snakeCaseString: string) => {
+    return snakeCaseString
+      .split('_')          // Split the string by underscores
+      .map(word =>          // Capitalize each word
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      )
+      .join(' ');          // Join the words with spaces
+  }
+
+  const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
       {
         accessorKey: "seat_number",
@@ -78,9 +87,9 @@ const Page = () => {
     { title: "License Key", key: "license_key" },
     { title: "License Status", key: "osc_license_status" },
     { title: "License server status", key: "license_server_status" },
-    { title: "Owner Name", key: "owner_name" },
-    { title: "Product Part Name", key: "osc_part_number" },
-    { title: "Vender Part Name", key: "osc_part_number" },
+    { title: "Owner Name", key: "license_onwer.customer_name" },
+    { title: "Product Part Name", key: "osc_product.product_name" },
+    { title: "Vender Part Name", key: "osc_product.vendor_name" },
   ]
 
   const getNestedValue = (obj: any, key: string) => {
@@ -96,11 +105,7 @@ const Page = () => {
         wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
         title={
           <div className="!font-satoshi px-12">
-            <div className="text-2xl font-semibold text-[#515f72]">Asset</div>
-            <div className="flex gap-4 text-sm text-[#656f7c] mt-2">
-              <div className="">Asset ID</div>
-              <div className="">{asset?.id}</div>
-            </div>
+            <div className="flex items-end gap-4 text-2xl font-semibold text-[#515f72]">Asset <div className="text-lg font-normal">{asset?.id}</div></div>
           </div>
         }
         headerButtons={({
@@ -115,12 +120,12 @@ const Page = () => {
           </div>
         )}
       >
-        <div className="flex gap-16 px-12 mt-8">
+        <div className="grid grid-cols-4 px-12 mt-8 gap-y-4 gap-x-4">
           {
             summaryfields.map(field => (
               <div className="flex flex-col gap-1">
                 <div className="text-[#778599]">{field.title}</div>
-                <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(asset, field.key)}</div>
+                <div className="text-[#515f72] text-xl font-medium">{getNestedValue(asset, field.key)}</div>
               </div>
             ))
           }
@@ -129,9 +134,10 @@ const Page = () => {
           <div className="px-12 pt-4">
             <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <StyledTab label="General Information" />
-              {/* <StyledTab label="Last Transaction Detail" /> */}
+              <StyledTab label="Products" />
+              <StyledTab label="License Owner" />
+              <StyledTab label="Transaction History" />
               <StyledTab label="Seats" />
-              <StyledTab label="Asset Status" />
             </StyledTabs>
           </div>
 
@@ -139,146 +145,111 @@ const Page = () => {
             <GeneralInformation
               singleColumn={true}
               items={[
-                { label: "Asset Id", value: asset?.id },
-                { label: "Organization", value: asset?.organization },
                 {
-                  label: "Asset number (LicKey/Srl#)",
-                  value: asset?.license_key,
+                  label: "Asset Id",
+                  value: asset?.id
                 },
                 {
-                  label: "Product part number",
-                  value: asset?.osc_product.osc_part_number,
+                  label: "Active Seats",
+                  value: asset?.active_seats
                 },
                 {
-                  label: "Asset type",
-                  value: asset?.osc_product.product_type,
+                  label: "Creation Date",
+                  value: asset?.creation_date
                 },
                 {
-                  label: "Vender name",
-                  value: asset?.osc_product.vendor_name,
+                  label: "active",
+                  value: asset?.active ? "Yes" : "No"
                 },
                 {
-                  label: "Vendor part",
-                  value: asset?.osc_product.product_name,
+                  label: "Start Date",
+                  value: asset?.start_date
+                },
+                {
+                  label: "End Date",
+                  value: asset?.end_date
+                },
+                {
+                  label: "Expired Seats",
+                  value: asset?.expired_seats
+                },
+                {
+                  label: "License Key",
+                  value: asset?.license_key
+                },
+                {
+                  label: "License Server Seat Count",
+                  value: asset?.license_server_seat_count
+                },
+                {
+                  label: "Organization",
+                  value: asset?.organization
+                },
+                {
+                  label: "OSC Seat Count",
+                  value: asset?.osc_seat_count
+                },
+                {
+                  label: "Renewal Seats",
+                  value: asset?.renewal_seats
+                },
+                {
+                  label: "Revoked Seats",
+                  value: asset?.revoked_seats
+                },
+                {
+                  label: "Suspended Seats",
+                  value: asset?.suspended_seats
+                },
+                {
+                  label: "Terminated Seats",
+                  value: asset?.terminated_seats
                 },
               ]}
             />
           </CustomTabPanel>
-          {/* <CustomTabPanel value={value} index={1}>
-            <GeneralInformation
-              singleColumn={true}
-              items={[
-                {
-                  label: "Transaction number",
-                  value: asset?.last_transaction?.transaction_number,
-                },
-                {
-                  label: "Transaction date",
-                  value: asset?.last_transaction?.transaction_date,
-                },
-                {
-                  label: "Transaction type",
-                  value: asset?.last_transaction?.transaction_type,
-                },
-                {
-                  label: "Owner account",
-                  value: "",
-                },
-                {
-                  label: "Owner name",
-                  value: "",
-                },
-                {
-                  label: "UOM (Duration/Each)",
-                  value: asset?.osc_product.duration,
-                },
-                {
-                  label: "Start date",
-                  value: asset?.last_transaction?.start_date,
-                },
-                {
-                  label: "End date",
-                  value: asset?.last_transaction?.end_date,
-                },
-              ]}
-            />
-          </CustomTabPanel> */}
           <CustomTabPanel value={value} index={1}>
             <GeneralInformation
               singleColumn={true}
-              items={[
-                { label: "Seats - OSC Master", value: asset?.osc_seat_count },
-                {
-                  label: "Seats - License Server",
-                  value: asset?.license_server_seat_count.toString(),
-                },
-                {
-                  label: "Asset status",
-                  value: asset?.status,
-                },
-                {
-                  label: "Status date",
-                  value: asset?.status_update_date,
-                },
-                {
-                  label: "Active",
-                  value: asset?.active_seats.toString(),
-                },
-                {
-                  label: "Renewal Due",
-                  value: asset?.renewal_seats.toString(),
-                },
-                {
-                  label: "Suspended",
-                  value: asset?.suspended_seats.toString(),
-                },
-                {
-                  label: "Expired",
-                  value: asset?.expired_seats.toString(),
-                },
-                {
-                  label: "Revoked",
-                  value: asset?.revoked_seats.toString(),
-                },
-                {
-                  label: "Terminated",
-                  value: asset?.terminated_seats.toString(),
-                },
-              ]}
+              items={
+                asset?.osc_product ?
+                  Object.keys(asset?.osc_product).map(val => ({
+                    label: toTitleCase(val),
+                    value: asset?.osc_product?.[val as keyof Product]?.toString()
+                  })) : []
+              }
             />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
-            <div className="flex justify-between">
-              <div className="text-xl font-semibold text-black flex items-center gap-2">
-                <LicenseIcon />
-                Seats
-              </div>
+            <GeneralInformation
+              singleColumn={true}
+              items={
+                asset?.license_owner ?
+                  Object.keys(asset?.license_owner).map(val => ({
+                    label: toTitleCase(val),
+                    value: asset?.license_owner?.[val as keyof LicenseOwner]?.toString()
+                  })) : []
+              }
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={3}>
+            <div className="max-w-full overflow-x-auto">
+              <TransactionHistoryTable 
+                transactions={transactions}
+              />
             </div>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={4}>
             <div className="max-w-full overflow-x-auto">
               <GenericTable
                 data={seats}
-                columns={columns}
+                title="Seats"
+                columns={SeatsColumns}
               />
             </div>
           </CustomTabPanel>
         </div>
       </Show>
-      {/* <div className="flex flex-col gap-10 mt-6">
-        <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex justify-between">
-            <div className="text-xl font-semibold text-black flex items-center gap-2">
-              <LicenseIcon />
-              Seats
-            </div>
-          </div>
-          <div className="max-w-full overflow-x-auto">
-            <GenericTable
-              data={seats}
-              columns={columns}
-            />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -172,7 +172,94 @@ const ShippingPartnerInformationFormFields: FieldConfig[] = [
   },
 ];
 
+const ResellerPartnerInformationFormFields: FieldConfig[] = [
+  {
+    name: "reseller_customer_name",
+    label: "Reseller Customer Name",
+    placeholder: "Reseller Customer Name",
+    rules: { required: "Reseller Customer Name is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_customer_account",
+    label: "Reseller Customer Account",
+    placeholder: "Reseller Customer Account",
+    rules: { required: "Reseller Customer Account is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_address1",
+    label: "Reseller Address 1",
+    placeholder: "Reseller Address 1",
+    rules: { required: "Reseller Address 1 is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_address2",
+    label: "Reseller Address 2",
+    placeholder: "Reseller Address 2",
+    type: "text",
+  },
+  {
+    name: "reseller_city",
+    label: "Reseller City",
+    placeholder: "Reseller City",
+    rules: { required: "Reseller City is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_state",
+    label: "Reseller State",
+    placeholder: "Reseller State",
+    rules: { required: "Reseller State is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_postal_code",
+    label: "Reseller Postal Code",
+    placeholder: "Reseller Postal Code",
+    rules: { required: "Reseller Postal Code is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_country",
+    label: "Reseller Country",
+    placeholder: "Reseller Country",
+    rules: { required: "Reseller Country is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_contact_first_name",
+    label: "Reseller Contact First Name",
+    placeholder: "Reseller Contact First Name",
+    rules: { required: "Reseller Contact First Name is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_contact_last_name",
+    label: "Reseller Contact Last Name",
+    placeholder: "Reseller Contact Last Name",
+    rules: { required: "Reseller Contact Last Name is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_contact_phone",
+    label: "Reseller Contact Phone",
+    placeholder: "Reseller Contact Phone",
+    rules: { required: "Reseller Contact Phone is required" },
+    type: "text",
+  },
+  {
+    name: "reseller_contact_email",
+    label: "Reseller Contact Email",
+    placeholder: "Reseller Contact Email",
+    rules: { required: "Reseller Contact Email is required" },
+    type: "text",
+  },
+];
+
 export default {
   BillingPartnerInformationFormFields,
   ShippingPartnerInformationFormFields,
+  ResellerPartnerInformationFormFields
 };

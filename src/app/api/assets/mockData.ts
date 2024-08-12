@@ -16,16 +16,24 @@ export const mockAssets = [
     start_date: "2024-01-15",
     suspended_seats: 0,
     terminated_seats: 0,
-    last_transaction: {
-      id: "37424-242356-99100",
-      transaction_number: 1001,
-      transaction_date: "2024-07-01",
-      transaction_type: "Sales",
-      duration: "2YR",
-      start_date: "2024-07-01",
-      end_date: "2026-06-30",
-      status: "Waiting for validation"
-    },
+    transactions: [
+      {
+        id: "37424-242356-99100",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+      {
+        id: "37424-242356-99101",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+    ],
     osc_product: {
       organization: "PAI",
       osc_product_id: 1,
@@ -49,16 +57,33 @@ export const mockAssets = [
       active: true,
     },
     seats: [
-      // {
-      //   seat_number: "1",
-      //   osc_license_status: "Active",
-      //   osc_start_date: "2024-07-01",
-      //   osc_end_date: "2026-06-30",
-      //   license_server_status: "Active",
-      //   license_server_start_date: "2024-07-01",
-      //   license_server_end_date: "2026-06-30",
-      // }
-    ]
+      {
+        seat_number: "1",
+        osc_license_status: "Active",
+        osc_start_date: "2024-07-01",
+        osc_end_date: "2026-06-30",
+        license_server_status: "Active",
+        license_server_start_date: "2024-07-01",
+        license_server_end_date: "2026-06-30",
+      }
+    ],
+    license_owner: {
+      address1: "321 Maple St",
+      address2: "Floor 3",
+      address_id: 104,
+      ship_city: "Shelbyville",
+      ship_contact_email: "bob.jones@example.com",
+      contact_first_name: "Bob",
+      contact_id: 204,
+      contact_last_name: "Jones",
+      contact_phone: "555-4321",
+      country: "USA",
+      customer_account: "AC98765",
+      customer_id: 304,
+      customer_name: "Delta Ltd",
+      postal_code: "62566",
+      state: "IL",
+    }
   },
   {
     id: "660e8400-e29b-41d4-a716-111111",
@@ -77,16 +102,24 @@ export const mockAssets = [
     start_date: "2024-02-20",
     suspended_seats: 0,
     terminated_seats: 0,
-    last_transaction: {
-      id: "37424-242356-99101",
-      transaction_number: 1002,
-      transaction_date: "2024-07-10",
-      transaction_type: "Sales",
-      duration: "YR",
-      start_date: "2024-07-10",
-      end_date: "2025-07-09",
-      status: "Waiting for validation"
-    },
+    transactions: [
+      {
+        id: "37424-242356-99100",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+      {
+        id: "37424-242356-99101",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+    ],
     osc_product: {
       organization: "PAI",
       osc_product_id: 2,
@@ -119,7 +152,24 @@ export const mockAssets = [
         license_server_start_date: "2024-07-10",
         license_server_end_date: "2025-07-09",
       }
-    ]
+    ],
+    license_owner: {
+      address1: "321 Maple St",
+      address2: "Floor 3",
+      address_id: 104,
+      ship_city: "Shelbyville",
+      ship_contact_email: "bob.jones@example.com",
+      contact_first_name: "Bob",
+      contact_id: 204,
+      contact_last_name: "Jones",
+      contact_phone: "555-4321",
+      country: "USA",
+      customer_account: "AC98765",
+      customer_id: 304,
+      customer_name: "Delta Ltd",
+      postal_code: "62566",
+      state: "IL",
+    }
   },
   {
     id: "660e8400-e29b-41d4-a716-199999",
@@ -138,16 +188,24 @@ export const mockAssets = [
     start_date: "2024-03-10",
     suspended_seats: 0,
     terminated_seats: 0,
-    last_transaction: {
-      id: "37424-242356-99102",
-      transaction_number: 1003,
-      transaction_date: "2024-07-15",
-      transaction_type: "Sales",
-      duration: "EA",
-      start_date: "2024-07-15",
-      end_date: null,
-      status: "Waiting for license update"
-    },
+    transactions: [
+      {
+        id: "37424-242356-99100",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+      {
+        id: "37424-242356-99101",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+    ],
     osc_product: {
       organization: "PAI",
       osc_product_id: 3,
@@ -180,7 +238,24 @@ export const mockAssets = [
         license_server_start_date: "2024-07-15",
         license_server_end_date: null,
       }
-    ]
+    ],
+    license_owner: {
+      address1: "321 Maple St",
+      address2: "Floor 3",
+      address_id: 104,
+      ship_city: "Shelbyville",
+      ship_contact_email: "bob.jones@example.com",
+      contact_first_name: "Bob",
+      contact_id: 204,
+      contact_last_name: "Jones",
+      contact_phone: "555-4321",
+      country: "USA",
+      customer_account: "AC98765",
+      customer_id: 304,
+      customer_name: "Delta Ltd",
+      postal_code: "62566",
+      state: "IL",
+    }
   },
   {
     id: "660e8400-e29b-41d4-a716-122222",
@@ -199,16 +274,24 @@ export const mockAssets = [
     start_date: "2024-04-01",
     suspended_seats: 0,
     terminated_seats: 0,
-    last_transaction: {
-      id: "37424-242356-99103",
-      transaction_number: 1004,
-      transaction_date: "2024-07-25",
-      transaction_type: "Eval",
-      duration: "EA",
-      start_date: "2024-07-25",
-      end_date: null,
-      status: "Waiting for source update"
-    },
+    transactions: [
+      {
+        id: "37424-242356-99100",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+      {
+        id: "37424-242356-99101",
+        transaction_date: "2024-07-01",
+        transaction_number: 1001,
+        transaction_source: "Manual",
+        transaction_status: "Waiting for validation",
+        transaction_type: "Sales"
+      },
+    ],
     osc_product: {
       organization: "PAI",
       osc_product_id: 4,
@@ -241,6 +324,23 @@ export const mockAssets = [
         license_server_start_date: "2024-07-25",
         license_server_end_date: null,
       }
-    ]
+    ],
+    license_owner: {
+      address1: "321 Maple St",
+      address2: "Floor 3",
+      address_id: 104,
+      ship_city: "Shelbyville",
+      ship_contact_email: "bob.jones@example.com",
+      contact_first_name: "Bob",
+      contact_id: 204,
+      contact_last_name: "Jones",
+      contact_phone: "555-4321",
+      country: "USA",
+      customer_account: "AC98765",
+      customer_id: 304,
+      customer_name: "Delta Ltd",
+      postal_code: "62566",
+      state: "IL",
+    }
   }
 ];
