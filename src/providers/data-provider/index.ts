@@ -10,7 +10,7 @@ const virtualAPI_URL = "https://lic-refine.vercel.app/api";
 const API_URL =
   process.env.NODE_ENV === "development"
     ? realAPI_URL
-    : virtualAPI_URL;
+    : localAPI_URL;
 
 // export const dataProvider = dataProviderSimpleRest(API_URL);
 
@@ -20,7 +20,7 @@ const replaceUrlIfNeeded = (url: string | undefined): string | undefined => {
     return url;
   }
   if (url.includes('transactions') || url.includes('assets') || url.includes('products')) {
-    return url.replace(realAPI_URL, virtualAPI_URL);
+    return url.replace(realAPI_URL, localAPI_URL);
   }
   return url;
 }

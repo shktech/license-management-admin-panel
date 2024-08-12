@@ -33,13 +33,19 @@ const Page = () => {
       <div className="flex gap-4 items-center px-12 py-8">
         <div className="text-white bg-[#1f325c] font-bold text-4xl w-20 h-20 flex items-center justify-center rounded-full">{`${identity?.first_name?.[0]} ${identity?.last_name?.[0]}`}</div>
         <div className="">
-          <div className="text-2xl font-semibold">{`${identity?.first_name} ${identity?.last_name}`}</div>
+          <div className="text-2xl font-semibold">
+            {`${identity?.first_name} ${identity?.last_name}`}
+            <span className={`mx-2 px-4 py-1 rounded-full text-xs ${identity?.is_active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}>
+              {identity?.is_active ? "Active" : "Deactive"}
+            </span>
+          </div>
           <div className="">{`Organization: ${identity?.organization}`}</div>
         </div>
+
       </div>
       <div className="flex gap-8 px-8 pb-8">
         <div className="flex-1">
-          <div className="p-6 border-[#1f325c] border-t-4 shadow-lg rounded-lg">
+          <div className="p-6 border-[#1f325c] border-t-4 shadow-lg rounded-lg bg-white">
             <div className="text-xl font-semibold pb-4">User Information</div>
             <ProfileForm
               {...{ control, errors, trigger }}
@@ -47,7 +53,7 @@ const Page = () => {
           </div>
         </div>
         <div className="flex-1">
-          <div className="p-6 border-[#1f325c] border-t-4 shadow-lg rounded-lg">
+          <div className="p-6 border-[#1f325c] border-t-4 shadow-lg rounded-lg bg-white">
             <div className="text-xl font-semibold pb-8">
               User Role
               <span
