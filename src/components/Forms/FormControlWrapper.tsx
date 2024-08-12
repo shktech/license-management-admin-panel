@@ -7,7 +7,7 @@ export interface FieldConfig {
   label: string;
   placeholder?: string;
   rules?: any;
-  type?: 'text' | 'date' | 'dropdown'| 'number';
+  type?: 'text' | 'date' | 'dropdown'| 'number' | 'switch';
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;

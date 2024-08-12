@@ -25,6 +25,8 @@ export const TxtStatusColor: { [key: string]: string } = {
     "Hold": "#fac107",
 }
 
+export const ProductActiveColor = (status: boolean) => status ? '#11ba82' : '#c2c2c2'
+
 export const RoleColors: { [key: string]: string } = {
     "Admin": 'bg-[#3d50e0]',
     "SuperUser": 'bg-[#11ba82]',

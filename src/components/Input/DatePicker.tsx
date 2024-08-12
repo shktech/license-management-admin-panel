@@ -52,7 +52,7 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
                     slotProps={{
                         input: {
                             className:
-                                'border border-transparent focus:border-black bg-[#e6eaed] form-datepicker w-full rounded-lg border border-stroke disabled:bg-whiter pb-2 pt-8 pl-4 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
+                                'border border-transparent focus:border-black bg-[#dfe6ec] form-datepicker w-full rounded-lg border border-stroke disabled:bg-whiter pb-2 pt-8 pl-4 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary',
                         },
                     }}
                 />

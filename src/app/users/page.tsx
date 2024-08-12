@@ -103,7 +103,7 @@ const Page = () => {
         Cell: ({ renderedCellValue }) => {
           return (
             <div className="flex gap-2">
-              {(renderedCellValue as Role[]).map((role) => (
+              {(renderedCellValue as Role[])?.map((role) => (
                 <div
                   key={role.name}
                   className={`${RoleColors[role.name as string] || RoleColors["default"]} text-white  text-xs rounded-full px-2 py-1`}

@@ -21,7 +21,7 @@ const Page: React.FC = () => {
 
   const onSubmit = async (data: any) => {
     const orgForm = data as FormData;
-    const response = await fetch("http://localhost:8000/authenticate/", {
+    const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

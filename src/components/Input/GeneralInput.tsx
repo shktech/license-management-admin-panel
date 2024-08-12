@@ -17,7 +17,7 @@ const GeneralInput = ({ label, ...props }: BaseInputProps) => {
         disabled={props.disabled}
         slotProps={{
           input: {
-            className: "border border-transparent  w-full rounded-md bg-[#e6eaed] hover:bg duration-200 focus:border-black pb-2 pt-8 px-4 text-black outline-none focus-visible:shadow-none"
+            className: "border border-transparent  w-full rounded-md bg-[#dfe6ec] hover:bg duration-200 focus:border-black pb-2 pt-8 px-4 text-black outline-none focus-visible:shadow-none"
           }
         }}
       />

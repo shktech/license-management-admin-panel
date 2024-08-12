@@ -1,7 +1,8 @@
 "use client"
-import { Box, Button } from '@mui/material';
+import { Box, Button, Pagination } from '@mui/material';
 import {
     MRT_ShowHideColumnsButton,
+    MRT_SortingFns,
     MRT_TableContainer,
     MRT_TablePagination,
     MRT_ToolbarAlertBanner,
@@ -17,17 +18,21 @@ import AddIcon from '@mui/icons-material/Add';
 interface GenericTableProps<T extends MRT_RowData> {
     title?: React.ReactNode;
     data?: T[];
+    totalCount?: number,
     columns: MRT_ColumnDef<T>[];
     onRowClick?: (row: T) => void;
     handleCreate?: () => void;
+    handlePage?: (value: number) => void;
+    handleSearch?: (value: string) => void;
     canCreate?: boolean;
     canDelete?: boolean;
     canEdit?: boolean;
     maxWidth?: string | number;
     minWidth?: string | number;
+
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick, handleCreate, canCreate, maxWidth,
+const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, onRowClick, handleCreate, handleSearch, handlePage, canCreate, maxWidth,
     minWidth,
 }: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
@@ -46,6 +51,13 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
             },
         })
     });
+
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        if (handlePage) {
+            handlePage(value);
+        }
+    };
+
 
     const table = useMaterialReactTable({
         columns: enhancedColumns,
@@ -94,7 +106,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
             <div className='flex justify-between px-12 py-4 gap-2'>
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
-                    <SearchInput />
+                    <SearchInput handleChange={handleSearch} />
                     {canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />
@@ -106,7 +118,18 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, onRowClick,
                     <MRT_TableContainer table={table} />
                     <Box>
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <MRT_TablePagination table={table} />
+                            {
+                                totalCount ?
+                                    <div className='p-8'>
+                                        <Pagination
+                                            onChange={handlePageChange}
+                                            count={Math.floor(totalCount / 10) + 1}
+                                            color="primary"
+                                            shape='rounded'
+                                        />
+                                    </div> :
+                                    <MRT_TablePagination table={table} />
+                            }
                         </Box>
                         <Box sx={{ display: 'grid', width: '100%' }}>
                             <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
