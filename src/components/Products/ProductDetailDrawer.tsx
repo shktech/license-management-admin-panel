@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button, Drawer } from '@mui/material';
-import { useCreate, useUpdate } from '@refinedev/core';
+import { Button, Drawer, IconButton } from '@mui/material';
+import { useCreate, useDelete, useUpdate } from '@refinedev/core';
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import { Product } from '../../types/types';
 import ProductForm from '@components/Forms/Products/ProductForm';
-
 
 interface ProductDetailDrawerProps {
   open: boolean;
@@ -31,39 +30,46 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
       Object.keys(previousProduct).forEach(key => setValue(key, null))
     }
   }, [open]);
+
   const { mutate: updateProduct } = useUpdate();
   const { mutate: createProduct } = useCreate();
 
-  const handleSubmit = () => {
-    const productData = getValues();
-    if (product) {
-      console.log(product);
-      updateProduct(
-        {
-          resource: "products",
-          id: `${(product?.id)}`,
-          values: productData
-        },
-        {
-          onError: (error) => {
-            console.log(error);
+  const handleSubmit = async () => {
+    const isValid = await trigger(); // Triggers validation for all fields
+
+    if (isValid) {
+      const handleError = (error: any) => {
+
+      };
+
+      const productData = getValues();
+
+      if (product) {
+        updateProduct(
+          {
+            resource: "products",
+            id: `${(product?.product_id)}`,
+            values: productData
           },
-          onSuccess: () => onClose(),
-        }
-      )
+          {
+            onError: handleError,
+            onSuccess: () => onClose(),
+          }
+        )
+      } else {
+        createProduct(
+          {
+            resource: "products",
+            values: productData
+          },
+          {
+            onError: handleError,
+            onSuccess: () => onClose(),
+          }
+        );
+      }
     } else {
-      createProduct(
-        {
-          resource: "products/",
-          values: productData
-        },
-        {
-          onError: (error) => {
-            console.log(error);
-          },
-          onSuccess: () => onClose(),
-        }
-      );
+      console.log('Validation errors:', errors);
     }
   };
   return (

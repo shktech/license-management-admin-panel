@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { FieldConfig, GenericFormProps } from "../FormControlWrapper";
 import { Transaction } from "@/types/types";
-import TransactionFormFields from "./TransactionFormFields";
+import { GeneralTxnFormField } from "./GeneralTxnFormField";
 import PartnerFormFields from "../Partners/PartnerFormFields";
 import GenericForm from "../GenericForm";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,30 +11,27 @@ import NoteIcon from "@/assets/icons/note.svg?icon";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import LicensingDetailFormFields from "./LicensingDetailFormFields";
-import ResellerFormFields from "./ResellerFormFields";
+import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import DetailsIcon from '@mui/icons-material/Details';
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
-  isCreate?: boolean,
 };
-const dividerStyle = { fontSize: '1.5rem', py: '1.5rem', fontWeight: 'bold', color: '#65758c' }
-
 const TransactionForm = (props: TransactionFormProps) => {
-  console.log(props);
   const FormGroups = [
     {
       icon: <PaidOutlinedIcon />,
       title: 'Transaction',
       description: 'Setup your Transaction data',
-      fields: TransactionFormFields
+      fields: GeneralTxnFormField
     },
+    
     {
       icon: <AccountBalanceWalletOutlinedIcon />,
       title: 'Billing Partner Information',
@@ -52,11 +49,11 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <ProductionQuantityLimitsOutlinedIcon />,
       title: 'Reseller Information',
       description: 'Setup your Reseller Information',
-      fields: ResellerFormFields
+      fields: PartnerFormFields.ResellerPartnerInformationFormFields
     },
     {
-      icon: <ProductionQuantityLimitsOutlinedIcon />,
-      title: 'Reseller Information',
+      icon: <DetailsIcon />,
+      title: 'Licensing Details',
       description: 'Setup your Reseller Information',
       fields: LicensingDetailFormFields
     },
@@ -68,8 +65,6 @@ const TransactionForm = (props: TransactionFormProps) => {
           FormGroups.map((formGroup, i) => (
             <Accordion
               key={i}
-              // elevation={0}
-              // disableGutters
               defaultExpanded={i == 0}
               sx={{
                 borderTop: '2px solid #1f325c',
@@ -88,7 +83,7 @@ const TransactionForm = (props: TransactionFormProps) => {
                   color: '#536175',
                   transitionDuration: '500ms',
                   "&:hover": {
-                    color: "#003133", // Light grey background on hover
+                    color: "#003133", 
                   },
                   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                     transform: 'rotate(90deg)',

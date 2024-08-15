@@ -9,7 +9,7 @@ import {
 } from "@refinedev/mui";
 import Link from "next/link";
 import GeneralInformation from "@components/common/View/GeneralInformation";
-import { Asset, Permission, Seat } from "@/types/types";
+import { Asset, Customer, Permission, Product, Seat, Transaction } from "@/types/types";
 import GeneralInformationIcon from "@/assets/icons/generalinfo.svg?icon";
 import TransactionIcon from "@/assets/icons/transaction.svg?icon";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
@@ -22,8 +22,8 @@ import AssetIcon from "@/assets/icons/asset.svg?icon"
 import { Box, Fade, styled, Tab, Tabs } from "@mui/material";
 import { deleteRefineBtnStyle, editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
-
-
+import TransactionHistoryTable from "@components/Assets/TransactionHistoryTable";
+import Loader from "@components/common/Loader";
 
 const Page = () => {
   const [value, setValue] = useState(0);
@@ -36,37 +36,35 @@ const Page = () => {
   const { data, isLoading } = queryResult;
 
   const asset: Asset = data?.data as Asset;
+  const transactions: Transaction[] = data?.data?.transactions as Transaction[];
   const seats: Seat[] = data?.data?.seats as Seat[];
-  const columns = useMemo<MRT_ColumnDef<Seat>[]>(
+  const toTitleCase = (snakeCaseString: string) => {
+    return snakeCaseString
+      .split('_')          // Split the string by underscores
+      .map(word =>          // Capitalize each word
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      )
+      .join(' ');          // Join the words with spaces
+  }
+
+  const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
       {
-        accessorKey: "seat_number",
-        header: "Seat",
+        accessorKey: "seat_id",
+        header: "Seat ID",
         size: 100,
       },
       {
-        accessorKey: "osc_start_date",
-        header: "OSC Start date",
-      },
-      {
-        accessorKey: "osc_end_date",
-        header: "OSC End date",
-      },
-      {
-        accessorKey: "osc_license_status",
-        header: "OSC License status",
-      },
-      {
-        accessorKey: "license_server_start_date",
-        header: "License server start date",
-      },
-      {
-        accessorKey: "license_server_end_date",
-        header: "License server end date",
+        accessorKey: "status",
+        header: "Status",
       },
       {
         accessorKey: "license_server_status",
-        header: "License server status",
+        header: "License Server Status",
+      },
+      {
+        accessorKey: "asset",
+        header: "Asset",
       },
     ],
     []
@@ -78,9 +76,9 @@ const Page = () => {
     { title: "License Key", key: "license_key" },
     { title: "License Status", key: "osc_license_status" },
     { title: "License server status", key: "license_server_status" },
-    { title: "Owner Name", key: "owner_name" },
-    { title: "Product Part Name", key: "osc_part_number" },
-    { title: "Vender Part Name", key: "osc_part_number" },
+    { title: "Owner Name", key: "license_onwer.customer_name" },
+    { title: "Product Part Name", key: "osc_product.product_name" },
+    { title: "Vender Part Name", key: "osc_product.vendor_name" },
   ]
 
   const getNestedValue = (obj: any, key: string) => {
@@ -93,192 +91,294 @@ const Page = () => {
         goBack={null}
         isLoading={isLoading}
         breadcrumb={false}
-        wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
+        wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-8 pb-2.5" }}
         title={
           <div className="!font-satoshi px-12">
-            <div className="text-2xl font-semibold text-[#515f72]">Asset</div>
-            <div className="flex gap-4 text-sm text-[#656f7c] mt-2">
-              <div className="">Asset ID</div>
-              <div className="">{asset?.id}</div>
-            </div>
+            <div className="flex items-end gap-4 text-2xl font-semibold text-[#515f72]">Asset <div className="text-lg font-normal">{asset?.asset_id}</div></div>
           </div>
         }
         headerButtons={({
-          deleteButtonProps,
-          editButtonProps,
           refreshButtonProps,
         }) => (
           <div className="flex gap-2 pr-10">
-            {permissionsData?.update && <EditButton {...editButtonProps} sx={editRefineBtnStyle} />}
-            {permissionsData?.delete && <DeleteButton {...deleteButtonProps} sx={deleteRefineBtnStyle} />}
             <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
           </div>
         )}
       >
-        <div className="flex gap-16 px-12 mt-8">
-          {
-            summaryfields.map(field => (
-              <div className="flex flex-col gap-1">
-                <div className="text-[#778599]">{field.title}</div>
-                <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(asset, field.key)}</div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <div className="grid grid-cols-4 px-12 mt-8 gap-y-4 gap-x-4">
+              {
+                summaryfields.map(field => (
+                  <div className="flex flex-col gap-1">
+                    <div className="text-[#778599]">{field.title}</div>
+                    <div className="text-[#515f72] text-xl font-medium">{getNestedValue(asset, field.key)}</div>
+                  </div>
+                ))
+              }
+            </div>
+            <div className="">
+              <div className="px-12 pt-4">
+                <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                  <StyledTab label="General Information" />
+                  <StyledTab label="Products" />
+                  <StyledTab label="License Owner" />
+                  <StyledTab label="Transaction History" />
+                  <StyledTab label="Seats" />
+                </StyledTabs>
               </div>
-            ))
-          }
-        </div>
-        <div className="">
-          <div className="px-12 pt-4">
-            <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <StyledTab label="General Information" />
-              {/* <StyledTab label="Last Transaction Detail" /> */}
-              <StyledTab label="Seats" />
-              <StyledTab label="Asset Status" />
-            </StyledTabs>
-          </div>
 
-          <CustomTabPanel value={value} index={0}>
-            <GeneralInformation
-              singleColumn={true}
-              items={[
-                { label: "Asset Id", value: asset?.id },
-                { label: "Organization", value: asset?.organization },
-                {
-                  label: "Asset number (LicKey/Srl#)",
-                  value: asset?.license_key,
-                },
-                {
-                  label: "Product part number",
-                  value: asset?.osc_product.osc_part_number,
-                },
-                {
-                  label: "Asset type",
-                  value: asset?.osc_product.product_type,
-                },
-                {
-                  label: "Vender name",
-                  value: asset?.osc_product.vendor_name,
-                },
-                {
-                  label: "Vendor part",
-                  value: asset?.osc_product.product_name,
-                },
-              ]}
-            />
-          </CustomTabPanel>
-          {/* <CustomTabPanel value={value} index={1}>
-            <GeneralInformation
-              singleColumn={true}
-              items={[
-                {
-                  label: "Transaction number",
-                  value: asset?.last_transaction?.transaction_number,
-                },
-                {
-                  label: "Transaction date",
-                  value: asset?.last_transaction?.transaction_date,
-                },
-                {
-                  label: "Transaction type",
-                  value: asset?.last_transaction?.transaction_type,
-                },
-                {
-                  label: "Owner account",
-                  value: "",
-                },
-                {
-                  label: "Owner name",
-                  value: "",
-                },
-                {
-                  label: "UOM (Duration/Each)",
-                  value: asset?.osc_product.duration,
-                },
-                {
-                  label: "Start date",
-                  value: asset?.last_transaction?.start_date,
-                },
-                {
-                  label: "End date",
-                  value: asset?.last_transaction?.end_date,
-                },
-              ]}
-            />
-          </CustomTabPanel> */}
-          <CustomTabPanel value={value} index={1}>
-            <GeneralInformation
-              singleColumn={true}
-              items={[
-                { label: "Seats - OSC Master", value: asset?.osc_seat_count },
-                {
-                  label: "Seats - License Server",
-                  value: asset?.license_server_seat_count.toString(),
-                },
-                {
-                  label: "Asset status",
-                  value: asset?.status,
-                },
-                {
-                  label: "Status date",
-                  value: asset?.status_update_date,
-                },
-                {
-                  label: "Active",
-                  value: asset?.active_seats.toString(),
-                },
-                {
-                  label: "Renewal Due",
-                  value: asset?.renewal_seats.toString(),
-                },
-                {
-                  label: "Suspended",
-                  value: asset?.suspended_seats.toString(),
-                },
-                {
-                  label: "Expired",
-                  value: asset?.expired_seats.toString(),
-                },
-                {
-                  label: "Revoked",
-                  value: asset?.revoked_seats.toString(),
-                },
-                {
-                  label: "Terminated",
-                  value: asset?.terminated_seats.toString(),
-                },
-              ]}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <div className="flex justify-between">
-              <div className="text-xl font-semibold text-black flex items-center gap-2">
-                <LicenseIcon />
-                Seats
-              </div>
+              <CustomTabPanel value={value} index={0}>
+                <GeneralInformation
+                  singleColumn={true}
+                  items={[
+                    {
+                      label: "Asset Id",
+                      value: asset?.asset_id
+                    },
+                    {
+                      label: "active",
+                      value: asset?.active ? "Yes" : "No"
+                    },
+
+                    {
+                      label: "License Key",
+                      value: asset?.license_key
+                    },
+                    {
+                      label: "License Key",
+                      value: asset?.license_key
+                    },
+                    {
+                      label: "Organization",
+                      value: asset?.organization
+                    },
+                    {
+                      label: "Bill Customer",
+                      value: asset?.bill_customer
+                    },
+                    {
+                      label: "Ship Customer",
+                      value: asset?.ship_customer
+                    },
+                    {
+                      label: "Reseller",
+                      value: asset?.reseller
+                    },
+                    {
+                      label: "Start Date",
+                      value: asset?.start_date
+                    },
+                    {
+                      label: "End Date",
+                      value: asset?.end_date
+                    },
+                    {
+                      label: "OSC Seat Count",
+                      value: asset?.osc_seat_count
+                    }, {
+                      label: "License Server Seat Count",
+                      value: asset?.license_server_seat_count
+                    },
+                    {
+                      label: "Active Seats",
+                      value: asset?.active_seats
+                    },
+                    {
+                      label: "Renewal Seats",
+                      value: asset?.renewal_seats
+                    },
+                    {
+                      label: "Revoked Seats",
+                      value: asset?.revoked_seats
+                    },
+                    {
+                      label: "Suspended Seats",
+                      value: asset?.suspended_seats
+                    },
+                    {
+                      label: "Terminated Seats",
+                      value: asset?.terminated_seats
+                    },
+                    {
+                      label: "Expired Seats",
+                      value: asset?.expired_seats
+                    },
+                  ]}
+                />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                <GeneralInformation
+                  singleColumn={true}
+                  items={[
+                    {
+                      label: "Product ID",
+                      value: asset?.osc_product?.product_id
+                    },
+                    {
+                      label: "Product Name",
+                      value: asset?.osc_product?.product_id
+                    },
+                    {
+                      label: "Product Part Number",
+                      value: asset?.osc_product?.product_part_number
+                    },
+                    {
+                      label: "Product Description",
+                      value: asset?.osc_product?.product_description
+                    },
+                    {
+                      label: "Product Type",
+                      value: asset?.osc_product?.product_type
+                    },
+                    {
+                      label: "Vender Name",
+                      value: asset?.osc_product?.vendor_name
+                    },
+                    {
+                      label: "Vendor Part Number",
+                      value: asset?.osc_product?.vendor_part_number
+                    },
+                    {
+                      label: "Active",
+                      value: asset?.osc_product?.active
+                    },
+                    {
+                      label: "Duration",
+                      value: asset?.osc_product?.duration
+                    },
+                    {
+                      label: "Eval Set name",
+                      value: asset?.osc_product?.eval_set_name
+                    },
+                    {
+                      label: "License Source Set",
+                      value: asset?.osc_product?.license_source_set
+                    },
+                    {
+                      label: "New Set Name",
+                      value: asset?.osc_product?.new_set_name
+                    },
+                    {
+                      label: "Organization",
+                      value: asset?.osc_product?.organization
+                    },
+                    {
+                      label: "Attribute1",
+                      value: asset?.osc_product?.attribute1
+                    },
+                    {
+                      label: "Attribute2",
+                      value: asset?.osc_product?.attribute2
+                    },
+                    {
+                      label: "Attribute3",
+                      value: asset?.osc_product?.attribute3
+                    },
+                    {
+                      label: "Attribute4",
+                      value: asset?.osc_product?.attribute4
+                    },
+                    {
+                      label: "Attribute5",
+                      value: asset?.osc_product?.attribute5
+                    },
+                  ]}
+                />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                <GeneralInformation
+                  singleColumn={true}
+                  items={[
+                    {
+                      label: "Account",
+                      value: asset?.owner?.account
+                    },
+                    {
+                      label: "Account ID",
+                      value: asset?.owner?.account_id
+                    },
+                    {
+                      label: "Address",
+                      value: asset?.owner?.address
+                    },
+                    {
+                      label: "Address1",
+                      value: asset?.owner?.contact?.address?.address1
+                    },
+                    {
+                      label: "Address2",
+                      value: asset?.owner?.contact?.address?.address2
+                    },
+                    {
+                      label: "Address ID",
+                      value: asset?.owner?.contact?.address?.address_id
+                    },
+                    {
+                      label: "City",
+                      value: asset?.owner?.contact?.address?.city
+                    },
+                    {
+                      label: "Country",
+                      value: asset?.owner?.contact?.address?.country
+                    },
+                    {
+                      label: "Postal Code",
+                      value: asset?.owner?.contact?.address?.postal_code
+                    },
+                    {
+                      label: "State",
+                      value: asset?.owner?.contact?.address?.state
+                    },
+                    {
+                      label: "Contact ID",
+                      value: asset?.owner?.contact?.contact_id
+                    },
+                    {
+                      label: "Contact Email",
+                      value: asset?.owner?.contact?.email
+                    },
+                    {
+                      label: "Contact Phone",
+                      value: asset?.owner?.contact?.phone
+                    },
+                    {
+                      label: "Contact First Name",
+                      value: asset?.owner?.contact?.first_name
+                    },
+                    {
+                      label: "Contact Last Name",
+                      value: asset?.owner?.contact?.last_name
+                    },
+                    {
+                      label: "Organization",
+                      value: asset?.owner?.organization
+                    },
+                  ]}
+                />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                <div className="max-w-full overflow-x-auto">
+                  <TransactionHistoryTable
+                    transactions={transactions}
+                  />
+                </div>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={4}>
+                <div className="max-w-full overflow-x-auto">
+                  <GenericTable
+                    data={seats}
+                    title="Seats"
+                    columns={SeatsColumns}
+                  />
+                </div>
+              </CustomTabPanel>
             </div>
-            <div className="max-w-full overflow-x-auto">
-              <GenericTable
-                data={seats}
-                columns={columns}
-              />
-            </div>
-          </CustomTabPanel>
-        </div>
+          </>
+        )}
       </Show>
-      {/* <div className="flex flex-col gap-10 mt-6">
-        <div className="rounded-xl shadow-md bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex justify-between">
-            <div className="text-xl font-semibold text-black flex items-center gap-2">
-              <LicenseIcon />
-              Seats
-            </div>
-          </div>
-          <div className="max-w-full overflow-x-auto">
-            <GenericTable
-              data={seats}
-              columns={columns}
-            />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

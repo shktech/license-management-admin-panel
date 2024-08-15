@@ -3,14 +3,6 @@ import { useFetchOptions } from "@/hooks/useFetchOptions";
 
 const ProfileFormFields: FieldConfig[] = [
     {
-        name: "user_id",
-        label: "User ID",
-        placeholder: "User ID",
-        rules: { required: "User ID is required" },
-        type: "text",
-        size: 2,
-    },
-    {
         name: "email",
         label: "Email",
         placeholder: "Email",
@@ -51,14 +43,14 @@ const ProfileFormFields: FieldConfig[] = [
         type: "text",
         size: 1,
     },
-    {
-        name: "is_active",
-        label: "Is Active",
-        placeholder: "Is Active",
-        rules: { required: "Is Active is required" },
-        type: "switch",
-        size: 1,
-    },
+    // {
+    //     name: "is_active",
+    //     label: "Is Active",
+    //     placeholder: "Is Active",
+    //     rules: { required: "Is Active is required" },
+    //     type: "switch",
+    //     size: 1,
+    // },
 ];
 
 export default ProfileFormFields;

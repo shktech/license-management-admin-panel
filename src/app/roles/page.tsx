@@ -15,8 +15,9 @@ import GenericTable from "@components/Table/GenericTable";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-  } = useTable<Role>();
-
+  } = useTable<Role>({
+    hasPagination: false
+  });
   const sortedData = data?.data.sort((a, b) => {
     const specialRoles = ["Admin", "SuperUser", "User"];
     if (specialRoles.includes(a.name as string) && !specialRoles.includes(b.name as string)) {
@@ -27,7 +28,8 @@ const Page = () => {
     }
     return 0;
   });
-
+  console.log("data", data);
+  console.log("sortedData", sortedData);
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "role" } });
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -118,7 +120,6 @@ const Page = () => {
               handleCreate={handleCreate}
               canCreate={permissionsData?.create}
               onRowClick={handleRowClick}
-              maxWidth={"1000px"}
             />
             {openDrawer && (
               <RoleDrawer

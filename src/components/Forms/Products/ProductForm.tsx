@@ -24,7 +24,6 @@ const ProductForm = (props: GenericFormProps) => {
     ]
     return (
         <div className="flex flex-col">
-            {/* <GenericForm {...{ ...props, fields: ProductFormFields }} /> */}
             {
                 FormGroups.map((formGroup, i) => (
                     <Accordion

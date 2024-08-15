@@ -27,13 +27,13 @@ interface GenericTableProps<T extends MRT_RowData> {
     canCreate?: boolean;
     canDelete?: boolean;
     canEdit?: boolean;
+    noCreateNeed?: boolean;
     maxWidth?: string | number;
     minWidth?: string | number;
 
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, onRowClick, handleCreate, handleSearch, handlePage, canCreate, maxWidth,
-    minWidth,
+const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, noCreateNeed, onRowClick, handleCreate, handleSearch, handlePage, canCreate, maxWidth, minWidth,
 }: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
         if (!!onRowClick) {
@@ -66,7 +66,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
         enableColumnPinning: true,
         muiTableBodyRowProps: ({ row }) => ({
             onClick: () => handleRowClick(row.original),
-            className: `${!!onRowClick && 'cursor-pointer'} bg-[#f2f6fa]`,
+            className: `${!!onRowClick && 'cursor-pointer'} bg-transparent`,
         }),
         muiTableHeadRowProps: {
             sx: {
@@ -76,13 +76,13 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
         muiTableBodyCellProps: ({ cell }) => ({
             sx: {
                 padding: cell.column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '', // Set padding for the first column
-                backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
+                // backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
             }
         }),
         muiTableHeadCellProps: ({ column }) => ({
             sx: {
                 padding: column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '',
-                backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
+                // backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
                 verticalAlign: 'middle'
             }
         }),
@@ -107,7 +107,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
                     <SearchInput handleChange={handleSearch} />
-                    {canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
+                    {!noCreateNeed && canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />
                     </Box>

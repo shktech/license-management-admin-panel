@@ -169,3 +169,7 @@
 .no-padding-card .MuiCardContent-root, .no-padding-card .MuiCardHeader-root {
     padding: 0;
 }
+
+.my-datepicker .MuiInputBase-input {
+    padding: 26px 16px 8px 16px !important;
+}

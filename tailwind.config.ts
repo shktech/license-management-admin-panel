@@ -3,7 +3,11 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   important: true,
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js"
+  ],
   darkMode: 'class',
   theme: {
     fontFamily: {

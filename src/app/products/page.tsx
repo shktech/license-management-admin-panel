@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigation, useTable, HttpError } from "@refinedev/core";
+import { useNavigation, useTable, HttpError, useDelete } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
@@ -13,18 +13,24 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";
 import { ProductActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
+import DeleteModal from "@components/Products/DeleteModal";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
     setCurrent,
     setFilters,
-  } = useTable<Product, HttpError>();
-
+  } = useTable<Product>();
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+
   const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
-  
+
   const handleCreate = () => setOpenDrawer(true);
+
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+
 
   const handleEditClick = (row: Product) => {
     setClickedProduct(row);
@@ -41,11 +47,29 @@ const Page = () => {
     setOpenDrawer(false);
   }
 
+  const { mutate: deleteProduct } = useDelete();
+
+  const handleDeleteBtn = (product: Product) => {
+
+    handleOpenDeleteModal();
+    setClickedProduct(product);
+  }
+
+  const handleDelete = () => {
+    deleteProduct(
+      { resource: "products", id: `${(clickedProduct?.product_id)}` },
+      {
+        onError: (error) => { console.log(error); },
+        onSuccess: () => { console.log("Success"); },
+      }
+    )
+    handleCloseDeleteModal();
+  }
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
       {
-        accessorKey: "osc_part_number",
-        header: "OSC Part number",
+        accessorKey: "product_part_number",
+        header: "Product Part Number",
         size: 200,
       },
       {
@@ -93,7 +117,7 @@ const Page = () => {
           <div className="w-full h-full">
             <div className="flex gap-4">
               <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-              <DeleteIcon onClick={() => console.log("Delete")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+              <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
             </div>
           </div>
         ),
@@ -126,6 +150,12 @@ const Page = () => {
         open={openDrawer}
         onClose={() => handleClose()}
         product={clickedProduct}
+      />
+      <DeleteModal
+        openModal={openDeleteModal}
+        handleDelete={handleDelete}
+        handleCloseModal={handleCloseDeleteModal}
+        selectedProduct={clickedProduct}
       />
     </div>
   );

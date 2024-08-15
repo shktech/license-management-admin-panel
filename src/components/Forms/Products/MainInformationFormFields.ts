@@ -1,55 +1,32 @@
 import { FieldConfig } from "../FormControlWrapper";
 import { useFetchOptions } from "@/hooks/useFetchOptions";
+import { InitialFieldConfig, SecondInitialFieldConfig } from "../InitialFieldConfig";
+import { getSecondRealFormFields } from "@utils/utilFunctions";
 
-const MainInformationFormFields: FieldConfig[] = [
-    {
-        name: "osc_part_number",
-        label: "Product part number",
-        placeholder: "Product part number",
-        rules: { required: "Part number is required" },
-        // type: "text",
-        type: "text",
-        valueKey: "osc_part_number",
-        labelKey: "osc_part_number",
-        size: 2,
-    },
-    {
-        name: "product_description",
-        label: "Product Description",
-        placeholder: "Product Description",
-        rules: { required: "Product Description is required" },
-        type: "text",
-        size: 2,
-    },
-    {
-        name: "product_type",
-        label: "Part Type",
-        placeholder: "Part Type",
-        rules: { required: "Part Type is required" },
-        type: "text",
-    },
+const InitialField: SecondInitialFieldConfig[] = [
+    { name: "product_part_number", size: 2 },
+    { name: "product_type", required: 'text' },
     {
         name: "duration",
-        label: "UOM(Duration)",
-        placeholder: "UOM(Duration)",
-        rules: { required: "UOM(Duration) is required" },
+        required: 'text',
         type: "dropdown",
-        options: [ 
+        options: [
             { value: "EA", label: "EA" },
             { value: "1YR", label: "1YR" },
             { value: "2YR", label: "2YR" },
             { value: "3YR", label: "3YR" },
         ],
     },
-    
-    {
-        name: "vendor_part_number",
-        label: "Vender Part Number",
-        placeholder: "Vender Part Number",
-        rules: { required: "Vender Part Number is required" },
-        type: "text",
-        size: 2
-    },
+    { name: "product_name", required: 'text', size: 2 },
+    { name: "product_description", size: 2 },
+    { name: "vendor_name" },
+    { name: "vendor_part_number", required: 'text' },
+    { name: "license_source_set", size: 2 },
+    { name: "source_name" },
+    { name: "eval_set_name" },
+    { name: "renewal_set_name" },
+    { name: "new_set_name" },
+    { name: "active", type: 'switch' },
 ];
 
-export default MainInformationFormFields;
+export default getSecondRealFormFields(InitialField);

@@ -9,7 +9,7 @@ export default function IndexPage() {
   return (
     <Suspense>
       <Authenticated key="dashboard">
-          <NavigateToResource />
+        <NavigateToResource />
       </Authenticated>
     </Suspense>
   );
