@@ -115,3 +115,31 @@ export const refreshRefineBtnStyle = {
     borderColor: '#003133',
     ...refineBtnStyle
 }
+
+
+export const modalStyle = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 300,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    borderRadius: '4px',
+    px: 2,
+    py: 2,
+    '&:focus': {
+        outline: 'none', // Ensure focus outline is removed
+    },
+};
+
+
+export const deleteModalButtonStyle = {
+    px: 2.5, // Horizontal padding
+    py: 0.5,  // Vertical padding
+    borderRadius: '4px', // Rounded corners
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontWeight: '500',
+    fontSize: '0.75rem',
+};

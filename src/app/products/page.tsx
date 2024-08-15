@@ -13,6 +13,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";
 import { ProductActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
+import DeleteModal from "@components/Products/DeleteModal";
 
 const Page = () => {
   const {
@@ -21,9 +22,15 @@ const Page = () => {
     setFilters,
   } = useTable<Product>();
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+
   const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
 
   const handleCreate = () => setOpenDrawer(true);
+
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+
 
   const handleEditClick = (row: Product) => {
     setClickedProduct(row);
@@ -42,16 +49,22 @@ const Page = () => {
 
   const { mutate: deleteProduct } = useDelete();
 
-  const handleDelete = (product_id: any) => {
+  const handleDeleteBtn = (product: Product) => {
+
+    handleOpenDeleteModal();
+    setClickedProduct(product);
+  }
+
+  const handleDelete = () => {
     deleteProduct(
-      { resource: "products", id: `${(product_id)}` },
+      { resource: "products", id: `${(clickedProduct?.product_id)}` },
       {
         onError: (error) => { console.log(error); },
         onSuccess: () => { console.log("Success"); },
       }
     )
+    handleCloseDeleteModal();
   }
-
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
       {
@@ -104,7 +117,7 @@ const Page = () => {
           <div className="w-full h-full">
             <div className="flex gap-4">
               <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-              <DeleteIcon onClick={() => handleDelete(row.original.product_id)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+              <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
             </div>
           </div>
         ),
@@ -137,6 +150,12 @@ const Page = () => {
         open={openDrawer}
         onClose={() => handleClose()}
         product={clickedProduct}
+      />
+      <DeleteModal
+        openModal={openDeleteModal}
+        handleDelete={handleDelete}
+        handleCloseModal={handleCloseDeleteModal}
+        selectedProduct={clickedProduct}
       />
     </div>
   );

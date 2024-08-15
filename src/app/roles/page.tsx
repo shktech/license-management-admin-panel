@@ -15,7 +15,9 @@ import GenericTable from "@components/Table/GenericTable";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-  } = useTable<Role>();
+  } = useTable<Role>({
+    hasPagination: false
+  });
   const sortedData = data?.data.sort((a, b) => {
     const specialRoles = ["Admin", "SuperUser", "User"];
     if (specialRoles.includes(a.name as string) && !specialRoles.includes(b.name as string)) {

@@ -16,7 +16,9 @@ import Unauthorized from "@components/Error/Unauthorized";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-  } = useTable<User>();
+  } = useTable<User>({
+    hasPagination: false
+  });
 
   const {
     data: rolesData,
@@ -24,6 +26,7 @@ const Page = () => {
     isError: isRolesError,
   } = useList<Role, HttpError>({
     resource: "roles",
+    hasPagination: false
   });
 
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "user" } });
