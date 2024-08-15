@@ -5,7 +5,6 @@ import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import { Product } from '../../types/types';
 import ProductForm from '@components/Forms/Products/ProductForm';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ProductDetailDrawerProps {
   open: boolean;
@@ -44,6 +43,7 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
       };
 
       const productData = getValues();
+
       if (product) {
         updateProduct(
           {

@@ -26,6 +26,7 @@ const InitialField: SecondInitialFieldConfig[] = [
     { name: "eval_set_name" },
     { name: "renewal_set_name" },
     { name: "new_set_name" },
+    { name: "active", type: 'switch' },
 ];
 
 export default getSecondRealFormFields(InitialField);
