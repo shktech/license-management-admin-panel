@@ -3,6 +3,8 @@ export const TxtTypeColor: { [key: string]: string } = {
     "Rental": '#fac107',
     "Eval": '#fac107',
     "Subscription": '#11ba82',
+    "Promotion": '#fac107',
+    "NFR": '#fac107',
 }
 
 export const TxtActionColor: { [key: string]: string } = {

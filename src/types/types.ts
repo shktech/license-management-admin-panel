@@ -1,8 +1,9 @@
 export interface Product {
     id: string;
-    organization: string;
-    osc_product_id?: number;
-    osc_part_number: string;
+    created_at?: string;
+    updated_at?: string;
+    product_id?: string;
+    product_part_number?: string;
     product_type?: string;
     product_name?: string;
     product_description?: string;
@@ -19,66 +20,49 @@ export interface Product {
     eval_set_name?: string;
     renewal_set_name?: string;
     new_set_name?: string;
-    active: boolean;
-    creation_date: string;
-    created_by: number;
-    last_update_date: string;
-    last_updated_by: number;
-    created: string;
-    updated: string;
-}
-
-export interface Asset {
-    id: string;
-    active_seats: number;
-    created_by: number;
-    creation_date: string;
-    active: boolean;
-    end_date: string;
-    expired_seats: number;
-    license_key: string;
-    license_server_seat_count: number;
-    organization: string;
-    osc_seat_count: number;
-    renewal_seats: number;
-    revoked_seats: number;
-    start_date: string;
-    suspended_seats: number;
-    terminated_seats: number;
-    status: string;
-    status_update_date: string;
-    transactions: Transaction[];
-    osc_product: Partial<Product>;
-    seats?: Seat[];
-    license_owner: Partial<LicenseOwner>
-}
-
-export interface LicenseOwner {
-    address1?: string,
-    address2?: string,
-    address_id?: string,
-    ship_city?: string,
-    ship_contact_email?: string,
-    contact_first_name?: string,
-    contact_id?: string,
-    contact_last_name?: string,
-    contact_phone?: string,
-    country?: string,
-    customer_account?: string,
-    customer_id?: string,
-    customer_name?: string,
-    postal_code?: string,
-    state?: string,
+    active?: boolean | null;
+    created_by?: number;
+    updated_by?: number;
+    organization?: string;
 }
 export interface Seat {
-    seat_id: string;
-    seat_number: string;
-    osc_license_status: string;
-    osc_start_date: string;
-    osc_end_date: string;
-    license_server_status: string;
-    license_server_start_date: string;
-    license_server_end_date: string;
+    id?: number;
+    created_at?: string;
+    updated_at?: string;
+    seat_id?: number;
+    status?: string;
+    license_server_status?: string;
+    created_by?: number;
+    updated_by?: number;
+    asset?: string;
+}
+export interface Asset {
+    asset_id?: string;
+    osc_product?: Partial<Product>;
+    seats?: Seat[];
+    transactions?: Transaction[];
+    owner?: Partial<Customer>
+    created_at?: string;
+    updated_at?: string;
+    license_key?: string;
+    license_type?: string;
+    start_date?: string;
+    end_date?: string;
+    active_seats?: number;
+    expired_seats?: number;
+    license_server_seat_count?: number;
+    osc_seat_count?: number;
+    renewal_seats?: number;
+    revoked_seats?: number;
+    suspended_seats?: number;
+    terminated_seats?: number;
+    active?: boolean;
+    created_by?: number;
+    updated_by?: number;
+    organization?: string;
+    bill_customer?: string;
+    ship_customer?: string;
+    reseller?: string;
 }
 
 export type SeatStatus = {
@@ -161,57 +145,122 @@ export interface Permission {
 
 export interface Transaction {
     id: string;
-    organization: string;
-    transaction_number: number;
-    transaction_date: string;
-    transaction_source?: string;
-    transaction_type?: string;
-    transaction_action?: string;
-    source_reference_id?: string;
-    source_reference_number?: string;
-    source_reference_date: string;
-    reference?: number;
-    bill_customer_id?: number;
-    bill_customer_account?: string;
-    bill_customer_name?: string;
-    bill_address1?: string;
-    bill_address2?: string;
-    bill_city?: string;
-    bill_state?: string;
-    bill_postal_code?: string;
-    bill_country?: string;
-    bill_address_id?: number;
-    bill_contact_first_name?: string;
-    bill_contact_last_name?: string;
-    bill_contact_phone?: string;
-    bill_contact_email?: string;
-    bill_contact_id?: number;
-    ship_customer_id?: number;
-    ship_customer_account?: string;
-    ship_customer_name?: string;
-    ship_address1?: string;
-    ship_address2?: string;
-    ship_city?: string;
-    ship_state?: string;
-    ship_postal_code?: string;
-    ship_country?: string;
-    ship_address_id?: number;
-    ship_contact_first_name?: string;
-    ship_contact_last_name?: string;
-    ship_contact_phone?: string;
-    ship_contact_email?: string;
-    ship_contact_id?: number;
-    notification_date: string;
-    quantity?: number;
-    start_date: string;
-    end_date: string;
-    reference_code?: string;
-    transaction_status?: string;
-    error_message?: string;
-    created_at: string;
-    created_by: string;
-    updated_at: string;
-    updated_by: string;
+    transaction_number?: number;
     asset?: Partial<Asset>;
-    osc_product?: Partial<Product>;
+    bill_customer?: Partial<Customer>;
+    ship_customer?: Partial<Customer>;
+    reseller?: Partial<Customer>;
+    created_at?: string;
+    updated_at?: string;
+    transaction_id: string;
+    transaction_date?: string;
+    transaction_source?: string;
+    transaction_status?: string;
+    transaction_action?: string;
+    source_reference_number?: string;
+    source_reference_date?: string;
+    source_reference_id?: string;
+    notification_date?: string;
+    quantity?: number;
+    start_date?: string;
+    end_date?: string;
+    comments?: string;
+    error_message?: string;
+    waybill_number?: string;
+    return_waybill_number?: string;
+    created_by?: number;
+    updated_by?: number;
+    organization?: string;
+}
+
+export interface InputTransaction {
+    transaction_source?: string,
+    transaction_action?: string,
+    license_type?: string,
+    source_reference_number?: string,
+    source_reference_date?: string,
+    source_reference_id?: string,
+    bill_customer_account?: string,
+    bill_customer_name?: string,
+    bill_address1?: string,
+    bill_address2?: string,
+    bill_city?: string,
+    bill_state?: string,
+    bill_postal_code?: string,
+    bill_country?: string,
+    bill_contact_first_name?: string,
+    bill_contact_last_name?: string,
+    bill_contact_phone?: string,
+    bill_contact_email?: string,
+    ship_customer_account?: string,
+    ship_customer_name?: string,
+    ship_address1?: string,
+    ship_address2?: string,
+    ship_city?: string,
+    ship_state?: string,
+    ship_postal_code?: string,
+    ship_country?: string,
+    ship_contact_first_name?: string,
+    ship_contact_last_name?: string,
+    ship_contact_phone?: string,
+    ship_contact_email?: string,
+    reseller_account?: string,
+    reseller_name?: string,
+    reseller_address1?: string,
+    reseller_address2?: string,
+    reseller_city?: string,
+    reseller_state?: string,
+    reseller_postal_code?: string,
+    reseller_country?: string,
+    reseller_contact_first_name?: string,
+    reseller_contact_last_name?: string,
+    reseller_contact_phone?: string,
+    reseller_contact_email?: string,
+    osc_part_number?: string,
+    quantity?: number,
+    start_date?: string,
+    end_date?: string,
+    waybill_number?: string,
+    return_waybill_number?: string,
+}
+
+export interface Customer {
+    account?: string;
+    contact: Partial<Contact>;
+    created_at?: string;
+    updated_at?: string;
+    account_id?: string;
+    created_by?: number;
+    updated_by?: number;
+    organization?: number;
+    address?: number;
+}
+
+export interface Contact {
+    id: number,
+    address: Partial<Address>;
+    created_at?: string;
+    updated_at?: string;
+    contact_id?: string;
+    first_name?: string;
+    last_name?: string;
+    phone?: string;
+    email?: string;
+    created_by?: number;
+    updated_by?: number;
+}
+
+export interface Address {
+    id?: string;
+    created_at?: string;
+    updated_at?: string;
+    address_id?: string;
+    address1?: string;
+    address2?: string;
+    city?: string;
+    state?: string;
+    postal_code?: string;
+    country?: string;
+    created_by?: number;
+    updated_by?: number;
 }

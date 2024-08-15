@@ -18,7 +18,7 @@ const Page = () => {
   const columns = useMemo<MRT_ColumnDef<Asset>[]>(
     () => [
       {
-        accessorKey: "id",
+        accessorKey: "asset_id",
         header: "Asset ID",
       },
       {
@@ -30,7 +30,7 @@ const Page = () => {
         header: "Organization",
       },
       {
-        accessorKey: "osc_product.osc_part_number",
+        accessorKey: "osc_product.product_part_number",
         header: "Product Part Number",
       },
       {
@@ -50,7 +50,7 @@ const Page = () => {
   );
 
   const handleRowClick = (row: Asset) => {
-    show("assets", row.id);
+    show("assets", row.asset_id as string);
   };
 
 
@@ -62,12 +62,12 @@ const Page = () => {
         <GenericTable
           title={
             <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-              <AssetIcon />
               Assets
             </div>
           }
           data={data?.data}
           columns={columns}
+          noCreateNeed
           onRowClick={handleRowClick}
           canCreate={permissionsData?.create}
           canEdit={permissionsData?.update}

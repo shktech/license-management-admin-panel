@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigation, useTable, HttpError } from "@refinedev/core";
+import { useNavigation, useTable, HttpError, useDelete } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
@@ -19,11 +19,10 @@ const Page = () => {
     tableQueryResult: { data, isLoading, refetch },
     setCurrent,
     setFilters,
-  } = useTable<Product, HttpError>();
-
+  } = useTable<Product>();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
-  
+
   const handleCreate = () => setOpenDrawer(true);
 
   const handleEditClick = (row: Product) => {
@@ -41,11 +40,23 @@ const Page = () => {
     setOpenDrawer(false);
   }
 
+  const { mutate: deleteProduct } = useDelete();
+
+  const handleDelete = (product_id: any) => {
+    deleteProduct(
+      { resource: "products", id: `${(product_id)}` },
+      {
+        onError: (error) => { console.log(error); },
+        onSuccess: () => { console.log("Success"); },
+      }
+    )
+  }
+
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
       {
-        accessorKey: "osc_part_number",
-        header: "OSC Part number",
+        accessorKey: "product_part_number",
+        header: "Product Part Number",
         size: 200,
       },
       {
@@ -93,7 +104,7 @@ const Page = () => {
           <div className="w-full h-full">
             <div className="flex gap-4">
               <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-              <DeleteIcon onClick={() => console.log("Delete")} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+              <DeleteIcon onClick={() => handleDelete(row.original.product_id)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
             </div>
           </div>
         ),

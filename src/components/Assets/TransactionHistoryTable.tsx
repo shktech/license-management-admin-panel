@@ -10,7 +10,7 @@ import { Transaction } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import GenericTable from '@components/Table/GenericTable';
 import { Box } from '@mui/material';
-import { TxtStatusColor, TxtTypeColor } from '@data/ColorData';
+import { TxtActionColor, TxtStatusColor, TxtTypeColor } from '@data/ColorData';
 import { tagStyle } from '@data/MuiStyles';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import TransactionDetailDrawer from './TransactionDetailDrawer';
@@ -24,7 +24,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
     const [openDrawer, setOpenDrawer] = useState(false);
     const [clickedTransaction, setClickedTransaction] = useState<string | null>(null);
     const handleShowClick = (row: Transaction) => {
-        setClickedTransaction(row.id);
+        setClickedTransaction(row.transaction_id);
         setOpenDrawer(true);
     };
     const handleClose = () => {
@@ -33,8 +33,8 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
     const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
         () => [
             {
-                accessorKey: 'id',
-                header: 'ID',
+                accessorKey: 'transaction_id',
+                header: 'Transaction ID',
                 size: 150,
             },
             {
@@ -42,32 +42,23 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
                 header: 'Txn Date',
                 size: 100,
             },
-            {
-                accessorKey: 'transaction_number',
-                header: 'Txn Number',
-                size: 100,
-            },
-            {
-                accessorKey: 'transaction_source',
-                header: 'Txn Source',
-                size: 100,
-            },
-            {
-                accessorKey: 'transaction_type',
-                header: 'Txn Type',
-                size: 100,
-                Cell: ({ renderedCellValue }) => (
-                    <Box component="span" sx={{ backgroundColor: TxtTypeColor[renderedCellValue as string], ...tagStyle }} >
-                        {renderedCellValue}
-                    </Box>
-                ),
-            },
+
             {
                 accessorKey: 'transaction_status',
                 header: 'Txn Status',
                 size: 150,
                 Cell: ({ renderedCellValue }) => (
                     <Box component="span" sx={(theme) => ({ backgroundColor: TxtStatusColor[renderedCellValue as string], ...tagStyle })} >
+                        {renderedCellValue}
+                    </Box>
+                ),
+            },
+            {
+                accessorKey: 'transaction_action',
+                header: 'Txn Action',
+                size: 100,
+                Cell: ({ renderedCellValue }) => (
+                    <Box component="span" sx={{ backgroundColor: TxtActionColor[renderedCellValue as string], ...tagStyle }} >
                         {renderedCellValue}
                     </Box>
                 ),

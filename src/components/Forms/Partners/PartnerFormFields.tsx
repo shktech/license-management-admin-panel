@@ -1,262 +1,29 @@
 import { FieldConfig } from "../FormControlWrapper";
+import { InitialFieldConfig } from "../InitialFieldConfig";
+import { InputCustomerFormFields, InputResellerCustomerFormFields } from "./InputCustomerFormFields";
 
-const BillingPartnerInformationFormFields: FieldConfig[] = [
-  {
-    name: "bill_customer_name",
-    label: "Billing Customer Name",
-    placeholder: "Billing Customer Name",
-    rules: { required: "Billing Customer Name is required" },
-    type: "text",
-  },
-  {
-    name: "bill_customer_account",
-    label: "Billing Customer Account",
-    placeholder: "Billing Customer Account",
-    rules: { required: "Billing Customer Account is required" },
-    type: "text",
-  },
-  {
-    name: "bill_address1",
-    label: "Billing Address 1",
-    placeholder: "Billing Address 1",
-    rules: { required: "Billing Address 1 is required" },
-    type: "text",
-  },
-  {
-    name: "bill_address2",
-    label: "Billing Address 2",
-    placeholder: "Billing Address 2",
-    type: "text",
-  },
-  {
-    name: "bill_city",
-    label: "Billing City",
-    placeholder: "Billing City",
-    rules: { required: "Billing City is required" },
-    type: "text",
-  },
-  {
-    name: "bill_state",
-    label: "Billing State",
-    placeholder: "Billing State",
-    rules: { required: "Billing State is required" },
-    type: "text",
-  },
-  {
-    name: "bill_postal_code",
-    label: "Billing Postal Code",
-    placeholder: "Billing Postal Code",
-    rules: { required: "Billing Postal Code is required" },
-    type: "text",
-  },
-  {
-    name: "bill_country",
-    label: "Billing Country",
-    placeholder: "Billing Country",
-    rules: { required: "Billing Country is required" },
-    type: "text",
-  },
-  {
-    name: "bill_contact_first_name",
-    label: "Billing Contact First Name",
-    placeholder: "Billing Contact First Name",
-    rules: { required: "Billing Contact First Name is required" },
-    type: "text",
-  },
-  {
-    name: "bill_contact_last_name",
-    label: "Billing Contact Last Name",
-    placeholder: "Billing Contact Last Name",
-    rules: { required: "Billing Contact Last Name is required" },
-    type: "text",
-  },
-  {
-    name: "bill_contact_phone",
-    label: "Billing Contact Phone",
-    placeholder: "Billing Contact Phone",
-    rules: { required: "Billing Contact Phone is required" },
-    type: "text",
-  },
-  {
-    name: "bill_contact_email",
-    label: "Billing Contact Email",
-    placeholder: "Billing Contact Email",
-    rules: { required: "Billing Contact Email is required" },
-    type: "text",
-  },
-];
+const BillingPartnerInformationFormFields: FieldConfig[] = InputCustomerFormFields.map(field => ({
+  name: "bill_" + field.name,
+  label: "Bill " + field.label,
+  placeholder: field.placeholder,
+  rules: field.rules,
+  type: field.type,
+}))
 
-const ShippingPartnerInformationFormFields: FieldConfig[] = [
-  {
-    name: "ship_customer_name",
-    label: "Shipping Customer Name",
-    placeholder: "Shipping Customer Name",
-    rules: { required: "Shipping Customer Name is required" },
-    type: "text",
-  },
-  {
-    name: "ship_customer_account",
-    label: "Shipping Customer Account",
-    placeholder: "Shipping Customer Account",
-    rules: { required: "Shipping Customer Account is required" },
-    type: "text",
-  },
-  {
-    name: "ship_address1",
-    label: "Shipping Address 1",
-    placeholder: "Shipping Address 1",
-    rules: { required: "Shipping Address 1 is required" },
-    type: "text",
-  },
-  {
-    name: "ship_address2",
-    label: "Shipping Address 2",
-    placeholder: "Shipping Address 2",
-    type: "text",
-  },
-  {
-    name: "ship_city",
-    label: "Shipping City",
-    placeholder: "Shipping City",
-    rules: { required: "Shipping City is required" },
-    type: "text",
-  },
-  {
-    name: "ship_state",
-    label: "Shipping State",
-    placeholder: "Shipping State",
-    rules: { required: "Shipping State is required" },
-    type: "text",
-  },
-  {
-    name: "ship_postal_code",
-    label: "Shipping Postal Code",
-    placeholder: "Shipping Postal Code",
-    rules: { required: "Shipping Postal Code is required" },
-    type: "text",
-  },
-  {
-    name: "ship_country",
-    label: "Shipping Country",
-    placeholder: "Shipping Country",
-    rules: { required: "Shipping Country is required" },
-    type: "text",
-  },
-  {
-    name: "ship_contact_first_name",
-    label: "Shipping Contact First Name",
-    placeholder: "Shipping Contact First Name",
-    rules: { required: "Shipping Contact First Name is required" },
-    type: "text",
-  },
-  {
-    name: "ship_contact_last_name",
-    label: "Shipping Contact Last Name",
-    placeholder: "Shipping Contact Last Name",
-    rules: { required: "Shipping Contact Last Name is required" },
-    type: "text",
-  },
-  {
-    name: "ship_contact_phone",
-    label: "Shipping Contact Phone",
-    placeholder: "Shipping Contact Phone",
-    rules: { required: "Shipping Contact Phone is required" },
-    type: "text",
-  },
-  {
-    name: "ship_contact_email",
-    label: "Shipping Contact Email",
-    placeholder: "Shipping Contact Email",
-    rules: { required: "Shipping Contact Email is required" },
-    type: "text",
-  },
-];
-
-const ResellerPartnerInformationFormFields: FieldConfig[] = [
-  {
-    name: "reseller_customer_name",
-    label: "Reseller Customer Name",
-    placeholder: "Reseller Customer Name",
-    rules: { required: "Reseller Customer Name is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_customer_account",
-    label: "Reseller Customer Account",
-    placeholder: "Reseller Customer Account",
-    rules: { required: "Reseller Customer Account is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_address1",
-    label: "Reseller Address 1",
-    placeholder: "Reseller Address 1",
-    rules: { required: "Reseller Address 1 is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_address2",
-    label: "Reseller Address 2",
-    placeholder: "Reseller Address 2",
-    type: "text",
-  },
-  {
-    name: "reseller_city",
-    label: "Reseller City",
-    placeholder: "Reseller City",
-    rules: { required: "Reseller City is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_state",
-    label: "Reseller State",
-    placeholder: "Reseller State",
-    rules: { required: "Reseller State is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_postal_code",
-    label: "Reseller Postal Code",
-    placeholder: "Reseller Postal Code",
-    rules: { required: "Reseller Postal Code is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_country",
-    label: "Reseller Country",
-    placeholder: "Reseller Country",
-    rules: { required: "Reseller Country is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_contact_first_name",
-    label: "Reseller Contact First Name",
-    placeholder: "Reseller Contact First Name",
-    rules: { required: "Reseller Contact First Name is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_contact_last_name",
-    label: "Reseller Contact Last Name",
-    placeholder: "Reseller Contact Last Name",
-    rules: { required: "Reseller Contact Last Name is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_contact_phone",
-    label: "Reseller Contact Phone",
-    placeholder: "Reseller Contact Phone",
-    rules: { required: "Reseller Contact Phone is required" },
-    type: "text",
-  },
-  {
-    name: "reseller_contact_email",
-    label: "Reseller Contact Email",
-    placeholder: "Reseller Contact Email",
-    rules: { required: "Reseller Contact Email is required" },
-    type: "text",
-  },
-];
+const ShippingPartnerInformationFormFields: FieldConfig[] = InputCustomerFormFields.map(field => ({
+  name: "ship_" + field.name,
+  label: "Ship " + field.label,
+  placeholder: field.placeholder,
+  rules: field.rules,
+  type: field.type,
+}))
+const ResellerPartnerInformationFormFields: FieldConfig[] = InputResellerCustomerFormFields.map(field => ({
+  name: "reseller_" + field.name,
+  label: "Reseller " + field.label,
+  placeholder: field.placeholder,
+  rules: field.rules,
+  type: field.type,
+}))
 
 export default {
   BillingPartnerInformationFormFields,
