@@ -19,15 +19,8 @@ const Page = () => {
 
   useEffect(() => {
     reset(identity);
-    console.log(identity);
   }, [identity]);
 
-
-  const isActive = watch('is_active');
-
-  useEffect(() => {
-    console.log(isActive);
-  }, [isActive])
   return (
     <div className="">
       <div className="flex gap-4 items-center px-12 py-8">

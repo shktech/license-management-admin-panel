@@ -8,9 +8,6 @@ const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
-  useEffect(() => {
-    // console.log(props.sidebarOpen);
-  }, [props.sidebarOpen])
   return (
     <header className="sticky top-0 z-99 flex w-full my-header">
       <div className="flex items-center justify-between w-full px-4 py-4 md:px-6 2xl:px-11">
