@@ -2,7 +2,7 @@ import { getSecondRealFormFields } from "@utils/utilFunctions";
 import { SecondInitialFieldConfig } from "../InitialFieldConfig";
 
 const InitialField: SecondInitialFieldConfig[] = [
-    { name: "product_part_number", size: 2 },
+    { name: "product_part_number", size: 2, required: 'text' },
     { name: "product_type", required: 'text' },
     {
         name: "duration",

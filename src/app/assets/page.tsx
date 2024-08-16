@@ -3,14 +3,25 @@ import React, { useMemo } from "react";
 import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Asset, Permission } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
-import { MRT_ColumnDef } from "material-react-table";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
+import AssetIcon from "@/assets/icons/asset.svg?icon";
 import Loader from "@components/common/Loader";
+import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading },
+    setCurrent,
+    setFilters,
+    setSorters,
   } = useTable<Asset>();
   const { push } = useNavigation();
+
+  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+
+  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+
+  const handlePage = (value: number) => setCurrent(value);
 
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "asset" } });
 
@@ -68,6 +79,10 @@ const Page = () => {
           columns={columns}
           noCreateNeed
           onRowClick={handleRowClick}
+          totalCount={data?.total}
+          handlePage={handlePage}
+          handleSorting={handleSorting}
+          handleSearch={handleSearch}
           canCreate={permissionsData?.create}
           canEdit={permissionsData?.update}
         />

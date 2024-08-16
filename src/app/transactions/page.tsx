@@ -4,22 +4,26 @@ import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Permission, Transaction } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
-import { MRT_ColumnDef } from "material-react-table";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
+import TransactionWithColorIcon from "@/assets/icons/transactionWithColor.svg?icon";
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
-import { getFormattedDate } from "@utils/utilFunctions";
+import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading },
     setCurrent,
     setFilters,
+    setSorters,
   } = useTable<Transaction>();
 
   const { push } = useNavigation();
 
   const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+
+  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
 
@@ -120,6 +124,7 @@ const Page = () => {
               canCreate={permissionsData?.create}
               totalCount={data?.total}
               handlePage={handlePage}
+              handleSorting={handleSorting}
               handleSearch={handleSearch}
               canDelete={false}
               canEdit={permissionsData?.update} />
