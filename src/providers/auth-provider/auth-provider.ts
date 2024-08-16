@@ -18,7 +18,6 @@ export interface CustomAuthProvider extends AuthProvider {
 }
 
 const aggregatePermissionsByCodename = (roles: Role[], codename: string): Permission | null => {
-    console.log(roles, codename)
     const aggregatedPermission: Permission = {
         codename: codename,
         create: false,

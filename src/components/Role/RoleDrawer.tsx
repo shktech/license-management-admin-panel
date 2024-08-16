@@ -61,9 +61,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
           values: payload,
         },
         {
-          onError: (error) => {
-            console.log(error);
-          },
+          onError: (error) => console.log(error),
           onSuccess: () => onClose(),
         }
       );
@@ -76,9 +74,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
           values: payload,
         },
         {
-          onError: (error) => {
-            console.log(error);
-          },
+          onError: (error) => console.log(error),
           onSuccess: () => onClose(),
         }
       );
