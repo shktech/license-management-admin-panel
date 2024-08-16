@@ -44,14 +44,20 @@ const customDataProvider: DataProvider = {
   ...nestjsxDataProvider(API_URL as string, axiosInstance),
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
 
-    const { current = 1, pageSize = 10 } = pagination ?? {};
-    const offset = (current - 1) * pageSize;
 
-    let params: PARAMS = {
-      limit: 10,
-      page: current,
-      offset: offset,
+    let params: PARAMS = {}
+
+    if (pagination?.mode) {
+      const { current = 1, pageSize = 10 } = pagination ?? {};
+      const offset = (current - 1) * pageSize;
+      params = {
+        ...params,
+        limit: 10,
+        page: current,
+        offset: offset,
+      }
     }
+
 
     if (filters && filters.length > 0) {
       params.filter = filters[0].value;
@@ -66,7 +72,13 @@ const customDataProvider: DataProvider = {
       params: params,
     });
 
-    return response.data;
+    if (pagination?.mode != 'off') {
+      return response.data;
+    }
+    return {
+      data: response.data,
+      total: response.data.length
+    }
   },
 }
 
