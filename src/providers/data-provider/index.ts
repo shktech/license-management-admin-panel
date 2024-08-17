@@ -1,13 +1,12 @@
 "use client";
 
-import dataProviderSimpleRest from "@refinedev/simple-rest";
 import nestjsxDataProvider, { axiosInstance } from "@refinedev/nestjsx-crud";
 
-const localAPI_URL = "http://localhost:3000/api";
-const virtualAPI_URL = "https://lic-refine.vercel.app/api";
+// const localAPI_URL = "http://localhost:3000/api";
+// const virtualAPI_URL = "https://lic-refine.vercel.app/api";
 const realAPI_URL = "https://license-management-server.vercel.app/api";
 
-const API_URL = realAPI_URL;
+const API_URL = process.env.API_URL;
 
 const replaceUrlIfNeeded = (url: string | undefined): string | undefined => {
   if (!url) return url;
@@ -28,4 +27,4 @@ axiosInstance.interceptors.request.use(
     return config;
   }
 );
-export const dataProvider = nestjsxDataProvider(API_URL, axiosInstance);
+export const dataProvider = nestjsxDataProvider(API_URL ?? realAPI_URL, axiosInstance);

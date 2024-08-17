@@ -57,7 +57,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
     if (create) {
       createRole(
         {
-          resource: "roles/",
+          resource: "roles",
           values: payload,
         },
         {

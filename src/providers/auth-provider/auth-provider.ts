@@ -4,6 +4,9 @@ import useStore from "@hooks/globalStore";
 import { AuthProvider } from "@refinedev/core";
 import { Organization, Permission, Role, User } from "@/types/types";
 
+const realAPI_URL = "https://license-management-server.vercel.app/api";
+const API_URL = process.env.API_URL;
+
 export interface LoginResponse {
     temp_access: string;
     user_id: string;
@@ -57,7 +60,7 @@ const getCurrentUser = async (): Promise<User | null> => {
 
 export const authProvider: AuthProvider = {
     login: async ({ email, password }) => {
-        const response = await fetch("https://license-management-server.vercel.app/api/login", {
+        const response = await fetch(`${API_URL ?? realAPI_URL}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -81,7 +84,7 @@ export const authProvider: AuthProvider = {
         // }
     },
     register: async ({ token, username, password, first_name, last_name }) => {
-        const response = await fetch("https://license-management-server.vercel.app/api/register/", {
+        const response = await fetch(`${API_URL ?? realAPI_URL}/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -117,7 +120,7 @@ export const authProvider: AuthProvider = {
     check: async () => {
         const currentUrl: string = window.location.href;
 
-        const response = await fetch("https://license-management-server.vercel.app/api/token/refresh", {
+        const response = await fetch(`${API_URL ?? realAPI_URL}/token/refresh`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -152,7 +155,7 @@ export const authProvider: AuthProvider = {
     getIdentity: async () => {
         const user: User | null = useStore.getState().user ?? null;
         if (!user) {
-            const response = await fetch("https://license-management-server.vercel.app/api/user", {
+            const response = await fetch(`${API_URL ?? realAPI_URL}/user`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

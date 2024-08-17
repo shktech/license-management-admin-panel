@@ -64,7 +64,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
     };
     mutate({
       resource: "users",
-      id: `${selectedUser.user_id}/roles/`,
+      id: `${selectedUser.user_id}/roles`,
       values: payload
     }, {
       onError: (error) => {
