@@ -41,7 +41,7 @@ axiosInstance.interceptors.request.use(
 // export const dataProvider = nestjsxDataProvider(API_URL, axiosInstance);
 
 const customDataProvider: DataProvider = {
-  ...nestjsxDataProvider(API_URL as string, axiosInstance),
+  ...nestjsxDataProvider(API_URL ?? realAPI_URL, axiosInstance),
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
 
 
@@ -68,7 +68,7 @@ const customDataProvider: DataProvider = {
       params.order = sorters[0].order;
     }
 
-    const response = await axiosInstance.get(`${API_URL}/${resource}`, {
+    const response = await axiosInstance.get(`${API_URL ?? realAPI_URL}/${resource}`, {
       params: params,
     });
 
