@@ -1,6 +1,5 @@
-import { getRealFormFields, getSecondRealFormFields, getTitleCase } from "@utils/utilFunctions";
-import { FieldConfig } from "../FormControlWrapper";
-import { InitialFieldConfig, SecondInitialFieldConfig } from "../InitialFieldConfig";
+import { getSecondRealFormFields } from "@utils/utilFunctions";
+import { SecondInitialFieldConfig } from "../InitialFieldConfig";
 
 const InitialCustomerFormFields: SecondInitialFieldConfig[] = [
   {

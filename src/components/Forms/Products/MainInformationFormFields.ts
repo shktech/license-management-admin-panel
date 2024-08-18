@@ -1,7 +1,5 @@
-import { FieldConfig } from "../FormControlWrapper";
-import { useFetchOptions } from "@/hooks/useFetchOptions";
-import { InitialFieldConfig, SecondInitialFieldConfig } from "../InitialFieldConfig";
 import { getSecondRealFormFields } from "@utils/utilFunctions";
+import { SecondInitialFieldConfig } from "../InitialFieldConfig";
 
 const InitialField: SecondInitialFieldConfig[] = [
     { name: "product_part_number", size: 2 },

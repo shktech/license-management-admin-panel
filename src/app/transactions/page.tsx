@@ -5,10 +5,8 @@ import { Permission, Transaction } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
-import TransactionWithColorIcon from "@/assets/icons/transactionWithColor.svg?icon";
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import { useRouter } from "next/navigation";
 import { tagStyle } from "@data/MuiStyles";
 import { getFormattedDate } from "@utils/utilFunctions";
 
@@ -19,27 +17,17 @@ const Page = () => {
     setFilters,
   } = useTable<Transaction>();
 
-  const mytable = useTable<Transaction>();
-
-  const { show } = useNavigation();
-
-  const router = useRouter();
+  const { push } = useNavigation();
 
   const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
 
   const handlePage = (value: number) => setCurrent(value);
 
-  const handleCreate = () => router.push('/transactions/create')
+  const handleCreate = () => push('/transactions/create')
 
-  const handleRowClick = (row: Transaction) => show("transactions", row.transaction_id)
+  const handleRowClick = (row: Transaction) => push(`/transactions/show?id=${row.transaction_id}`)
 
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "transaction" } });
-
-  useEffect(() => {
-    if (!isLoading && data) {
-      console.log(mytable);
-    }
-  }, [isLoading, data])
 
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
     () => [

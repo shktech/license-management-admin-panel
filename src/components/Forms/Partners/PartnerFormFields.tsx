@@ -1,5 +1,4 @@
 import { FieldConfig } from "../FormControlWrapper";
-import { InitialFieldConfig } from "../InitialFieldConfig";
 import { InputCustomerFormFields, InputResellerCustomerFormFields } from "./InputCustomerFormFields";
 
 const BillingPartnerInformationFormFields: FieldConfig[] = InputCustomerFormFields.map(field => ({

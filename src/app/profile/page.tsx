@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
-import { useGetIdentity, usePermissions, useTable } from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
-import { Permission, Role, User } from "@/types/types";
+import { Permission, User } from "@/types/types";
 import ProfileForm from "@components/Forms/Profile/ProfileForm";
-import { RoleColors } from "@data/ColorData";
 import PermissionsTable from "@components/Role/PermissionsTable";
+import { RoleColors } from "@data/ColorData";
+import { useGetIdentity } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { useEffect } from "react";
 
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();

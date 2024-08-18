@@ -1,7 +1,5 @@
-import { FieldConfig } from "../FormControlWrapper";
-import { useFetchOptions } from "@/hooks/useFetchOptions";
-import { InitialFieldConfig, SecondInitialFieldConfig } from "../InitialFieldConfig";
-import { getRealFormFields, getSecondRealFormFields } from "@utils/utilFunctions";
+import { getSecondRealFormFields } from "@utils/utilFunctions";
+import { SecondInitialFieldConfig } from "../InitialFieldConfig";
 
 const InitialField: SecondInitialFieldConfig[] = [
     {
@@ -17,6 +15,7 @@ const InitialField: SecondInitialFieldConfig[] = [
         name: "license_type",
         type: "dropdown",
         size: 1,
+        required: 'text',
         options: [
             { value: "Eval", label: "Eval" },
             { value: "Subscription", label: "Subscription" },

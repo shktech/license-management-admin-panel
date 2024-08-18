@@ -65,7 +65,6 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
       ...data,
       body: emailBody,
     };
-    console.log(payload);
     mutate(
       {
         resource: "email-templates/type",
@@ -86,7 +85,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
         recipient_email: testRecipient
     }
     sendTestEmail({
-      resource: `email-templates/type/${template.type as string}/test/`,
+      resource: `email-templates/type/${template.type as string}/test`,
       values: payload,
     });
   }

@@ -1,18 +1,15 @@
 'use client'
 
-import { useMemo, useState } from 'react';
-import {
-    MaterialReactTable,
-    useMaterialReactTable,
-    type MRT_ColumnDef,
-} from 'material-react-table';
 import { Transaction } from '@/types/types';
-import { useRouter } from 'next/navigation';
 import GenericTable from '@components/Table/GenericTable';
-import { Box } from '@mui/material';
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from '@data/ColorData';
+import { TxtActionColor, TxtStatusColor } from '@data/ColorData';
 import { tagStyle } from '@data/MuiStyles';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Box } from '@mui/material';
+import {
+    type MRT_ColumnDef
+} from 'material-react-table';
+import { useMemo, useState } from 'react';
 import TransactionDetailDrawer from './TransactionDetailDrawer';
 
 interface TransactionHistoryTableProps {

@@ -71,6 +71,7 @@ const GeneralSwitch = ({ label, onChange, value, ...props }: BaseInputProps) => 
           onChange={handleChange}
           checked={value as boolean}
           sx={{ mx: 1 }}
+          disabled={props.disabled}
         />
       }
       label={label}

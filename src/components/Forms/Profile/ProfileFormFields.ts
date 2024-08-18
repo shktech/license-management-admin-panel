@@ -1,5 +1,4 @@
 import { FieldConfig } from "../FormControlWrapper";
-import { useFetchOptions } from "@/hooks/useFetchOptions";
 
 const ProfileFormFields: FieldConfig[] = [
     {
@@ -43,14 +42,6 @@ const ProfileFormFields: FieldConfig[] = [
         type: "text",
         size: 1,
     },
-    // {
-    //     name: "is_active",
-    //     label: "Is Active",
-    //     placeholder: "Is Active",
-    //     rules: { required: "Is Active is required" },
-    //     type: "switch",
-    //     size: 1,
-    // },
 ];
 
 export default ProfileFormFields;

@@ -4,14 +4,13 @@ import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Asset, Permission } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef } from "material-react-table";
-import AssetIcon from "@/assets/icons/asset.svg?icon";
 import Loader from "@components/common/Loader";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading },
   } = useTable<Asset>();
-  const { show } = useNavigation();
+  const { push } = useNavigation();
 
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "asset" } });
 
@@ -50,7 +49,7 @@ const Page = () => {
   );
 
   const handleRowClick = (row: Asset) => {
-    show("assets", row.asset_id as string);
+    push(`/assets/show?id=${row.asset_id}`);
   };
 
 

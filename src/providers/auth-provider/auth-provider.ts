@@ -118,8 +118,6 @@ export const authProvider: AuthProvider = {
         }
     },
     check: async () => {
-        const currentUrl: string = window.location.href;
-
         const response = await fetch(`${API_URL ?? realAPI_URL}/token/refresh`, {
             method: "POST",
             headers: {
@@ -131,18 +129,14 @@ export const authProvider: AuthProvider = {
             const data = await response.json();
             localStorage.setItem("accessToken", data.access);
             localStorage.setItem("refreshToken", data.refresh);
-
-            if (currentUrl.includes("auth")) {
-                return {
-                    authenticated: true,
-                    redirectTo: "/dashboard",
-                };
-            }
-    
             return {
                 authenticated: true,
             }
         } else {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("tempToken");
+            useStore.getState().setUser(null);    
             return {
                 authenticated: false,
                 redirectTo: "/auth/signin"

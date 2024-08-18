@@ -61,7 +61,7 @@ export const menuGroups = [
             { label: "Profile", route: "/profile" },
             { label: "Roles", route: "/roles" },
             { label: "User", route: "/users" },
-            { label: "Org Setup", route: "/org-setup" },
+            { label: "Org Setup", route: "/orgs" },
           ],
         },
       ],

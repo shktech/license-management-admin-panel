@@ -30,18 +30,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const theme = cookieStore.get("theme");
-  const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
   return (
     <html lang="en">
-      <body className={defaultMode === "dark" ? "dark" : ""} suppressHydrationWarning={true}>
+      <body className={"light"} suppressHydrationWarning={true}>
         <StyledEngineProvider injectFirst>
           <Suspense>
             <RefineKbarProvider>
               <RefineSnackbarProvider>
-                {/* <ColorModeContextProvider defaultMode={defaultMode}> */}
                 <Refine
                   routerProvider={routerProvider}
                   dataProvider={dataProvider}

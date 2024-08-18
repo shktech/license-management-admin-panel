@@ -1,27 +1,31 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useForm } from "@refinedev/react-hook-form";
-import { Edit, SaveButton } from "@refinedev/mui";
+import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { InputTransaction, Transaction } from "@/types/types";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
-import Link from "next/link";
-import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { useBack, useList } from "@refinedev/core";
-import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
+import { sendEmailBtnStyle } from "@data/MuiStyles";
+import { useBack, useParsed } from "@refinedev/core";
+import { Edit, SaveButton } from "@refinedev/mui";
+import { useForm } from "@refinedev/react-hook-form";
+import { useEffect, useState } from "react";
 
 const TransactionEdit = () => {
+  const { params } = useParsed();
   const {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
     control,
     reset,
     trigger,
-    watch,
-    setValue,
     formState: { errors },
-  } = useForm<Transaction>();
+  } = useForm<Transaction>({
+    refineCoreProps: {
+      action: "edit",
+      resource: "transactions",
+      id: params?.id,
+    },
+  });
 
   const transaction: Transaction = queryResult?.data?.data as Transaction;
 
@@ -39,7 +43,8 @@ const TransactionEdit = () => {
         bill_address2: transaction.bill_customer?.contact?.address?.address2,
         bill_city: transaction.bill_customer?.contact?.address?.city,
         bill_state: transaction.bill_customer?.contact?.address?.state,
-        bill_postal_code: transaction.bill_customer?.contact?.address?.postal_code,
+        bill_postal_code:
+          transaction.bill_customer?.contact?.address?.postal_code,
         bill_country: transaction.bill_customer?.contact?.address?.country,
         bill_contact_first_name: transaction.bill_customer?.contact?.first_name,
         bill_contact_last_name: transaction.bill_customer?.contact?.last_name,
@@ -50,7 +55,8 @@ const TransactionEdit = () => {
         ship_address2: transaction.ship_customer?.contact?.address?.address2,
         ship_city: transaction.ship_customer?.contact?.address?.city,
         ship_state: transaction.ship_customer?.contact?.address?.state,
-        ship_postal_code: transaction.ship_customer?.contact?.address?.postal_code,
+        ship_postal_code:
+          transaction.ship_customer?.contact?.address?.postal_code,
         ship_country: transaction.ship_customer?.contact?.address?.country,
         ship_contact_first_name: transaction.ship_customer?.contact?.first_name,
         ship_contact_last_name: transaction.ship_customer?.contact?.last_name,
@@ -61,7 +67,8 @@ const TransactionEdit = () => {
         reseller_address2: transaction.reseller?.contact?.address?.address2,
         reseller_city: transaction.reseller?.contact?.address?.city,
         reseller_state: transaction.reseller?.contact?.address?.state,
-        reseller_postal_code: transaction.reseller?.contact?.address?.postal_code,
+        reseller_postal_code:
+          transaction.reseller?.contact?.address?.postal_code,
         reseller_country: transaction.reseller?.contact?.address?.country,
         reseller_contact_first_name: transaction.reseller?.contact?.first_name,
         reseller_contact_last_name: transaction.reseller?.contact?.last_name,
@@ -73,14 +80,22 @@ const TransactionEdit = () => {
         end_date: transaction.end_date,
         waybill_number: transaction.waybill_number,
         return_waybill_number: transaction.return_waybill_number,
-      }
+      };
       reset({ ...resetTransaction });
     }
   }, [formLoading, transaction]);
 
   return (
     <Edit
-      goBack={<button onClick={useBack()} className="inline-block mx-2 p-2 rounded-xl border duration-500 border-transparent hover:border-black"> <ArrowIcon /></button>}
+      goBack={
+        <button
+          onClick={useBack()}
+          className="inline-block mx-2 p-2 rounded-xl border duration-500 border-transparent hover:border-black"
+        >
+          {" "}
+          <ArrowIcon />
+        </button>
+      }
       canDelete={false}
       title={
         <div className="!font-satoshi text-2xl font-semibold text-[#536175] flex items-center">
@@ -89,7 +104,9 @@ const TransactionEdit = () => {
       }
       breadcrumb={false}
       headerButtons={<></>}
-      wrapperProps={{ className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5" }}
+      wrapperProps={{
+        className: "rounded-none bg-[#f2f6fa] shadow-none pt-6 pb-2.5",
+      }}
       saveButtonProps={{ ...saveButtonProps, hidden: false }}
       footerButtons={({ saveButtonProps }) => (
         <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
@@ -99,9 +116,7 @@ const TransactionEdit = () => {
         <Loader />
       ) : (
         <div className="px-8">
-          <TransactionForm
-            {...{ control, errors, trigger }}
-          />
+          <TransactionForm {...{ control, errors, trigger }} />
         </div>
       )}
     </Edit>

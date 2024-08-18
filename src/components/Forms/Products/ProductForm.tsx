@@ -1,11 +1,10 @@
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { Product } from "../../../types/types";
 import { GenericFormProps } from "../FormControlWrapper";
-import ProductFormFields from "./MainInformationFormFields";
 import GenericForm from "../GenericForm";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import MainInformationFormFields from "./MainInformationFormFields";
 import AttributeFormFields from "./AttributeFormFields";
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import MainInformationFormFields from "./MainInformationFormFields";
 
 export type ProductFormProps = GenericFormProps & {
     product?: Product;

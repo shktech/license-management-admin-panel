@@ -1,29 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { FieldConfig, GenericFormProps } from "../FormControlWrapper";
 import { Transaction } from "@/types/types";
-import { GeneralTxnFormField } from "./GeneralTxnFormField";
-import PartnerFormFields from "../Partners/PartnerFormFields";
-import GenericForm from "../GenericForm";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import NoteIcon from "@/assets/icons/note.svg?icon";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
-import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import DetailsIcon from '@mui/icons-material/Details';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import { GenericFormProps } from "../FormControlWrapper";
+import GenericForm from "../GenericForm";
+import PartnerFormFields from "../Partners/PartnerFormFields";
+import { GeneralTxnFormField } from "./GeneralTxnFormField";
+import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
+import { useEffect, useState } from "react";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
 };
 const TransactionForm = (props: TransactionFormProps) => {
+  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({"Transaction": true});
+
+  useEffect(() => {
+    const errors = props.errors;
+    const newExpandedPanels = FormGroups.reduce((acc, group, index) => {
+      const hasErrors = group.fields.some((field: any) => errors?.[field.name]);;
+      const shouldExpand = hasErrors || index === 0;
+      return { ...acc, [group.title]: shouldExpand };
+    }, {});
+    setExpandedPanels(newExpandedPanels);
+  }, [props]);
+
+  const handleAccordionChange = (panel: string) => {
+    setExpandedPanels((prev) => ({
+      ...prev,
+      [panel]: !prev[panel],
+    }));
+  };
+
   const FormGroups = [
     {
       icon: <PaidOutlinedIcon />,
@@ -64,8 +79,9 @@ const TransactionForm = (props: TransactionFormProps) => {
         {
           FormGroups.map((formGroup, i) => (
             <Accordion
-              key={i}
-              defaultExpanded={i == 0}
+              key={formGroup.title}
+              expanded={expandedPanels[formGroup.title] || false}
+              onChange={() => handleAccordionChange(formGroup.title)}
               sx={{
                 borderTop: '2px solid #1f325c',
                 '&::before': { display: 'none' },
@@ -75,8 +91,8 @@ const TransactionForm = (props: TransactionFormProps) => {
             >
               <AccordionSummary
                 expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem', color: '#536175' }} />}
-                aria-controls="panel1-content"
-                id={formGroup.title}
+                aria-controls={`${formGroup.title}-content`}
+                id={`${formGroup.title}-content`}
                 sx={{
                   py: 1,
                   flexDirection: 'row-reverse',

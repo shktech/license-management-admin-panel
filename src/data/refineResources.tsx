@@ -200,7 +200,9 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "orgsetup",
-    list: "/settings/org-setup",
+    list: "/orgs",
+    create: "/orgs",
+    edit: "/orgs/:id",
     meta: {
       label: "Org Setup",
       parent: "settings",

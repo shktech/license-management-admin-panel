@@ -26,7 +26,7 @@ const GeneralInformationCard: React.FC<GeneralInformationCardProps> = ({
       }
       <div className="">
         {items.map((item, index) => (
-          <div className={`flex gap-2 px-12 py-3 items-center ${items.length != index + 1 ? 'border-b border-[#d5dce3]' : ''}`}>
+          <div key={index} className={`flex gap-2 px-12 py-3 items-center ${items.length != index + 1 ? 'border-b border-[#d5dce3]' : ''}`}>
             <div className="text-base font-medium text-[#666f75] min-w-96">{item.label}</div>
             <div className="text-base">{item.value || ""}</div>
           </div>

@@ -1,12 +1,12 @@
+import { IOSSwitch } from "@components/Input/GeneralSwitch";
+import { modalOkBtnStyle } from "@data/MuiStyles";
+import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { useState } from "react";
-import { Product, User } from "../../../types/types";
+import { User } from "../../../types/types";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import PasswordsFormFields from "./PasswordsFormFields";
 import ProfileFormFields from "./ProfileFormFields";
-import { Button, Collapse, FormControlLabel, styled, Switch, SwitchProps } from "@mui/material";
-import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { IOSSwitch } from "@components/Input/GeneralSwitch";
 
 export type ProfileFormProps = GenericFormProps & {
     user?: User;
