@@ -172,35 +172,35 @@ const Page = () => {
                     },
                     {
                       label: "OSC Seat Count",
-                      value: asset?.osc_seat_count,
+                      value: asset?.osc_seat_count?.toString(),
                     },
                     {
                       label: "License Server Seat Count",
-                      value: asset?.license_server_seat_count,
+                      value: asset?.license_server_seat_count?.toString(),
                     },
                     {
                       label: "Active Seats",
-                      value: asset?.active_seats,
+                      value: asset?.active_seats?.toString(),
                     },
                     {
                       label: "Renewal Seats",
-                      value: asset?.renewal_seats,
+                      value: asset?.renewal_seats?.toString(),
                     },
                     {
                       label: "Revoked Seats",
-                      value: asset?.revoked_seats,
+                      value: asset?.revoked_seats?.toString(),
                     },
                     {
                       label: "Suspended Seats",
-                      value: asset?.suspended_seats,
+                      value: asset?.suspended_seats?.toString(),
                     },
                     {
                       label: "Terminated Seats",
-                      value: asset?.terminated_seats,
+                      value: asset?.terminated_seats?.toString(),
                     },
                     {
                       label: "Expired Seats",
-                      value: asset?.expired_seats,
+                      value: asset?.expired_seats?.toString(),
                     },
                   ]}
                 />
