@@ -21,6 +21,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import GenericTable from "@components/Table/GenericTable";
 import Loader from "@components/common/Loader";
+import CommonTable from "@components/Table/CommonTable";
 
 const Page = () => {
   const { data: identity, isLoading: isIdentityLoading } =
@@ -136,7 +137,7 @@ const Page = () => {
       {
         loading ?
           <Loader /> :
-          <GenericTable
+          <CommonTable
             title={
               <div className="flex gap-4 items-end">
                 <div className="text-lg font-semibold">Organizations</div>
@@ -148,8 +149,6 @@ const Page = () => {
             data={orgData}
             columns={columns}
             canCreate={true}
-            noSearchNeed
-            totalCount={orgs?.total}
             handleCreate={handleCreate}
           />
       }
