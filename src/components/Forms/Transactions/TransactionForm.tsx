@@ -22,15 +22,15 @@ export type TransactionFormProps = GenericFormProps & {
 const TransactionForm = (props: TransactionFormProps) => {
   const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({"Transaction": true});
 
-  useEffect(() => {
-    const errors = props.errors;
-    const newExpandedPanels = FormGroups.reduce((acc, group, index) => {
-      const hasErrors = group.fields.some((field: any) => errors?.[field.name]);;
-      const shouldExpand = hasErrors || index === 0;
-      return { ...acc, [group.title]: shouldExpand };
-    }, {});
-    setExpandedPanels(newExpandedPanels);
-  }, [props]);
+  // useEffect(() => {
+  //   const errors = props.errors;
+  //   const newExpandedPanels = FormGroups.reduce((acc, group, index) => {
+  //     const hasErrors = group.fields.some((field: any) => errors?.[field.name]);;
+  //     const shouldExpand = hasErrors || index === 0;
+  //     return { ...acc, [group.title]: shouldExpand };
+  //   }, {});
+  //   setExpandedPanels(newExpandedPanels);
+  // }, [props]);
 
   const handleAccordionChange = (panel: string) => {
     setExpandedPanels((prev) => ({

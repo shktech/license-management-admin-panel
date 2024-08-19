@@ -15,10 +15,10 @@ export const dashboardResources: ResourceProps[] = [
   // },
   {
     name: "transactions",
-    list: "/transactions",
-    create: "/transactions/create",
-    edit: "/transactions/edit/:id",
-    show: "/transactions/show/:id",
+    list: "/dashboard/transactions",
+    create: "/dashboard/transactions/create",
+    edit: "/dashboard/transactions/edit/:id",
+    show: "/dashboard/transactions/show/:id",
     meta: {
       canDelete: true,
       label: "Transactions",
@@ -44,10 +44,10 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "assets",
-    list: "/assets",
-    create: "/assets/create",
-    edit: "/assets/edit/:id",
-    show: "/assets/show/:id",
+    list: "/dashboard/assets",
+    create: "/dashboard/assets/create",
+    edit: "/dashboard/assets/edit/:id",
+    show: "/dashboard/assets/show/:id",
     meta: {
       canDelete: true,
       label: "Assets",
@@ -71,10 +71,10 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "products",
-    list: "/products",
-    create: "/products/create",
-    edit: "/products/edit/:id",
-    show: "/products/show/:id",
+    list: "/dashboard/products",
+    create: "/dashboard/products/create",
+    edit: "/dashboard/products/edit/:id",
+    show: "/dashboard/products/show/:id",
     meta: {
       canDelete: true,
       label: "Products",
@@ -102,7 +102,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "lookups",
-    list: "/maintenance/lookups",
+    list: "/dashboard/maintenance/lookups",
     meta: {
       label: "Lookups",
       parent: "maintenance",
@@ -110,7 +110,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "licensecode",
-    list: "/maintenance/license-code",
+    list: "/dashboard/maintenance/license-code",
     meta: {
       label: "License Code",
       parent: "maintenance",
@@ -118,7 +118,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "email-templates",
-    // list: "/email-templates",
+    list: "/dashboard/email-templates",
     meta: {
       label: "Email Templates",
       parent: "maintenance",
@@ -126,7 +126,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "unsubscribe",
-    list: "/maintenance/unsubscribe",
+    list: "/dashboard/maintenance/unsubscribe",
     meta: {
       label: "Unsubscribe",
       parent: "maintenance",
@@ -174,7 +174,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "profile",
-    list: "/settings/profile",
+    list: "/dashboard/settings/profile",
     meta: {
       label: "Profile",
       parent: "settings",
@@ -182,9 +182,9 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "roles",
-    list: "/roles",
-    create: "/roles",
-    edit: "/roles/:id",
+    list: "/dashboard/roles",
+    create: "/dashboard/roles",
+    edit: "/dashboard/roles/:id",
     meta: {
       label: "Roles",
       parent: "settings",
@@ -192,7 +192,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "users",
-    list: "/users",
+    list: "/dashboard/users",
     meta: {
       label: "User",
       parent: "settings",
@@ -200,9 +200,9 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "orgsetup",
-    list: "/orgs",
-    create: "/orgs",
-    edit: "/orgs/:id",
+    list: "/dashboard/orgs",
+    create: "/dashboard/orgs",
+    edit: "/dashboard/orgs/:id",
     meta: {
       label: "Org Setup",
       parent: "settings",

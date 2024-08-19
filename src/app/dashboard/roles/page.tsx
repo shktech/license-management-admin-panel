@@ -111,13 +111,14 @@ const Page = () => {
           <Loader />
         ) : (
           <div>
-            <GenericTable
+            <CommonTable
               title="Role & Permission"
               data={sortedData}
               columns={columns}
               handleCreate={handleCreate}
               canCreate={permissionsData?.create}
-              onRowClick={handleRowClick}
+            // onRowClick={handleRowClick}
+            // noSearchNeed
             />
             {openDrawer && (
               <RoleDrawer

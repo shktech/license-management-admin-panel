@@ -37,14 +37,7 @@ const InitialField: SecondInitialFieldConfig[] = [
         name: "end_date",
         type: "date",
         required: 'text',
-    },
-    {
-        name: "waybill_number",
-        size: 2,
-    },
-    {
-        name: "return_waybill_number",
-        size: 2,
+        disabled: true
     },
 ];
 

@@ -173,3 +173,10 @@
 .my-datepicker .MuiInputBase-input {
     padding: 26px 16px 8px 16px !important;
 }
+
+.truncated {
+    display: block;
+    white-space: nowrap; /* forces text to single line */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

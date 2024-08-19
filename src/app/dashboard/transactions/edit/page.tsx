@@ -1,13 +1,14 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { InputTransaction, Transaction } from "@/types/types";
+import { InputTransaction, Product, Transaction } from "@/types/types";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useList, useParsed } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
+import { getDurationFromString } from "@utils/utilFunctions";
 import { useEffect, useState } from "react";
 
 const TransactionEdit = () => {
@@ -18,6 +19,8 @@ const TransactionEdit = () => {
     control,
     reset,
     trigger,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<Transaction>({
     refineCoreProps: {
@@ -25,6 +28,11 @@ const TransactionEdit = () => {
       resource: "transactions",
       id: params?.id,
     },
+  });
+
+  const { data: productData, refetch, isLoading: productLoading } = useList<Product>({
+    resource: "products",
+    hasPagination: false
   });
 
   const transaction: Transaction = queryResult?.data?.data as Transaction;
@@ -43,8 +51,7 @@ const TransactionEdit = () => {
         bill_address2: transaction.bill_customer?.contact?.address?.address2,
         bill_city: transaction.bill_customer?.contact?.address?.city,
         bill_state: transaction.bill_customer?.contact?.address?.state,
-        bill_postal_code:
-          transaction.bill_customer?.contact?.address?.postal_code,
+        bill_postal_code: transaction.bill_customer?.contact?.address?.postal_code,
         bill_country: transaction.bill_customer?.contact?.address?.country,
         bill_contact_first_name: transaction.bill_customer?.contact?.first_name,
         bill_contact_last_name: transaction.bill_customer?.contact?.last_name,
@@ -55,8 +62,7 @@ const TransactionEdit = () => {
         ship_address2: transaction.ship_customer?.contact?.address?.address2,
         ship_city: transaction.ship_customer?.contact?.address?.city,
         ship_state: transaction.ship_customer?.contact?.address?.state,
-        ship_postal_code:
-          transaction.ship_customer?.contact?.address?.postal_code,
+        ship_postal_code: transaction.ship_customer?.contact?.address?.postal_code,
         ship_country: transaction.ship_customer?.contact?.address?.country,
         ship_contact_first_name: transaction.ship_customer?.contact?.first_name,
         ship_contact_last_name: transaction.ship_customer?.contact?.last_name,
@@ -67,8 +73,7 @@ const TransactionEdit = () => {
         reseller_address2: transaction.reseller?.contact?.address?.address2,
         reseller_city: transaction.reseller?.contact?.address?.city,
         reseller_state: transaction.reseller?.contact?.address?.state,
-        reseller_postal_code:
-          transaction.reseller?.contact?.address?.postal_code,
+        reseller_postal_code: transaction.reseller?.contact?.address?.postal_code,
         reseller_country: transaction.reseller?.contact?.address?.country,
         reseller_contact_first_name: transaction.reseller?.contact?.first_name,
         reseller_contact_last_name: transaction.reseller?.contact?.last_name,
@@ -85,6 +90,22 @@ const TransactionEdit = () => {
     }
   }, [formLoading, transaction]);
 
+
+  const start_date = watch('start_date');
+  const osc_part_number = watch('osc_part_number');
+  useEffect(() => {
+    let duration = transaction?.asset?.osc_product?.duration;
+    if (productData?.data) {
+      duration = productData.data.find(p => p.product_part_number == osc_part_number)?.duration;
+    }
+    if (start_date) {
+      const originalDate = new Date(start_date);
+      originalDate.setMonth(originalDate.getMonth() + getDurationFromString(duration as string));
+      const end_date = originalDate.toISOString().split('T')[0];
+      setValue('end_date', end_date);
+    }
+  }, [start_date, osc_part_number])
+
   return (
     <Edit
       goBack={
@@ -99,7 +120,7 @@ const TransactionEdit = () => {
       canDelete={false}
       title={
         <div className="!font-satoshi text-2xl font-semibold text-[#536175] flex items-center">
-          {/* Edit Transaction {transaction?.transaction_number} */}
+          Edit Transaction {transaction?.transaction_number}
         </div>
       }
       breadcrumb={false}
@@ -112,7 +133,7 @@ const TransactionEdit = () => {
         <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
       )}
     >
-      {formLoading ? (
+      {formLoading || productLoading ? (
         <Loader />
       ) : (
         <div className="px-8">

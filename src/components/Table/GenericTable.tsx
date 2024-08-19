@@ -31,12 +31,13 @@ interface GenericTableProps<T extends MRT_RowData> {
     canDelete?: boolean;
     canEdit?: boolean;
     noCreateNeed?: boolean;
+    noSearchNeed?: boolean;
     maxWidth?: string | number;
     minWidth?: string | number;
 
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, noCreateNeed, onRowClick, handleCreate, handleSearch, handlePage, handleSorting, canCreate, maxWidth, minWidth,
+const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, noCreateNeed, noSearchNeed, onRowClick, handleCreate, handleSearch, handlePage, handleSorting, canCreate, maxWidth, minWidth,
 }: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
         if (!!onRowClick) {
@@ -120,7 +121,8 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
             <div className='flex justify-between px-12 py-4 gap-2'>
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
-                    <SearchInput handleChange={handleSearch} />
+
+                    { !noSearchNeed && <SearchInput handleChange={handleSearch} />}
                     {!noCreateNeed && canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />

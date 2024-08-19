@@ -1,45 +1,81 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Drawer } from "@mui/material";
-import { useCreate } from "@refinedev/core";
+import { useCreate, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import { Organization } from "@/types/types";
-import { OrganizationCreateFormFields } from "@components/Forms/Organizations/OrganizationFormFields";
+import { OrganizationCreateFormFields, OrganizationEditFormFields } from "@components/Forms/Organizations/OrganizationFormFields";
 import GenericForm from "@components/Forms/GenericForm";
 
 interface OrganizationDetailDrawerProps {
   open: boolean;
   onClose: () => void;
+  org: Organization | null
 }
 
 const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
   open,
   onClose,
+  org
 }) => {
   const {
     control,
     trigger,
     formState: { errors },
     getValues,
+    setValue,
+    reset
   } = useForm<Organization>();
 
-  const { mutate } = useCreate();
-  const fields = OrganizationCreateFormFields;
+  useEffect(() => {
+    if (org != null) {
+      reset(org);
+    } else {
+      reset({});
+    }
+  }, [open]);
+
+  const { mutate: createOrg } = useCreate();
+  const { mutate: updateOrg } = useUpdate();
+  const fields = org ? OrganizationEditFormFields : OrganizationCreateFormFields;
 
   const handleSubmit = async () => {
     const isValid = await trigger();
-
+    console.log(fields);
     if (isValid) {
+
+      const handleError = (error: any) => {
+
+      };
+
       const orgData = getValues();
-      mutate(
-        {
-          resource: "orgs",
-          values: orgData,
-        },
-        {
-          onSuccess: () => onClose(),
-        }
-      );
+
+      console.log(orgData);
+      if (org) {
+        updateOrg(
+          {
+            resource: "products",
+            id: `${(org?.organization_code)}`,
+            values: orgData
+          },
+          {
+            onError: handleError,
+            onSuccess: () => onClose(),
+          }
+        )
+      } else {
+        createOrg(
+          {
+            resource: "orgs",
+            values: orgData,
+          },
+          {
+            onError: handleError,
+            onSuccess: () => onClose(),
+          }
+        );
+      }
+
     } else {
       console.log("Validation errors:", errors);
     }
@@ -67,7 +103,7 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
             onClick={handleSubmit}
             sx={modalOkBtnStyle}
           >
-            {"Create"}
+            {org ? "Save" : "Create"}
           </Button>
         </div>
       </div>

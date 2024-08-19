@@ -52,6 +52,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       {...fieldProps}
                       label={field.label}
                       placeholder={field.placeholder}
+                      disabled={field.disabled}
                     />
                   );
                 case 'dropdown':

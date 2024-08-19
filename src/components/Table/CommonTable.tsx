@@ -38,14 +38,12 @@ const CommonTable = <T extends MRT_RowData>({ title, data, columns, handleCreate
         },
         muiTableBodyCellProps: ({ cell }) => ({
             sx: {
-                padding: cell.column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '', // Set padding for the first column
-                backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
+                padding: cell.column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '',
             }
         }),
         muiTableHeadCellProps: ({ column }) => ({
             sx: {
                 padding: column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '',
-                backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
                 verticalAlign: 'middle'
             }
         }),
@@ -63,7 +61,7 @@ const CommonTable = <T extends MRT_RowData>({ title, data, columns, handleCreate
             <div className='flex justify-between px-12 py-4 gap-2'>
                 <div className="text-xl text-xl font-semibold text-black">{title}</div>
                 <div className='flex gap-2'>
-                    <SearchInput />
+                    {/* <SearchInput /> */}
                     {canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> {addText ?? "Add"}</Button>}
                 </div>
             </div>

@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { Suspense } from "react"
 import { dataProvider } from "@providers/data-provider";
 import { authProvider } from "@providers/auth-provider";
-import { dashboardResources } from "../data/refineResources";
+import { dashboardResources } from "../config/refineResources";
 
 // Tailwind and TailAdmin Styles
 import "jsvectormap/dist/jsvectormap.css";

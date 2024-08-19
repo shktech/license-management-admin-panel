@@ -59,35 +59,35 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
                 },
                 {
                     label: "Active Seats",
-                    value: transaction?.asset?.active_seats
+                    value: transaction?.asset?.active_seats?.toString()
                 },
                 {
                     label: "Expired Seats",
-                    value: transaction?.asset?.expired_seats
+                    value: transaction?.asset?.expired_seats?.toString()
                 },
                 {
                     label: "License Server Seat Count",
-                    value: transaction?.asset?.license_server_seat_count
+                    value: transaction?.asset?.license_server_seat_count?.toString()
                 },
                 {
                     label: "OSC Seat Count",
-                    value: transaction?.asset?.osc_seat_count
+                    value: transaction?.asset?.osc_seat_count?.toString()
                 },
                 {
                     label: "Renewal Seats",
-                    value: transaction?.asset?.renewal_seats
+                    value: transaction?.asset?.renewal_seats?.toString()
                 },
                 {
                     label: "Revoked Seats",
-                    value: transaction?.asset?.revoked_seats
+                    value: transaction?.asset?.revoked_seats?.toString()
                 },
                 {
                     label: "Suspended Seats",
-                    value: transaction?.asset?.suspended_seats
+                    value: transaction?.asset?.suspended_seats?.toString()
                 },
                 {
                     label: "Terminated Seats",
-                    value: transaction?.asset?.terminated_seats
+                    value: transaction?.asset?.terminated_seats?.toString()
                 },
             ]}
         >
