@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigation, useTable, HttpError, useDelete } from "@refinedev/core";
+import { useNavigation, useTable, HttpError, useDelete, CrudSort } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
-import { MRT_ColumnDef } from "material-react-table";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import ProductIcon from "@/assets/icons/products.svg?icon";
 import Loader from "@components/common/Loader";
 import { Box, Button } from "@mui/material";
@@ -14,12 +14,14 @@ import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";
 import { ProductActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
 import DeleteModal from "@components/Products/DeleteModal";
+import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
     setCurrent,
     setFilters,
+    setSorters,
   } = useTable<Product>();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
@@ -38,6 +40,8 @@ const Page = () => {
   };
 
   const handlePage = (value: number) => setCurrent(value);
+
+  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
 
   const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
 
@@ -142,6 +146,7 @@ const Page = () => {
             canCreate={true}
             totalCount={data?.total}
             handlePage={handlePage}
+            handleSorting={handleSorting}
             handleSearch={handleSearch}
             handleCreate={handleCreate} />
       }

@@ -36,7 +36,6 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
 
   const updatePermissions = () => {
     const aggregatedPermissions: Permission[] = [];
-    console.log(selectedRoles)
 
     selectedRoles.forEach(role => {
       role?.permissions?.forEach(rolePermission => {
@@ -54,7 +53,6 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
         }
       });
     });
-    console.log(aggregatedPermissions);
     setPermissions(aggregatedPermissions);
   };
 
@@ -67,9 +65,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
       id: `${selectedUser.user_id}/roles`,
       values: payload
     }, {
-      onError: (error) => {
-        console.log(error);
-      },
+      onError: (error) => console.log(error),
       onSuccess: () => handleCloseModal(),
     });
   };

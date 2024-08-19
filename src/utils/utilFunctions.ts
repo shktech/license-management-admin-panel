@@ -1,6 +1,8 @@
 import { FieldConfig } from '@components/Forms/FormControlWrapper';
 import { InitialFieldConfig, SecondInitialFieldConfig } from '@components/Forms/InitialFieldConfig';
+import { CrudSort } from '@refinedev/core';
 import { format } from 'date-fns';
+import { MRT_SortingState } from 'material-react-table';
 
 export const getFormattedDate = (timestamp: any) => {
     const date = new Date(timestamp);
@@ -65,3 +67,10 @@ export const getNestedValue = (obj: any, key: string) => {
     if (!obj) return '';
     return key.split('.').reduce((acc, part) => acc && acc[part], obj);
 }
+
+export const convertSortingStateToCrudSort = (sortingState: MRT_SortingState): CrudSort[] => {
+    return sortingState.map((sort) => ({
+        field: sort.id,
+        order: sort.desc ? 'desc' : 'asc',
+    }));
+};

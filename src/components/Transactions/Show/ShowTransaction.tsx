@@ -18,6 +18,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+    
     const summaryfields = [
         { title: "Transaction Quantity", key: 'quantity' },
         { title: "Transaction Action", key: "transaction_action" },

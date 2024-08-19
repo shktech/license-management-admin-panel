@@ -28,8 +28,6 @@ const Page = () => {
     }
     return 0;
   });
-  console.log("data", data);
-  console.log("sortedData", sortedData);
   const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "role" } });
 
   const [openDrawer, setOpenDrawer] = React.useState(false);

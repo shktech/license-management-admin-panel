@@ -3,6 +3,7 @@ import { Box, Button, Pagination } from '@mui/material';
 import {
     MRT_ShowHideColumnsButton,
     MRT_SortingFns,
+    MRT_SortingState,
     MRT_TableContainer,
     MRT_TablePagination,
     MRT_ToolbarAlertBanner,
@@ -10,10 +11,11 @@ import {
     type MRT_ColumnDef,
     type MRT_RowData,
 } from 'material-react-table';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchInput from '@components/Input/SearchInput';
 import { tableAddButton } from '@data/MuiStyles';
 import AddIcon from '@mui/icons-material/Add';
+
 
 interface GenericTableProps<T extends MRT_RowData> {
     title?: React.ReactNode;
@@ -24,6 +26,7 @@ interface GenericTableProps<T extends MRT_RowData> {
     handleCreate?: () => void;
     handlePage?: (value: number) => void;
     handleSearch?: (value: string) => void;
+    handleSorting?: (value: MRT_SortingState) => void,
     canCreate?: boolean;
     canDelete?: boolean;
     canEdit?: boolean;
@@ -33,7 +36,7 @@ interface GenericTableProps<T extends MRT_RowData> {
 
 }
 
-const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, noCreateNeed, onRowClick, handleCreate, handleSearch, handlePage, canCreate, maxWidth, minWidth,
+const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount, noCreateNeed, onRowClick, handleCreate, handleSearch, handlePage, handleSorting, canCreate, maxWidth, minWidth,
 }: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
         if (!!onRowClick) {
@@ -58,12 +61,20 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
         }
     };
 
+    const [sorting, setSorting] = useState<MRT_SortingState>([]);
+
+    useEffect(() => {
+        setSorting(sorting);
+        handleSorting?.(sorting);
+    }, [sorting])
 
     const table = useMaterialReactTable({
         columns: enhancedColumns,
         data: data || [],
         enableColumnActions: false,
         enableColumnPinning: true,
+        onSortingChange: setSorting,
+        manualSorting: true,
         muiTableBodyRowProps: ({ row }) => ({
             onClick: () => handleRowClick(row.original),
             className: `${!!onRowClick && 'cursor-pointer'} bg-transparent`,
@@ -99,6 +110,9 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
                 right: ['actions'],
             },
         },
+        state: {
+            sorting
+        }
     });
 
     return (
