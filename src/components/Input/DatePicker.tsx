@@ -51,7 +51,7 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
         }
     };
 
-    handleChange(dayjs());
+    // handleChange(dayjs());
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -61,7 +61,8 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
                 </div>
                 <DesktopDatePicker
                     onChange={(newValue) => handleChange(newValue as Dayjs)}
-                    defaultValue={dayjs(props.value as string)}
+                    value={dayjs(props.value as string)}
+                    disabled={props.disabled}
                     slots={{
                         textField: textFieldProps => <CustomTextField {...textFieldProps} />
                     }}

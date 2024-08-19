@@ -93,3 +93,18 @@ export const truncateString = (str: string, maxLength: number) => {
     }
     return str;
 }
+
+export const getDurationFromString = (str: string) => {
+    switch (str) {
+        case "EA":
+            return 0;
+        case "1YR":
+            return 1;
+        case "2YR":
+            return 2;
+        case "3YR":
+            return 3;
+        default:
+            return 0;
+    }
+}
