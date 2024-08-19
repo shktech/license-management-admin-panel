@@ -6,7 +6,7 @@ import { stringify } from "querystring";
 
 // const localAPI_URL = "http://localhost:3000/api";
 // const virtualAPI_URL = "https://lic-refine.vercel.app/api";
-const realAPI_URL = "https://license-management-server.vercel.app/api";
+const realAPI_URL = "https://awscalmtestpy.pfuamerica.com/api";
 
 const API_URL = process.env.API_URL;
 
