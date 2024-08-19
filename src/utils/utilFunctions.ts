@@ -13,6 +13,18 @@ export const getFormattedDate = (timestamp: any) => {
     return timestamp
 }
 
+export const getReadableDate = (dateString: any) => {
+    const date = new Date(dateString);
+
+    const options: Intl.DateTimeFormatOptions = {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    };
+
+    return date.toLocaleDateString('en-US', options);
+}
+
 export const getTitleCase = (snakeCaseString: string) => {
     return snakeCaseString
         .split('_')          // Split the string by underscores
@@ -74,3 +86,10 @@ export const convertSortingStateToCrudSort = (sortingState: MRT_SortingState): C
         order: sort.desc ? 'desc' : 'asc',
     }));
 };
+
+export const truncateString = (str: string, maxLength: number) => {
+    if (str.length > maxLength) {
+        return str.slice(0, maxLength) + '...';
+    }
+    return str;
+}

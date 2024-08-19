@@ -9,7 +9,7 @@ interface GeneralInformationCardProps {
   items: { label: string; value: React.ReactNode | string | number | boolean | undefined }[];
 }
 
-const GeneralInformationCard: React.FC<GeneralInformationCardProps> = ({
+const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
   header,
   headerIcon,
   items,
@@ -36,4 +36,4 @@ const GeneralInformationCard: React.FC<GeneralInformationCardProps> = ({
   );
 };
 
-export default GeneralInformationCard;
+export default GeneralInformation;

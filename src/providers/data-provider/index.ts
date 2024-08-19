@@ -2,6 +2,7 @@
 
 import nestjsxDataProvider, { axiosInstance } from "@refinedev/nestjsx-crud";
 import { DataProvider } from "@refinedev/core";
+import { stringify } from "querystring";
 
 // const localAPI_URL = "http://localhost:3000/api";
 // const virtualAPI_URL = "https://lic-refine.vercel.app/api";
@@ -43,8 +44,6 @@ axiosInstance.interceptors.request.use(
 const customDataProvider: DataProvider = {
   ...nestjsxDataProvider(API_URL ?? realAPI_URL, axiosInstance),
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
-
-
     let params: PARAMS = {}
 
     if (pagination?.mode) {
@@ -57,8 +56,6 @@ const customDataProvider: DataProvider = {
         offset: offset,
       }
     }
-
-
     if (filters && filters.length > 0) {
       params.filter = filters[0].value;
     }
@@ -79,6 +76,30 @@ const customDataProvider: DataProvider = {
       data: response.data,
       total: response.data.length
     }
+  },
+  custom: async ({ url, method, payload }) => {
+    let requestUrl = (API_URL ?? realAPI_URL) + `/${url}?`;
+    console.log(requestUrl);
+    let axiosResponse;
+    switch (method) {
+      case "put":
+      case "post":
+      case "patch":
+        axiosResponse = await axiosInstance[method](requestUrl, payload);
+        break;
+      case "delete":
+        axiosResponse = await axiosInstance.delete(requestUrl, {
+          data: payload,
+        });
+        break;
+      default:
+        axiosResponse = await axiosInstance.get(requestUrl);
+        break;
+    }
+
+    const { data } = axiosResponse;
+
+    return Promise.resolve({ data });
   },
 }
 

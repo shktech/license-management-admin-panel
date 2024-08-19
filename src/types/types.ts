@@ -127,6 +127,13 @@ export interface User {
     roles?: Role[]
 };
 
+export interface APIKey {
+    id?: string;
+    created?: string;
+    name?: string;
+    revoked?: boolean;
+};
+
 export interface Role {
     role_id?: string;
     description?: string;
