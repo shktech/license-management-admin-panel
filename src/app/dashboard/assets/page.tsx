@@ -60,7 +60,7 @@ const Page = () => {
   );
 
   const handleRowClick = (row: Asset) => {
-    push(`/assets/show?id=${row.asset_id}`);
+    push(`/dashboard/assets/show?id=${row.asset_id}`);
   };
 
 

@@ -19,7 +19,7 @@ export const menuGroups = [
           label: "Transaction",
           route: "#",
           children: [
-            { label: "Transactions", route: "/transactions" },
+            { label: "Transactions", route: "/dashboard/transactions" },
           ],
         },
         {
@@ -27,9 +27,9 @@ export const menuGroups = [
           label: "Master Mngt",
           route: "#",
           children: [
-            { label: "Assets", route: "/assets" },
-            { label: "Products", route: "/products" },
-            { label: "Partners", route: "/partners" }
+            { label: "Assets", route: "/dashboard/assets" },
+            { label: "Products", route: "/dashboard/products" },
+            { label: "Partners", route: "/dashboard/partners" }
           ],
         },
         {
@@ -37,10 +37,10 @@ export const menuGroups = [
           label: "Maintenance",
           route: "#",
           children: [
-            { label: "Lookups", route: "/lookups" },
-            { label: "License Code", route: "/license-code" },
-            { label: "Email Templates", route: "/email-templates" },
-            { label: "Un-Subscribe", route: "/un-subscribe" }
+            { label: "Lookups", route: "/dashboard/lookups" },
+            { label: "License Code", route: "/dashboard/license-code" },
+            { label: "Email Templates", route: "/dashboard/email-templates" },
+            { label: "Un-Subscribe", route: "/dashboard/un-subscribe" }
           ],
         },
         {
@@ -48,9 +48,9 @@ export const menuGroups = [
           label: "Reports",
           route: "#",
           children: [
-            { label: "Business", route: "/reports/business" },
-            { label: "Logs", route: "/reports/logs" },
-            { label: "Schedule/View", route: "/reports/schedule-view" },
+            { label: "Business", route: "/dashboard/reports/business" },
+            { label: "Logs", route: "/dashboard/reports/logs" },
+            { label: "Schedule/View", route: "/dashboard/reports/schedule-view" },
           ],
         },
         {
@@ -58,10 +58,10 @@ export const menuGroups = [
           label: "Settings",
           route: "#",
           children: [
-            { label: "Profile", route: "/profile" },
-            { label: "Roles", route: "/roles" },
-            { label: "User", route: "/users" },
-            { label: "Org Setup", route: "/orgs" },
+            { label: "Profile", route: "/dashboard/profile" },
+            { label: "Roles", route: "/dashboard/roles" },
+            { label: "User", route: "/dashboard/users" },
+            { label: "Org Setup", route: "/dashboard/orgs" },
           ],
         },
       ],

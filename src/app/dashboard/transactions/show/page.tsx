@@ -33,7 +33,7 @@ const TransactionShow = () => {
     return (
       <div className="flex gap-2 px-12">
         {permissionsData?.update && (
-          <EditButton {...editButtonProps} onClick={() => push(`/transactions/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
+          <EditButton {...editButtonProps} onClick={() => push(`/dashboard/transactions/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
         )}
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
