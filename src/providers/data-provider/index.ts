@@ -46,7 +46,7 @@ const customDataProvider: DataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     let params: PARAMS = {}
 
-    if (pagination?.mode) {
+    if (pagination?.mode != "off") {
       const { current = 1, pageSize = 10 } = pagination ?? {};
       const offset = (current - 1) * pageSize;
       params = {

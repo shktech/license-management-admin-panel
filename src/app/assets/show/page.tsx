@@ -137,7 +137,6 @@ const Page = () => {
                       label: "active",
                       value: asset?.active ? "Yes" : "No",
                     },
-
                     {
                       label: "License Key",
                       value: asset?.license_key,
