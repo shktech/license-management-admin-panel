@@ -34,7 +34,7 @@ const SignUp: React.FC = () => {
     };
     mutate(
       {
-        resource: "register-admin/",
+        resource: "register-admin",
         values: payload,
       },
       {
