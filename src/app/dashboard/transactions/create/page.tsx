@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { Create, SaveButton } from "@refinedev/mui";
 import { InputTransaction, Product } from "@/types/types";
@@ -29,9 +29,12 @@ const TransactionEdit = () => {
       source_reference_date: nowDateString,
       start_date: nowDateString,
       end_date: nowDateString,
+      transaction_action: 'New'
     };
     reset({ ...resetTransaction });
   }, []);
+
+  const [newAction, setNewAction] = useState(true);
 
   const { data: productData, refetch, isLoading: productLoading } = useList<Product>({
     resource: "products",
@@ -40,6 +43,12 @@ const TransactionEdit = () => {
 
   const start_date = watch('start_date');
   const osc_part_number = watch('osc_part_number');
+  const transaction_action = watch('transaction_action');
+
+  useEffect(() => {
+    setNewAction(transaction_action == "New");
+  }, [transaction_action])
+
   useEffect(() => {
     let duration;
     if (productData?.data) {
@@ -72,7 +81,7 @@ const TransactionEdit = () => {
         <Loader />
       ) : (
         <div className="bg-white px-8 rounded-xl">
-          <TransactionForm {...{ control, errors, trigger }} />
+          <TransactionForm {...{ control, errors, trigger }} newAction={newAction} />
         </div>
       )}
     </Create>

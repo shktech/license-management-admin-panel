@@ -63,10 +63,6 @@ const Page = () => {
     setClickedOrg(null);
     setOpenDrawer(false);
   }
-  const handleDeleteBtn = (org: Organization) => {
-    // handleOpenDeleteModal();
-    // setClickedOrg(org);
-  }
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
@@ -115,13 +111,6 @@ const Page = () => {
                   disabled={!row.original?.isCurrent}
                 >
                   <EditOutlinedIcon fontSize="inherit" />
-                </IconButton>
-                <IconButton
-                  onClick={() => handleDeleteBtn(row.original)}
-                  size="small"
-                  disabled={!row.original?.isCurrent}
-                >
-                  <DeleteIcon fontSize="inherit" />
                 </IconButton>
               </div>
             </div>

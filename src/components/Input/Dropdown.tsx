@@ -79,6 +79,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           onChange={handleChange}
           displayEmpty
           size="small"
+          disabled={props.disabled}
           sx={{
             pt: 3,
             backgroundColor: '#dfe6ec',
