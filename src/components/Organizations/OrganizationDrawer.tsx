@@ -52,7 +52,7 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
       if (org) {
         updateOrg(
           {
-            resource: "products",
+            resource: "orgs",
             id: `${(org?.organization_code)}`,
             values: orgData
           },
