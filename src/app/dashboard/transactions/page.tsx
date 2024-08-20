@@ -17,7 +17,14 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Transaction>();
+  } = useTable<Transaction>({
+    initialSorter: [
+      {
+        field: "transaction_date",  // The field you want to sort by
+        order: "desc",    // The sorting order: "asc" or "desc"
+      },
+    ],
+  });
 
   const { push } = useNavigation();
 
@@ -107,29 +114,29 @@ const Page = () => {
   );
 
   return (
-      <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-        {
-          isLoading ?
-            <Loader /> :
-            <GenericTable
-              title={
-                <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-                  Transactions
-                </div>
-              }
-              data={data?.data}
-              columns={columns}
-              onRowClick={handleRowClick}
-              handleCreate={handleCreate}
-              canCreate={permissionsData?.create}
-              totalCount={data?.total}
-              handlePage={handlePage}
-              handleSorting={handleSorting}
-              handleSearch={handleSearch}
-              canDelete={false}
-              canEdit={permissionsData?.update} />
-        }
-      </div>
+    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
+      {
+        isLoading ?
+          <Loader /> :
+          <GenericTable
+            title={
+              <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+                Transactions
+              </div>
+            }
+            data={data?.data}
+            columns={columns}
+            onRowClick={handleRowClick}
+            handleCreate={handleCreate}
+            canCreate={permissionsData?.create}
+            totalCount={data?.total}
+            handlePage={handlePage}
+            handleSorting={handleSorting}
+            handleSearch={handleSearch}
+            canDelete={false}
+            canEdit={permissionsData?.update} />
+      }
+    </div>
   );
 };
 
