@@ -41,7 +41,6 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
 
   const handleSubmit = async () => {
     const isValid = await trigger();
-    console.log(fields);
     if (isValid) {
 
       const handleError = (error: any) => {
@@ -50,11 +49,10 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
 
       const orgData = getValues();
 
-      console.log(orgData);
       if (org) {
         updateOrg(
           {
-            resource: "products",
+            resource: "orgs",
             id: `${(org?.organization_code)}`,
             values: orgData
           },

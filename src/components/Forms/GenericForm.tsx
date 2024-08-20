@@ -65,6 +65,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       resource={field.resource}
                       valueKey={field.valueKey}
                       labelKey={field.labelKey}
+                      disabled={field.disabled}
                     // fetchOptions={field.fetchOptions}
                     />
                   );

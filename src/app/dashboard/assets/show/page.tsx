@@ -11,14 +11,18 @@ import {
 } from "@components/Tab/CustomizedTab";
 import GenericTable from "@components/Table/GenericTable";
 import { refreshRefineBtnStyle } from "@data/MuiStyles";
-import { useParsed, usePermissions, useShow } from "@refinedev/core";
+import { Button } from "@mui/material";
+import { useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { useRouter } from "next/router";
 
 const Page = () => {
   const { params } = useParsed();
   const [value, setValue] = useState(0);
+  const { push } = useNavigation();
   const { data: permissionsData } = usePermissions<Permission>({
     params: { codename: "asset" },
   });
@@ -26,6 +30,7 @@ const Page = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   const { queryResult } = useShow<Asset>({
     resource: "assets",
     id: params?.id,
@@ -35,6 +40,21 @@ const Page = () => {
   const asset: Asset = data?.data as Asset;
   const transactions: Transaction[] = data?.data?.transactions as Transaction[];
   const seats: Seat[] = data?.data?.seats as Seat[];
+
+  const handleReActionBtn = (action: string) => {
+    const path = '/dashboard/transactions/create?'; // your target route
+    const queryParams = {
+      transaction_action: action,
+      license_key: asset.license_key as string,
+      license_type: asset.license_type as string,
+      start_date: asset.start_date as string,
+      end_date: asset.end_date as string,
+      osc_part_number: asset.osc_product?.product_part_number as string
+    };
+
+    // Navigate to the path with the query parameters
+    push(path + (new URLSearchParams(queryParams).toString()));
+  }
 
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
@@ -92,7 +112,16 @@ const Page = () => {
         }
         headerButtons={({ refreshButtonProps }) => (
           <div className="flex gap-2 pr-10">
+            <Button sx={refreshRefineBtnStyle} onClick={() => handleReActionBtn("Renewal")}>
+              <AutorenewIcon fontSize="small" />
+              Renew
+            </Button>
+            <Button sx={refreshRefineBtnStyle} onClick={() => handleReActionBtn("Revoke")}>
+              <AutorenewIcon fontSize="small" />Revoke
+            </Button>
+
             <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+
           </div>
         )}
       >

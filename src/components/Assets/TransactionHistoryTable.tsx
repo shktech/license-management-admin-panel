@@ -83,11 +83,14 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
                 title="Transaction History"
                 columns={columns}
             />
-            <TransactionDetailDrawer
-                open={openDrawer}
-                onClose={() => handleClose()}
-                transaction_id={clickedTransaction}
-            />
+            {
+                clickedTransaction &&
+                <TransactionDetailDrawer
+                    open={openDrawer}
+                    onClose={() => handleClose()}
+                    transaction_id={clickedTransaction}
+                />
+            }
         </>
     )
 };

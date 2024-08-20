@@ -137,7 +137,7 @@ const TransactionEdit = () => {
         <Loader />
       ) : (
         <div className="px-8">
-          <TransactionForm {...{ control, errors, trigger }} />
+          <TransactionForm {...{ control, errors, trigger }} transaction={transaction} />
         </div>
       )}
     </Edit>

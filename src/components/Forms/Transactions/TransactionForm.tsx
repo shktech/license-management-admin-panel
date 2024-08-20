@@ -12,15 +12,16 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import PartnerFormFields from "../Partners/PartnerFormFields";
-import { GeneralTxnFormField } from "./GeneralTxnFormField";
+import GeneralTxnFormField from "./GeneralTxnFormField";
 import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
+  transaction_action?: string;
 };
 const TransactionForm = (props: TransactionFormProps) => {
-  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({"Transaction": true});
+  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({ "Transaction": true });
 
   // useEffect(() => {
   //   const errors = props.errors;
@@ -44,16 +45,16 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <PaidOutlinedIcon />,
       title: 'Transaction',
       description: 'Setup your Transaction data',
-      fields: GeneralTxnFormField
+      fields: props.transaction ?
+        GeneralTxnFormField.EditTransactionForm :
+        (props.transaction_action == "New" ? GeneralTxnFormField.CreateTransactionForm.newAction : GeneralTxnFormField.CreateTransactionForm.notNewAction )
     },
-    
     {
       icon: <AccountBalanceWalletOutlinedIcon />,
       title: 'Billing Partner Information',
       description: 'Setup your Billing Partner Information',
       fields: PartnerFormFields.BillingPartnerInformationFormFields
     },
-
     {
       icon: <PaidOutlinedIcon />,
       title: 'Shipping Parter Information',
@@ -70,7 +71,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <DetailsIcon />,
       title: 'Licensing Details',
       description: 'Setup your Reseller Information',
-      fields: LicensingDetailFormFields
+      fields: props.transaction_action == "New" ? LicensingDetailFormFields.newAction : LicensingDetailFormFields.notNewAction
     },
   ]
   return (
@@ -99,7 +100,7 @@ const TransactionForm = (props: TransactionFormProps) => {
                   color: '#536175',
                   transitionDuration: '500ms',
                   "&:hover": {
-                    color: "#003133", 
+                    color: "#003133",
                   },
                   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                     transform: 'rotate(90deg)',
