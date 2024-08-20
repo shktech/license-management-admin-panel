@@ -64,17 +64,17 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
 
     const [sorting, setSorting] = useState<MRT_SortingState>([]);
 
-    useEffect(() => {
-        setSorting(sorting);
+    const handleSortingChange = (newSorting: any) => {
+        setSorting(newSorting);
         handleSorting?.(sorting);
-    }, [sorting])
+    }
 
     const table = useMaterialReactTable({
         columns: enhancedColumns,
         data: data || [],
         enableColumnActions: false,
         enableColumnPinning: true,
-        onSortingChange: setSorting,
+        onSortingChange: handleSortingChange,
         manualSorting: true,
         muiTableBodyRowProps: ({ row }) => ({
             onClick: () => handleRowClick(row.original),
@@ -122,7 +122,7 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
 
-                    { !noSearchNeed && <SearchInput handleChange={handleSearch} />}
+                    {!noSearchNeed && <SearchInput handleChange={handleSearch} />}
                     {!noCreateNeed && canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}><AddIcon /> Add</Button>}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />

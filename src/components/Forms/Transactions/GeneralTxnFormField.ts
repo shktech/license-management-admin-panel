@@ -19,6 +19,7 @@ const InitialCreateField: SecondInitialFieldConfig[] = [
         name: "transaction_action",
         type: "dropdown",
         required: 'text',
+        disabled: true,
         options: [
             { value: "New", label: "New" },
             { value: "Renewal", label: "Renewal" },
@@ -66,7 +67,7 @@ const InitialEditField: SecondInitialFieldConfig[] = [
 export default {
     CreateTransactionForm: {
         newAction: getSecondRealFormFields(InitialCreateField),
-        notNewAction: getSecondRealFormFields([...InitialCreateField, { name: "license_key", size: 2 },]),
+        notNewAction: getSecondRealFormFields([...InitialCreateField, { name: "license_key", size: 2, disabled: true },]),
     },
     EditTransactionForm: getSecondRealFormFields(InitialEditField),
 }

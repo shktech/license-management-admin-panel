@@ -34,7 +34,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
                     summaryfields.map(field => (
                         <div key={field.key} className="flex flex-col gap-1">
                             <div className="text-[#778599]">{field.title}</div>
-                            <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(transaction, field.key).toString()}</div>
+                            <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(transaction, field.key)}</div>
                         </div>
                     ))
                 }

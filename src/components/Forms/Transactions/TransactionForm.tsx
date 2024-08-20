@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
-  newAction?: boolean
+  transaction_action?: string;
 };
 const TransactionForm = (props: TransactionFormProps) => {
   const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({ "Transaction": true });
@@ -47,7 +47,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       description: 'Setup your Transaction data',
       fields: props.transaction ?
         GeneralTxnFormField.EditTransactionForm :
-        (props.newAction ? GeneralTxnFormField.CreateTransactionForm.newAction : GeneralTxnFormField.CreateTransactionForm.notNewAction )
+        (props.transaction_action == "New" ? GeneralTxnFormField.CreateTransactionForm.newAction : GeneralTxnFormField.CreateTransactionForm.notNewAction )
     },
     {
       icon: <AccountBalanceWalletOutlinedIcon />,
@@ -55,7 +55,6 @@ const TransactionForm = (props: TransactionFormProps) => {
       description: 'Setup your Billing Partner Information',
       fields: PartnerFormFields.BillingPartnerInformationFormFields
     },
-
     {
       icon: <PaidOutlinedIcon />,
       title: 'Shipping Parter Information',
@@ -72,7 +71,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <DetailsIcon />,
       title: 'Licensing Details',
       description: 'Setup your Reseller Information',
-      fields: LicensingDetailFormFields
+      fields: props.transaction_action == "New" ? LicensingDetailFormFields.newAction : LicensingDetailFormFields.notNewAction
     },
   ]
   return (

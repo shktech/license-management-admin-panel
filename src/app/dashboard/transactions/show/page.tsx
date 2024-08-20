@@ -32,7 +32,7 @@ const TransactionShow = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        {permissionsData?.update && (
+        {transaction?.transaction_status != "Completed" &&permissionsData?.update && (
           <EditButton {...editButtonProps} onClick={() => push(`/dashboard/transactions/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
         )}
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
