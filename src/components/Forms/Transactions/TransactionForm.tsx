@@ -12,15 +12,16 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import PartnerFormFields from "../Partners/PartnerFormFields";
-import { GeneralTxnFormField } from "./GeneralTxnFormField";
+import GeneralTxnFormField from "./GeneralTxnFormField";
 import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
+  newAction?: boolean
 };
 const TransactionForm = (props: TransactionFormProps) => {
-  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({"Transaction": true});
+  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({ "Transaction": true });
 
   // useEffect(() => {
   //   const errors = props.errors;
@@ -44,9 +45,10 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <PaidOutlinedIcon />,
       title: 'Transaction',
       description: 'Setup your Transaction data',
-      fields: GeneralTxnFormField
+      fields: props.transaction ?
+        GeneralTxnFormField.EditTransactionForm :
+        (props.newAction ? GeneralTxnFormField.CreateTransactionForm.newAction : GeneralTxnFormField.CreateTransactionForm.notNewAction )
     },
-    
     {
       icon: <AccountBalanceWalletOutlinedIcon />,
       title: 'Billing Partner Information',
@@ -73,6 +75,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       fields: LicensingDetailFormFields
     },
   ]
+  console.log(FormGroups[0].fields)
   return (
     <div className="flex justify-center">
       <div className="w-2/3 flex flex-col gap-2">
@@ -99,7 +102,7 @@ const TransactionForm = (props: TransactionFormProps) => {
                   color: '#536175',
                   transitionDuration: '500ms',
                   "&:hover": {
-                    color: "#003133", 
+                    color: "#003133",
                   },
                   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                     transform: 'rotate(90deg)',
