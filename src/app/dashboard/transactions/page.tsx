@@ -27,7 +27,7 @@ const Page = () => {
 
   const handlePage = (value: number) => setCurrent(value);
 
-  const handleCreate = () => push('/dashboard/transactions/create')
+  const handleCreate = () => push('/dashboard/transactions/create?transaction_action=New')
 
   const handleRowClick = (row: Transaction) => push(`/dashboard/transactions/show?id=${row.transaction_id}`)
 
