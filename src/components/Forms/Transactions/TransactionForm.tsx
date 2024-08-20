@@ -75,7 +75,6 @@ const TransactionForm = (props: TransactionFormProps) => {
       fields: LicensingDetailFormFields
     },
   ]
-  console.log(FormGroups[0].fields)
   return (
     <div className="flex justify-center">
       <div className="w-2/3 flex flex-col gap-2">

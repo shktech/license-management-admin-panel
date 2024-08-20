@@ -79,7 +79,6 @@ const customDataProvider: DataProvider = {
   },
   custom: async ({ url, method, payload }) => {
     let requestUrl = (API_URL ?? realAPI_URL) + `/${url}?`;
-    console.log(requestUrl);
     let axiosResponse;
     switch (method) {
       case "put":
