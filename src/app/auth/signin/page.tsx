@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { mutate: login } = useLogin<FormData>();
+  const { mutate: login, isLoading: isLoginLoading } = useLogin<FormData>();
 
   const onSubmit = (data: any) => {
     const loginForm = data as FormData;
@@ -46,7 +46,7 @@ const SignIn: React.FC = () => {
   return (
     <div className='bg-[#f7f9fa] flex justify-center items-center min-h-screen py-10'>
       {
-        isLoading ?
+        isLoading || isLoginLoading ?
           <Loader /> :
           <div className="min-w-[480px] rounded-xl border border-stroke bg-white shadow-default">
             <div className="flex flex-wrap items-center">
