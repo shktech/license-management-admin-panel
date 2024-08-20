@@ -54,7 +54,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
         }
         if (start_date) {
             const originalDate = new Date(start_date);
-            originalDate.setMonth(originalDate.getMonth() + getDurationFromString(duration as string));
+            originalDate.setFullYear(originalDate.getFullYear() + getDurationFromString(duration as string));
             const end_date = originalDate.toISOString().split('T')[0];
             setValue('end_date', end_date);
         }
