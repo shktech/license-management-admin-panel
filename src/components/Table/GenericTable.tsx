@@ -2,10 +2,8 @@
 import { Box, Button, Pagination } from '@mui/material';
 import {
     MRT_ShowHideColumnsButton,
-    MRT_SortingFns,
     MRT_SortingState,
     MRT_TableContainer,
-    MRT_TablePagination,
     MRT_ToolbarAlertBanner,
     useMaterialReactTable,
     type MRT_ColumnDef,

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Box, Button, Drawer, Modal } from '@mui/material';
-import { Product, User } from '../../types/types';
+import React from 'react';
+import { Box, Button, Modal } from '@mui/material';
+import { Product } from '../../types/types';
 import { deleteModalButtonStyle, modalStyle } from '@data/MuiStyles';
 
 

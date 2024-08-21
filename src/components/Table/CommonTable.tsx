@@ -1,5 +1,4 @@
 "use client"
-import SearchInput from '@components/Input/SearchInput';
 import { tableAddButton } from '@data/MuiStyles';
 import { Button } from '@mui/material';
 import {

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import { Authenticated, useGetIdentity, useLogin } from "@refinedev/core"
+import { useGetIdentity, useLogin } from "@refinedev/core"
 import { useForm } from '@refinedev/react-hook-form';
 import EmailIcon from '@/assets/icons/email.svg?icon';
 import PasswordIcon from '@/assets/icons/password.svg?icon';

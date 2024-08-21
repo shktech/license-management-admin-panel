@@ -1,5 +1,3 @@
-import { FieldConfig } from "../FormControlWrapper";
-import { useFetchOptions } from "@/hooks/useFetchOptions";
 import { SecondInitialFieldConfig } from "../InitialFieldConfig";
 import { getSecondRealFormFields } from "@utils/utilFunctions";
 

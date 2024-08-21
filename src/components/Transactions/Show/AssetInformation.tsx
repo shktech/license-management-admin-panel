@@ -2,11 +2,6 @@
 
 import { Transaction } from '@/types/types';
 import GeneralInformation from '@components/common/View/GeneralInformation';
-import { TxtActionColor, TxtStatusColor } from '@data/ColorData';
-import { tagStyle } from '@data/MuiStyles';
-import { Box } from '@mui/material';
-import { getFormattedDate } from '@utils/utilFunctions';
-
 interface AssetInformationProps {
     transaction?: Transaction;
 }

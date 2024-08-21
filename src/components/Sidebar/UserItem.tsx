@@ -1,8 +1,6 @@
 "use client";
 import { useState } from 'react';
 import { useGetIdentity, useLogout } from "@refinedev/core";
-import ClickOutside from '../ClickOutside';
-import Link from 'next/link';
 import { User } from '@/types/types';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Button, Menu, MenuItem } from '@mui/material';

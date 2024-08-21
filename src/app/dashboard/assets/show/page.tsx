@@ -17,7 +17,6 @@ import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { useRouter } from "next/router";
 
 const Page = () => {
   const { params } = useParsed();

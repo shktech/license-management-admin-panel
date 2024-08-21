@@ -4,7 +4,6 @@ import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Asset, Permission } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
-import AssetIcon from "@/assets/icons/asset.svg?icon";
 import Loader from "@components/common/Loader";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 

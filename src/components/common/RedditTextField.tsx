@@ -2,10 +2,6 @@ import React from 'react';
 import { styled, TextField, InputAdornment, IconButton, OutlinedInputProps, TextFieldProps, alpha } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-// interface RedditTextFieldProps extends TextFieldProps {
-//     onCopy: () => void;
-// }
-
 const RedditTextField = styled(({ onCopy, ...props }: any) => (
     <TextField
         fullWidth

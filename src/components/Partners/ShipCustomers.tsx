@@ -1,6 +1,6 @@
 "use client";
-import { StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
-import React, { useEffect, useMemo, useState } from "react";
+
+import React from "react";
 
 const ShipCustomers = () => {
     return (

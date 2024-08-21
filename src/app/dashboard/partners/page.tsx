@@ -3,7 +3,7 @@ import BillCustomers from "@components/Partners/BillCustomers";
 import Resellers from "@components/Partners/Resellers";
 import ShipCustomers from "@components/Partners/ShipCustomers";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 
 const Page = () => {
   const [value, setValue] = useState(0);
