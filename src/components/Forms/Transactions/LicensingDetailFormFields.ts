@@ -1,7 +1,7 @@
-import { getSecondRealFormFields } from "@utils/utilFunctions";
-import { SecondInitialFieldConfig } from "../InitialFieldConfig";
+import { getRealFormFields } from "@utils/utilFunctions";
+import { InitialFieldConfig } from "../InitialFieldConfig";
 
-const InitialCreateField: SecondInitialFieldConfig[] = [
+const InitialCreateField: InitialFieldConfig[] = [
     {
         name: "osc_part_number",
         type: "dropdown",
@@ -41,7 +41,7 @@ const InitialCreateField: SecondInitialFieldConfig[] = [
     },
 ];
 
-const InitialReActionField: SecondInitialFieldConfig[] = [
+const InitialReActionField: InitialFieldConfig[] = [
     {
         name: "osc_part_number",
         type: "dropdown",
@@ -84,6 +84,6 @@ const InitialReActionField: SecondInitialFieldConfig[] = [
 ];
 
 export const LicensingDetailFormFields = {
-    newAction: getSecondRealFormFields(InitialCreateField),
-    notNewAction: getSecondRealFormFields(InitialReActionField),
+    newAction: getRealFormFields(InitialCreateField),
+    notNewAction: getRealFormFields(InitialReActionField),
 }

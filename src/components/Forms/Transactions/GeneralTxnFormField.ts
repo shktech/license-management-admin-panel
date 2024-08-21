@@ -1,7 +1,7 @@
-import { SecondInitialFieldConfig } from "../InitialFieldConfig";
-import { getSecondRealFormFields } from "@utils/utilFunctions";
+import { InitialFieldConfig } from "../InitialFieldConfig";
+import { getRealFormFields } from "@utils/utilFunctions";
 
-const InitialCreateField: SecondInitialFieldConfig[] = [
+const InitialCreateField: InitialFieldConfig[] = [
     {
         name: "transaction_source",
         type: "dropdown",
@@ -31,7 +31,7 @@ const InitialCreateField: SecondInitialFieldConfig[] = [
     { name: "return_waybill_number" },
 ];
 
-const InitialEditField: SecondInitialFieldConfig[] = [
+const InitialEditField: InitialFieldConfig[] = [
     {
         name: "transaction_source",
         type: "dropdown",
@@ -64,8 +64,8 @@ const InitialEditField: SecondInitialFieldConfig[] = [
 
 export default {
     CreateTransactionForm: {
-        newAction: getSecondRealFormFields(InitialCreateField),
-        notNewAction: getSecondRealFormFields([...InitialCreateField, { name: "license_key", size: 2, disabled: true },]),
+        newAction: getRealFormFields(InitialCreateField),
+        notNewAction: getRealFormFields([...InitialCreateField, { name: "license_key", size: 2, disabled: true },]),
     },
-    EditTransactionForm: getSecondRealFormFields(InitialEditField),
+    EditTransactionForm: getRealFormFields(InitialEditField),
 }

@@ -1,4 +1,4 @@
-export interface SecondInitialFieldConfig {
+export interface InitialFieldConfig {
     name: string;
     required?: 'text' | 'email';
     type?: 'text' | 'date' | 'dropdown' | 'number' | 'switch';

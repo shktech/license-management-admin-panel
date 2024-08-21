@@ -1,7 +1,7 @@
-import { getSecondRealFormFields } from "@utils/utilFunctions";
-import { SecondInitialFieldConfig } from "../InitialFieldConfig";
+import { getRealFormFields } from "@utils/utilFunctions";
+import { InitialFieldConfig } from "../InitialFieldConfig";
 
-const InitialCustomerFormFields: SecondInitialFieldConfig[] = [
+const InitialCustomerFormFields: InitialFieldConfig[] = [
   {
     name: "customer_account",
     required: 'text'
@@ -50,7 +50,7 @@ const InitialCustomerFormFields: SecondInitialFieldConfig[] = [
     required: 'email'
   },
 ];
-const InitialResellerFormField: SecondInitialFieldConfig[] = [
+const InitialResellerFormField: InitialFieldConfig[] = [
   {
     name: "account",
     required: 'text'
@@ -100,6 +100,6 @@ const InitialResellerFormField: SecondInitialFieldConfig[] = [
   },
 ];
 
-export const InputResellerCustomerFormFields = getSecondRealFormFields(InitialResellerFormField);
-export const InputCustomerFormFields = getSecondRealFormFields(InitialCustomerFormFields);
+export const InputResellerCustomerFormFields = getRealFormFields(InitialResellerFormField);
+export const InputCustomerFormFields = getRealFormFields(InitialCustomerFormFields);
 

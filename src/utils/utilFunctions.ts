@@ -1,5 +1,5 @@
 import { FieldConfig } from '@components/Forms/FormControlWrapper';
-import { SecondInitialFieldConfig } from '@components/Forms/InitialFieldConfig';
+import { InitialFieldConfig } from '@components/Forms/InitialFieldConfig';
 import { CrudSort } from '@refinedev/core';
 import { format } from 'date-fns';
 import { MRT_SortingState } from 'material-react-table';
@@ -34,7 +34,7 @@ export const getTitleCase = (snakeCaseString: string) => {
         .join(' ');          // Join the words with spaces
 }
 
-export const getSecondRealFormFields = (InitialCustomerFormFields: SecondInitialFieldConfig[]) => {
+export const getRealFormFields = (InitialCustomerFormFields: InitialFieldConfig[]) => {
     return InitialCustomerFormFields.map(field => {
         const value: FieldConfig = {
             label: getTitleCase(field.name),
