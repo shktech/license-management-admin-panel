@@ -144,7 +144,8 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
                                             shape='rounded'
                                         />
                                     </div> :
-                                    <MRT_TablePagination table={table} />
+                                    // <MRT_TablePagination table={table} />
+                                    null
                             }
                         </Box>
                         <Box sx={{ display: 'grid', width: '100%' }}>

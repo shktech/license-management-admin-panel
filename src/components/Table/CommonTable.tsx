@@ -17,7 +17,7 @@ interface CommonTableProps<T extends MRT_RowData> {
     title?: React.ReactNode;
     data?: T[];
     columns: MRT_ColumnDef<T>[];
-    handleCreate: () => void
+    handleCreate?: () => void
     addText?: string;
     canCreate?: boolean;
 }
