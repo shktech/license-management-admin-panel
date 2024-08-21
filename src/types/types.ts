@@ -63,6 +63,13 @@ export interface Asset {
     bill_customer?: string;
     ship_customer?: string;
     reseller?: string;
+    
+    license_key_created_email_notification_date?: string;
+    one_month_reminder_notification_date?: string;
+    two_month_reminder_notification_date?: string;
+    renew_due_notification_date?: string;
+    expired_notification_date?: string;
+    last_email_date?: string;
 }
 
 export type SeatStatus = {

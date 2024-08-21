@@ -148,6 +148,7 @@ const Page = () => {
                 >
                   <StyledTab label="General Information" />
                   <StyledTab label="Products" />
+                  <StyledTab label="Notifications" />
                   <StyledTab label="License Owner" />
                   <StyledTab label="Transaction History" />
                   <StyledTab label="Seats" />
@@ -317,6 +318,33 @@ const Page = () => {
                   singleColumn={true}
                   items={[
                     {
+                      label: "First reminder notification date",
+                      value: asset?.one_month_reminder_notification_date,
+                    },
+                    {
+                      label: "Second reminder notification date",
+                      value: asset?.two_month_reminder_notification_date,
+                    },
+                    {
+                      label: "On expired notification date",
+                      value: asset?.renew_due_notification_date,
+                    },
+                    {
+                      label: "After expired notification date",
+                      value: asset?.expired_notification_date,
+                    },
+                    {
+                      label: "Last email send date",
+                      value: asset?.last_email_date,
+                    },
+                  ]}
+                />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                <GeneralInformation
+                  singleColumn={true}
+                  items={[
+                    {
                       label: "Account",
                       value: asset?.owner?.account,
                     },
@@ -383,12 +411,12 @@ const Page = () => {
                   ]}
                 />
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={3}>
+              <CustomTabPanel value={value} index={4}>
                 <div className="max-w-full overflow-x-auto">
                   <TransactionHistoryTable transactions={transactions} />
                 </div>
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={4}>
+              <CustomTabPanel value={value} index={5}>
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}
