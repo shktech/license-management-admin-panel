@@ -84,7 +84,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "partners",
-    list: "/partners",
+    list: "/dashboard/partners",
     meta: {
       label: "Partners",
       parent: "mastermgmt",
