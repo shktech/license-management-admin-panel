@@ -73,7 +73,6 @@ const InitialReActionField: SecondInitialFieldConfig[] = [
     {
         name: "start_date",
         required: 'text',
-        disabled: true,
         type: "date",
     },
     {
