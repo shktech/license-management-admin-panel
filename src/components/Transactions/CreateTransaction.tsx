@@ -127,7 +127,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
                 <Loader />
             ) : (
                 <div className="bg-white px-8 rounded-xl">
-                    <TransactionForm {...{ control, errors, trigger }} transaction_action={initialInfo.transaction_action} />
+                    <TransactionForm {...{ control, errors, trigger }} transaction_action={initialInfo.transaction_action} reset={reset} />
                 </div>
             )}
         </Create>
