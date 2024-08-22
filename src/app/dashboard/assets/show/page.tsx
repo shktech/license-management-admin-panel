@@ -18,6 +18,7 @@ import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
+import EditIcon from '@mui/icons-material/Edit';
 
 const Page = () => {
   const { params } = useParsed();
@@ -39,6 +40,16 @@ const Page = () => {
   const asset: Asset = data?.data as Asset;
   const transactions: Transaction[] = data?.data?.transactions as Transaction[];
   const seats: Seat[] = data?.data?.seats as Seat[];
+
+  const handleEditBtn = () => {
+    const path = '/dashboard/transactions/create?'; // your target route
+    const queryParams = {
+      id: "edit_transaction_id",
+    };
+
+    // Navigate to the path with the query parameters
+    push(path + (new URLSearchParams(queryParams).toString()));
+  }
 
   const handleReActionBtn = (action: string) => {
     const path = '/dashboard/transactions/create?'; // your target route
@@ -122,6 +133,10 @@ const Page = () => {
             </Button>
             <Button sx={refreshRefineBtnStyle} onClick={() => handleReActionBtn("Revoke")}>
               <AutorenewIcon fontSize="small" />Revoke
+            </Button>
+
+            <Button sx={refreshRefineBtnStyle} onClick={() => handleEditBtn()}>
+              <EditIcon fontSize="small" />Edit
             </Button>
 
             <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
