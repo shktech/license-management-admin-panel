@@ -1,6 +1,6 @@
 "use client";
 
-import { useTable } from "@refinedev/core";
+import { useDelete, useTable } from "@refinedev/core";
 import { Customer } from "../../types/types";
 import React, { useMemo } from "react";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -10,15 +10,20 @@ import CustomerDetailDrawer from "./CustomerDetailDrawer";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import CommonDeleteModal from "@components/common/CommonDeleteModal";
 
-const BillCustomers = () => {
+interface CustomerTableProps {
+    resource: string
+}
+
+const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
     const {
         tableQueryResult: { data, isLoading, refetch },
         setCurrent,
         setFilters,
         setSorters,
     } = useTable<Customer>({
-        resource: 'customers/bill-customers',
+        resource: `customers/${resource}`,
         hasPagination: false
     });
 
@@ -43,7 +48,6 @@ const BillCustomers = () => {
     }
 
     const handleDeleteBtn = (customer: Customer) => {
-
         handleOpenDeleteModal();
         setClickedCustomer(customer);
     }
@@ -55,6 +59,20 @@ const BillCustomers = () => {
     const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
 
     const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+
+
+    const { mutate: deleteProduct } = useDelete();
+
+    const handleDelete = () => {
+        deleteProduct(
+            { resource: `customers/${resource}`, id: `${(clickedCustomer?.account_id)}` },
+            {
+                onError: (error) => { console.log(error); },
+                onSuccess: () => { console.log("Success"); },
+            }
+        )
+        handleCloseDeleteModal();
+    }
 
     const columns = useMemo<MRT_ColumnDef<Customer>[]>(
         () => [
@@ -114,7 +132,7 @@ const BillCustomers = () => {
                 size: 50,
             },
             {
-                accessorKey: 'name',
+                accessorKey: 'contact.email',
                 header: 'Email',
                 size: 50,
             },
@@ -161,12 +179,18 @@ const BillCustomers = () => {
                     />
             }
             <CustomerDetailDrawer
+                resource={resource}
                 open={openDrawer}
                 onClose={() => handleClose()}
                 customer={clickedCustomer}
+            />
+            <CommonDeleteModal
+                openModal={openDeleteModal}
+                handleDelete={handleDelete}
+                handleCloseModal={handleCloseDeleteModal}
             />
         </>
     );
 }
 
-export default BillCustomers;
+export default CustomerTable;

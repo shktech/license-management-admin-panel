@@ -25,19 +25,22 @@ export const getReadableDate = (dateString: any) => {
     return date.toLocaleDateString('en-US', options);
 }
 
-export const getTitleCase = (snakeCaseString: string) => {
-    return snakeCaseString
-        .split('_')          // Split the string by underscores
-        .map(word =>          // Capitalize each word
+export const getTitleCase = (inputString: string) => {
+    // Extract the substring after the last dot
+    const lastPart = inputString.split('.').pop();
+
+    // Convert the extracted substring to title case
+    return lastPart
+        ?.split('_')           // Split the string by underscores
+        .map(word =>           // Capitalize each word
             word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         )
-        .join(' ');          // Join the words with spaces
+        .join(' ');            // Join the words with spaces
 }
-
 export const getRealFormFields = (InitialCustomerFormFields: InitialFieldConfig[]) => {
     return InitialCustomerFormFields.map(field => {
         const value: FieldConfig = {
-            label: getTitleCase(field.name),
+            label: getTitleCase(field.name) as string,
             placeholder: getTitleCase(field.name),
             ...field
         }

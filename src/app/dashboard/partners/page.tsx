@@ -1,5 +1,6 @@
 "use client";
 import BillCustomers from "@components/Partners/BillCustomers";
+import CustomerTable from "@components/Partners/CustomerTable";
 import Resellers from "@components/Partners/Resellers";
 import ShipCustomers from "@components/Partners/ShipCustomers";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
@@ -24,13 +25,13 @@ const Page = () => {
         </StyledTabs>
       </div>
       <CustomTabPanel value={value} index={0}>
-        <BillCustomers />
+        <CustomerTable resource="bill-customers"/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <ShipCustomers />
+      <CustomerTable resource="ship-customers"/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Resellers />
+      <CustomerTable resource="resellers"/>
       </CustomTabPanel>
     </div>
   );
