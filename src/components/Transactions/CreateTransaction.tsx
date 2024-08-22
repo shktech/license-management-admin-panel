@@ -3,19 +3,19 @@
 import React, { useEffect } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { Create, SaveButton } from "@refinedev/mui";
-import { InputTransaction, Product } from "@/types/types";
+import { Customer, InputTransaction, Product } from "@/types/types";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { useBack, useList } from "@refinedev/core";
+import { useBack, useList, useOne } from "@refinedev/core";
 import { getDurationFromString } from "@utils/utilFunctions";
 
 interface ShowTransactionProps {
     initialInfo: any
 }
 
-const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
+const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     const {
         saveButtonProps,
         refineCore: { formLoading, queryResult },
@@ -39,10 +39,58 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
         reset({ ...resetTransaction });
     }, []);
 
-    const { data: productData, refetch, isLoading: productLoading } = useList<Product>({
+    const { data: productData, isLoading: productLoading } = useList<Product>({
         resource: "products",
         hasPagination: false
     });
+
+    const { data: billCustomerData, isLoading: billLoading } = useOne<Customer>({
+        resource: "customers/bill-customers",
+        id: initialInfo.bill_customer
+    });
+
+    const { data: shipCustomerData, isLoading: shipLoading } = useOne<Customer>({
+        resource: "customers/ship-customers",
+        id: initialInfo.ship_customer
+    });
+
+    const { data: resellerData, isLoading: resellerLoading } = useOne<Customer>({
+        resource: "customers/resellers",
+        id: initialInfo.reseller
+    });
+
+    useEffect(() => {
+        if (!billLoading) {
+            console.log(billCustomerData?.data)
+            const realData = billCustomerData?.data;
+            reset({ 
+                bill_customer_account: realData?.account,
+                bill_customer_name: realData?.name,
+                bill_address1: realData?.contact.address?.address1,
+                bill_address2: realData?.contact.address?.address2,
+                bill_city: realData?.contact.address?.city,
+                bill_state: realData?.contact.address?.state,
+                bill_postal_code: realData?.contact.address?.postal_code,
+                bill_country: realData?.contact.address?.country,
+                bill_contact_first_name: realData?.contact.first_name,
+                bill_contact_last_name: realData?.contact.last_name,
+                bill_contact_phone: realData?.contact.phone,
+                bill_contact_email: realData?.contact.email,
+            });
+        }
+    }, [billLoading])
+
+    useEffect(() => {
+        if (!shipLoading) {
+            console.log(shipCustomerData?.data)
+        }
+    }, [billLoading])
+
+    useEffect(() => {
+        if (!resellerLoading) {
+            console.log(resellerData?.data)
+        }
+    }, [resellerLoading])
 
     const start_date = watch('start_date');
     const osc_part_number = watch('osc_part_number');

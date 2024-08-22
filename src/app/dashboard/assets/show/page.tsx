@@ -48,7 +48,10 @@ const Page = () => {
       license_type: asset.license_type as string,
       start_date: asset.start_date as string,
       end_date: asset.end_date as string,
-      osc_part_number: asset.osc_product?.product_part_number as string
+      osc_part_number: asset.osc_product?.product_part_number as string,
+      bill_customer: asset.bill_customer as string,
+      ship_customer: asset.ship_customer as string,
+      reseller: asset.reseller as string,
     };
 
     // Navigate to the path with the query parameters
