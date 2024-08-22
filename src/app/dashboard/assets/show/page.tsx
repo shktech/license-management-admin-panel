@@ -10,25 +10,25 @@ import {
   StyledTabs,
 } from "@components/Tab/CustomizedTab";
 import GenericTable from "@components/Table/GenericTable";
-import { refreshRefineBtnStyle } from "@data/MuiStyles";
+import { outlineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import { Button } from "@mui/material";
 import { useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
 
 const Page = () => {
   const { params } = useParsed();
   const [value, setValue] = useState(0);
   const { push } = useNavigation();
-  const { data: permissionsData } = usePermissions<Permission>({
-    params: { codename: "asset" },
-  });
+  const [openNotiDrawer, setOpenDrawer] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
 
   const { queryResult } = useShow<Asset>({
     resource: "assets",
@@ -92,6 +92,8 @@ const Page = () => {
   const getNestedValue = (obj: any, key: string) => {
     return key.split(".").reduce((acc, part) => acc && acc[part], obj);
   };
+
+
 
   return (
     <div className="no-padding-card">
@@ -338,6 +340,7 @@ const Page = () => {
                     },
                   ]}
                 />
+                <SendNotificationDrawer license_key={asset.license_key}/>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
                 <GeneralInformation

@@ -58,7 +58,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
   const [emailBody, setEmailBody] = useState<string>(template.body as string);
 
   const { mutate } = useUpdate();
-  const { mutate: sendTestEmail} = useCreate();
+  const { mutate: sendTestEmail } = useCreate();
 
   const onSubmit = (data: any) => {
     const payload = {
@@ -72,7 +72,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
         values: payload,
       },
       {
-        onError: (error) => {},
+        onError: (error) => { },
         onSuccess: () => {
           onSave();
         },
@@ -82,7 +82,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
 
   const sendEmail = () => {
     const payload = {
-        recipient_email: testRecipient
+      recipient_email: testRecipient
     }
     sendTestEmail({
       resource: `email-templates/type/${template.type as string}/test`,
