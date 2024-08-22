@@ -86,9 +86,17 @@ const TransactionForm = ({ reset, ...props }: TransactionFormProps) => {
               component="li"
               {...optionProps}
             >
-              <div>
-                <div>{option.account}</div>
-                <div>{option.account}</div>
+              <div className="text-sm flex flex-col gap-2 py-2">
+                <div className="flex gap-4">
+                  <div className="border-b">{option.account}</div>
+                  <div className="border-b">{option.contact.first_name + " " + option.contact.last_name}</div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="border-b">{option.contact.address?.address1}</div>
+                  <div className="border-b">{option.contact.address?.address2}</div>
+                  <div className="border-b">{option.contact.address?.state}</div>
+                  <div className="border-b">{option.contact.address?.country}</div>
+                </div>
               </div>
             </Box>
           );
