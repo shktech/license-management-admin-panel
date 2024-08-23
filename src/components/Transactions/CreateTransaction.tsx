@@ -4,12 +4,13 @@ import React, { useEffect } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { Create, SaveButton } from "@refinedev/mui";
 import { Customer, InputTransaction, Product } from "@/types/types";
-import TransactionForm from "@components/Forms/Transactions/TransactionForm";
+// import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { useBack, useList, useOne } from "@refinedev/core";
 import { getDurationFromString } from "@utils/utilFunctions";
+import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 
 interface ShowTransactionProps {
     initialInfo: any
@@ -63,7 +64,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         if (!billLoading) {
             console.log(billCustomerData?.data)
             const realData = billCustomerData?.data;
-            reset({ 
+            reset({
                 bill_customer_account: realData?.account,
                 bill_customer_name: realData?.name,
                 bill_address1: realData?.contact.address?.address1,

@@ -1,6 +1,7 @@
 import { FieldConfig } from '@components/Forms/FormControlWrapper';
 import { InitialFieldConfig } from '@components/Forms/InitialFieldConfig';
 import { CrudSort } from '@refinedev/core';
+import { Customer, InputCustomer } from '../types/types';
 import { format } from 'date-fns';
 import { MRT_SortingState } from 'material-react-table';
 
@@ -94,4 +95,27 @@ export const getDurationFromString = (str: string) => {
         default:
             return 0;
     }
+}
+
+export const getInputCustomer = (customer: any, type: string) => {
+    let inputCustomer: { [key: string]: any } = {
+        customer_account:customer?.account,
+        customer_name:customer?.name,
+        address1:customer?.contact?.address?.address1,
+        address2:customer?.contact?.address?.address2,
+        city:customer?.contact?.address?.city,
+        state:customer?.contact?.address?.state,
+        postal_code:customer?.contact?.address?.postal_code,
+        country:customer?.contact?.address?.country,
+        contact_first_name:customer?.contact?.first_name,
+        contact_last_name:customer?.contact?.last_name,
+        contact_phone:customer?.contact?.phone,
+        contact_email:customer?.contact?.email,
+    };
+
+    let value: { [key: string]: any } = {};
+    Object.keys(inputCustomer).forEach(key => {
+        value["bill_" + key] = inputCustomer[key] ? inputCustomer[key] : '';
+    })
+    return value;
 }
