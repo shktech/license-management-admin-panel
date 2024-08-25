@@ -3,7 +3,7 @@ import { Button, Drawer, IconButton } from '@mui/material';
 import { useCreate, useDelete, useUpdate } from '@refinedev/core';
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { Customer, InputCustomer } from '../../types/types';
+import { Customer } from '../../types/types';
 import CustomerForm from '@components/Forms/Partners/CustomerForm';
 
 interface CustomerDetailDrawerProps {
@@ -25,26 +25,7 @@ const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({ resource, o
 
     useEffect(() => {
         if (customer != null) {
-            const resetCustomer: Customer = {
-                account: customer.account,
-                name: customer.name,
-                contact: {
-                    first_name: customer.contact.first_name,
-                    last_name: customer.contact.last_name,
-                    phone: customer.contact.phone,
-                    email: customer.contact.email,
-                    address: {
-                        address1: customer?.contact.address?.address1,
-                        address2: customer?.contact.address?.address2,
-                        city: customer.contact.address?.city,
-                        state: customer.contact.address?.state,
-                        postal_code: customer.contact.address?.postal_code,
-                        country: customer.contact.address?.country,
-                    }
-                },
-            }
-            console.log(resetCustomer);
-            reset(resetCustomer);
+            reset(customer);
         } else {
             reset({})
         }

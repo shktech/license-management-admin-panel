@@ -69,9 +69,9 @@ const customDataProvider: DataProvider = {
       params: params,
     });
 
-    // if (pagination?.mode != 'off') {
-    //   return response.data;
-    // }
+    if (pagination?.mode != 'off') {
+      return response.data;
+    }
     return {
       data: response.data,
       total: response.data.length

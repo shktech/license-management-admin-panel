@@ -240,30 +240,18 @@ export interface InputTransaction {
 
 export interface Customer {
     account?: string;
-    contact: Partial<Contact>;
-    created_at?: string;
-    updated_at?: string;
-    name?: string;
     account_id?: string;
-    created_by?: number;
-    updated_by?: number;
-    organization?: number;
-    address?: number;
-}
-
-export interface InputCustomer {
-    account?: string;
-    name?: string;
     address1?: string;
     address2?: string;
     city?: string;
-    state?: string;
-    postal_code?: string;
     country?: string;
+    email?: string;
     first_name?: string;
     last_name?: string;
-    phone?: string;
-    email?: string;
+    name?: string
+    state?: string;
+    postal_code?: string;
+    phone?: string;    
 }
 
 export interface Contact {

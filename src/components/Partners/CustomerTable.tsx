@@ -24,7 +24,6 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
         setSorters,
     } = useTable<Customer>({
         resource: `customers/${resource}`,
-        hasPagination: false
     });
 
     const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -87,52 +86,52 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
                 size: 50,
             },
             {
-                accessorKey: 'contact.address.address1',
+                accessorKey: 'address1',
                 header: 'Address1',
                 size: 50,
             },
             {
-                accessorKey: 'contact.address.address2',
+                accessorKey: 'address2',
                 header: 'Address2',
                 size: 50,
             },
             {
-                accessorKey: 'contact.address.city',
+                accessorKey: 'city',
                 header: 'City',
-                size: 50,
+                size: 100,
             },
             {
-                accessorKey: 'contact.address.state',
+                accessorKey: 'state',
                 header: 'State',
                 size: 50,
             },
             {
-                accessorKey: 'contact.address.postal_code',
+                accessorKey: 'postal_code',
                 header: 'Postal Code',
                 size: 50,
             },
             {
-                accessorKey: 'contact.address.country',
+                accessorKey: 'country',
                 header: 'Country',
                 size: 50,
             },
             {
-                accessorKey: 'contact.first_name',
+                accessorKey: 'first_name',
                 header: 'First Name',
                 size: 50,
             },
             {
-                accessorKey: 'contact.last_name',
+                accessorKey: 'last_name',
                 header: 'Last Name',
                 size: 50,
             },
             {
-                accessorKey: 'contact.phone',
+                accessorKey: 'phone',
                 header: 'Phone',
                 size: 50,
             },
             {
-                accessorKey: 'contact.email',
+                accessorKey: 'email',
                 header: 'Email',
                 size: 50,
             },

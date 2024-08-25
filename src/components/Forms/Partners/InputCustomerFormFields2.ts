@@ -8,47 +8,37 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
   },
   {
     name: "name",
-    required: "text"
   },
   {
-    name: "contact.first_name",
-    required: "text"
+    name: "first_name",
   },
   {
-    name: "contact.last_name",
-    required: "text"
+    name: "last_name"
   },
   {
-    name: "contact.phone",
-    required: "text"
+    name: "phone",
   },
   {
-    name: "contact.email",
-    required: "email"
+    name: "email",
+    required: 'email'
   },
   {
-    name: "contact.address.address1",
-    required: "text"
+    name: "address1",
   },
   {
-    name: "contact.address.address2",
-    required: "text"
+    name: "address2",
   },
   {
-    name: "contact.address.city",
-    required: "text"
+    name: "city",
   },
   {
-    name: "contact.address.state",
-    required: "text"
+    name: "state",
   },
   {
-    name: "contact.address.postal_code",
-    required: "text"
+    name: "postal_code",
   },
   {
-    name: "contact.address.country",
-    required: "text"
+    name: "country",
   },
 ];
 export const InputCustomerFormFields2 = getRealFormFields(InitialCustomerFormFields);
