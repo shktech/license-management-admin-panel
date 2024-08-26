@@ -74,6 +74,7 @@ const InitialReActionField: InitialFieldConfig[] = [
         name: "start_date",
         required: 'text',
         type: "date",
+        disabled: true
     },
     {
         name: "end_date",

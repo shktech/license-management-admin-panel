@@ -65,7 +65,7 @@ const InitialEditField: InitialFieldConfig[] = [
 export default {
     CreateTransactionForm: {
         newAction: getRealFormFields(InitialCreateField),
-        notNewAction: getRealFormFields([...InitialCreateField, { name: "license_key", size: 2, disabled: true },]),
+        notNewAction: getRealFormFields([...InitialCreateField, { name: "license_key", size: 2, disabled: true }]),
     },
     EditTransactionForm: getRealFormFields(InitialEditField),
 }
