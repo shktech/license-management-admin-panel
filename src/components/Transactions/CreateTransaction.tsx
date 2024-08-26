@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { Create, SaveButton } from "@refinedev/mui";
 import { Customer, InputTransaction, Product } from "@/types/types";
@@ -28,6 +28,9 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         formState: { errors },
     } = useForm<InputTransaction>();
 
+    const [reseller, setReseller] = useState<Customer | null>(null);
+    const [billCustomer, setBillCustomer] = useState<Customer | null>(null);
+    const [shipCustomer, setShipCustomer] = useState<Customer | null>(null);
     useEffect(() => {
         const nowDateString = (new Date()).toISOString().split('T')[0];
         const resetTransaction: InputTransaction = {
@@ -59,6 +62,11 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         id: initialInfo.reseller
     });
 
+    useEffect(() => {
+        setReseller(resellerData?.data || null);
+        setBillCustomer(billCustomerData?.data || null);
+        setShipCustomer(shipCustomerData?.data || null);
+    }, [resellerData, billCustomerData, shipCustomerData])
 
     const start_date = watch('start_date');
     const osc_part_number = watch('osc_part_number');
@@ -100,9 +108,9 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
                         transaction_action={initialInfo.transaction_action}
                         setValue={setValue}
                         customers={{
-                            bill_customers: billCustomerData?.data,
-                            ship_customers: shipCustomerData?.data,
-                            resellers: resellerData?.data
+                            bill_customers: billCustomer,
+                            ship_customers: shipCustomer,
+                            resellers: reseller
                         }}
                     />
                 </div>
