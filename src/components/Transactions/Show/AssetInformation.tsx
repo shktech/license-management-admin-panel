@@ -2,11 +2,6 @@
 
 import { Transaction } from '@/types/types';
 import GeneralInformation from '@components/common/View/GeneralInformation';
-import { TxtActionColor, TxtStatusColor } from '@data/ColorData';
-import { tagStyle } from '@data/MuiStyles';
-import { Box } from '@mui/material';
-import { getFormattedDate } from '@utils/utilFunctions';
-
 interface AssetInformationProps {
     transaction?: Transaction;
 }
@@ -43,19 +38,19 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
                 },
                 {
                     label: "Organization",
-                    value: transaction?.asset?.organization
+                    value: transaction?.asset?.organization?.organization_name
                 },
                 {
                     label: "Bill Customer",
-                    value: transaction?.asset?.bill_customer
+                    value: transaction?.bill_customer?.account
                 },
                 {
                     label: "Ship Customer",
-                    value: transaction?.asset?.ship_customer
+                    value: transaction?.ship_customer?.account
                 },
                 {
                     label: "Reseller",
-                    value: transaction?.asset?.reseller
+                    value: transaction?.reseller?.account
                 },
                 {
                     label: "Active Seats",

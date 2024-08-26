@@ -9,7 +9,6 @@ import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { menuGroups } from "@/data/MenuGroupData";
 import LogoIcon from "@/assets/icons/logo.svg?icon";
-import DropdownUser from "@components/Header/DropdownUser";
 import UserItem from "./UserItem";
 
 interface SidebarProps {

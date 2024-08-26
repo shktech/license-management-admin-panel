@@ -2,10 +2,6 @@
 
 import { Customer, Transaction } from '@/types/types';
 import GeneralInformation from '@components/common/View/GeneralInformation';
-import { TxtActionColor, TxtStatusColor } from '@data/ColorData';
-import { tagStyle } from '@data/MuiStyles';
-import { Box } from '@mui/material';
-import { getFormattedDate } from '@utils/utilFunctions';
 
 interface CustomerInformationProps {
     transaction?: Transaction;
@@ -23,43 +19,43 @@ const CustomerInformation: React.FC<CustomerInformationProps> = ({ transaction, 
                 },
                 {
                     label: "Address1",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.address?.address1
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.address1
                 },
                 {
                     label: "Address2",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.address?.address2
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.address2
                 },
                 {
                     label: "City",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.address?.city
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.city
                 },
                 {
                     label: "State",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.address?.state
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.state
                 },
                 {
                     label: "Postal Code",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.address?.postal_code
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.postal_code
                 },
                 {
                     label: "Country",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.address?.country
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.country
                 },
                 {
                     label: "First Name",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.first_name
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.first_name
                 },
                 {
                     label: "Last Name",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.last_name
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.last_name
                 },
                 {
                     label: "Contact Phone",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.phone
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.phone
                 },
                 {
                     label: "Contact Email",
-                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.contact?.email
+                    value: (transaction?.[type as keyof Transaction] as Partial<Customer>)?.email
                 },
 
             ]}

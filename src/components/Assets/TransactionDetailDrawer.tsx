@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Drawer } from '@mui/material';
-import { useCreate, useOne, GetOneResponse } from '@refinedev/core';
-import { useForm } from "@refinedev/react-hook-form";
-import { modalCancelBtnStyle, modalOkBtnStyle, tagStyle } from "@data/MuiStyles";
-import { Product, Transaction } from '../../types/types';
-import ProductForm from '@components/Forms/Products/ProductForm';
-import { CustomTabPanel, StyledTab, StyledTabs } from '@components/Tab/CustomizedTab';
-import GeneralInformation from '@components/common/View/GeneralInformation';
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from '@data/ColorData';
+import React from 'react';
+import { Drawer } from '@mui/material';
+import { useOne } from '@refinedev/core';
+import { Transaction } from '../../types/types';
 import ShowTransaction from '@components/Transactions/Show/ShowTransaction';
 import Loader from '@components/common/Loader';
 

@@ -1,7 +1,7 @@
-import { getSecondRealFormFields } from "@utils/utilFunctions";
-import { SecondInitialFieldConfig } from "../InitialFieldConfig";
+import { getRealFormFields } from "@utils/utilFunctions";
+import { InitialFieldConfig } from "../InitialFieldConfig";
 
-const InitialField: SecondInitialFieldConfig[] = [
+const InitialField: InitialFieldConfig[] = [
     { name: "product_part_number", size: 2, required: 'text' },
     { name: "product_type", required: 'text' },
     {
@@ -27,4 +27,4 @@ const InitialField: SecondInitialFieldConfig[] = [
     { name: "active", type: 'switch' },
 ];
 
-export default getSecondRealFormFields(InitialField);
+export default getRealFormFields(InitialField);

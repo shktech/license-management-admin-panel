@@ -1,5 +1,4 @@
 "use client"
-import SearchInput from '@components/Input/SearchInput';
 import { tableAddButton } from '@data/MuiStyles';
 import { Button } from '@mui/material';
 import {
@@ -17,7 +16,7 @@ interface CommonTableProps<T extends MRT_RowData> {
     title?: React.ReactNode;
     data?: T[];
     columns: MRT_ColumnDef<T>[];
-    handleCreate: () => void
+    handleCreate?: () => void
     addText?: string;
     canCreate?: boolean;
 }
