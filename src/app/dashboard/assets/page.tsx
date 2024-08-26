@@ -28,11 +28,11 @@ const Page = () => {
     () => [
       {
         accessorKey: "asset_id",
-        header: "Asset ID",
+        header: "License ID",
       },
       {
         accessorKey: "license_key",
-        header: "Asset Number (LicKey/Srl#)",
+        header: "License Number (LicKey/Srl#)",
       },
       {
         accessorKey: "organization.organization_name",
@@ -44,7 +44,7 @@ const Page = () => {
       },
       {
         accessorKey: "osc_product.product_type",
-        header: "Asset Type",
+        header: "License Type",
       },
       {
         accessorKey: "osc_product.vendor_name",
@@ -71,7 +71,7 @@ const Page = () => {
         <GenericTable
           title={
             <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-              Assets
+              Licenses
             </div>
           }
           data={data?.data}

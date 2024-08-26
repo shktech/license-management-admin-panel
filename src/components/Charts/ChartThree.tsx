@@ -109,7 +109,7 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#3d50e0]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Activated Assets </span>
+              <span> Activated Licenses </span>
               <span> 70% </span>
             </p>
           </div>
@@ -118,7 +118,7 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#80c9ed]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Expired Assets </span>
+              <span> Expired Licenses </span>
               <span> 30% </span>
             </p>
           </div>

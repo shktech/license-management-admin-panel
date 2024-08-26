@@ -17,7 +17,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
   const checkboxGroupInfo = [
     { title: "Users", key: "user" },
     { title: "Role", key: "role" },
-    { title: "Assets", key: "asset" },
+    { title: "Licenses", key: "asset" },
     { title: "Transactions", key: "transaction" },
     { title: "Products", key: "product" },
   ];

@@ -27,7 +27,7 @@ export const menuGroups = [
           label: "Master Mngt",
           route: "#",
           children: [
-            { label: "Assets", route: "/dashboard/assets" },
+            { label: "Licenses", route: "/dashboard/assets" },
             { label: "Products", route: "/dashboard/products" },
             { label: "Partners", route: "/dashboard/partners" }
           ],

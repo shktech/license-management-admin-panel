@@ -76,7 +76,7 @@ const Page = () => {
       },
       {
         accessorKey: "asset",
-        header: "Asset",
+        header: "License",
       },
     ],
     []
@@ -86,9 +86,7 @@ const Page = () => {
     { title: "Start Date", key: "start_date" },
     { title: "End Date", key: "end_date" },
     { title: "License Key", key: "license_key" },
-    { title: "License Status", key: "osc_license_status" },
-    { title: "License server status", key: "license_server_status" },
-    { title: "Owner Name", key: "license_onwer.customer_name" },
+    { title: "Owner Name", key: "owner.name" },
     { title: "Product Part Name", key: "osc_product.product_name" },
     { title: "Vender Part Name", key: "osc_product.vendor_name" },
   ];
@@ -111,7 +109,7 @@ const Page = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex items-end gap-4 text-2xl font-semibold text-[#515f72]">
-              Asset <div className="text-lg font-normal">{asset?.asset_id}</div>
+              License <div className="text-lg font-normal">{asset?.asset_id}</div>
             </div>
           </div>
         }
@@ -165,16 +163,12 @@ const Page = () => {
                   singleColumn={true}
                   items={[
                     {
-                      label: "Asset Id",
+                      label: "License Id",
                       value: asset?.asset_id,
                     },
                     {
-                      label: "active",
+                      label: "Active",
                       value: <div className={`rounded-full h-4 w-4 ${asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
-                    },
-                    {
-                      label: "License Key",
-                      value: asset?.license_key,
                     },
                     {
                       label: "License Key",
@@ -186,15 +180,15 @@ const Page = () => {
                     },
                     {
                       label: "Bill Customer",
-                      value: asset?.bill_customer?.account,
+                      value: asset?.bill_customer?.name,
                     },
                     {
                       label: "Ship Customer",
-                      value: asset?.ship_customer?.account,
+                      value: asset?.ship_customer?.name,
                     },
                     {
                       label: "Reseller",
-                      value: asset?.reseller?.account,
+                      value: asset?.reseller?.name,
                     },
                     {
                       label: "Start Date",
@@ -243,18 +237,18 @@ const Page = () => {
                 <GeneralInformation
                   singleColumn={true}
                   items={[
-                    {
-                      label: "Product ID",
-                      value: asset?.osc_product?.product_id,
-                    },
+                    // {
+                    //   label: "Product ID",
+                    //   value: asset?.osc_product?.product_id,
+                    // },
                     {
                       label: "Product Name",
                       value: asset?.osc_product?.product_id,
                     },
-                    {
-                      label: "Product Part Number",
-                      value: asset?.osc_product?.product_part_number,
-                    },
+                    // {
+                    //   label: "Product Part Number",
+                    //   value: asset?.osc_product?.product_part_number,
+                    // },
                     {
                       label: "Product Description",
                       value: asset?.osc_product?.product_description,
@@ -354,10 +348,10 @@ const Page = () => {
                       label: "Account",
                       value: asset?.owner?.account,
                     },
-                    {
-                      label: "Address",
-                      value: asset?.owner?.address1 + " " + asset?.owner?.address2,
-                    },
+                    // {
+                    //   label: "Address",
+                    //   value: asset?.owner?.address1 + " " + asset?.owner?.address2,
+                    // },
                     {
                       label: "Address1",
                       value: asset?.owner?.address1,

@@ -86,14 +86,6 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
                     value: transaction?.error_message,
                 },
                 {
-                    label: "Waybill Number",
-                    value: transaction?.waybill_number,
-                },
-                {
-                    label: "Return Waybill Number",
-                    value: transaction?.return_waybill_number,
-                },
-                {
                     label: "Organization",
                     value: transaction?.organization,
                 },

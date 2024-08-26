@@ -27,8 +27,6 @@ const InitialCreateField: InitialFieldConfig[] = [
     { name: "source_reference_number" },
     { name: "source_reference_date", type: "date", required: 'text' },
     { name: "source_reference_id" },
-    { name: "waybill_number" },
-    { name: "return_waybill_number" },
 ];
 
 const InitialEditField: InitialFieldConfig[] = [
@@ -58,8 +56,6 @@ const InitialEditField: InitialFieldConfig[] = [
     { name: "source_reference_number" },
     { name: "source_reference_date", type: "date", required: 'text' },
     { name: "source_reference_id" },
-    { name: "waybill_number" },
-    { name: "return_waybill_number" },
 ];
 
 export default {
