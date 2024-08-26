@@ -42,7 +42,7 @@ const CustomerForm = ({ transaction_action, watch, setValue: setValueProps, disa
       setValueProps?.('bill_address2', watch('ship_address2'));
       setValueProps?.('bill_city', watch('ship_city'));
       setValueProps?.('bill_state', watch('ship_state'));
-      setValueProps?.('bill_zip', watch('ship_zip'));
+      setValueProps?.('bill_postal_code', watch('ship_postal_code'));
       setValueProps?.('bill_country', watch('ship_country'));
       setValueProps?.('bill_customer_account', watch('ship_customer_account'));
       setValueProps?.('bill_customer_name', watch('ship_customer_name'));
