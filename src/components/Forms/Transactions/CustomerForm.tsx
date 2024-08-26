@@ -15,29 +15,49 @@ import PartnerFormFields from "../Partners/PartnerFormFields";
 import GeneralTxnFormField from "./GeneralTxnFormField";
 import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Autocomplete, Box, FormControlLabel, TextField } from "@mui/material";
 import { useOne, useTable } from "@refinedev/core";
 import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 import { getInputCustomer } from "@utils/utilFunctions";
+import { IOSSwitch } from "@components/Input/GeneralSwitch";
 
 export type CustomerFormProps = GenericFormProps & {
   reset?: any,
   watch?: any,
   setValue?: any,
   fields: FieldConfig[],
+  transaction_action?: string,
   customer: any,
   disabledSearch?: boolean
 };
 
 const ADDLABEL = "New Customer";
 
-const CustomerForm = ({ watch, setValue: setValueProps, disabledSearch, fields, customer, ...props }: CustomerFormProps) => {
+const CustomerForm = ({ transaction_action, watch, setValue: setValueProps, disabledSearch, fields, customer, ...props }: CustomerFormProps) => {
+  const [isSameBillShipping, setIsSameBillShipping] = useState(false);
 
+  const handleSameBillShipping = () => {
+    if (!isSameBillShipping) {
+      setValueProps?.('bill_address1', watch('ship_address1'));
+      setValueProps?.('bill_address2', watch('ship_address2'));
+      setValueProps?.('bill_city', watch('ship_city'));
+      setValueProps?.('bill_state', watch('ship_state'));
+      setValueProps?.('bill_zip', watch('ship_zip'));
+      setValueProps?.('bill_country', watch('ship_country'));
+      setValueProps?.('bill_customer_account', watch('ship_customer_account'));
+      setValueProps?.('bill_customer_name', watch('ship_customer_name'));
+      setValueProps?.('bill_contact_first_name', watch('ship_contact_first_name'));
+      setValueProps?.('bill_contact_last_name', watch('ship_contact_last_name'));
+      setValueProps?.('bill_contact_email', watch('ship_contact_email'));
+      setValueProps?.('bill_contact_phone', watch('ship_contact_phone'));
+    }
+    setIsSameBillShipping((prev) => !prev);
+  };
   const [value, setValue] = useState<Customer>(customer.data as Customer || { account: ADDLABEL });
   const [inputValue, setInputValue] = useState('');
   const [customers, setCustomers] = useState<Customer[]>([]);
   useEffect(() => {
-    if(customer.data){
+    if (customer.data) {
       setValue(customer.data as Customer);
       handleReset(customer.data as Customer);
     } else {
@@ -132,6 +152,19 @@ const CustomerForm = ({ watch, setValue: setValueProps, disabledSearch, fields, 
           )
         }}
       />
+      {
+        customer?.prefix == "bill_" && !(transaction_action == "Revoke" || transaction_action == "Renewal") &&
+        <FormControlLabel
+          control={
+            <IOSSwitch
+              checked={isSameBillShipping}
+              onChange={handleSameBillShipping}
+              sx={{ mx: 1 }}
+            />
+          }
+          label="Same with shipping address"
+        />
+      }
       <GenericForm {...{ ...props, fields: fields }} />
     </div>
   );
