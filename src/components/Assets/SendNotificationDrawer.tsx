@@ -11,10 +11,11 @@ import * as monaco from "monaco-editor";
 
 interface SendNotificationDrawerProps {
   license_key: string | undefined;
+  receiver: string | undefined;
 }
 
 
-const SendNotificationDrawer: React.FC<SendNotificationDrawerProps> = ({ license_key }) => {
+const SendNotificationDrawer: React.FC<SendNotificationDrawerProps> = ({ license_key, receiver }) => {
 
   const { data, refetch, isLoading } = useList<EmailTemplate>({
     resource: "email-templates",
@@ -87,7 +88,7 @@ const SendNotificationDrawer: React.FC<SendNotificationDrawerProps> = ({ license
                       <TextField
                         hiddenLabel
                         fullWidth
-                        placeholder='Please enter the receiver email i.g. john@gmail.com'
+                        value={receiver}
                         id="filled-hidden-label-small"
                         size="small"
                         required

@@ -15,15 +15,17 @@ import PartnerFormFields from "../Partners/PartnerFormFields";
 import GeneralTxnFormField from "./GeneralTxnFormField";
 import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Autocomplete, Box, FormControlLabel, TextField } from "@mui/material";
 import CustomerForm from "./CustomerForm";
 import { getDisabledFields } from "@utils/utilFunctions";
+import { IOSSwitch } from "@components/Input/GeneralSwitch";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
   transaction_action?: string;
   setValue?: any,
-  customers?: any
+  customers?: any,
+  watch?: any
 };
 
 const TransactionForm = (props: TransactionFormProps) => {
@@ -55,19 +57,6 @@ const TransactionForm = (props: TransactionFormProps) => {
         (props.transaction_action == "New" ? GeneralTxnFormField.CreateTransactionForm.newAction : GeneralTxnFormField.CreateTransactionForm.notNewAction)
     },
     {
-      icon: <AccountBalanceWalletOutlinedIcon />,
-      title: 'Billing Partner Information',
-      description: 'Setup your Billing Partner Information',
-      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields) : PartnerFormFields.BillingPartnerInformationFormFields,
-      isCustomer: true,
-      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
-      customer: {
-        resource: 'bill-customers',
-        prefix: 'bill_',
-        data: props.transaction?.bill_customer || props.customers.bill_customers
-      },
-    },
-    {
       icon: <PaidOutlinedIcon />,
       title: 'Shipping Parter Information',
       description: 'Setup your Shipping Partner Information',
@@ -81,6 +70,19 @@ const TransactionForm = (props: TransactionFormProps) => {
       },
     },
     {
+      icon: <AccountBalanceWalletOutlinedIcon />,
+      title: 'Billing Partner Information',
+      description: 'Setup your Billing Partner Information',
+      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields) : PartnerFormFields.BillingPartnerInformationFormFields,
+      isCustomer: true,
+      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
+      customer: {
+        resource: 'bill-customers',
+        prefix: 'bill_',
+        data: props.transaction?.bill_customer || props.customers.bill_customers
+      },
+    },
+    {
       icon: <ProductionQuantityLimitsOutlinedIcon />,
       title: 'Reseller Information',
       description: 'Setup your Reseller Information',
@@ -90,7 +92,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       customer: {
         resource: 'resellers',
         prefix: 'reseller_',
-        data: props.transaction?.reseller || props.customers.resellers  
+        data: props.transaction?.reseller || props.customers.resellers
       },
     },
     {
@@ -134,12 +136,12 @@ const TransactionForm = (props: TransactionFormProps) => {
                 }}
               >
                 <div className="pl-4">{formGroup.icon}</div>
-                <div className="pl-2 text-md font-medium">{formGroup.title}</div>
+                <div className="pl-2 text-md font-medium flex gap-4">{formGroup.title}</div>
               </AccordionSummary>
               <AccordionDetails>
                 {
                   formGroup.isCustomer ?
-                    <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer, disabledSearch: formGroup.disabledSearch }}  /> :
+                    <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer, disabledSearch: formGroup.disabledSearch }} /> :
                     <GenericForm {...{ ...props, fields: formGroup.fields }} />
                 }
 

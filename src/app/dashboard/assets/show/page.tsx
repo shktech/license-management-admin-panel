@@ -338,7 +338,7 @@ const Page = () => {
                     },
                   ]}
                 />
-                <SendNotificationDrawer license_key={asset.license_key}/>
+                <SendNotificationDrawer license_key={asset.license_key} receiver={asset?.owner?.email}/>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
                 <GeneralInformation

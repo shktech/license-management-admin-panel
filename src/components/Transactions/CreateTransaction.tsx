@@ -107,6 +107,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
                         {...{ control, errors, trigger }}
                         transaction_action={initialInfo.transaction_action}
                         setValue={setValue}
+                        watch={watch}
                         customers={{
                             bill_customers: billCustomer,
                             ship_customers: shipCustomer,
