@@ -46,45 +46,44 @@ const TransactionEdit = () => {
         source_reference_number: transaction.source_reference_number,
         source_reference_date: transaction.source_reference_date,
         source_reference_id: transaction.source_reference_id,
-        bill_customer_account: transaction.bill_customer?.account,
-        bill_address1: transaction.bill_customer?.contact?.address?.address1,
-        bill_address2: transaction.bill_customer?.contact?.address?.address2,
-        bill_city: transaction.bill_customer?.contact?.address?.city,
-        bill_state: transaction.bill_customer?.contact?.address?.state,
-        bill_postal_code: transaction.bill_customer?.contact?.address?.postal_code,
-        bill_country: transaction.bill_customer?.contact?.address?.country,
-        bill_contact_first_name: transaction.bill_customer?.contact?.first_name,
-        bill_contact_last_name: transaction.bill_customer?.contact?.last_name,
-        bill_contact_phone: transaction.bill_customer?.contact?.phone,
-        bill_contact_email: transaction.bill_customer?.contact?.email,
-        ship_customer_account: transaction.ship_customer?.account,
-        ship_address1: transaction.ship_customer?.contact?.address?.address1,
-        ship_address2: transaction.ship_customer?.contact?.address?.address2,
-        ship_city: transaction.ship_customer?.contact?.address?.city,
-        ship_state: transaction.ship_customer?.contact?.address?.state,
-        ship_postal_code: transaction.ship_customer?.contact?.address?.postal_code,
-        ship_country: transaction.ship_customer?.contact?.address?.country,
-        ship_contact_first_name: transaction.ship_customer?.contact?.first_name,
-        ship_contact_last_name: transaction.ship_customer?.contact?.last_name,
-        ship_contact_phone: transaction.ship_customer?.contact?.phone,
-        ship_contact_email: transaction.ship_customer?.contact?.email,
-        reseller_account: transaction.reseller?.account,
-        reseller_address1: transaction.reseller?.contact?.address?.address1,
-        reseller_address2: transaction.reseller?.contact?.address?.address2,
-        reseller_city: transaction.reseller?.contact?.address?.city,
-        reseller_state: transaction.reseller?.contact?.address?.state,
-        reseller_postal_code: transaction.reseller?.contact?.address?.postal_code,
-        reseller_country: transaction.reseller?.contact?.address?.country,
-        reseller_contact_first_name: transaction.reseller?.contact?.first_name,
-        reseller_contact_last_name: transaction.reseller?.contact?.last_name,
-        reseller_contact_phone: transaction.reseller?.contact?.phone,
-        reseller_contact_email: transaction.reseller?.contact?.email,
+        // bill_customer_account: transaction.bill_customer?.account,
+        // bill_address1: transaction.bill_customer?.address1,
+        // bill_address2: transaction.bill_customer?.address2,
+        // bill_city: transaction.bill_customer?.city,
+        // bill_state: transaction.bill_customer?.state,
+        // bill_postal_code: transaction.bill_customer?.postal_code,
+        // bill_country: transaction.bill_customer?.country,
+        // bill_contact_first_name: transaction.bill_customer?.first_name,
+        // bill_contact_last_name: transaction.bill_customer?.last_name,
+        // bill_contact_phone: transaction.bill_customer?.phone,
+        // bill_contact_email: transaction.bill_customer?.email,
+        // ship_customer_account: transaction.ship_customer?.account,
+        // ship_address1: transaction.ship_customer?.address1,
+        // ship_address2: transaction.ship_customer?.address2,
+        // ship_city: transaction.ship_customer?.city,
+        // ship_state: transaction.ship_customer?.state,
+        // ship_postal_code: transaction.ship_customer?.postal_code,
+        // ship_country: transaction.ship_customer?.country,
+        // ship_contact_first_name: transaction.ship_customer?.first_name,
+        // ship_contact_last_name: transaction.ship_customer?.last_name,
+        // ship_contact_phone: transaction.ship_customer?.phone,
+        // ship_contact_email: transaction.ship_customer?.email,
+        // reseller_customer_account: transaction.reseller?.account,
+        // reseller_customer_name: transaction.reseller?.name,
+        // reseller_address1: transaction.reseller?.address1,
+        // reseller_address2: transaction.reseller?.address2,
+        // reseller_city: transaction.reseller?.city,
+        // reseller_state: transaction.reseller?.state,
+        // reseller_postal_code: transaction.reseller?.postal_code,
+        // reseller_country: transaction.reseller?.country,
+        // reseller_contact_first_name: transaction.reseller?.first_name,
+        // reseller_contact_last_name: transaction.reseller?.last_name,
+        // reseller_contact_phone: transaction.reseller?.phone,
+        // reseller_contact_email: transaction.reseller?.email,
         osc_part_number: transaction.asset?.osc_product?.product_part_number,
         quantity: transaction.quantity,
         start_date: transaction.start_date,
         end_date: transaction.end_date,
-        waybill_number: transaction.waybill_number,
-        return_waybill_number: transaction.return_waybill_number,
       };
       reset({ ...resetTransaction });
     }
@@ -100,7 +99,7 @@ const TransactionEdit = () => {
     }
     if (start_date) {
       const originalDate = new Date(start_date);
-      originalDate.setMonth(originalDate.getMonth() + getDurationFromString(duration as string));
+      originalDate.setFullYear(originalDate.getFullYear() + getDurationFromString(duration as string));
       const end_date = originalDate.toISOString().split('T')[0];
       setValue('end_date', end_date);
     }
@@ -137,7 +136,7 @@ const TransactionEdit = () => {
         <Loader />
       ) : (
         <div className="px-8">
-          <TransactionForm {...{ control, errors, trigger }} transaction={transaction} />
+          <TransactionForm {...{ control, errors, trigger }} transaction={transaction} setValue={setValue} watch={watch} />
         </div>
       )}
     </Edit>

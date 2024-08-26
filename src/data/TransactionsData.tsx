@@ -1,4 +1,3 @@
-import { Transaction } from "@/types/types";
 
 const transactionData = [
     {

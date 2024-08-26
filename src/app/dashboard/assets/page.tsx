@@ -4,7 +4,6 @@ import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Asset, Permission } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
-import AssetIcon from "@/assets/icons/asset.svg?icon";
 import Loader from "@components/common/Loader";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 
@@ -29,14 +28,14 @@ const Page = () => {
     () => [
       {
         accessorKey: "asset_id",
-        header: "Asset ID",
+        header: "License ID",
       },
       {
         accessorKey: "license_key",
-        header: "Asset Number (LicKey/Srl#)",
+        header: "License Number (LicKey/Srl#)",
       },
       {
-        accessorKey: "organization",
+        accessorKey: "organization.organization_name",
         header: "Organization",
       },
       {
@@ -45,7 +44,7 @@ const Page = () => {
       },
       {
         accessorKey: "osc_product.product_type",
-        header: "Asset Type",
+        header: "License Type",
       },
       {
         accessorKey: "osc_product.vendor_name",

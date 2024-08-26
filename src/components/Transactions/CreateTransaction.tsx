@@ -3,19 +3,20 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { Create, SaveButton } from "@refinedev/mui";
-import { InputTransaction, Product } from "@/types/types";
-import TransactionForm from "@components/Forms/Transactions/TransactionForm";
+import { Customer, InputTransaction, Product } from "@/types/types";
+// import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { useBack, useList } from "@refinedev/core";
-import { getDurationFromString } from "@utils/utilFunctions";
+import { useBack, useList, useOne } from "@refinedev/core";
+import { getDurationFromString, getInputCustomer } from "@utils/utilFunctions";
+import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 
 interface ShowTransactionProps {
     initialInfo: any
 }
 
-const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
+const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     const {
         saveButtonProps,
         refineCore: { formLoading, queryResult },
@@ -27,6 +28,9 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
         formState: { errors },
     } = useForm<InputTransaction>();
 
+    const [reseller, setReseller] = useState<Customer | null>(null);
+    const [billCustomer, setBillCustomer] = useState<Customer | null>(null);
+    const [shipCustomer, setShipCustomer] = useState<Customer | null>(null);
     useEffect(() => {
         const nowDateString = (new Date()).toISOString().split('T')[0];
         const resetTransaction: InputTransaction = {
@@ -35,14 +39,34 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
             end_date: nowDateString,
             ...initialInfo
         };
-        console.log(resetTransaction);
         reset({ ...resetTransaction });
     }, []);
 
-    const { data: productData, refetch, isLoading: productLoading } = useList<Product>({
+    const { data: productData, isLoading: productLoading } = useList<Product>({
         resource: "products",
         hasPagination: false
     });
+
+    const { data: billCustomerData, isLoading: billLoading } = useOne<Customer>({
+        resource: "customers/bill-customers",
+        id: initialInfo.bill_customer
+    });
+
+    const { data: shipCustomerData, isLoading: shipLoading } = useOne<Customer>({
+        resource: "customers/ship-customers",
+        id: initialInfo.ship_customer
+    });
+
+    const { data: resellerData, isLoading: resellerLoading } = useOne<Customer>({
+        resource: "customers/resellers",
+        id: initialInfo.reseller
+    });
+
+    useEffect(() => {
+        setReseller(resellerData?.data || null);
+        setBillCustomer(billCustomerData?.data || null);
+        setShipCustomer(shipCustomerData?.data || null);
+    }, [resellerData, billCustomerData, shipCustomerData])
 
     const start_date = watch('start_date');
     const osc_part_number = watch('osc_part_number');
@@ -54,7 +78,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
         }
         if (start_date) {
             const originalDate = new Date(start_date);
-            originalDate.setMonth(originalDate.getMonth() + getDurationFromString(duration as string));
+            originalDate.setFullYear(originalDate.getFullYear() + getDurationFromString(duration as string));
             const end_date = originalDate.toISOString().split('T')[0];
             setValue('end_date', end_date);
         }
@@ -75,11 +99,21 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo}) => {
                 <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
             )}
         >
-            {formLoading || productLoading ? (
+            {formLoading || productLoading || initialInfo.transaction_action != "New" && (billLoading || shipLoading || resellerLoading) ? (
                 <Loader />
             ) : (
                 <div className="bg-white px-8 rounded-xl">
-                    <TransactionForm {...{ control, errors, trigger }} transaction_action={initialInfo.transaction_action} />
+                    <TransactionForm
+                        {...{ control, errors, trigger }}
+                        transaction_action={initialInfo.transaction_action}
+                        setValue={setValue}
+                        watch={watch}
+                        customers={{
+                            bill_customers: billCustomer,
+                            ship_customers: shipCustomer,
+                            resellers: reseller
+                        }}
+                    />
                 </div>
             )}
         </Create>

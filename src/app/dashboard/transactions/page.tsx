@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Permission, Transaction } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
-import TransactionWithColorIcon from "@/assets/icons/transactionWithColor.svg?icon";
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
@@ -90,7 +89,7 @@ const Page = () => {
       },
       {
         accessorKey: "asset.license_key",
-        header: "Asset",
+        header: "License",
         size: 200,
       },
       {

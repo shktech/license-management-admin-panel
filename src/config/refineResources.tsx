@@ -63,7 +63,7 @@ export const dashboardResources: ResourceProps[] = [
     show: "/assets/show/:assetid/assets_details/show/:detailsid",
     meta: {
       canDelete: true,
-      label: "Assets Details",
+      label: "License Details",
       parent: "assets",
       hide: true,
       warnWhenUnsavedChanges: true,
@@ -84,7 +84,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "partners",
-    list: "/partners",
+    list: "/dashboard/partners",
     meta: {
       label: "Partners",
       parent: "mastermgmt",

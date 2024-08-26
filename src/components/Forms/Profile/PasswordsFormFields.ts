@@ -1,5 +1,4 @@
 import { FieldConfig } from "../FormControlWrapper";
-import { useFetchOptions } from "@/hooks/useFetchOptions";
 
 const PasswordsFormFields: FieldConfig[] = [
     {

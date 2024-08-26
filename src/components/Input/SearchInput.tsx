@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormControl, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@/assets/icons/search.svg?icon";
 

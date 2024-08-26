@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Box, Button, Drawer, Modal } from '@mui/material';
+import React from 'react';
+import { Box, Button, Modal } from '@mui/material';
 import { User } from '../../types/types';
 
 

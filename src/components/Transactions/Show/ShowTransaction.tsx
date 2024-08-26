@@ -43,7 +43,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
                 <div className="px-12 pt-4">
                     <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <StyledTab label="Basic Information" />
-                        <StyledTab label="Asset Status" />
+                        <StyledTab label="License Status" />
                         {/* <StyledTab label="Bill Customer" />
                         <StyledTab label="Ship Customer" />
                         <StyledTab label="Reseller" /> */}
@@ -56,7 +56,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
             <CustomTabPanel value={value} index={1}>
                 <AssetInformation transaction={transaction} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
+            {/* <CustomTabPanel value={value} index={2}>
                 <CustomerInformation transaction={transaction} type="bill_customer" />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
@@ -64,7 +64,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={4}>
                 <CustomerInformation transaction={transaction} type="reseller" />
-            </CustomTabPanel>
+            </CustomTabPanel> */}
         </div>
     )
 };
