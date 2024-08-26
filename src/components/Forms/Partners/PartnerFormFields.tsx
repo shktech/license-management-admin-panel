@@ -1,5 +1,5 @@
 import { FieldConfig } from "../FormControlWrapper";
-import { InputCustomerFormFields, InputResellerCustomerFormFields } from "./InputCustomerFormFields";
+import { InputCustomerFormFields } from "./InputCustomerFormFields";
 
 const BillingPartnerInformationFormFields: FieldConfig[] = InputCustomerFormFields.map(field => ({
   name: "bill_" + field.name,
@@ -16,7 +16,7 @@ const ShippingPartnerInformationFormFields: FieldConfig[] = InputCustomerFormFie
   rules: field.rules,
   type: field.type,
 }))
-const ResellerPartnerInformationFormFields: FieldConfig[] = InputResellerCustomerFormFields.map(field => ({
+const ResellerPartnerInformationFormFields: FieldConfig[] = InputCustomerFormFields.map(field => ({
   name: "reseller_" + field.name,
   label: "Reseller " + field.label,
   placeholder: field.placeholder,

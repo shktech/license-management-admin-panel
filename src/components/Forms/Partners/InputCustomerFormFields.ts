@@ -4,102 +4,52 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 const InitialCustomerFormFields: InitialFieldConfig[] = [
   {
     name: "customer_account",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "customer_name",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "address1",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "address2",
   },
   {
     name: "city",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "state",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "postal_code",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "country",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "contact_first_name",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "contact_last_name",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "contact_phone",
-    required: 'text'
+    // required: 'text'
   },
   {
     name: "contact_email",
-    required: 'email'
-  },
-];
-const InitialResellerFormField: InitialFieldConfig[] = [
-  {
-    name: "account",
-    required: 'text'
-  },
-  {
-    name: "name",
-    required: 'text'
-  },
-  {
-    name: "address1",
-    required: 'text'
-  },
-  {
-    name: "address2",
-  },
-  {
-    name: "city",
-    required: 'text'
-  },
-  {
-    name: "state",
-    required: 'text'
-  },
-  {
-    name: "postal_code",
-    required: 'text'
-  },
-  {
-    name: "country",
-    required: 'text'
-  },
-  {
-    name: "contact_first_name",
-    required: 'text'
-  },
-  {
-    name: "contact_last_name",
-    required: 'text'
-  },
-  {
-    name: "contact_phone",
-    required: 'text'
-  },
-  {
-    name: "contact_email",
-    required: 'email'
+    // required: 'email'
   },
 ];
 
-export const InputResellerCustomerFormFields = getRealFormFields(InitialResellerFormField);
 export const InputCustomerFormFields = getRealFormFields(InitialCustomerFormFields);
 

@@ -44,7 +44,7 @@ const SendNotificationDrawer: React.FC<SendNotificationDrawerProps> = ({ license
   };
 
   return (
-    <div className='px-10'>
+    <div className='px-10 py-4'>
       <Button onClick={handleShowDrawer} sx={outlineBtnStyle}>Send Notification</Button>
       <Drawer anchor="right" open={openDrawer} onClose={handleCloseDrawer}>
         <div className="min-w-[700px] pb-4 flex flex-col min-h-screen">

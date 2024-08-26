@@ -35,7 +35,7 @@ const Page = () => {
         header: "Asset Number (LicKey/Srl#)",
       },
       {
-        accessorKey: "organization",
+        accessorKey: "organization.organization_name",
         header: "Organization",
       },
       {

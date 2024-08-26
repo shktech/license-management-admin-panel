@@ -41,16 +41,6 @@ const Page = () => {
   const transactions: Transaction[] = data?.data?.transactions as Transaction[];
   const seats: Seat[] = data?.data?.seats as Seat[];
 
-  const handleEditBtn = () => {
-    const path = '/dashboard/transactions/create?'; // your target route
-    const queryParams = {
-      id: "edit_transaction_id",
-    };
-
-    // Navigate to the path with the query parameters
-    push(path + (new URLSearchParams(queryParams).toString()));
-  }
-
   const handleReActionBtn = (action: string) => {
     const path = '/dashboard/transactions/create?'; // your target route
     const queryParams = {
@@ -60,9 +50,9 @@ const Page = () => {
       start_date: asset.start_date as string,
       end_date: asset.end_date as string,
       osc_part_number: asset.osc_product?.product_part_number as string,
-      bill_customer: asset.bill_customer as string,
-      ship_customer: asset.ship_customer as string,
-      reseller: asset.reseller as string,
+      bill_customer: asset.bill_customer?.account_id as string,
+      ship_customer: asset.ship_customer?.account_id as string,
+      reseller: asset.reseller?.account_id as string,
     };
 
     // Navigate to the path with the query parameters
@@ -135,10 +125,6 @@ const Page = () => {
               <AutorenewIcon fontSize="small" />Revoke
             </Button>
 
-            <Button sx={refreshRefineBtnStyle} onClick={() => handleEditBtn()}>
-              <EditIcon fontSize="small" />Edit
-            </Button>
-
             <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
 
           </div>
@@ -184,7 +170,7 @@ const Page = () => {
                     },
                     {
                       label: "active",
-                      value: asset?.active ? "Yes" : "No",
+                      value: <div className={`rounded-full h-4 w-4 ${asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
                     },
                     {
                       label: "License Key",
@@ -196,19 +182,19 @@ const Page = () => {
                     },
                     {
                       label: "Organization",
-                      value: asset?.organization,
+                      value: asset?.organization?.organization_name,
                     },
                     {
                       label: "Bill Customer",
-                      value: asset?.bill_customer,
+                      value: asset?.bill_customer?.account,
                     },
                     {
                       label: "Ship Customer",
-                      value: asset?.ship_customer,
+                      value: asset?.ship_customer?.account,
                     },
                     {
                       label: "Reseller",
-                      value: asset?.reseller,
+                      value: asset?.reseller?.account,
                     },
                     {
                       label: "Start Date",
@@ -287,7 +273,7 @@ const Page = () => {
                     },
                     {
                       label: "Active",
-                      value: asset?.osc_product?.active,
+                      value: <div className={`rounded-full h-4 w-4 ${asset?.osc_product?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
                     },
                     {
                       label: "Duration",
@@ -369,64 +355,52 @@ const Page = () => {
                       value: asset?.owner?.account,
                     },
                     {
-                      label: "Account ID",
-                      value: asset?.owner?.account_id,
-                    },
-                    {
                       label: "Address",
-                      value: asset?.owner?.address,
+                      value: asset?.owner?.address1 + " " + asset?.owner?.address2,
                     },
                     {
                       label: "Address1",
-                      value: asset?.owner?.contact?.address?.address1,
+                      value: asset?.owner?.address1,
                     },
                     {
                       label: "Address2",
-                      value: asset?.owner?.contact?.address?.address2,
-                    },
-                    {
-                      label: "Address ID",
-                      value: asset?.owner?.contact?.address?.address_id,
+                      value: asset?.owner?.address2,
                     },
                     {
                       label: "City",
-                      value: asset?.owner?.contact?.address?.city,
+                      value: asset?.owner?.city,
                     },
                     {
                       label: "Country",
-                      value: asset?.owner?.contact?.address?.country,
+                      value: asset?.owner?.country,
                     },
                     {
                       label: "Postal Code",
-                      value: asset?.owner?.contact?.address?.postal_code,
+                      value: asset?.owner?.postal_code,
                     },
                     {
                       label: "State",
-                      value: asset?.owner?.contact?.address?.state,
-                    },
-                    {
-                      label: "Contact ID",
-                      value: asset?.owner?.contact?.contact_id,
+                      value: asset?.owner?.state,
                     },
                     {
                       label: "Contact Email",
-                      value: asset?.owner?.contact?.email,
+                      value: asset?.owner?.email,
                     },
                     {
                       label: "Contact Phone",
-                      value: asset?.owner?.contact?.phone,
+                      value: asset?.owner?.phone,
                     },
                     {
                       label: "Contact First Name",
-                      value: asset?.owner?.contact?.first_name,
+                      value: asset?.owner?.first_name,
                     },
                     {
                       label: "Contact Last Name",
-                      value: asset?.owner?.contact?.last_name,
+                      value: asset?.owner?.last_name,
                     },
                     {
                       label: "Organization",
-                      value: asset?.owner?.organization,
+                      value: asset?.organization?.organization_name,
                     },
                   ]}
                 />

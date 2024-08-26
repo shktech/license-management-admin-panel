@@ -22,43 +22,49 @@ import { getInputCustomer } from "@utils/utilFunctions";
 
 export type CustomerFormProps = GenericFormProps & {
   reset?: any,
+  watch?: any,
+  setValue?: any,
   fields: FieldConfig[],
-  customerType: string
+  customerType: any
 };
 
 const ADDLABEL = "New Customer";
 
-const CustomerForm = ({ reset, fields, customerType, ...props }: CustomerFormProps) => {
+const CustomerForm = ({ watch, setValue: setValueProps, fields, customerType, ...props }: CustomerFormProps) => {
 
-  const [value, setValue] = useState<any>({
-    isAdd: true,
+  const [value, setValue] = useState<Customer>({
     account: ADDLABEL
   });
   const [inputValue, setInputValue] = useState(ADDLABEL);
-  const [customers, setCustomers] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const {
     tableQueryResult: { data, isLoading },
     setFilters,
   } = useTable<Customer>({
-    resource: `customers/${customerType}`,
+    resource: `customers/${customerType.resource}`,
     syncWithLocation: false
   });
 
-  const handleValueChange = (event: any, newValue: any) => {
-    setValue(newValue);
-  }
-
+  const customer_account = watch(`${customerType.prefix}customer_account`);
 
   useEffect(() => {
-    if (value?.isAdd) {
-      reset(getInputCustomer({}, 'bill-customers'))
-    } else {
-      reset(getInputCustomer(value, 'bill-customers'))
+    if (customer_account) {
+      console.log('customer_account', customer_account)
+      setInputValue(customer_account)
     }
-  }, [value])
+  }, [customer_account])
+  const handleValueChange = (event: any, newValue: Customer | null) => {
+    setValue(newValue as Customer);
+    handleReset(newValue as Customer);
+  }
 
+  const handleReset = (value: Customer) => {
+    Object.keys(getInputCustomer(value, customerType.prefix)).forEach(key => {
+      setValueProps?.(key, value?.account == ADDLABEL ? '' : getInputCustomer(value, customerType.prefix)[key])
+    })
+  }
   const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
-  const handleInputChange = (event: any, newInputValue: any) => {
+  const handleInputChange = (event: any, newInputValue: string) => {
     setInputValue(newInputValue);
     if (newInputValue == ADDLABEL) {
       handleSearch('')
@@ -69,10 +75,13 @@ const CustomerForm = ({ reset, fields, customerType, ...props }: CustomerFormPro
 
   useEffect(() => {
     if (data?.data) {
-      setCustomers(data?.data as any[])
+      setCustomers(data?.data as Customer[])
     }
   }, [data])
 
+  useEffect(() => {
+    
+  }, [])
   return (
     <div className="flex justify-center flex-col gap-4">
       <Autocomplete
@@ -84,7 +93,6 @@ const CustomerForm = ({ reset, fields, customerType, ...props }: CustomerFormPro
         onInputChange={handleInputChange}
         options={[
           {
-            isAdd: true,
             account: ADDLABEL
           },
           ...customers
@@ -101,18 +109,18 @@ const CustomerForm = ({ reset, fields, customerType, ...props }: CustomerFormPro
               {...optionProps}
             >
               {
-                option.isAdd == true ?
+                option.account == ADDLABEL ?
                   <div className="border px-4 py-2 rounded-lg w-full text-center bg-[#1f325c] text-white">{option.account}</div> :
                   <div className="text-sm flex flex-col gap-2 py-2">
                     <div className="flex gap-4">
                       <div className="border-b">{option.account}</div>
-                      <div className="border-b">{option.contact.first_name + " " + option.contact.last_name}</div>
+                      <div className="border-b">{option.first_name + " " + option.last_name}</div>
                     </div>
                     <div className="flex gap-2">
-                      <div className="border-b">{option.contact.address?.address1}</div>
-                      <div className="border-b">{option.contact.address?.address2}</div>
-                      <div className="border-b">{option.contact.address?.state}</div>
-                      <div className="border-b">{option.contact.address?.country}</div>
+                      <div className="border-b">{option.address1}</div>
+                      <div className="border-b">{option.address2}</div>
+                      <div className="border-b">{option.state}</div>
+                      <div className="border-b">{option.country}</div>
                     </div>
                   </div>
               }

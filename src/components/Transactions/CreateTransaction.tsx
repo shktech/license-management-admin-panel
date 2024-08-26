@@ -9,8 +9,9 @@ import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { useBack, useList, useOne } from "@refinedev/core";
-import { getDurationFromString } from "@utils/utilFunctions";
+import { getDurationFromString, getInputCustomer } from "@utils/utilFunctions";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
+import { Button } from "@mui/material";
 
 interface ShowTransactionProps {
     initialInfo: any
@@ -62,36 +63,32 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
 
     useEffect(() => {
         if (!billLoading) {
-            console.log(billCustomerData?.data)
-            const realData = billCustomerData?.data;
-            reset({
-                bill_customer_account: realData?.account,
-                bill_customer_name: realData?.name,
-                bill_address1: realData?.contact.address?.address1,
-                bill_address2: realData?.contact.address?.address2,
-                bill_city: realData?.contact.address?.city,
-                bill_state: realData?.contact.address?.state,
-                bill_postal_code: realData?.contact.address?.postal_code,
-                bill_country: realData?.contact.address?.country,
-                bill_contact_first_name: realData?.contact.first_name,
-                bill_contact_last_name: realData?.contact.last_name,
-                bill_contact_phone: realData?.contact.phone,
-                bill_contact_email: realData?.contact.email,
-            });
+            const realData = billCustomerData?.data as Customer;
+            handleReset(realData, 'bill_');
         }
     }, [billLoading])
 
     useEffect(() => {
         if (!shipLoading) {
-            console.log(shipCustomerData?.data)
+            const realData = shipCustomerData?.data as Customer;
+            handleReset(realData, 'ship_');
         }
-    }, [billLoading])
+    }, [shipLoading])
 
     useEffect(() => {
         if (!resellerLoading) {
-            console.log(resellerData?.data)
+            const realData = resellerData?.data as Customer;
+            handleReset(realData, 'reseller_');
         }
     }, [resellerLoading])
+
+    const handleReset = (value: Customer, prefix: string) => {
+        Object.keys(getInputCustomer(value, prefix)).forEach(key => {
+            setValue(key, getInputCustomer(value, prefix)[key])
+        })
+        // reset(getInputCustomer(value, prefix));
+        console.log(getInputCustomer(value, prefix))
+    }
 
     const start_date = watch('start_date');
     const osc_part_number = watch('osc_part_number');
@@ -128,7 +125,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
                 <Loader />
             ) : (
                 <div className="bg-white px-8 rounded-xl">
-                    <TransactionForm {...{ control, errors, trigger }} transaction_action={initialInfo.transaction_action} reset={reset} />
+                    <TransactionForm {...{ control, errors, trigger }} transaction_action={initialInfo.transaction_action} setValue={setValue} watch={watch} />
                 </div>
             )}
         </Create>

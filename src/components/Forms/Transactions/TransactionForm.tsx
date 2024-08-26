@@ -17,11 +17,13 @@ import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import CustomerForm from "./CustomerForm";
+import { getDisabledFields } from "@utils/utilFunctions";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
   transaction_action?: string;
-  reset?: any
+  setValue?: any,
+  watch?: any
 };
 
 const TransactionForm = (props: TransactionFormProps) => {
@@ -57,32 +59,41 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <AccountBalanceWalletOutlinedIcon />,
       title: 'Billing Partner Information',
       description: 'Setup your Billing Partner Information',
-      fields: PartnerFormFields.BillingPartnerInformationFormFields,
+      fields: props.transaction_action == "New" ? PartnerFormFields.BillingPartnerInformationFormFields : getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields),
       isCustomer: true,
-      customerType: 'bill-customers',
+        customerType: {
+          resource: 'bill-customers',
+          prefix: 'bill_'
+        },
     },
     {
       icon: <PaidOutlinedIcon />,
       title: 'Shipping Parter Information',
       description: 'Setup your Shipping Partner Information',
-      fields: PartnerFormFields.ShippingPartnerInformationFormFields,
+      fields: props.transaction_action == "New" ? (PartnerFormFields.ShippingPartnerInformationFormFields) : getDisabledFields(PartnerFormFields.ShippingPartnerInformationFormFields),
       isCustomer: true,
-      customerType: 'ship-customers',
+      customerType: {
+        resource: 'ship-customers',
+        prefix: 'ship_'
+      },
     },
     {
       icon: <ProductionQuantityLimitsOutlinedIcon />,
       title: 'Reseller Information',
       description: 'Setup your Reseller Information',
-      fields: PartnerFormFields.ResellerPartnerInformationFormFields,
+      fields: props.transaction_action == "New" ? PartnerFormFields.ResellerPartnerInformationFormFields : getDisabledFields(PartnerFormFields.ResellerPartnerInformationFormFields),
       isCustomer: true,
-      customerType: 'resellers',
+      customerType: {
+        resource: 'resellers',
+        prefix: 'reseller_'
+      },
     },
-    // {
-    //   icon: <DetailsIcon />,
-    //   title: 'Licensing Details',
-    //   description: 'Setup your Reseller Information',
-    //   fields: props.transaction_action == "New" ? LicensingDetailFormFields.newAction : LicensingDetailFormFields.notNewAction
-    // },
+    {
+      icon: <DetailsIcon />,
+      title: 'Licensing Details',
+      description: 'Setup your Reseller Information',
+      fields: props.transaction_action == "New" ? LicensingDetailFormFields.newAction : LicensingDetailFormFields.notNewAction
+    },
   ]
   return (
     <div className="flex justify-center">

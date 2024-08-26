@@ -1,8 +1,5 @@
 "use client";
-import BillCustomers from "@components/Partners/BillCustomers";
 import CustomerTable from "@components/Partners/CustomerTable";
-import Resellers from "@components/Partners/Resellers";
-import ShipCustomers from "@components/Partners/ShipCustomers";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
 import React, { useState } from "react";
 
