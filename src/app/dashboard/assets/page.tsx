@@ -72,7 +72,7 @@ const Page = () => {
         <GenericTable
           title={
             <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-              Assets
+              Licenses
             </div>
           }
           data={data?.data}

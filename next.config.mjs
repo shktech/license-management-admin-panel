@@ -29,7 +29,8 @@ const nextConfig = {
     return config;
   },
   output: 'export',
-  distDir: 'dist'
+  distDir: 'dist',
+  trailingSlash: true
 };
 
 

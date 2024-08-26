@@ -29,9 +29,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-          <Link href="/" className="text-[#e3ebff] font-bold flex justify-center items-center">
+          <Link href="/dashboard" className="text-[#e3ebff] font-bold flex justify-center items-center">
             <LogoIcon /> 
-            <div className="font-bold pl-4 text-3xl">License</div>
+            <div className="font-bold pl-4 text-3xl">CALM</div>
           </Link>
         </div>
         {/* <!-- SIDEBAR HEADER --> */}

@@ -50,7 +50,7 @@ export const dashboardResources: ResourceProps[] = [
     show: "/dashboard/assets/show/:id",
     meta: {
       canDelete: true,
-      label: "Assets",
+      label: "Licenses",
       parent: "mastermgmt",
       warnWhenUnsavedChanges: true,
     },
