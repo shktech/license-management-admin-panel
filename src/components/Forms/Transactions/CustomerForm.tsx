@@ -88,7 +88,7 @@ const CustomerForm = ({ watch, setValue: setValueProps, disabledSearch, fields, 
         value={value}
         onChange={handleValueChange}
         disabled={disabledSearch}
-        sx={{ width: 300 }}
+        fullWidth
         inputValue={inputValue}
         onInputChange={handleInputChange}
         options={[
@@ -113,14 +113,13 @@ const CustomerForm = ({ watch, setValue: setValueProps, disabledSearch, fields, 
                   <div className="border px-4 py-2 rounded-lg w-full text-center bg-[#1f325c] text-white">{option.account}</div> :
                   <div className="text-sm flex flex-col gap-2 py-2">
                     <div className="flex gap-4">
-                      <div className="border-b">{option.account}</div>
-                      <div className="border-b">{option.first_name + " " + option.last_name}</div>
+                      <div className=""><span className="font-bold">Account: </span>{option.account}</div>
+                      <div className=""><span className="font-bold">Name: </span>{option.first_name + " " + option.last_name}</div>
                     </div>
                     <div className="flex gap-2">
-                      <div className="border-b">{option.address1}</div>
-                      <div className="border-b">{option.address2}</div>
-                      <div className="border-b">{option.state}</div>
-                      <div className="border-b">{option.country}</div>
+                      <div className=""><span className="font-bold">Address: </span>{option.address1} {option.address2}</div>
+                      <div className=""><span className="font-bold">State: </span>{option.state}</div>
+                      <div className=""><span className="font-bold">Country: </span>{option.country}</div>
                     </div>
                   </div>
               }

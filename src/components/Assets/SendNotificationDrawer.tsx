@@ -6,6 +6,8 @@ import ShowTransaction from '@components/Transactions/Show/ShowTransaction';
 import Loader from '@components/common/Loader';
 import { IOSSwitch } from '@components/Input/GeneralSwitch';
 import { modalOkBtnStyle, outlineBtnStyle } from '@data/MuiStyles';
+import Editor from "@monaco-editor/react";
+import * as monaco from "monaco-editor";
 
 interface SendNotificationDrawerProps {
   license_key: string | undefined;
@@ -41,6 +43,20 @@ const SendNotificationDrawer: React.FC<SendNotificationDrawerProps> = ({ license
 
   const handleChangeType = (event: SelectChangeEvent) => {
     setType(event.target.value)
+  };
+
+  const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+    lineNumbers: "off",
+    readOnly: true
+  };
+  const handleEditorDidMount = (editor: any, monaco: any) => {
+    monaco.editor.defineTheme("custom-theme", {
+      base: "vs",
+      inherit: true,
+      rules: [],
+      colors: { "editor.background": "#e6eaed" },
+    });
+    monaco.editor.setTheme("custom-theme");
   };
 
   return (
@@ -99,7 +115,16 @@ const SendNotificationDrawer: React.FC<SendNotificationDrawerProps> = ({ license
                     </div>
                   </div>
                   <div className='mt-4 border border-[#c4c4c4] rounded-md p-4'>
-                    <div dangerouslySetInnerHTML={{ __html: getReplacedEmailContent(emailTemplateData[type].body) }} />
+                    {/* <div dangerouslySetInnerHTML={{ __html: getReplacedEmailContent(emailTemplateData[type].body) }} /> */}
+                    <Editor
+                      value={emailTemplateData[type].body}
+                      height="300px"
+                      defaultLanguage="html"
+                      options={editorOptions}
+                      theme="custom-theme"
+                      onMount={handleEditorDidMount}
+                      // onChange={(value) => onEmailBodyChange(value as string)}
+                    />
                   </div>
                   <div className='flex justify-end'>
                     <Button

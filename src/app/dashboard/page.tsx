@@ -4,12 +4,20 @@ import { Transaction } from "../../types/types";
 import React, { useMemo } from "react";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
-import { MRT_ColumnDef } from "material-react-table";
+import { MRT_ColumnDef, MRT_TableContainer, MRT_ToolbarAlertBanner, useMaterialReactTable } from "material-react-table";
 import { getFormattedDate } from "@utils/utilFunctions";
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
-import CommonTable from "@components/Table/CommonTable";
+// import CommonTable from "@components/Table/CommonTable";
+import ChartOne from "@components/Charts/ChartOne";
+import ChartTwo from "@components/Charts/ChartTwo";
+import Chart from "@components/Charts/page";
+import dynamic from "next/dynamic";
+
+const ChartThree = dynamic(() => import("@/components/Charts/ChartThree"), {
+  ssr: false,
+});
 
 const HomePage: React.FC = () => {
   const {
@@ -22,6 +30,7 @@ const HomePage: React.FC = () => {
         order: "desc",    // The sorting order: "asc" or "desc"
       },
     ],
+    syncWithLocation: false
   });
 
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
@@ -74,7 +83,7 @@ const HomePage: React.FC = () => {
       },
       {
         accessorKey: "asset.license_key",
-        header: "Asset",
+        header: "License",
         size: 200,
       },
       {
@@ -97,25 +106,54 @@ const HomePage: React.FC = () => {
     []
   );
 
+  const table = useMaterialReactTable({
+    columns: columns,
+    data: data?.data.slice(0, 5) || [],
+    enableColumnActions: false,
+    enableColumnPinning: true,
+    muiTableBodyCellProps: ({ cell }) => ({
+      sx: {
+        padding: cell.column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '',
+      }
+    }),
+    muiTableHeadCellProps: ({ column }) => ({
+      sx: {
+        padding: column.getIndex() === 0 ? '1rem 1rem 1rem 3rem' : '',
+        verticalAlign: 'middle'
+      }
+    }),
+    muiPaginationProps: {
+      color: 'primary',
+      shape: 'rounded',
+      showRowsPerPage: false,
+      variant: 'outlined',
+    },
+    paginationDisplayMode: 'pages',
+  });
+
   return (
-    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {/* <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+    <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5 px-8 py-8">
+      <ChartOne />
+      <ChartTwo />
+      <ChartThree />
+      <div className="col-span-7 p-8 overflow-x-auto bg-white">
+        {/* <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#515f72] flex items-center gap-2">
         Dashboard
       </div> */}
-      {
-        isLoading ?
-          <Loader /> :
-          <CommonTable
-            title={
-              <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-                Recent Transactions
+        {
+          isLoading ?
+            <Loader /> :
+            <div className='scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200'>
+              <div className='flex justify-between pb-4 gap-2'>
+                <div className="text-xl text-xl font-semibold text-black">Recent Transaction</div>
               </div>
-            }
-            data={data?.data}
-            columns={columns}
-          />
-      }
+              <MRT_TableContainer table={table} />
+              <MRT_ToolbarAlertBanner stackAlertBanner table={table} />
+            </div>
+        }
+      </div>
     </div>
+
   );
 };
 

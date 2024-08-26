@@ -43,7 +43,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
                 <div className="px-12 pt-4">
                     <StyledTabs value={value} onChange={handleChange} aria-label="basic tabs example">
                         <StyledTab label="Basic Information" />
-                        <StyledTab label="Asset Status" />
+                        <StyledTab label="License Status" />
                         {/* <StyledTab label="Bill Customer" />
                         <StyledTab label="Ship Customer" />
                         <StyledTab label="Reseller" /> */}

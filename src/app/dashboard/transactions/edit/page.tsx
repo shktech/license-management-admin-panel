@@ -84,8 +84,6 @@ const TransactionEdit = () => {
         quantity: transaction.quantity,
         start_date: transaction.start_date,
         end_date: transaction.end_date,
-        waybill_number: transaction.waybill_number,
-        return_waybill_number: transaction.return_waybill_number,
       };
       reset({ ...resetTransaction });
     }

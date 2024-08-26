@@ -13,7 +13,7 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
             singleColumn
             items={[
                 {
-                    label: "Asset ID",
+                    label: "License ID",
                     value: transaction?.asset?.asset_id
                 },
                 {

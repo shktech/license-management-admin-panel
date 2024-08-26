@@ -180,8 +180,6 @@ export interface Transaction {
     end_date?: string;
     comments?: string;
     error_message?: string;
-    waybill_number?: string;
-    return_waybill_number?: string;
     created_by?: number;
     updated_by?: number;
     organization?: string;
@@ -234,8 +232,6 @@ export interface InputTransaction {
     quantity?: number,
     start_date?: string,
     end_date?: string,
-    waybill_number?: string,
-    return_waybill_number?: string,
 }
 
 export interface Customer {

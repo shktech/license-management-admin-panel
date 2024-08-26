@@ -89,7 +89,7 @@ const Page = () => {
       },
       {
         accessorKey: "asset.license_key",
-        header: "Asset",
+        header: "License",
         size: 200,
       },
       {
