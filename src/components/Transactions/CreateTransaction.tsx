@@ -11,7 +11,6 @@ import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { useBack, useList, useOne } from "@refinedev/core";
 import { getDurationFromString, getInputCustomer } from "@utils/utilFunctions";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
-import { Button } from "@mui/material";
 
 interface ShowTransactionProps {
     initialInfo: any
@@ -37,7 +36,6 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
             end_date: nowDateString,
             ...initialInfo
         };
-        console.log(resetTransaction);
         reset({ ...resetTransaction });
     }, []);
 
@@ -61,34 +59,6 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         id: initialInfo.reseller
     });
 
-    useEffect(() => {
-        if (!billLoading) {
-            const realData = billCustomerData?.data as Customer;
-            handleReset(realData, 'bill_');
-        }
-    }, [billLoading])
-
-    useEffect(() => {
-        if (!shipLoading) {
-            const realData = shipCustomerData?.data as Customer;
-            handleReset(realData, 'ship_');
-        }
-    }, [shipLoading])
-
-    useEffect(() => {
-        if (!resellerLoading) {
-            const realData = resellerData?.data as Customer;
-            handleReset(realData, 'reseller_');
-        }
-    }, [resellerLoading])
-
-    const handleReset = (value: Customer, prefix: string) => {
-        Object.keys(getInputCustomer(value, prefix)).forEach(key => {
-            setValue(key, getInputCustomer(value, prefix)[key])
-        })
-        // reset(getInputCustomer(value, prefix));
-        console.log(getInputCustomer(value, prefix))
-    }
 
     const start_date = watch('start_date');
     const osc_part_number = watch('osc_part_number');
@@ -121,11 +91,20 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
                 <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
             )}
         >
-            {formLoading || productLoading ? (
+            {formLoading || productLoading || initialInfo.transaction_action != "New" && (billLoading || shipLoading || resellerLoading) ? (
                 <Loader />
             ) : (
                 <div className="bg-white px-8 rounded-xl">
-                    <TransactionForm {...{ control, errors, trigger }} transaction_action={initialInfo.transaction_action} setValue={setValue} watch={watch} />
+                    <TransactionForm
+                        {...{ control, errors, trigger }}
+                        transaction_action={initialInfo.transaction_action}
+                        setValue={setValue}
+                        customers={{
+                            bill_customers: billCustomerData?.data,
+                            ship_customers: shipCustomerData?.data,
+                            resellers: resellerData?.data
+                        }}
+                    />
                 </div>
             )}
         </Create>

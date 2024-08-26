@@ -25,42 +25,43 @@ export type CustomerFormProps = GenericFormProps & {
   watch?: any,
   setValue?: any,
   fields: FieldConfig[],
-  customerType: any
+  customer: any
 };
 
 const ADDLABEL = "New Customer";
 
-const CustomerForm = ({ watch, setValue: setValueProps, fields, customerType, ...props }: CustomerFormProps) => {
+const CustomerForm = ({ watch, setValue: setValueProps, fields, customer, ...props }: CustomerFormProps) => {
 
-  const [value, setValue] = useState<Customer>({
-    account: ADDLABEL
-  });
-  const [inputValue, setInputValue] = useState(ADDLABEL);
+  const [value, setValue] = useState<Customer>(customer.data as Customer || { account: ADDLABEL });
+  const [inputValue, setInputValue] = useState('');
   const [customers, setCustomers] = useState<Customer[]>([]);
+  useEffect(() => {
+    if(customer.data){
+      setValue(customer.data as Customer);
+      handleReset(customer.data as Customer);
+    } else {
+      setValue({
+        account: ADDLABEL
+      })
+    }
+  }, [customer.data])
+
   const {
     tableQueryResult: { data, isLoading },
     setFilters,
   } = useTable<Customer>({
-    resource: `customers/${customerType.resource}`,
+    resource: `customers/${customer.resource}`,
     syncWithLocation: false
   });
 
-  const customer_account = watch(`${customerType.prefix}customer_account`);
-
-  useEffect(() => {
-    if (customer_account) {
-      console.log('customer_account', customer_account)
-      setInputValue(customer_account)
-    }
-  }, [customer_account])
   const handleValueChange = (event: any, newValue: Customer | null) => {
     setValue(newValue as Customer);
     handleReset(newValue as Customer);
   }
 
   const handleReset = (value: Customer) => {
-    Object.keys(getInputCustomer(value, customerType.prefix)).forEach(key => {
-      setValueProps?.(key, value?.account == ADDLABEL ? '' : getInputCustomer(value, customerType.prefix)[key])
+    Object.keys(getInputCustomer(value, customer.prefix)).forEach(key => {
+      setValueProps?.(key, value?.account == ADDLABEL ? '' : getInputCustomer(value, customer.prefix)[key])
     })
   }
   const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
@@ -79,9 +80,6 @@ const CustomerForm = ({ watch, setValue: setValueProps, fields, customerType, ..
     }
   }, [data])
 
-  useEffect(() => {
-    
-  }, [])
   return (
     <div className="flex justify-center flex-col gap-4">
       <Autocomplete

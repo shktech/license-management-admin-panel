@@ -36,7 +36,6 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
 
     const handleEditClick = (row: Customer) => {
         setClickedCustomer(row);
-        console.log(row);
         setOpenDrawer(true);
     };
 

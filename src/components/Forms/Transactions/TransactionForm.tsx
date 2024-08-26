@@ -23,12 +23,11 @@ export type TransactionFormProps = GenericFormProps & {
   transaction?: Transaction;
   transaction_action?: string;
   setValue?: any,
-  watch?: any
+  customers?: any
 };
 
 const TransactionForm = (props: TransactionFormProps) => {
   const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>({ "Transaction": true });
-
   // useEffect(() => {
   //   const errors = props.errors;
   //   const newExpandedPanels = FormGroups.reduce((acc, group, index) => {
@@ -59,33 +58,36 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <AccountBalanceWalletOutlinedIcon />,
       title: 'Billing Partner Information',
       description: 'Setup your Billing Partner Information',
-      fields: props.transaction_action == "New" ? PartnerFormFields.BillingPartnerInformationFormFields : getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields),
+      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields) : PartnerFormFields.BillingPartnerInformationFormFields,
       isCustomer: true,
-        customerType: {
-          resource: 'bill-customers',
-          prefix: 'bill_'
-        },
+      customer: {
+        resource: 'bill-customers',
+        prefix: 'bill_',
+        data: props.transaction?.bill_customer || props.customers.bill_customers
+      },
     },
     {
       icon: <PaidOutlinedIcon />,
       title: 'Shipping Parter Information',
       description: 'Setup your Shipping Partner Information',
-      fields: props.transaction_action == "New" ? (PartnerFormFields.ShippingPartnerInformationFormFields) : getDisabledFields(PartnerFormFields.ShippingPartnerInformationFormFields),
+      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ShippingPartnerInformationFormFields) : PartnerFormFields.ShippingPartnerInformationFormFields,
       isCustomer: true,
-      customerType: {
+      customer: {
         resource: 'ship-customers',
-        prefix: 'ship_'
+        prefix: 'ship_',
+        data: props.transaction?.ship_customer || props.customers.ship_customers
       },
     },
     {
       icon: <ProductionQuantityLimitsOutlinedIcon />,
       title: 'Reseller Information',
       description: 'Setup your Reseller Information',
-      fields: props.transaction_action == "New" ? PartnerFormFields.ResellerPartnerInformationFormFields : getDisabledFields(PartnerFormFields.ResellerPartnerInformationFormFields),
+      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ResellerPartnerInformationFormFields) : PartnerFormFields.ResellerPartnerInformationFormFields,
       isCustomer: true,
-      customerType: {
+      customer: {
         resource: 'resellers',
-        prefix: 'reseller_'
+        prefix: 'reseller_',
+        data: props.transaction?.reseller || props.customers.resellers  
       },
     },
     {
@@ -134,7 +136,7 @@ const TransactionForm = (props: TransactionFormProps) => {
               <AccordionDetails>
                 {
                   formGroup.isCustomer ?
-                    <CustomerForm {...{ ...props, fields: formGroup.fields, customerType: formGroup.customerType }} /> :
+                    <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer }} /> :
                     <GenericForm {...{ ...props, fields: formGroup.fields }} />
                 }
 
