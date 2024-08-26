@@ -10,7 +10,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import RoleDrawer from "@components/Role/RoleDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
-import GenericTable from "@components/Table/GenericTable";
 
 const Page = () => {
   const {

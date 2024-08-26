@@ -1,4 +1,4 @@
-import { colors } from "@mui/material";
+import { colors, duration } from "@mui/material";
 
 export const tableAddButton = {
     bgcolor: '#4580ff', // Background color
@@ -36,6 +36,25 @@ export const modalCancelBtnStyle = {
         boxShadow: 'none',
     },
     ...modalBtnStyle
+}
+
+export const outlineBtnStyle = {
+    bgcolor: 'white', // Background color
+    color: '#003133',
+    borderColor: '#003133',
+    border: '2px solid', // Set the border style
+    py: 0.5,  // Vertical padding
+    px: 3,
+    borderRadius: '6px', // Rounded corners
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontWeight: '500',
+    minWidth: '90px',
+    fontSize: '0.875rem',
+    '&:hover': {
+        opacity: 0.6, // Adjust opacity on hover
+        boxShadow: 'none',
+    },
 }
 
 export const modalOkBtnStyle = {

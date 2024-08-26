@@ -8,7 +8,7 @@ import { EmailTemplate } from "@/types/types";
 const Page = () => {
   const { data, refetch, isLoading } = useList<EmailTemplate>({
     resource: "email-templates",
-    hasPagination: false
+    hasPagination: false,
   });
 
   const [eTData, setETData] = useState<EmailTemplate[]>();

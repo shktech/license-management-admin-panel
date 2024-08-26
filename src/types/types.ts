@@ -59,10 +59,17 @@ export interface Asset {
     active?: boolean;
     created_by?: number;
     updated_by?: number;
-    organization?: string;
-    bill_customer?: string;
-    ship_customer?: string;
-    reseller?: string;
+    organization?: Partial<Organization>;
+    bill_customer?: Partial<Customer>;
+    ship_customer?: Partial<Customer>;
+    reseller?: Partial<Customer>;
+    
+    license_key_created_email_notification_date?: string;
+    one_month_reminder_notification_date?: string;
+    two_month_reminder_notification_date?: string;
+    renew_due_notification_date?: string;
+    expired_notification_date?: string;
+    last_email_date?: string;
 }
 
 export type SeatStatus = {
@@ -151,7 +158,7 @@ export interface Permission {
 }
 
 export interface Transaction {
-    id: string;
+    id?: string;
     transaction_number?: number;
     asset?: Partial<Asset>;
     bill_customer?: Partial<Customer>;
@@ -173,8 +180,6 @@ export interface Transaction {
     end_date?: string;
     comments?: string;
     error_message?: string;
-    waybill_number?: string;
-    return_waybill_number?: string;
     created_by?: number;
     updated_by?: number;
     organization?: string;
@@ -211,8 +216,8 @@ export interface InputTransaction {
     ship_contact_last_name?: string,
     ship_contact_phone?: string,
     ship_contact_email?: string,
-    reseller_account?: string,
-    reseller_name?: string,
+    reseller_customer_account?: string,
+    reseller_customer_name?: string,
     reseller_address1?: string,
     reseller_address2?: string,
     reseller_city?: string,
@@ -227,38 +232,25 @@ export interface InputTransaction {
     quantity?: number,
     start_date?: string,
     end_date?: string,
-    waybill_number?: string,
-    return_waybill_number?: string,
 }
 
 export interface Customer {
     account?: string;
-    contact: Partial<Contact>;
-    created_at?: string;
-    updated_at?: string;
     account_id?: string;
-    created_by?: number;
-    updated_by?: number;
-    organization?: number;
-    address?: number;
-}
-
-export interface Contact {
-    id: number,
-    address: Partial<Address>;
-    created_at?: string;
-    updated_at?: string;
-    contact_id?: string;
+    address1?: string;
+    address2?: string;
+    city?: string;
+    country?: string;
+    email?: string;
     first_name?: string;
     last_name?: string;
-    phone?: string;
-    email?: string;
-    created_by?: number;
-    updated_by?: number;
+    name?: string
+    state?: string;
+    postal_code?: string;
+    phone?: string;    
 }
 
 export interface Address {
-    id?: string;
     created_at?: string;
     updated_at?: string;
     address_id?: string;

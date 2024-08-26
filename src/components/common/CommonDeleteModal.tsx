@@ -7,12 +7,11 @@ import { deleteModalButtonStyle, modalStyle } from '@data/MuiStyles';
 interface DeleteModalProps {
   openModal: boolean;
   handleCloseModal: () => void;
-  selectedProduct: Product | null;
   handleDelete: () => void;
 }
 
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ openModal, handleCloseModal, handleDelete }) => {
+const CommonDeleteModal: React.FC<DeleteModalProps> = ({ openModal, handleCloseModal, handleDelete }) => {
 
   return (
     <Modal
@@ -22,7 +21,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ openModal, handleCloseModal, 
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalStyle}>
-        <div className='text-center text-lg text-black font-bold my-4 px-2'>Are you sure you want to delete this product</div>
+        <div className='text-center text-lg text-black font-bold my-4 px-2'>Are you sure you want to delete this item</div>
         <div className="flex justify-end mt-4 gap-2">
           <Button
             variant="contained"
@@ -64,4 +63,4 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ openModal, handleCloseModal, 
   );
 };
 
-export default DeleteModal;
+export default CommonDeleteModal;

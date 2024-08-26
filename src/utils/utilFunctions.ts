@@ -1,6 +1,7 @@
 import { FieldConfig } from '@components/Forms/FormControlWrapper';
-import { InitialFieldConfig, SecondInitialFieldConfig } from '@components/Forms/InitialFieldConfig';
+import { InitialFieldConfig } from '@components/Forms/InitialFieldConfig';
 import { CrudSort } from '@refinedev/core';
+import { Customer } from '../types/types';
 import { format } from 'date-fns';
 import { MRT_SortingState } from 'material-react-table';
 
@@ -25,35 +26,22 @@ export const getReadableDate = (dateString: any) => {
     return date.toLocaleDateString('en-US', options);
 }
 
-export const getTitleCase = (snakeCaseString: string) => {
-    return snakeCaseString
-        .split('_')          // Split the string by underscores
-        .map(word =>          // Capitalize each word
+export const getTitleCase = (inputString: string) => {
+    // Extract the substring after the last dot
+    const lastPart = inputString.split('.').pop();
+
+    // Convert the extracted substring to title case
+    return lastPart
+        ?.split('_')           // Split the string by underscores
+        .map(word =>           // Capitalize each word
             word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         )
-        .join(' ');          // Join the words with spaces
+        .join(' ');            // Join the words with spaces
 }
-
 export const getRealFormFields = (InitialCustomerFormFields: InitialFieldConfig[]) => {
     return InitialCustomerFormFields.map(field => {
         const value: FieldConfig = {
-            label: getTitleCase(field.name),
-            placeholder: getTitleCase(field.name),
-            ...field
-        }
-        if (field.required) {
-            value.rules = {
-                required: `${getTitleCase(field.name)} is required`
-            }
-        }
-        return value
-    })
-}
-
-export const getSecondRealFormFields = (InitialCustomerFormFields: SecondInitialFieldConfig[]) => {
-    return InitialCustomerFormFields.map(field => {
-        const value: FieldConfig = {
-            label: getTitleCase(field.name),
+            label: getTitleCase(field.name) as string,
             placeholder: getTitleCase(field.name),
             ...field
         }
@@ -107,4 +95,36 @@ export const getDurationFromString = (str: string) => {
         default:
             return 0;
     }
+}
+
+export const getInputCustomer = (customer: any, type: string) => {
+    let inputCustomer: { [key: string]: any } = {
+        customer_account:customer?.account,
+        customer_name:customer?.name,
+        address1:customer?.address1,
+        address2:customer?.address2,
+        city:customer?.city,
+        state:customer?.state,
+        postal_code:customer?.postal_code,
+        country:customer?.country,
+        contact_first_name:customer?.first_name,
+        contact_last_name:customer?.last_name,
+        contact_phone:customer?.phone,
+        contact_email:customer?.email,
+    };
+
+    let value: { [key: string]: any } = {};
+    Object.keys(inputCustomer).forEach(key => {
+        value[type + key] = inputCustomer[key] ? inputCustomer[key] : '';
+    })
+    return value;
+}
+
+export const getDisabledFields = (fields: FieldConfig[]) => {
+    return fields.map(field => {
+        return {
+            ...field,
+            disabled: true
+        }
+    })
 }

@@ -4,7 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { InputProps } from '@mui/base';
-import { Input, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 interface CustomizedInputProps {
     label: string;
     [key: string]: any;
@@ -51,7 +51,6 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
         }
     };
 
-    // handleChange(dayjs());
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>

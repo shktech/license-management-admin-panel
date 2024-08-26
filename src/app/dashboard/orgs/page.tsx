@@ -1,27 +1,17 @@
 "use client";
 
-import { Accordion, AccordionSummary, AccordionDetails, Box, IconButton } from "@mui/material";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import { Box, IconButton } from "@mui/material";
+
 import { HttpError, useGetIdentity, useList } from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
 import { Organization, User } from "@/types/types";
-import GenericForm from "@components/Forms/GenericForm";
-import { OrganizationEditFormFields } from "@components/Forms/Organizations/OrganizationFormFields";
 import { useEffect, useMemo, useState } from "react";
-import { tableAddButton, tagStyle } from "@data/MuiStyles";
-import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import { modalOkBtnStyle } from "@data/MuiStyles";
 import OrganizationDetailDrawer from "@components/Organizations/OrganizationDrawer";
-import OrganizationComponent from "@components/Organizations/OrganizationComponent";
 import { MRT_ColumnDef } from "material-react-table";
 import { ProductActiveColor } from "@data/ColorData";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-import GenericTable from "@components/Table/GenericTable";
 import Loader from "@components/common/Loader";
 import CommonTable from "@components/Table/CommonTable";
+import { tagStyle } from "@data/MuiStyles";
 
 const Page = () => {
   const { data: identity, isLoading: isIdentityLoading } =

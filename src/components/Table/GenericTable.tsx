@@ -2,10 +2,8 @@
 import { Box, Button, Pagination } from '@mui/material';
 import {
     MRT_ShowHideColumnsButton,
-    MRT_SortingFns,
     MRT_SortingState,
     MRT_TableContainer,
-    MRT_TablePagination,
     MRT_ToolbarAlertBanner,
     useMaterialReactTable,
     type MRT_ColumnDef,
@@ -144,7 +142,8 @@ const GenericTable = <T extends MRT_RowData>({ title, data, columns, totalCount,
                                             shape='rounded'
                                         />
                                     </div> :
-                                    <MRT_TablePagination table={table} />
+                                    // <MRT_TablePagination table={table} />
+                                    null
                             }
                         </Box>
                         <Box sx={{ display: 'grid', width: '100%' }}>

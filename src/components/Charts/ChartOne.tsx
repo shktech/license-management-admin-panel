@@ -131,11 +131,11 @@ interface ChartOneState {
 const ChartOne: React.FC = () => {
   const series = [
     {
-      name: "Total Assets",
+      name: "Total Licenses",
       data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
     },
     {
-      name: "Expired Assets",
+      name: "Expired Licenses",
       data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
     },
   ]
@@ -149,7 +149,7 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Assets</p>
+              <p className="font-semibold text-primary">Total Licenses</p>
             </div>
           </div>
           <div className="flex min-w-47.5">
@@ -157,7 +157,7 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-secondary">Expired Assets</p>
+              <p className="font-semibold text-secondary">Expired Licenses</p>
             </div>
           </div>
         </div>

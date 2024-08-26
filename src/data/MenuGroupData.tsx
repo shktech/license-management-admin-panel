@@ -27,7 +27,7 @@ export const menuGroups = [
           label: "Master Mngt",
           route: "#",
           children: [
-            { label: "Assets", route: "/dashboard/assets" },
+            { label: "Licenses", route: "/dashboard/assets" },
             { label: "Products", route: "/dashboard/products" },
             { label: "Partners", route: "/dashboard/partners" }
           ],
@@ -37,10 +37,8 @@ export const menuGroups = [
           label: "Maintenance",
           route: "#",
           children: [
-            { label: "Lookups", route: "/dashboard/lookups" },
             { label: "License Code", route: "/dashboard/license-code" },
             { label: "Email Templates", route: "/dashboard/email-templates" },
-            { label: "Un-Subscribe", route: "/dashboard/un-subscribe" }
           ],
         },
         {

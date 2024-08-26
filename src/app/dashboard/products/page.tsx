@@ -1,13 +1,11 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import { useNavigation, useTable, HttpError, useDelete, CrudSort } from "@refinedev/core";
+import React, { useMemo } from "react";
+import { useTable , useDelete  } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
-import ProductIcon from "@/assets/icons/products.svg?icon";
 import Loader from "@components/common/Loader";
-import { Box, Button } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { Box } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";

@@ -10,26 +10,26 @@ import {
   StyledTabs,
 } from "@components/Tab/CustomizedTab";
 import GenericTable from "@components/Table/GenericTable";
-import { refreshRefineBtnStyle } from "@data/MuiStyles";
+import { outlineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import { Button } from "@mui/material";
 import { useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { useRouter } from "next/router";
+import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
+import EditIcon from '@mui/icons-material/Edit';
 
 const Page = () => {
   const { params } = useParsed();
   const [value, setValue] = useState(0);
   const { push } = useNavigation();
-  const { data: permissionsData } = usePermissions<Permission>({
-    params: { codename: "asset" },
-  });
+  const [openNotiDrawer, setOpenDrawer] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
 
   const { queryResult } = useShow<Asset>({
     resource: "assets",
@@ -49,7 +49,10 @@ const Page = () => {
       license_type: asset.license_type as string,
       start_date: asset.start_date as string,
       end_date: asset.end_date as string,
-      osc_part_number: asset.osc_product?.product_part_number as string
+      osc_part_number: asset.osc_product?.product_part_number as string,
+      bill_customer: asset.bill_customer?.account_id as string,
+      ship_customer: asset.owner?.account_id as string,
+      reseller: asset.reseller?.account_id as string,
     };
 
     // Navigate to the path with the query parameters
@@ -73,7 +76,7 @@ const Page = () => {
       },
       {
         accessorKey: "asset",
-        header: "Asset",
+        header: "License",
       },
     ],
     []
@@ -83,9 +86,7 @@ const Page = () => {
     { title: "Start Date", key: "start_date" },
     { title: "End Date", key: "end_date" },
     { title: "License Key", key: "license_key" },
-    { title: "License Status", key: "osc_license_status" },
-    { title: "License server status", key: "license_server_status" },
-    { title: "Owner Name", key: "license_onwer.customer_name" },
+    { title: "Owner Name", key: "owner.name" },
     { title: "Product Part Name", key: "osc_product.product_name" },
     { title: "Vender Part Name", key: "osc_product.vendor_name" },
   ];
@@ -93,6 +94,8 @@ const Page = () => {
   const getNestedValue = (obj: any, key: string) => {
     return key.split(".").reduce((acc, part) => acc && acc[part], obj);
   };
+
+
 
   return (
     <div className="no-padding-card">
@@ -106,7 +109,7 @@ const Page = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex items-end gap-4 text-2xl font-semibold text-[#515f72]">
-              Asset <div className="text-lg font-normal">{asset?.asset_id}</div>
+              License <div className="text-lg font-normal">{asset?.asset_id}</div>
             </div>
           </div>
         }
@@ -148,6 +151,7 @@ const Page = () => {
                 >
                   <StyledTab label="General Information" />
                   <StyledTab label="Products" />
+                  <StyledTab label="Notifications" />
                   <StyledTab label="License Owner" />
                   <StyledTab label="Transaction History" />
                   <StyledTab label="Seats" />
@@ -159,16 +163,12 @@ const Page = () => {
                   singleColumn={true}
                   items={[
                     {
-                      label: "Asset Id",
+                      label: "License Id",
                       value: asset?.asset_id,
                     },
                     {
-                      label: "active",
-                      value: asset?.active ? "Yes" : "No",
-                    },
-                    {
-                      label: "License Key",
-                      value: asset?.license_key,
+                      label: "Active",
+                      value: <div className={`rounded-full h-4 w-4 ${asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
                     },
                     {
                       label: "License Key",
@@ -176,19 +176,15 @@ const Page = () => {
                     },
                     {
                       label: "Organization",
-                      value: asset?.organization,
+                      value: asset?.organization?.organization_name,
                     },
                     {
                       label: "Bill Customer",
-                      value: asset?.bill_customer,
-                    },
-                    {
-                      label: "Ship Customer",
-                      value: asset?.ship_customer,
+                      value: asset?.bill_customer?.name,
                     },
                     {
                       label: "Reseller",
-                      value: asset?.reseller,
+                      value: asset?.reseller?.name,
                     },
                     {
                       label: "Start Date",
@@ -237,18 +233,18 @@ const Page = () => {
                 <GeneralInformation
                   singleColumn={true}
                   items={[
-                    {
-                      label: "Product ID",
-                      value: asset?.osc_product?.product_id,
-                    },
+                    // {
+                    //   label: "Product ID",
+                    //   value: asset?.osc_product?.product_id,
+                    // },
                     {
                       label: "Product Name",
                       value: asset?.osc_product?.product_id,
                     },
-                    {
-                      label: "Product Part Number",
-                      value: asset?.osc_product?.product_part_number,
-                    },
+                    // {
+                    //   label: "Product Part Number",
+                    //   value: asset?.osc_product?.product_part_number,
+                    // },
                     {
                       label: "Product Description",
                       value: asset?.osc_product?.product_description,
@@ -267,7 +263,7 @@ const Page = () => {
                     },
                     {
                       label: "Active",
-                      value: asset?.osc_product?.active,
+                      value: <div className={`rounded-full h-4 w-4 ${asset?.osc_product?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
                     },
                     {
                       label: "Duration",
@@ -317,78 +313,94 @@ const Page = () => {
                   singleColumn={true}
                   items={[
                     {
+                      label: "First reminder notification date",
+                      value: asset?.one_month_reminder_notification_date,
+                    },
+                    {
+                      label: "Second reminder notification date",
+                      value: asset?.two_month_reminder_notification_date,
+                    },
+                    {
+                      label: "On expired notification date",
+                      value: asset?.renew_due_notification_date,
+                    },
+                    {
+                      label: "After expired notification date",
+                      value: asset?.expired_notification_date,
+                    },
+                    {
+                      label: "Last email send date",
+                      value: asset?.last_email_date,
+                    },
+                  ]}
+                />
+                <SendNotificationDrawer license_key={asset.license_key} receiver={asset?.owner?.email}/>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                <GeneralInformation
+                  singleColumn={true}
+                  items={[
+                    {
                       label: "Account",
                       value: asset?.owner?.account,
                     },
-                    {
-                      label: "Account ID",
-                      value: asset?.owner?.account_id,
-                    },
-                    {
-                      label: "Address",
-                      value: asset?.owner?.address,
-                    },
+                    // {
+                    //   label: "Address",
+                    //   value: asset?.owner?.address1 + " " + asset?.owner?.address2,
+                    // },
                     {
                       label: "Address1",
-                      value: asset?.owner?.contact?.address?.address1,
+                      value: asset?.owner?.address1,
                     },
                     {
                       label: "Address2",
-                      value: asset?.owner?.contact?.address?.address2,
-                    },
-                    {
-                      label: "Address ID",
-                      value: asset?.owner?.contact?.address?.address_id,
+                      value: asset?.owner?.address2,
                     },
                     {
                       label: "City",
-                      value: asset?.owner?.contact?.address?.city,
+                      value: asset?.owner?.city,
                     },
                     {
                       label: "Country",
-                      value: asset?.owner?.contact?.address?.country,
+                      value: asset?.owner?.country,
                     },
                     {
                       label: "Postal Code",
-                      value: asset?.owner?.contact?.address?.postal_code,
+                      value: asset?.owner?.postal_code,
                     },
                     {
                       label: "State",
-                      value: asset?.owner?.contact?.address?.state,
-                    },
-                    {
-                      label: "Contact ID",
-                      value: asset?.owner?.contact?.contact_id,
+                      value: asset?.owner?.state,
                     },
                     {
                       label: "Contact Email",
-                      value: asset?.owner?.contact?.email,
+                      value: asset?.owner?.email,
                     },
                     {
                       label: "Contact Phone",
-                      value: asset?.owner?.contact?.phone,
+                      value: asset?.owner?.phone,
                     },
                     {
                       label: "Contact First Name",
-                      value: asset?.owner?.contact?.first_name,
+                      value: asset?.owner?.first_name,
                     },
                     {
                       label: "Contact Last Name",
-                      value: asset?.owner?.contact?.last_name,
+                      value: asset?.owner?.last_name,
                     },
                     {
                       label: "Organization",
-                      value: asset?.owner?.organization,
+                      value: asset?.organization?.organization_name,
                     },
                   ]}
                 />
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={3}>
+              <CustomTabPanel value={value} index={4}>
                 <div className="max-w-full overflow-x-auto">
                   <TransactionHistoryTable transactions={transactions} />
                 </div>
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={4}>
+              <CustomTabPanel value={value} index={5}>
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}

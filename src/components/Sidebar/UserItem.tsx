@@ -1,13 +1,12 @@
 "use client";
 import { useState } from 'react';
 import { useGetIdentity, useLogout } from "@refinedev/core";
-import ClickOutside from '../ClickOutside';
-import Link from 'next/link';
 import { User } from '@/types/types';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Button, Menu, MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Link from 'next/link';
 
 const UserItem = () => {
     const { data: identity } = useGetIdentity<User>();
@@ -71,9 +70,9 @@ const UserItem = () => {
                 }}
             >
                 <MenuItem onClick={handleClose}>
-                    <div className='flex gap-2 py-1 pr-2 text-sm items-center'>
+                    <Link href="/dashboard/profile" className='flex gap-2 py-1 pr-2 text-sm items-center'>
                         <PersonIcon />My Profile
-                    </div>
+                    </Link>
                 </MenuItem>
                 <MenuItem onClick={() => logout()}>
                     <div className='flex gap-2 py-1 pr-2 text-sm items-center'>

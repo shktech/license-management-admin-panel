@@ -9,7 +9,6 @@ import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { menuGroups } from "@/data/MenuGroupData";
 import LogoIcon from "@/assets/icons/logo.svg?icon";
-import DropdownUser from "@components/Header/DropdownUser";
 import UserItem from "./UserItem";
 
 interface SidebarProps {
@@ -29,8 +28,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-          <Link href="/dashboard" className="text-[#e3ebff] font-bold flex justify-center items-center">
-            <LogoIcon /> 
+          <Link href="/" className="text-[#e3ebff] font-bold flex justify-center items-center">
             <div className="font-bold pl-4 text-3xl">CALM</div>
           </Link>
         </div>

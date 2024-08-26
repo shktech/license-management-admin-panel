@@ -18,11 +18,11 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { useNotificationProvider, RefineSnackbarProvider } from "@refinedev/mui";
 
 export const metadata: Metadata = {
-  title: "License Manager",
+  title: "CALM",
   description: "Admin Dashboard to manage your license keys",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  // icons: {
+  //   icon: "/favicon.ico",
+  // },
 };
 
 export default function RootLayout({

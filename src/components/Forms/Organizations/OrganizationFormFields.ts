@@ -1,7 +1,7 @@
-import { getSecondRealFormFields } from "@utils/utilFunctions";
-import { SecondInitialFieldConfig } from "../InitialFieldConfig";
+import { getRealFormFields } from "@utils/utilFunctions";
+import { InitialFieldConfig } from "../InitialFieldConfig";
 
-const OrganizationEditFormInitialFields: SecondInitialFieldConfig[] = [
+const OrganizationEditFormInitialFields: InitialFieldConfig[] = [
     {
         name: "organization_code",
         required: "text",
@@ -29,7 +29,7 @@ const OrganizationEditFormInitialFields: SecondInitialFieldConfig[] = [
     },
 ];
 
-const OrganizationCreateInitialFields: SecondInitialFieldConfig[] = [
+const OrganizationCreateInitialFields: InitialFieldConfig[] = [
     {
         name: "organization_code",
         required: "text",
@@ -52,7 +52,7 @@ const OrganizationCreateInitialFields: SecondInitialFieldConfig[] = [
     }
 ];
 
-const OrganizationEditFormFields = getSecondRealFormFields(OrganizationEditFormInitialFields);
-const OrganizationCreateFormFields = getSecondRealFormFields(OrganizationCreateInitialFields);
+const OrganizationEditFormFields = getRealFormFields(OrganizationEditFormInitialFields);
+const OrganizationCreateFormFields = getRealFormFields(OrganizationCreateInitialFields);
 
 export { OrganizationCreateFormFields, OrganizationEditFormFields };

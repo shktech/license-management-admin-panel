@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import { BaseInputProps } from "./InputProps";
-import { useFetchOptions } from "@hooks/useFetchOptions";
 import { useList } from "@refinedev/core";
 import { FormControl, makeStyles, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
