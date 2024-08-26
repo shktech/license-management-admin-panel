@@ -51,7 +51,7 @@ const Page = () => {
       end_date: asset.end_date as string,
       osc_part_number: asset.osc_product?.product_part_number as string,
       bill_customer: asset.bill_customer?.account_id as string,
-      ship_customer: asset.ship_customer?.account_id as string,
+      ship_customer: asset.owner?.account_id as string,
       reseller: asset.reseller?.account_id as string,
     };
 
@@ -181,10 +181,6 @@ const Page = () => {
                     {
                       label: "Bill Customer",
                       value: asset?.bill_customer?.name,
-                    },
-                    {
-                      label: "Ship Customer",
-                      value: asset?.ship_customer?.name,
                     },
                     {
                       label: "Reseller",
