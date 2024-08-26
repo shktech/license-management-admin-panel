@@ -25,12 +25,13 @@ export type CustomerFormProps = GenericFormProps & {
   watch?: any,
   setValue?: any,
   fields: FieldConfig[],
-  customer: any
+  customer: any,
+  disabledSearch?: boolean
 };
 
 const ADDLABEL = "New Customer";
 
-const CustomerForm = ({ watch, setValue: setValueProps, fields, customer, ...props }: CustomerFormProps) => {
+const CustomerForm = ({ watch, setValue: setValueProps, disabledSearch, fields, customer, ...props }: CustomerFormProps) => {
 
   const [value, setValue] = useState<Customer>(customer.data as Customer || { account: ADDLABEL });
   const [inputValue, setInputValue] = useState('');
@@ -86,6 +87,7 @@ const CustomerForm = ({ watch, setValue: setValueProps, fields, customer, ...pro
         id="country-select-demo"
         value={value}
         onChange={handleValueChange}
+        disabled={disabledSearch}
         sx={{ width: 300 }}
         inputValue={inputValue}
         onInputChange={handleInputChange}

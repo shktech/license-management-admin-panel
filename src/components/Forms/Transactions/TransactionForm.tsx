@@ -60,6 +60,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       description: 'Setup your Billing Partner Information',
       fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields) : PartnerFormFields.BillingPartnerInformationFormFields,
       isCustomer: true,
+      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
       customer: {
         resource: 'bill-customers',
         prefix: 'bill_',
@@ -72,6 +73,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       description: 'Setup your Shipping Partner Information',
       fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ShippingPartnerInformationFormFields) : PartnerFormFields.ShippingPartnerInformationFormFields,
       isCustomer: true,
+      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
       customer: {
         resource: 'ship-customers',
         prefix: 'ship_',
@@ -84,6 +86,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       description: 'Setup your Reseller Information',
       fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ResellerPartnerInformationFormFields) : PartnerFormFields.ResellerPartnerInformationFormFields,
       isCustomer: true,
+      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
       customer: {
         resource: 'resellers',
         prefix: 'reseller_',
@@ -136,7 +139,7 @@ const TransactionForm = (props: TransactionFormProps) => {
               <AccordionDetails>
                 {
                   formGroup.isCustomer ?
-                    <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer }} /> :
+                    <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer, disabledSearch: formGroup.disabledSearch }}  /> :
                     <GenericForm {...{ ...props, fields: formGroup.fields }} />
                 }
 
