@@ -263,3 +263,11 @@ export interface Address {
     created_by?: number;
     updated_by?: number;
 }
+
+export interface Lookup {
+    code?: string;
+    meaning?: string;
+    description?: string;
+    tag?: string;
+    active?: boolean;
+}

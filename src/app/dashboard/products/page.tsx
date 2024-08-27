@@ -52,7 +52,6 @@ const Page = () => {
   const { mutate: deleteProduct } = useDelete();
 
   const handleDeleteBtn = (product: Product) => {
-
     handleOpenDeleteModal();
     setClickedProduct(product);
   }

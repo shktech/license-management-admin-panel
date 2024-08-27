@@ -28,7 +28,8 @@ const CommonTable = <T extends MRT_RowData>({ title, data, columns, handleCreate
         enableColumnActions: false,
         enableColumnPinning: true,
         muiTableBodyRowProps: ({ row }) => ({
-            className: `bg-[#f2f6fa]`,
+            // className: `bg-[#f2f6fa]`,
+            className: 'bg-transparent'
         }),
         muiTableHeadRowProps: {
             sx: {

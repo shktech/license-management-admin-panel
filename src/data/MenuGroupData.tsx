@@ -38,6 +38,7 @@ export const menuGroups = [
           route: "#",
           children: [
             { label: "License Code", route: "/dashboard/license-code" },
+            { label: "Lookups", route: "/dashboard/lookups" },
             { label: "Email Templates", route: "/dashboard/email-templates" },
           ],
         },
