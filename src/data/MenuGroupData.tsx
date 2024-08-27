@@ -24,12 +24,13 @@ export const menuGroups = [
         },
         {
           icon: <MasterMngtIcon className="fill-current" />,
-          label: "Master Mngt",
+          label: "Management",
           route: "#",
           children: [
             { label: "Licenses", route: "/dashboard/assets" },
             { label: "Products", route: "/dashboard/products" },
-            { label: "Partners", route: "/dashboard/partners" }
+            { label: "Partners", route: "/dashboard/partners" },
+            { label: "Reference", route: "/dashboard/reference" }
           ],
         },
         {
@@ -38,7 +39,7 @@ export const menuGroups = [
           route: "#",
           children: [
             { label: "License Code", route: "/dashboard/license-code" },
-            { label: "Lookups", route: "/dashboard/lookups" },
+            { label: "Setups", route: "/dashboard/lookups" },
             { label: "Email Templates", route: "/dashboard/email-templates" },
           ],
         },
