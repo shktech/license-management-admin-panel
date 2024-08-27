@@ -12,6 +12,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Loader from "@components/common/Loader";
 import CommonTable from "@components/Table/CommonTable";
 import { tagStyle } from "@data/MuiStyles";
+import ConfirmModal from "@components/common/ConfirmModal";
 
 const Page = () => {
   const { data: identity, isLoading: isIdentityLoading } =
@@ -43,6 +44,10 @@ const Page = () => {
     }
   }, [identity, orgs]);
 
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const handleOpenConfirmModal = () => setOpenConfirmModal(true);
+  const handleCloseConfirmModal = () => setOpenConfirmModal(false);
+
   const handleEditClick = (row: Organization) => {
     setClickedOrg(row);
     setOpenDrawer(true);
@@ -53,8 +58,42 @@ const Page = () => {
     setClickedOrg(null);
     setOpenDrawer(false);
   }
+  const handleClickSwitch = (row: Organization) => {
+    setClickedOrg(row);
+    handleOpenConfirmModal();
+  }
+  const handleSwitch = async () => {
+    const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("tempToken")}`,
+      },
+      body: JSON.stringify({ organization: clickedOrg?.organization_code }),
+    });
+    if (response.ok) {
+      const data: any = await response.json();
+      localStorage.setItem("accessToken", data.access);
+      localStorage.setItem("refreshToken", data.refresh);
+      window.location.reload();
+    }
+  }
+
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
+      {
+        accessorKey: "isCurrent",
+        header: "Switch",
+        size: 100,
+        Cell: ({ renderedCellValue, row }) => (
+          <div
+            onClick={() => handleClickSwitch(row.original)}
+            className={`${renderedCellValue ? "border-[#11ba82]" : "border-[#b5b7ba]"} w-5 h-5 p-1 rounded-full border-2 cursor-pointer hover:border-[#11ba82]`}
+          >
+            {renderedCellValue && <div className="w-full h-full rounded-full bg-[#11ba82]"></div>}
+          </div>
+        ),
+      },
       {
         accessorKey: "organization_code",
         header: "Organization Code",
@@ -135,6 +174,11 @@ const Page = () => {
         open={openDrawer}
         onClose={handleClose}
         org={clickedOrg}
+      />
+      <ConfirmModal
+        openModal={openConfirmModal}
+        handleCloseModal={handleCloseConfirmModal}
+        handleOK={handleSwitch}
       />
     </div>
   );
