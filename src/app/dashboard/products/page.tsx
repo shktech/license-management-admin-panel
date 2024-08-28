@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable , useDelete  } from "@refinedev/core";
+import { useTable , useDelete, useNavigation  } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -21,6 +21,8 @@ const Page = () => {
     setFilters,
     setSorters,
   } = useTable<Product>();
+
+  const { push } = useNavigation();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
@@ -33,8 +35,9 @@ const Page = () => {
 
 
   const handleEditClick = (row: Product) => {
-    setClickedProduct(row);
-    setOpenDrawer(true);
+    // setClickedProduct(row);
+    // setOpenDrawer(true);
+    push(`/dashboard/products/edit?id=${row.product_id}`)
   };
 
   const handlePage = (value: number) => setCurrent(value);
@@ -66,6 +69,7 @@ const Page = () => {
     )
     handleCloseDeleteModal();
   }
+
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
       {
