@@ -271,3 +271,24 @@ export interface Lookup {
     tag?: string;
     active?: boolean;
 }
+
+export interface Reference {
+    created_at?: string;
+    updated_at?: string;
+    reference_id?: string;
+    reference_name?: string;
+    reference_description?: string;
+    reference_type?: string;
+    organization?: Partial<Organization>;
+    active?: boolean;
+}
+
+export interface ReferenceCode {
+    start_date?: string;
+    end_date?: string;
+    product_part_number?: string;
+    product_part_id?: string;
+    osc_product_id?: string;
+    transaction_line_id?: string;
+    reference_code?: string;
+}

@@ -83,6 +83,19 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
+    name: "references",
+    list: "/dashboard/references",
+    create: "/dashboard/references/create",
+    edit: "/dashboard/references/edit/:id",
+    show: "/dashboard/references/show/:id",
+    meta: {
+      canDelete: true,
+      label: "References",
+      parent: "mastermgmt",
+      warnWhenUnsavedChanges: true,
+    },
+  },
+  {
     name: "partners",
     list: "/dashboard/partners",
     meta: {

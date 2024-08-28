@@ -30,7 +30,7 @@ export const menuGroups = [
             { label: "Licenses", route: "/dashboard/assets" },
             { label: "Products", route: "/dashboard/products" },
             { label: "Partners", route: "/dashboard/partners" },
-            { label: "Reference", route: "/dashboard/reference" }
+            { label: "References", route: "/dashboard/references" }
           ],
         },
         {
@@ -61,6 +61,7 @@ export const menuGroups = [
             { label: "Profile", route: "/dashboard/profile" },
             { label: "Roles", route: "/dashboard/roles" },
             { label: "User", route: "/dashboard/users" },
+            { label: "Notifications", route: "/dashboard/notifications" },
             { label: "Org Setup", route: "/dashboard/orgs" },
           ],
         },
