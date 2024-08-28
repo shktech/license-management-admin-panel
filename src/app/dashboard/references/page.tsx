@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable, useDelete } from "@refinedev/core";
+import { useNavigation, useTable, useDelete } from "@refinedev/core";
 import { Reference } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -16,10 +16,12 @@ import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-    setCurrent,
-    setFilters,
-    setSorters,
-  } = useTable<Reference>();
+  } = useTable<Reference>({
+    hasPagination: false,
+  });
+
+  const { push } = useNavigation();
+
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
@@ -35,12 +37,6 @@ const Page = () => {
     setClickedReference(row);
     setOpenDrawer(true);
   };
-
-  const handlePage = (value: number) => setCurrent(value);
-
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
-
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
 
   const handleClose = () => {
     refetch();
@@ -65,6 +61,10 @@ const Page = () => {
     )
     handleCloseDeleteModal();
   }
+
+  const handleRowClick = (row: Reference) => {
+    push(`/dashboard/references/show?id=${row.reference_id}`);
+  };
   const columns = useMemo<MRT_ColumnDef<Reference>[]>(
     () => [
       {
@@ -89,21 +89,21 @@ const Page = () => {
         accessorKey: "organization.organization_code",
         header: "Organization",
       },
-      {
-        accessorKey: "actions",
-        header: "Action",
-        size: 100,
-        enableSorting: false,
-        pin: 'right',
-        Cell: ({ row }) => (
-          <div className="w-full h-full">
-            <div className="flex gap-4">
-              <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-              <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-            </div>
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "actions",
+      //   header: "Action",
+      //   size: 100,
+      //   enableSorting: false,
+      //   pin: 'right',
+      //   Cell: ({ row }) => (
+      //     <div className="w-full h-full">
+      //       <div className="flex gap-4">
+      //         <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+      //         <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+      //       </div>
+      //     </div>
+      //   ),
+      // },
     ],
     []
   );
@@ -123,13 +123,14 @@ const Page = () => {
             columns={columns}
             canCreate={true}
             totalCount={data?.total}
-            handlePage={handlePage}
-            handleSorting={handleSorting}
-            handleSearch={handleSearch}
-            handleCreate={handleCreate} />
+            onRowClick={handleRowClick}
+            // handleSorting={handleSorting}
+            // handleSearch={handleSearch}
+            handleCreate={handleCreate}
+          />
       }
 
-      <ReferenceDetailDrawer
+      {/* <ReferenceDetailDrawer
         open={openDrawer}
         onClose={() => handleClose()}
         reference={clickedReference}
@@ -138,7 +139,7 @@ const Page = () => {
         openModal={openDeleteModal}
         handleOK={handleDelete}
         handleCloseModal={handleCloseDeleteModal}
-      />
+      /> */}
     </div>
   );
 };

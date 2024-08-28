@@ -3,16 +3,18 @@ import { Button, Drawer, IconButton } from '@mui/material';
 import { useCreate, useDelete, useUpdate } from '@refinedev/core';
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { Reference } from '../../types/types';
+import { Reference, ReferenceCode } from '../../types/types';
 import ReferenceForm from '@components/Forms/References/ReferenceForm';
+import ReferenceCodeForm from '@components/Forms/References/ReferenceCodeForm';
 
-interface ReferenceDetailDrawerProps {
+interface ReferenceCodeDetailDrawerProps {
   open: boolean;
   onClose: () => void;
-  reference: Reference | null
+  referenceCode: ReferenceCode | null
+  reference_id: string | undefined
 }
 
-const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({ open, onClose, reference }) => {
+const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ reference_id, open, onClose, referenceCode }) => {
   const {
     control,
     trigger,
@@ -24,15 +26,15 @@ const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({ open, onC
 
   useEffect(() => {
     const previousReference = getValues();
-    if (reference != null) {
-      reset(reference);
+    if (referenceCode != null) {
+      reset(referenceCode);
     } else {
       reset({})
     }
   }, [open]);
 
-  const { mutate: updateReference } = useUpdate();
-  const { mutate: createReference } = useCreate();
+  const { mutate: updateReferenceCode } = useUpdate();
+  const { mutate: createReferenceCode } = useCreate();
 
   const handleSubmit = async () => {
     const isValid = await trigger(); // Triggers validation for all fields
@@ -42,25 +44,25 @@ const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({ open, onC
         console.log(error.response.data);
       };
 
-      const referenceData = getValues();
-
-      if (reference) {
-        updateReference(
-          {
-            resource: "references",
-            id: `${(reference?.reference_id)}`,
-            values: referenceData
-          },
-          {
-            onError: handleError,
-            onSuccess: () => onClose(),
-          }
-        )
+      const referenceCodeData = getValues();
+      console.log(referenceCodeData);
+      if (referenceCode) {
+        // updateReference(
+        //   {
+        //     resource: "references",
+        //     id: `${(reference?.reference_id)}`,
+        //     values: referenceCodeData
+        //   },
+        //   {
+        //     onError: handleError,
+        //     onSuccess: () => onClose(),
+        //   }
+        // )
       } else {
-        createReference(
+        createReferenceCode(
           {
-            resource: "references",
-            values: referenceData
+            resource: `references/${reference_id}/codes`,
+            values: referenceCodeData
           },
           {
             onError: handleError,
@@ -79,7 +81,7 @@ const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({ open, onC
           Detail Information
         </div>
         <div className='flex-1'>
-          <ReferenceForm
+          <ReferenceCodeForm
             {...{ control, errors, trigger }}
           />
         </div>
@@ -96,7 +98,7 @@ const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({ open, onC
             onClick={handleSubmit}
             sx={modalOkBtnStyle}
           >
-            {reference ? "Save" : "Create"}
+            {referenceCode ? "Save" : "Create"}
           </Button>
         </div>
       </div>
@@ -104,4 +106,4 @@ const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({ open, onC
   );
 };
 
-export default ReferenceDetailDrawer;
+export default ReferenceCodeDetailDrawer;
