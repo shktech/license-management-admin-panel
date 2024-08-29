@@ -222,7 +222,7 @@ export const dashboardResources: ResourceProps[] = [
     create: "/dashboard/orgs/create",
     edit: "/dashboard/orgs/edit/:id",
     meta: {
-      label: "Org Setup",
+      label: "Organizations",
       parent: "settings",
       warnWhenUnsavedChanges: true,
       canDelete: true,

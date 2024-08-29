@@ -60,12 +60,12 @@ const Page = () => {
         </>
       )
     },
-    {
-      label: 'Personal API Key',
-      value: (
-        <APIKeyPanel />
-      )
-    }
+    // {
+    //   label: 'Personal API Key',
+    //   value: (
+    //     <APIKeyPanel />
+    //   )
+    // }
   ]
 
   return (

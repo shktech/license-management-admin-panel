@@ -13,6 +13,7 @@ import Loader from "@components/common/Loader";
 import CommonTable from "@components/Table/CommonTable";
 import { tagStyle } from "@data/MuiStyles";
 import ConfirmModal from "@components/common/ConfirmModal";
+import APIKeyPanel from "@components/Organizations/APIKeyPanel";
 
 const Page = () => {
   const { data: identity, isLoading: isIdentityLoading } =
@@ -187,6 +188,7 @@ const Page = () => {
         handleCloseModal={handleCloseConfirmModal}
         handleOK={handleSwitch}
       />
+      <APIKeyPanel />
     </div>
   );
 };

@@ -62,7 +62,7 @@ export const menuGroups = [
             { label: "Roles", route: "/dashboard/roles" },
             { label: "User", route: "/dashboard/users" },
             { label: "Notifications", route: "/dashboard/notifications" },
-            { label: "Org Setup", route: "/dashboard/orgs" },
+            { label: "Organizations", route: "/dashboard/orgs" },
           ],
         },
       ],
