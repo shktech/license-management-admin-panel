@@ -2,7 +2,7 @@
 
 import { Box, IconButton } from "@mui/material";
 
-import { HttpError, useGetIdentity, useList } from "@refinedev/core";
+import { HttpError, useGetIdentity, useList, useNavigation } from "@refinedev/core";
 import { Organization, User } from "@/types/types";
 import { useEffect, useMemo, useState } from "react";
 import OrganizationDetailDrawer from "@components/Organizations/OrganizationDrawer";
@@ -12,6 +12,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Loader from "@components/common/Loader";
 import CommonTable from "@components/Table/CommonTable";
 import { tagStyle } from "@data/MuiStyles";
+import ConfirmModal from "@components/common/ConfirmModal";
+import APIKeyPanel from "@components/Organizations/APIKeyPanel";
 
 const Page = () => {
   const { data: identity, isLoading: isIdentityLoading } =
@@ -29,6 +31,7 @@ const Page = () => {
     setLoading(isIdentityLoading || isLoading);
   }, [isIdentityLoading, isLoading]);
 
+  const { push } = useNavigation();
   const [orgData, setOrgData] = useState<any[]>();
   const [loading, setLoading] = useState(true);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -43,18 +46,62 @@ const Page = () => {
     }
   }, [identity, orgs]);
 
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const handleOpenConfirmModal = () => setOpenConfirmModal(true);
+  const handleCloseConfirmModal = () => setOpenConfirmModal(false);
+
   const handleEditClick = (row: Organization) => {
-    setClickedOrg(row);
-    setOpenDrawer(true);
+    // setClickedOrg(row);
+    // setOpenDrawer(true);
+
+    push(`/dashboard/orgs/edit?organization_code=${row.organization_code}`)
+
   };
-  const handleCreate = () => setOpenDrawer(true);
+  const handleCreate = () => {
+    // setOpenDrawer(true)
+    push("/dashboard/orgs/create")
+  }
   const handleClose = () => {
     refetch();
     setClickedOrg(null);
     setOpenDrawer(false);
   }
+  const handleClickSwitch = (row: Organization) => {
+    setClickedOrg(row);
+    handleOpenConfirmModal();
+  }
+  const handleSwitch = async () => {
+    const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("tempToken")}`,
+      },
+      body: JSON.stringify({ organization: clickedOrg?.organization_code }),
+    });
+    if (response.ok) {
+      const data: any = await response.json();
+      localStorage.setItem("accessToken", data.access);
+      localStorage.setItem("refreshToken", data.refresh);
+      window.location.reload();
+    }
+  }
+
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
+      {
+        accessorKey: "isCurrent",
+        header: "Switch",
+        size: 100,
+        Cell: ({ renderedCellValue, row }) => (
+          <div
+            onClick={() => handleClickSwitch(row.original)}
+            className={`${renderedCellValue ? "border-[#11ba82]" : "border-[#b5b7ba]"} w-5 h-5 p-1 rounded-full border-2 cursor-pointer hover:border-[#11ba82]`}
+          >
+            {renderedCellValue && <div className="w-full h-full rounded-full bg-[#11ba82]"></div>}
+          </div>
+        ),
+      },
       {
         accessorKey: "organization_code",
         header: "Organization Code",
@@ -136,6 +183,12 @@ const Page = () => {
         onClose={handleClose}
         org={clickedOrg}
       />
+      <ConfirmModal
+        openModal={openConfirmModal}
+        handleCloseModal={handleCloseConfirmModal}
+        handleOK={handleSwitch}
+      />
+      <APIKeyPanel />
     </div>
   );
 };

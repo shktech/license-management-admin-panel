@@ -3,6 +3,7 @@
 import nestjsxDataProvider, { axiosInstance } from "@refinedev/nestjsx-crud";
 import { DataProvider } from "@refinedev/core";
 import { stringify } from "querystring";
+import axios, { AxiosError } from 'axios';
 
 // const localAPI_URL = "http://localhost:3000/api";
 // const virtualAPI_URL = "https://lic-refine.vercel.app/api";
@@ -77,6 +78,24 @@ const customDataProvider: DataProvider = {
       total: response.data.length
     }
   },
+  create: async ({ resource, variables }) => {
+    const url = `${API_URL ?? realAPI_URL}/${resource}`;
+
+    try {
+      const { data } = await axiosInstance.post(url, variables);
+      return {
+        data,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          data: error.response?.data,
+        };
+      }
+      throw error;
+    }
+  },
+
   custom: async ({ url, method, payload }) => {
     let requestUrl = (API_URL ?? realAPI_URL) + `/${url}?`;
     let axiosResponse;

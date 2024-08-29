@@ -83,6 +83,19 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
+    name: "references",
+    list: "/dashboard/references",
+    create: "/dashboard/references/create",
+    edit: "/dashboard/references/edit/:id",
+    show: "/dashboard/references/show/:id",
+    meta: {
+      canDelete: true,
+      label: "References",
+      parent: "mastermgmt",
+      warnWhenUnsavedChanges: true,
+    },
+  },
+  {
     name: "partners",
     list: "/dashboard/partners",
     meta: {
@@ -102,10 +115,15 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "lookups",
-    list: "/dashboard/maintenance/lookups",
+    list: "/dashboard/lookups",
+    create: "/dashboard/lookups/create",
+    edit: "/dashboard/lookups/edit/:id",
+    show: "/dashboard/lookups/show/:id",
     meta: {
       label: "Lookups",
+      canDelete: true,
       parent: "maintenance",
+      warnWhenUnsavedChanges: true,
     },
   },
   {
@@ -199,13 +217,15 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
-    name: "orgsetup",
+    name: "orgs",
     list: "/dashboard/orgs",
-    create: "/dashboard/orgs",
-    edit: "/dashboard/orgs/:id",
+    create: "/dashboard/orgs/create",
+    edit: "/dashboard/orgs/edit/:id",
     meta: {
-      label: "Org Setup",
+      label: "Organizations",
       parent: "settings",
+      warnWhenUnsavedChanges: true,
+      canDelete: true,
     },
   },
 ];

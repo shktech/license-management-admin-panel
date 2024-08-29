@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable , useDelete  } from "@refinedev/core";
+import { useTable , useDelete, useNavigation  } from "@refinedev/core";
 import { Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -21,20 +21,26 @@ const Page = () => {
     setFilters,
     setSorters,
   } = useTable<Product>();
+
+  const { push } = useNavigation();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
   const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
 
-  const handleCreate = () => setOpenDrawer(true);
+  const handleCreate = () => {
+    // setOpenDrawer(true);
+    push(`/dashboard/products/create`)
+  }
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
 
   const handleEditClick = (row: Product) => {
-    setClickedProduct(row);
-    setOpenDrawer(true);
+    // setClickedProduct(row);
+    // setOpenDrawer(true);
+    push(`/dashboard/products/edit?id=${row.product_id}`)
   };
 
   const handlePage = (value: number) => setCurrent(value);
@@ -52,7 +58,6 @@ const Page = () => {
   const { mutate: deleteProduct } = useDelete();
 
   const handleDeleteBtn = (product: Product) => {
-
     handleOpenDeleteModal();
     setClickedProduct(product);
   }
@@ -67,6 +72,7 @@ const Page = () => {
     )
     handleCloseDeleteModal();
   }
+
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
       {

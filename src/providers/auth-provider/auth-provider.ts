@@ -70,6 +70,25 @@ export const authProvider: AuthProvider = {
             const data: LoginResponse = await response.json();
             localStorage.setItem("tempToken", data.temp_access);
             useStore.getState().setOrganizations(data.organizations);
+            if (data.organizations.length == 1) {
+                const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("tempToken")}`,
+                    },
+                    body: JSON.stringify({ organization: data.organizations[0].organization_code }),
+                });
+                if (response.ok) {
+                    const data: any = await response.json();
+                    localStorage.setItem("accessToken", data.access);
+                    localStorage.setItem("refreshToken", data.refresh);
+                    return {
+                        success: true,
+                        redirectTo: "/dashboard"
+                    }
+                }
+            }
             return {
                 success: true,
                 redirectTo: "/auth/organization"
@@ -135,7 +154,7 @@ export const authProvider: AuthProvider = {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("tempToken");
-            useStore.getState().setUser(null);    
+            useStore.getState().setUser(null);
             return {
                 authenticated: false,
                 redirectTo: "/auth/signin"

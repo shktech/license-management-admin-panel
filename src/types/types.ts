@@ -263,3 +263,41 @@ export interface Address {
     created_by?: number;
     updated_by?: number;
 }
+
+export interface Lookup {
+    lookup_id?: string;
+    lookup_name?: string;
+    description?: string;
+    active?: boolean;
+}
+
+export interface LookupValue {
+    value?: string;
+    meaning?: string;
+    attribute1?: string;
+    attribute2?: string;
+    attribute3?: string;
+    active?: boolean;
+}
+
+export interface Reference {
+    created_at?: string;
+    updated_at?: string;
+    reference_id?: string;
+    reference_name?: string;
+    reference_description?: string;
+    reference_type?: string;
+    organization?: Partial<Organization>;
+    active?: boolean;
+}
+
+export interface ReferenceCode {
+    id?: string;
+    start_date?: string;
+    end_date?: string;
+    product_part_number?: string;
+    product_part_id?: string;
+    osc_product_id?: string;
+    transaction_line_id?: string;
+    reference_code?: string;
+}
