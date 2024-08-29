@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { usePermissions, useTable } from "@refinedev/core";
+import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Permission, Role } from "@/types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
@@ -17,6 +17,7 @@ const Page = () => {
   } = useTable<Role>({
     hasPagination: false
   });
+  const { push } = useNavigation();
   const sortedData = data?.data.sort((a, b) => {
     const specialRoles = ["Admin", "SuperUser", "User"];
     if (specialRoles.includes(a.name as string) && !specialRoles.includes(b.name as string)) {
@@ -33,13 +34,15 @@ const Page = () => {
   const [clickedRole, setClickedRole] = React.useState<any>();
 
   const handleClickItem = (role: Role) => {
-    setClickedRole(role);
-    setOpenDrawer(true);
+    // setClickedRole(role);
+    // setOpenDrawer(true);
+    push(`/dashboard/roles/edit?id=${role.role_id}`)
   };
 
   const handleCreate = () => {
-    setClickedRole(null);
-    setOpenDrawer(true);
+    // setClickedRole(null);
+    // setOpenDrawer(true);
+    push(`/dashboard/roles/create`)
   };
 
   const handleClose = () => {

@@ -3,7 +3,6 @@
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { InputTransaction, Product, Transaction } from "@/types/types";
 import ProductForm from "@components/Forms/Products/ProductForm";
-import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useList, useParsed } from "@refinedev/core";
@@ -23,7 +22,7 @@ const ProductEdit = () => {
         watch,
         setValue,
         formState: { errors },
-    } = useForm<Transaction>({
+    } = useForm<Product>({
         refineCoreProps: {
             action: "edit",
             resource: "products",

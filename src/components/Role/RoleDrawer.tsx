@@ -9,7 +9,7 @@ import PermissionsTable from "./PermissionsTable";
 
 interface RoleDrawerProps {
   onClose: () => void;
-  role: Role;
+  role?: Role;
   create: boolean;
 }
 
