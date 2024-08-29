@@ -3,7 +3,7 @@ import { getRealFormFields } from "@utils/utilFunctions";
 
 const InitialField: InitialFieldConfig[] = [
     {
-        name: "reference_code",
+        name: "reference_code", size: 2
     },
     {
         name: "product_part_number",

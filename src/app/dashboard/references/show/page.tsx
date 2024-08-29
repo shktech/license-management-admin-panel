@@ -26,10 +26,9 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Reference>({
+  } = useTable<ReferenceCode>({
     resource: `references/${params?.id}/codes`,
   });
-  const codes = codeData?.data as ReferenceCode[];
   const reference: Reference = data?.data as Reference;
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -37,15 +36,18 @@ const Page = () => {
 
   const [clickedReferenceCode, setClickedReferenceCode] = useState<ReferenceCode | null>(null);
 
-  const handleCreate = () => setOpenDrawer(true);
+  const handleCreate = () => {
+    // setOpenDrawer(true);
+    push(`/dashboard/references/codes/create?id=${params?.id}`);
+  }
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
-
   const handleEditClick = (row: ReferenceCode) => {
-    setClickedReferenceCode(row);
-    setOpenDrawer(true);
+    // setClickedReferenceCode(row);
+    // setOpenDrawer(true);
+    push(`/dashboard/references/codes/edit?reference_id=${params?.id}&code_id=${row.id}`);
   };
 
   const handleClose = () => {
@@ -123,7 +125,10 @@ const Page = () => {
       isLoading={isLoading}
       breadcrumb={false}
       wrapperProps={{
-        className: "rounded-none bg-[#f2f6fa] shadow-none",
+        className: "rounded-none bg-[#f2f6fa] shadow-none p-0",
+      }}
+      contentProps={{
+        className: "p-0",
       }}
       title={
         <div className="px-8 pt-4 !font-satoshi text-2xl font-semibold text-[#515f72] gap-2">
@@ -146,14 +151,27 @@ const Page = () => {
       }
     >
       {isLoading ? <Loader /> :
-        <div className="px-8 grid grid-cols-3 gap-4">
-          <div className="">
-            <div className="text-base font-semibold">Reference Name</div>
-            <div className="text-sm font-normal text-[#808080]">{reference?.reference_name}</div>
+        <div>
+          <div className="px-12 grid grid-cols-3 gap-4 pb-8">
+            <div className="">
+              <div className="text-base font-semibold">Reference Name</div>
+              <div className="text-sm font-normal text-[#808080]">{reference?.reference_name}</div>
+            </div>
+            <div className="col-span-2">
+              <div className="text-base font-semibold">Reference Description</div>
+              <div className="text-sm font-normal text-[#808080]">{reference?.reference_description}</div>
+            </div>
           </div>
-          <div className="col-span-2">
-            <div className="text-base font-semibold">Reference Description</div>
-            <div className="text-sm font-normal text-[#808080]">{reference?.reference_description}</div>
+          <div className="bg-white">
+            <GenericTable
+              title="Reference Codes"
+              columns={columns}
+              handleCreate={handleCreate}
+              data={codeData?.data}
+              totalCount={codeData?.total}
+              onRowClick={handleEditClick}
+              canCreate={true}
+            />
           </div>
         </div>
       }
