@@ -28,7 +28,10 @@ const Page = () => {
 
   const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
 
-  const handleCreate = () => setOpenDrawer(true);
+  const handleCreate = () => {
+    // setOpenDrawer(true);
+    push(`/dashboard/products/create`)
+  }
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);

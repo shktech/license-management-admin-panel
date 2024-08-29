@@ -22,50 +22,48 @@ const ProductForm = (props: GenericFormProps) => {
         },
     ]
     return (
-        <div className="flex justify-center">
-            <div className="w-2/3 flex flex-col gap-2">
-                {
-                    FormGroups.map((formGroup, i) => (
-                        <Accordion
-                            key={i}
-                            // elevation={0}
-                            // disableGutters
-                            defaultExpanded={i == 0}
+        <div className="flex flex-col gap-2">
+            {
+                FormGroups.map((formGroup, i) => (
+                    <Accordion
+                        key={i}
+                        // elevation={0}
+                        // disableGutters
+                        defaultExpanded={i == 0}
+                        sx={{
+                            borderTop: '2px solid #1f325c',
+                            '&::before': { display: 'none' },
+                            borderRadius: '0.5rem',
+                            boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);'
+                        }}
+                    >
+                        <AccordionSummary
+                            expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem', color: '#536175' }} />}
+                            aria-controls="panel1-content"
+                            id={formGroup.title}
                             sx={{
-                                borderTop: '2px solid #1f325c',
-                                '&::before': { display: 'none' },
-                                borderRadius: '0.5rem',
-                                boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);'
+                                py: 1,
+                                flexDirection: 'row-reverse',
+                                color: '#536175',
+                                transitionDuration: '500ms',
+                                "&:hover": {
+                                    color: "#003133",
+                                },
+                                '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+                                    transform: 'rotate(90deg)',
+                                },
                             }}
                         >
-                            <AccordionSummary
-                                expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem', color: '#536175' }} />}
-                                aria-controls="panel1-content"
-                                id={formGroup.title}
-                                sx={{
-                                    py: 1,
-                                    flexDirection: 'row-reverse',
-                                    color: '#536175',
-                                    transitionDuration: '500ms',
-                                    "&:hover": {
-                                        color: "#003133",
-                                    },
-                                    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-                                        transform: 'rotate(90deg)',
-                                    },
-                                }}
-                            >
-                                <div className="pl-2 text-md font-medium">{formGroup.title}</div>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <div className="px-4">
-                                    <GenericForm {...{ ...props, fields: formGroup.fields }} />
-                                </div>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))
-                }
-            </div>
+                            <div className="pl-2 text-md font-medium">{formGroup.title}</div>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <div className="px-4">
+                                <GenericForm {...{ ...props, fields: formGroup.fields }} />
+                            </div>
+                        </AccordionDetails>
+                    </Accordion>
+                ))
+            }
         </div>
     )
 }
