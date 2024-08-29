@@ -1,10 +1,13 @@
 "use client";
 
 import { Reference, ReferenceCode } from "@/types/types";
+import Loader from "@components/common/Loader";
 import ReferenceCodeDetailDrawer from "@components/References/ReferenceCodeDetailDrawer";
 import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
 import GenericTable from "@components/Table/GenericTable";
+import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import { useDelete, useNavigation, useParsed, usePermissions, useShow, useTable } from "@refinedev/core";
+import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 
@@ -51,6 +54,16 @@ const Page = () => {
     setOpenDrawer(false);
   }
 
+  const { push } = useNavigation();
+
+  const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
+    return (
+      <div className="flex gap-2 px-12">
+        <EditButton {...editButtonProps} onClick={() => push(`/dashboard/references/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
+        <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+      </div>
+    );
+  };
   // const { mutate: deleteReferenceCode } = useDelete();
 
   // const handleDeleteBtn = (ReferenceCode: ReferenceCode) => {
@@ -105,47 +118,46 @@ const Page = () => {
     []
   );
   return (
-    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      <div className="px-12 py-4 !font-satoshi text-2xl font-semibold text-[#515f72] gap-2">
-        <div className="flex items-center gap-2">
-          <div className="">Detailed Reference</div>
-          <span className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}>
-            {reference?.reference_type}
-          </span>
-          <span className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}>
-            {reference?.active ? "Active" : "Deactive"}
-          </span>
+    <Show
+      goBack={null}
+      isLoading={isLoading}
+      breadcrumb={false}
+      wrapperProps={{
+        className: "rounded-none bg-[#f2f6fa] shadow-none",
+      }}
+      title={
+        <div className="px-8 pt-4 !font-satoshi text-2xl font-semibold text-[#515f72] gap-2">
+          <div className="flex items-center gap-2">
+            <div className="">Detailed Reference</div>
+            <span className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}>
+              {reference?.reference_type}
+            </span>
+            <span className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}>
+              {reference?.active ? "Active" : "Deactive"}
+            </span>
+          </div>
+          <div className="flex">
+            <div className="text-base font-normal text-[#808080]">{reference?.reference_id}</div>
+          </div>
         </div>
-        <div className="flex">
-          <div className="text-base font-normal text-[#808080]">{reference?.reference_id}</div>
+      }
+      headerButtons={({ editButtonProps, refreshButtonProps }) =>
+        getButtonProps(editButtonProps, refreshButtonProps)
+      }
+    >
+      {isLoading ? <Loader /> :
+        <div className="px-8 grid grid-cols-3 gap-4">
+          <div className="">
+            <div className="text-base font-semibold">Reference Name</div>
+            <div className="text-sm font-normal text-[#808080]">{reference?.reference_name}</div>
+          </div>
+          <div className="col-span-2">
+            <div className="text-base font-semibold">Reference Description</div>
+            <div className="text-sm font-normal text-[#808080]">{reference?.reference_description}</div>
+          </div>
         </div>
-      </div>
-      <div className="px-12 grid grid-cols-3 gap-4">
-        <div className="">
-          <div className="text-base font-semibold">Reference Name</div>
-          <div className="text-sm font-normal text-[#808080]">{reference?.reference_name}</div>
-        </div>
-        <div className="col-span-2">
-          <div className="text-base font-semibold">Reference Description</div>
-          <div className="text-sm font-normal text-[#808080]">{reference?.reference_description}</div>
-        </div>
-      </div>
-      <div className="text-white">
-        <GenericTable
-          data={codes}
-          columns={columns}
-          totalCount={codes?.length}
-          handleCreate={handleCreate}
-          canCreate={true}
-        />
-      </div>
-      <ReferenceCodeDetailDrawer
-        open={openDrawer}
-        reference_id={reference?.reference_id}
-        onClose={() => handleClose()}
-        referenceCode={clickedReferenceCode}
-      />
-    </div>
+      }
+    </Show>
   );
 };
 

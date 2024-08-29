@@ -27,7 +27,10 @@ const Page = () => {
 
   const [clickedReference, setClickedReference] = React.useState<Reference | null>(null);
 
-  const handleCreate = () => setOpenDrawer(true);
+  const handleCreate = () => {
+    // setOpenDrawer(true);
+    push("/dashboard/references/create");
+  }
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
