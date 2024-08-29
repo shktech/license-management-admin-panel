@@ -212,13 +212,15 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
-    name: "orgsetup",
+    name: "orgs",
     list: "/dashboard/orgs",
-    create: "/dashboard/orgs",
-    edit: "/dashboard/orgs/:id",
+    create: "/dashboard/orgs/create",
+    edit: "/dashboard/orgs/edit/:id",
     meta: {
       label: "Org Setup",
       parent: "settings",
+      warnWhenUnsavedChanges: true,
+      canDelete: true,
     },
   },
 ];

@@ -2,7 +2,7 @@
 
 import { Box, IconButton } from "@mui/material";
 
-import { HttpError, useGetIdentity, useList } from "@refinedev/core";
+import { HttpError, useGetIdentity, useList, useNavigation } from "@refinedev/core";
 import { Organization, User } from "@/types/types";
 import { useEffect, useMemo, useState } from "react";
 import OrganizationDetailDrawer from "@components/Organizations/OrganizationDrawer";
@@ -30,6 +30,7 @@ const Page = () => {
     setLoading(isIdentityLoading || isLoading);
   }, [isIdentityLoading, isLoading]);
 
+  const { push } = useNavigation();
   const [orgData, setOrgData] = useState<any[]>();
   const [loading, setLoading] = useState(true);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -49,10 +50,16 @@ const Page = () => {
   const handleCloseConfirmModal = () => setOpenConfirmModal(false);
 
   const handleEditClick = (row: Organization) => {
-    setClickedOrg(row);
-    setOpenDrawer(true);
+    // setClickedOrg(row);
+    // setOpenDrawer(true);
+
+    push(`/dashboard/orgs/edit?organization_code=${row.organization_code}`)
+
   };
-  const handleCreate = () => setOpenDrawer(true);
+  const handleCreate = () => {
+    // setOpenDrawer(true)
+    push("/dashboard/orgs/create")
+  }
   const handleClose = () => {
     refetch();
     setClickedOrg(null);
