@@ -115,10 +115,15 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "lookups",
-    list: "/dashboard/maintenance/lookups",
+    list: "/dashboard/lookups",
+    create: "/dashboard/lookups/create",
+    edit: "/dashboard/lookups/edit/:id",
+    show: "/dashboard/lookups/show/:id",
     meta: {
       label: "Lookups",
+      canDelete: true,
       parent: "maintenance",
+      warnWhenUnsavedChanges: true,
     },
   },
   {

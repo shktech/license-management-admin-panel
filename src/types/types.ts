@@ -265,10 +265,18 @@ export interface Address {
 }
 
 export interface Lookup {
-    code?: string;
-    meaning?: string;
+    lookup_id?: string;
+    lookup_name?: string;
     description?: string;
-    tag?: string;
+    active?: boolean;
+}
+
+export interface LookupValue {
+    value?: string;
+    meaning?: string;
+    attribute1?: string;
+    attribute2?: string;
+    attribute3?: string;
     active?: boolean;
 }
 
