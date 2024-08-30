@@ -268,6 +268,7 @@ export interface Lookup {
     lookup_id?: string;
     lookup_name?: string;
     description?: string;
+    type?: string;
     active?: boolean;
 }
 

@@ -1,5 +1,15 @@
 import { colors, duration } from "@mui/material";
 
+export const initialRoundedButton = {
+    pl: 2, // Horizontal padding
+    borderRadius: '50px', // Rounded corners
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontWeight: '500',
+    fontSize: '0.875rem',
+    minWidth: '90px',
+}
+
 export const tableAddButton = {
     bgcolor: '#4580ff', // Background color
     color: 'white', // Text color
@@ -15,6 +25,28 @@ export const tableAddButton = {
     textTransform: 'none',
     fontWeight: '500',
     fontSize: '0.875rem',
+}
+
+export const tableSaveButton = {
+    bgcolor: '#4580ff', // Background color
+    color: 'white', // Text color
+    '&:hover': {
+        bgcolor: '#4580ff', // Background color on hover
+        opacity: 0.9, // Adjust opacity on hover
+        boxShadow: 'none',
+    },
+    ...initialRoundedButton
+}
+
+export const tableCancelButton = {
+    bgcolor: '#f2f6fa', // Background color
+    color: '#1f325c', // Text color
+    '&:hover': {
+        bgcolor: '#f2f6fa', // Background color on hover
+        opacity: 0.9, // Adjust opacity on hover
+        boxShadow: 'none',
+    },
+    ...initialRoundedButton
 }
 
 const modalBtnStyle = {
