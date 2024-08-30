@@ -43,6 +43,10 @@ const Page = () => {
     push(`/dashboard/products/edit?id=${row.product_id}`)
   };
 
+  const handleRowClick = (row: Product) => {
+    push(`/dashboard/products/show?id=${row.product_id}`)
+  }
+
   const handlePage = (value: number) => setCurrent(value);
 
   const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
@@ -115,21 +119,21 @@ const Page = () => {
           </Box>
         ),
       },
-      {
-        accessorKey: "actions",
-        header: "Action",
-        size: 100,
-        enableSorting: false,
-        pin: 'right',
-        Cell: ({ row }) => (
-          <div className="w-full h-full">
-            <div className="flex gap-4">
-              <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-              <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-            </div>
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "actions",
+      //   header: "Action",
+      //   size: 100,
+      //   enableSorting: false,
+      //   pin: 'right',
+      //   Cell: ({ row }) => (
+      //     <div className="w-full h-full">
+      //       <div className="flex gap-4">
+      //         <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+      //         <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+      //       </div>
+      //     </div>
+      //   ),
+      // },
     ],
     []
   );
@@ -150,6 +154,7 @@ const Page = () => {
             canCreate={true}
             totalCount={data?.total}
             handlePage={handlePage}
+            onRowClick={handleRowClick}
             handleSorting={handleSorting}
             handleSearch={handleSearch}
             handleCreate={handleCreate} />
