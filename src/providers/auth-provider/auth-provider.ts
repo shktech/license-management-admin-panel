@@ -71,7 +71,7 @@ export const authProvider: AuthProvider = {
             localStorage.setItem("tempToken", data.temp_access);
             useStore.getState().setOrganizations(data.organizations);
             if (data.organizations.length == 1) {
-                const response = await fetch("https://license-management-admin-panel.vercel.app/authenticate", {
+                const response = await fetch("https://license-management-server.vercel.app/authenticate", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
