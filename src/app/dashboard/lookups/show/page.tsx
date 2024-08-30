@@ -127,6 +127,7 @@ const Page = () => {
       {
         accessorKey: "active",
         header: "Active",
+        size: 50,
       },
     ],
     []
@@ -147,12 +148,28 @@ const Page = () => {
                   onChange={(e) => handleEditChange(row.index, column.id as string, (e.target.value == "true"))}
                   label="Age"
                 >
-                  <MenuItem value={"true"}>True</MenuItem>
-                  <MenuItem value={"false"}>False</MenuItem>
+                  <MenuItem value={"true"}>
+                    <div className="flex items-center gap-2">
+                      <div className={`rounded-full text-white py-1 text-xs px-3 bg-[#11ba82]`}>
+                        Active
+                      </div>
+                    </div>
+                  </MenuItem>
+                  <MenuItem value={"false"}>
+                    <div className="flex items-center gap-2">
+                      <div className={`rounded-full text-white py-1 text-xs px-3 bg-[#929ea8]`}>
+                        Deactive
+                      </div>
+                    </div>
+                  </MenuItem>
                 </Select>
               </FormControl>
             ) : (
-              renderedCellValue ? "True" : "False"
+              <div className="flex items-center gap-2">
+                <div className={`rounded-full text-white py-1 text-xs px-3 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}>
+                  {renderedCellValue ? "Active" : "Deactive"}
+                </div>
+              </div>
             ),
         }
       } else if (column.accessorKey == "value") {
@@ -259,9 +276,6 @@ const Page = () => {
               {lookup?.active ? "Active" : "Deactive"}
             </span>
           </div>
-          <div className="flex">
-            <div className="text-base font-normal text-[#808080]">{lookup?.lookup_id}</div>
-          </div>
         </div>
       }
       headerButtons={({ editButtonProps, refreshButtonProps }) =>
@@ -270,18 +284,18 @@ const Page = () => {
     >
       {isLoading ? <Loader /> :
         <div>
-          <div className="px-12 grid grid-cols-4 gap-4 pb-8">
+          <div className="px-12 grid grid-cols-4 gap-4  pt-4 pb-12">
             <div className="">
-              <div className="text-base font-semibold">Lookup Name</div>
-              <div className="text-sm font-normal text-[#808080]">{lookup?.lookup_name}</div>
+              <div className="text-[#778599]">Lookup Name</div>
+              <div className="text-[#515f72] text-xl font-semibold">{lookup?.lookup_name}</div>
             </div>
             <div className="">
-              <div className="text-base font-semibold">Lookup Type</div>
-              <div className="text-sm font-normal text-[#808080]">{lookup?.type}</div>
+              <div className="text-[#778599]">Lookup Type</div>
+              <div className="text-[#515f72] text-xl font-semibold">{lookup?.type}</div>
             </div>
             <div className="col-span-2">
-              <div className="text-base font-semibold">Lookup Description</div>
-              <div className="text-sm font-normal text-[#808080]">{lookup?.description}</div>
+              <div className="text-[#778599]">Lookup Description</div>
+              <div className="text-[#515f72] text-xl font-semibold">{lookup?.description}</div>
             </div>
           </div>
           <div className="bg-white">
