@@ -101,7 +101,7 @@ const Page = () => {
         header: "Product Part ID",
       },
       {
-        accessorKey: "osc_product_id",
+        accessorKey: "osc_product.product_id",
         header: "OSC Product ID",
       },
       {
@@ -111,10 +111,16 @@ const Page = () => {
       {
         accessorKey: "start_date",
         header: "Start Date",
+        Cell: ({ cell }) => {
+          return <div>{new Date(cell.getValue() as string).toLocaleDateString()}</div>
+        }
       },
       {
         accessorKey: "end_date",
         header: "End Date",
+        Cell: ({ cell }) => {
+          return <div>{new Date(cell.getValue() as string).toLocaleDateString()}</div>
+        }
       },
     ],
     []

@@ -13,9 +13,16 @@ const InitialField: InitialFieldConfig[] = [
     },
     {
         name: "osc_product_id",
+        type: "dropdown",
+        required: 'text',
+        resource: "products",
+        valueKey: "product_id",
+        labelKey: "product_id",
+        size: 2,
     },
     {
         name: "transaction_line_id",
+        size: 2,
     },
     {
         name: "start_date",
