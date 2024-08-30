@@ -33,7 +33,7 @@ const Item = () => {
     return (
         <div className="flex items-center justify-center py-12">
             <div className="w-2/3">
-                {formLoading ? <Loader /> : <RoleDetailPanel role={role}/>}
+                {formLoading ? <Loader /> : <RoleDetailPanel role={role} isShow={true} />}
             </div>
         </div>
     );

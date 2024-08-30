@@ -12,10 +12,17 @@ const InitialField: InitialFieldConfig[] = [
         name: "product_part_id",
     },
     {
-        name: "osc_product_id",
+        name: "osc_part_number",
+        type: "dropdown",
+        required: 'text',
+        resource: "products",
+        valueKey: "product_part_number",
+        labelKey: "product_part_number",
+        size: 2,
     },
     {
         name: "transaction_line_id",
+        size: 2,
     },
     {
         name: "start_date",
@@ -24,6 +31,7 @@ const InitialField: InitialFieldConfig[] = [
     {
         name: "end_date",
         type: "date",
+        disabled: true,
     },
 ];
 

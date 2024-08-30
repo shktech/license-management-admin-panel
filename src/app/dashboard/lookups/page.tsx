@@ -52,20 +52,20 @@ const HomePage: React.FC = () => {
         size: 50,
         Cell: ({ renderedCellValue }) => <div className={`rounded-full h-4 w-4 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
       },
-      {
-        accessorKey: "actions",
-        header: "Action",
-        size: 50,
-        enableSorting: false,
-        pin: 'right',
-        Cell: ({ row }) => (
-          <div className="w-full h-full">
-            <div className="flex gap-4">
-              <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-            </div>
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "actions",
+      //   header: "Action",
+      //   size: 50,
+      //   enableSorting: false,
+      //   pin: 'right',
+      //   Cell: ({ row }) => (
+      //     <div className="w-full h-full">
+      //       <div className="flex gap-4">
+      //         <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
+      //       </div>
+      //     </div>
+      //   ),
+      // },
     ],
     []
   );
@@ -83,6 +83,7 @@ const HomePage: React.FC = () => {
             data={data?.data}
             columns={columns}
             canCreate={true}
+            onRowClick={handleEditClick}
             totalCount={data?.total}
             handleCreate={handleCreate}
           />

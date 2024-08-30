@@ -34,7 +34,7 @@ interface GenericTableProps<T extends MRT_RowData> {
     minWidth?: string | number;
 }
 
-const GenericTable = <T extends MRT_RowData>({addText, title, data, columns, totalCount, noCreateNeed, noSearchNeed, onRowClick, handleCreate, handleSearch, handlePage, handleSorting, canCreate, maxWidth, minWidth,
+const GenericTable = <T extends MRT_RowData>({ addText, title, data, columns, totalCount, noCreateNeed, noSearchNeed, onRowClick, handleCreate, handleSearch, handlePage, handleSorting, canCreate, maxWidth, minWidth,
 }: GenericTableProps<T>) => {
     const handleRowClick = (row: T) => {
         if (!!onRowClick) {
@@ -112,15 +112,16 @@ const GenericTable = <T extends MRT_RowData>({addText, title, data, columns, tot
             sorting
         }
     });
-    
+
     return (
         <div className='scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200'>
-            <div className='flex justify-between px-12 py-4 gap-2'>
+            <div className='flex justify-between px-12 py-4 gap-2 items-center'>
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
-
                     {!noSearchNeed && <SearchInput handleChange={handleSearch} />}
-                    {!noCreateNeed && canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}> {addText ?? <><AddIcon /> Add</>}</Button>}
+                    <div>
+                        {!noCreateNeed && canCreate && <Button onClick={handleCreate} variant="contained" sx={tableAddButton}> {addText ?? <><AddIcon /> Add</>}</Button>}
+                    </div>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <MRT_ShowHideColumnsButton table={table} />
                     </Box>

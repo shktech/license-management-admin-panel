@@ -10,9 +10,10 @@ import Link from "next/link";
 
 interface RoleDetailPanelProps {
   role?: Role;
+  isShow?: boolean;
 }
 
-const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role }) => {
+const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
   const checkboxGroupInfo = [
     { title: "Users", key: "user" },
     { title: "Role", key: "role" },
@@ -83,10 +84,17 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role }) => {
   return (
     <div className="bg-white px-8 py-8 font-med flex flex-col">
       <div className="text-xl font-semibold text-black flex items-center gap-4">
-        <Link href="/dashboard/roles" className="pb-1 hover:text-slate-700">
+        <Link href={role && !isShow ? "/dashboard/roles/show?id=" + role?.role_id : "/dashboard/roles"} className="pb-1 hover:text-slate-700">
           <ArrowBackIosNewIcon fontSize="small" />
         </Link>
-        <div>{role ? "Edit" : "Create"} Role</div>
+        <div className="flex flex-1 items-center justify-between">
+          <div>{role ? isShow ? "" : "Edit" : "Create"} Role</div>
+          {isShow && (
+            <Link href={`/dashboard/roles/edit?id=${role?.role_id}`} className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium">
+              Edit
+            </Link>
+          )}
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         <Divider
@@ -105,6 +113,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role }) => {
             name="name"
             label="Role Name"
             type="text"
+            disabled={isShow}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -115,6 +124,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role }) => {
             name="desc"
             label="Role Description"
             type="text"
+            disabled={isShow}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -131,17 +141,20 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role }) => {
         </Divider>
         <PermissionsTable
           permissions={permissions}
+          readonly={isShow}
           handleCheckboxChange={handleCheckboxChange}
         />
       </div>
       <div className="flex justify-end pt-4">
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          sx={modalOkBtnStyle}
-        >
-          {role ? "Save" : "Create"}
-        </Button>
+        {!isShow && (
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            sx={modalOkBtnStyle}
+          >
+            {role ? "Save" : "Create"}
+          </Button>
+        )}
       </div>
     </div>
   );

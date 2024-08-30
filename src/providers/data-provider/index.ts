@@ -45,7 +45,7 @@ axiosInstance.interceptors.request.use(
 const customDataProvider: DataProvider = {
   ...nestjsxDataProvider(API_URL ?? realAPI_URL, axiosInstance),
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
-    let params: PARAMS = {}
+    let params: any = {}
 
     if (pagination?.mode != "off") {
       const { current = 1, pageSize = 10 } = pagination ?? {};
@@ -58,7 +58,9 @@ const customDataProvider: DataProvider = {
       }
     }
     if (filters && filters.length > 0) {
-      params.filter = filters[0].value;
+      console.log(filters);
+      params.filter = filters.find((filter: any) => filter?.field == 'searchKey')?.value;
+      params.type = filters.find((filter: any) => filter?.field == 'type')?.value;
     }
 
     if (sorters && sorters.length > 0) {

@@ -12,6 +12,7 @@ import { tagStyle } from "@data/MuiStyles";
 import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
 import ConfirmModal from "@components/common/ConfirmModal";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import StateComponent from "@components/common/StateComponent";
 
 const Page = () => {
   const {
@@ -87,26 +88,12 @@ const Page = () => {
       {
         accessorKey: "active",
         header: "Active",
+        Cell: ({ renderedCellValue }) => <StateComponent active={renderedCellValue as boolean} />
       },
       {
         accessorKey: "organization.organization_code",
         header: "Organization",
       },
-      // {
-      //   accessorKey: "actions",
-      //   header: "Action",
-      //   size: 100,
-      //   enableSorting: false,
-      //   pin: 'right',
-      //   Cell: ({ row }) => (
-      //     <div className="w-full h-full">
-      //       <div className="flex gap-4">
-      //         <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-      //         <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-      //       </div>
-      //     </div>
-      //   ),
-      // },
     ],
     []
   );

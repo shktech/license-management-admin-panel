@@ -2,7 +2,9 @@ import { getRealFormFields } from "@utils/utilFunctions";
 import { InitialFieldConfig } from "../InitialFieldConfig";
 
 const InitialField: InitialFieldConfig[] = [
-    { name: "product_part_number", size: 2, required: 'text' },
+    { name: "product_part_number",  required: 'text' },
+    { name: "product_name", required: 'text'},
+    { name: "product_description", size: 2 },
     { name: "product_type", required: 'text' },
     {
         name: "duration",
@@ -15,11 +17,9 @@ const InitialField: InitialFieldConfig[] = [
             { value: "3YR", label: "3YR" },
         ],
     },
-    { name: "product_name", required: 'text', size: 2 },
-    { name: "product_description", size: 2 },
     { name: "vendor_name" },
     { name: "vendor_part_number", required: 'text' },
-    { name: "license_source_set", size: 2 },
+    { name: "license_source_set" },
     { name: "source_name" },
     { name: "eval_set_name" },
     { name: "renewal_set_name" },

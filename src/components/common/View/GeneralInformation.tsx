@@ -14,6 +14,8 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
   headerIcon,
   items,
 }) => {
+  const halfItems = Math.ceil(items.length / 2);
+  const firstHalfItems = items.slice(0, halfItems);
   return (
     <div className='bg-white shadow-sm flex-1'>
       {
@@ -24,12 +26,18 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
             </div>
           </Divider> : null
       }
-      <div className="">
-        {items.map((item, index) => (
-          <div key={index} className={`flex gap-2 px-12 py-3 items-center ${items.length != index + 1 ? 'border-b border-[#d5dce3]' : ''}`}>
-            <div className="text-base font-medium text-[#666f75] min-w-96">{item.label}</div>
-            <div className="text-base">{item.value || ""}</div>
-          </div>
+      <div className="grid grid-cols-2">
+        {firstHalfItems.map((item, index) => (
+          <>
+            <div key={index} className={`grid grid-cols-2 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}>
+              <div className="text-base font-medium text-[#666f75] col-span-1">{item.label}</div>
+              <div className="text-base">{item.value || ""}</div>
+            </div>
+            <div key={index + halfItems} className={`grid grid-cols-2 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}>
+              <div className="text-base font-medium text-[#666f75] col-span-1">{items[index + halfItems]?.label}</div>
+              <div className="text-base">{items[index + halfItems]?.value || ""}</div>
+            </div>
+          </>
         ))}
       </div>
     </div>

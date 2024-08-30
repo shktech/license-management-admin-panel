@@ -1,7 +1,8 @@
 "use client";
 
-import { Role } from "@/types/types";
+import { User } from "@/types/types";
 import RoleDetailPanel from "@components/Role/RoleDetailPanel";
+import UserDetailPanel from "@components/Users/UserDetailPanel";
 import Loader from "@components/common/Loader";
 import { useParsed } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
@@ -13,27 +14,27 @@ const Item = () => {
         refineCore: { formLoading, queryResult },
         reset,
         formState: { errors },
-    } = useForm<Role>({
+    } = useForm<User>({
         refineCoreProps: {
             action: "edit",
-            resource: "roles",
+            resource: "users",
             id: params?.id,
         },
     });
 
-    const role: Role = queryResult?.data?.data as Role;
+    const user: User = queryResult?.data?.data as User;
 
     useEffect(() => {
-        if (!formLoading && role) {
-            reset({ ...role });
+        if (!formLoading && user) {
+            reset({ ...user });
         }
-    }, [formLoading, role]);
+    }, [formLoading, user]);
 
 
     return (
         <div className="flex items-center justify-center py-12">
             <div className="w-2/3">
-                {formLoading ? <Loader /> : <RoleDetailPanel role={role}/>}
+                {formLoading ? <Loader /> : <UserDetailPanel user={user} isShow={true} />}
             </div>
         </div>
     );

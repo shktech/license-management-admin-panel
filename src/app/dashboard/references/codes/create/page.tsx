@@ -1,16 +1,17 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Reference, ReferenceCode } from "@/types/types";
+import { Product, Reference, ReferenceCode } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
 import ProductForm from "@components/Forms/Products/ProductForm";
 import ReferenceCodeFormFields from "@components/Forms/References/ReferenceCodeFormFields";
 import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useList, useParsed } from "@refinedev/core";
 import { Create, Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
+import { getDurationFromString } from "@utils/utilFunctions";
 import { useEffect } from "react";
 
 const Item = () => {
@@ -21,6 +22,8 @@ const Item = () => {
         control,
         reset,
         trigger,
+        watch,
+        setValue,
         formState: { errors },
     } = useForm<ReferenceCode>({
         refineCoreProps: {
@@ -29,6 +32,7 @@ const Item = () => {
         },
     });
 
+
     // const referenceCode: ReferenceCode = queryResult?.data?.data as ReferenceCode;
 
     // useEffect(() => {
@@ -36,6 +40,40 @@ const Item = () => {
     //         reset({ ...reference });
     //     }
     // }, [formLoading, reference]);
+
+    const { data: productData, isLoading: productLoading } = useList<Product>({
+        resource: "products",
+        hasPagination: false
+    });
+
+    useEffect(() => {
+        const nowDate = new Date();
+        const nowDateString = nowDate.toISOString().split('T')[0];
+        const tomorrow = new Date(nowDate.setDate(nowDate.getDate() + 1));
+        const tomorrowString = tomorrow.toISOString().split('T')[0];
+        const initialInfo = {
+            start_date: nowDateString,
+            end_date: tomorrowString,
+        };
+        reset({ ...initialInfo });
+    }, []);
+
+
+    const start_date = watch('start_date');
+    const osc_part_number = watch('osc_part_number');
+
+    useEffect(() => {
+        let duration;
+        if (productData?.data) {
+            duration = productData.data.find(p => p.product_part_number == osc_part_number)?.duration;
+        }
+        if (start_date) {
+            const originalDate = new Date(start_date);
+            originalDate.setFullYear(originalDate.getFullYear() + getDurationFromString(duration as string));
+            const end_date = originalDate.toISOString().split('T')[0];
+            setValue('end_date', end_date);
+        }
+    }, [start_date, osc_part_number])
 
 
     return (
