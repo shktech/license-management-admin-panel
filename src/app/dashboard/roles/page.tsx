@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import RoleDrawer from "@components/Role/RoleDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
+import GenericTable from "@components/Table/GenericTable";
 
 const Page = () => {
   const {
@@ -36,7 +37,7 @@ const Page = () => {
   const handleClickItem = (role: Role) => {
     // setClickedRole(role);
     // setOpenDrawer(true);
-    push(`/dashboard/roles/edit?id=${role.role_id}`)
+    push(`/dashboard/roles/show?id=${role.role_id}`)
   };
 
   const handleCreate = () => {
@@ -75,66 +76,68 @@ const Page = () => {
         header: "Description",
         size: 250,
       },
-      {
-        accessorKey: "action",
-        header: "Action",
-        size: 100,
-        enableSorting: false,
-        Cell: ({ row }) => {
-          const roleName = row.original.name;
-          const isSpecialRole = ["Admin", "SuperUser", "User"].includes(roleName as string);
-          return (
-            <div className="flex gap-4">
-              {!isSpecialRole && permissionsData?.update && (
-                <EditOutlinedIcon
-                  onClick={() => handleClickItem(row.original)}
-                  fontSize="small"
-                  className="text-[#818f99] hover:text-black cursor-pointer"
-                />
-              )}
-              {!isSpecialRole && permissionsData?.delete && (
-                <DeleteIcon
-                  fontSize="small"
-                  className="text-[#818f99] hover:text-black cursor-pointer"
-                />
-              )}
-            </div>
-          );
-        },
-      },
+      // {
+      //   accessorKey: "action",
+      //   header: "Action",
+      //   size: 100,
+      //   enableSorting: false,
+      //   Cell: ({ row }) => {
+      //     const roleName = row.original.name;
+      //     const isSpecialRole = ["Admin", "SuperUser", "User"].includes(roleName as string);
+      //     return (
+      //       <div className="flex gap-4">
+      //         {!isSpecialRole && permissionsData?.update && (
+      //           <EditOutlinedIcon
+      //             onClick={() => handleClickItem(row.original)}
+      //             fontSize="small"
+      //             className="text-[#818f99] hover:text-black cursor-pointer"
+      //           />
+      //         )}
+      //         {!isSpecialRole && permissionsData?.delete && (
+      //           <DeleteIcon
+      //             fontSize="small"
+      //             className="text-[#818f99] hover:text-black cursor-pointer"
+      //           />
+      //         )}
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     [permissionsData]
   );
 
   return (
-    permissionsData?.read ? (
-      <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div>
-            <CommonTable
-              title="Role & Permission"
-              data={sortedData}
-              columns={columns}
-              handleCreate={handleCreate}
-              canCreate={permissionsData?.create}
+    // permissionsData?.read ? (
+    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div>
+          <GenericTable
+            title="Role & Permission"
+            data={sortedData}
+            columns={columns}
+            handleCreate={handleCreate}
+            // canCreate={permissionsData?.create}
+            canCreate={true}
             // onRowClick={handleRowClick}
-            // noSearchNeed
+            onRowClick={handleClickItem}
+            noSearchNeed
+          />
+          {openDrawer && (
+            <RoleDrawer
+              onClose={handleClose}
+              role={clickedRole}
+              create={!clickedRole}
             />
-            {openDrawer && (
-              <RoleDrawer
-                onClose={handleClose}
-                role={clickedRole}
-                create={!clickedRole}
-              />
-            )}
-          </div>
-        )}
-      </div>
-    ) : (
-      <Unauthorized />
-    )
+          )}
+        </div>
+      )}
+    </div>
+    // ) : (
+    //   <Unauthorized />
+    // )
   );
 };
 
