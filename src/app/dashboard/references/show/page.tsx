@@ -147,9 +147,6 @@ const Page = () => {
               {reference?.active ? "Active" : "Deactive"}
             </span>
           </div>
-          <div className="flex">
-            <div className="text-base font-normal text-[#808080]">{reference?.reference_id}</div>
-          </div>
         </div>
       }
       headerButtons={({ editButtonProps, refreshButtonProps }) =>
@@ -158,14 +155,14 @@ const Page = () => {
     >
       {isLoading ? <Loader /> :
         <div>
-          <div className="px-12 grid grid-cols-3 gap-4 pb-8">
+          <div className="px-12 grid grid-cols-4 gap-4  pt-4 pb-12">
             <div className="">
-              <div className="text-base font-semibold">Reference Name</div>
-              <div className="text-sm font-normal text-[#808080]">{reference?.reference_name}</div>
+              <div className="text-[#778599]">Reference Name</div>
+              <div className="text-[#515f72] text-xl font-semibold">{reference?.reference_name}</div>
             </div>
-            <div className="col-span-2">
-              <div className="text-base font-semibold">Reference Description</div>
-              <div className="text-sm font-normal text-[#808080]">{reference?.reference_description}</div>
+            <div className="">
+              <div className="text-[#778599]">Reference Description</div>
+              <div className="text-[#515f72] text-xl font-semibold">{reference?.reference_description}</div>
             </div>
           </div>
           <div className="bg-white">

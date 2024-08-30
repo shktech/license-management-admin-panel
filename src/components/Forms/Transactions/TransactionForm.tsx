@@ -56,45 +56,45 @@ const TransactionForm = (props: TransactionFormProps) => {
         GeneralTxnFormField.EditTransactionForm :
         (props.transaction_action == "New" ? GeneralTxnFormField.CreateTransactionForm.newAction : GeneralTxnFormField.CreateTransactionForm.notNewAction)
     },
-    {
-      icon: <PaidOutlinedIcon />,
-      title: 'Shipping Parter Information',
-      description: 'Setup your Shipping Partner Information',
-      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ShippingPartnerInformationFormFields) : PartnerFormFields.ShippingPartnerInformationFormFields,
-      isCustomer: true,
-      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
-      customer: {
-        resource: 'ship-customers',
-        prefix: 'ship_',
-        data: props.transaction?.ship_customer || props.customers.ship_customers
-      },
-    },
-    {
-      icon: <AccountBalanceWalletOutlinedIcon />,
-      title: 'Billing Partner Information',
-      description: 'Setup your Billing Partner Information',
-      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields) : PartnerFormFields.BillingPartnerInformationFormFields,
-      isCustomer: true,
-      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
-      customer: {
-        resource: 'bill-customers',
-        prefix: 'bill_',
-        data: props.transaction?.bill_customer || props.customers.bill_customers
-      },
-    },
-    {
-      icon: <ProductionQuantityLimitsOutlinedIcon />,
-      title: 'Reseller Information',
-      description: 'Setup your Reseller Information',
-      fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ResellerPartnerInformationFormFields) : PartnerFormFields.ResellerPartnerInformationFormFields,
-      isCustomer: true,
-      disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
-      customer: {
-        resource: 'resellers',
-        prefix: 'reseller_',
-        data: props.transaction?.reseller || props.customers.resellers
-      },
-    },
+    // {
+    //   icon: <PaidOutlinedIcon />,
+    //   title: 'Shipping Parter Information',
+    //   description: 'Setup your Shipping Partner Information',
+    //   fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ShippingPartnerInformationFormFields) : PartnerFormFields.ShippingPartnerInformationFormFields,
+    //   isCustomer: true,
+    //   disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
+    //   customer: {
+    //     resource: 'ship-customers',
+    //     prefix: 'ship_',
+    //     data: props.transaction?.ship_customer || props.customers.ship_customers
+    //   },
+    // },
+    // {
+    //   icon: <AccountBalanceWalletOutlinedIcon />,
+    //   title: 'Billing Partner Information',
+    //   description: 'Setup your Billing Partner Information',
+    //   fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.BillingPartnerInformationFormFields) : PartnerFormFields.BillingPartnerInformationFormFields,
+    //   isCustomer: true,
+    //   disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
+    //   customer: {
+    //     resource: 'bill-customers',
+    //     prefix: 'bill_',
+    //     data: props.transaction?.bill_customer || props.customers.bill_customers
+    //   },
+    // },
+    // {
+    //   icon: <ProductionQuantityLimitsOutlinedIcon />,
+    //   title: 'Reseller Information',
+    //   description: 'Setup your Reseller Information',
+    //   fields: props.transaction_action == "Revoke" || props.transaction_action == "Renewal" ? getDisabledFields(PartnerFormFields.ResellerPartnerInformationFormFields) : PartnerFormFields.ResellerPartnerInformationFormFields,
+    //   isCustomer: true,
+    //   disabledSearch: props.transaction_action == "Revoke" || props.transaction_action == "Renewal",
+    //   customer: {
+    //     resource: 'resellers',
+    //     prefix: 'reseller_',
+    //     data: props.transaction?.reseller || props.customers.resellers
+    //   },
+    // },
     {
       icon: <DetailsIcon />,
       title: 'Licensing Details',
@@ -140,8 +140,8 @@ const TransactionForm = (props: TransactionFormProps) => {
               </AccordionSummary>
               <AccordionDetails>
                 {
-                  formGroup.isCustomer ?
-                    <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer, disabledSearch: formGroup.disabledSearch }} /> :
+                  // formGroup.isCustomer ?
+                  //   <CustomerForm {...{ ...props, fields: formGroup.fields, customer: formGroup.customer, disabledSearch: formGroup.disabledSearch }} /> :
                     <GenericForm {...{ ...props, fields: formGroup.fields }} />
                 }
 

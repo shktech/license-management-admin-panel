@@ -71,7 +71,9 @@ const Page = () => {
     handleOpenConfirmModal();
   }
   const handleSwitch = async () => {
-    const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate/", {
+    const realAPI_URL = "https://license-management-server.vercel.app/api";
+    const API_URL = process.env.API_URL;
+    const response = await fetch(`${API_URL ?? realAPI_URL}/authenticate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

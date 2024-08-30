@@ -42,7 +42,7 @@ const Item = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        <EditButton {...editButtonProps} onClick={() => push(`/dashboard/products/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
+        <EditButton {...editButtonProps} onClick={() => push(`/dashboard/partners/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
@@ -97,6 +97,8 @@ const Item = () => {
                 >
                   <StyledTab label="Address" />
                   <StyledTab label="Contacts" />
+                  <StyledTab label="Licenses" />
+                  <StyledTab label="Transactions" />
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>
@@ -104,6 +106,12 @@ const Item = () => {
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <ContactTable data={partner?.contacts ?? []} />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                
               </CustomTabPanel>
             </div>
           </>
