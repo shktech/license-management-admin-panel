@@ -63,7 +63,7 @@ export interface Asset {
     bill_customer?: Partial<Customer>;
     ship_customer?: Partial<Customer>;
     reseller?: Partial<Customer>;
-    
+
     license_key_created_email_notification_date?: string;
     one_month_reminder_notification_date?: string;
     two_month_reminder_notification_date?: string;
@@ -247,22 +247,10 @@ export interface Customer {
     name?: string
     state?: string;
     postal_code?: string;
-    phone?: string;    
+    phone?: string;
 }
 
-export interface Address {
-    created_at?: string;
-    updated_at?: string;
-    address_id?: string;
-    address1?: string;
-    address2?: string;
-    city?: string;
-    state?: string;
-    postal_code?: string;
-    country?: string;
-    created_by?: number;
-    updated_by?: number;
-}
+
 
 export interface Lookup {
     lookup_id?: string;
@@ -301,4 +289,34 @@ export interface ReferenceCode {
     osc_product_id?: string;
     transaction_line_id?: string;
     reference_code?: string;
+}
+
+export interface Partner {
+    partner_id?: string;
+    account_id?: string;
+    name?: string;
+    type?: string;
+    addresses?: Partial<Address[]>;
+    contacts?: Partial<Contact[]>;
+    active?: boolean;
+}
+
+export interface Address {
+    address_id?: string;
+    address1?: string;
+    address2?: string;
+    city?: string;
+    state?: string;
+    postal_code?: string;
+    country?: string;
+    active?: boolean;
+}
+
+export interface Contact {
+    contact_id?: string;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+    phone?: string;
+    active?: boolean;
 }
