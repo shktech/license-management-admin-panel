@@ -12,6 +12,9 @@ import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { DatePicker, DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Page = () => {
 
@@ -130,34 +133,110 @@ const Page = () => {
   );
 
   const columns = useMemo<MRT_ColumnDef<LookupValue>[]>(
-    () => baseColumns.map(column => ({
-      ...column,
-      Cell: ({ renderedCellValue, cell, row, column }) =>
-        isEditMode ? (
-          column.id == "active" ?
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={renderedCellValue}
-                onChange={(e) => handleEditChange(row.index, column.id as string, (e.target.value == "true"))}
-                label="Age"
-              >
-                <MenuItem value={"true"}>True</MenuItem>
-                <MenuItem value={"false"}>False</MenuItem>
-              </Select>
-            </FormControl> :
+    () => baseColumns.map(column => {
+      if (column.accessorKey == "active") {
+        return {
+          ...column,
+          Cell: ({ renderedCellValue, cell, row, column }) =>
+            isEditMode ? (
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={renderedCellValue}
+                  onChange={(e) => handleEditChange(row.index, column.id as string, (e.target.value == "true"))}
+                  label="Age"
+                >
+                  <MenuItem value={"true"}>True</MenuItem>
+                  <MenuItem value={"false"}>False</MenuItem>
+                </Select>
+              </FormControl>
+            ) : (
+              renderedCellValue ? "True" : "False"
+            ),
+        }
+      } else if (column.accessorKey == "value") {
+        switch (lookup?.type) {
+          case "Number":
+            return {
+              ...column,
+              Cell: ({ renderedCellValue, cell, row, column }) =>
+                isEditMode ? (
+                  <TextField
+                    variant="standard"
+                    type="number"
+                    value={renderedCellValue}
+                    onChange={(e) => handleEditChange(row.index, column.id as string, e.target.value)}
+                  />
+                ) : renderedCellValue,
+            }
+          case "Date":
+            return {
+              ...column,
+              Cell: ({ renderedCellValue, cell, row, column }) =>
+                isEditMode ? (
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      value={dayjs(renderedCellValue as string)}
+                      onChange={(newValue) => handleEditChange(row.index, column.id as string, newValue?.format('YYYY-MM-DD'))}
+                      slotProps={{
+                        textField: {
+                          variant: "standard",
+                        }
+                      }}
+                    />
+                  </LocalizationProvider>
+                ) : renderedCellValue,
+            }
+          case "Duration":
+            return {
+              ...column,
+              Cell: ({ renderedCellValue, cell, row, column }) =>
+                isEditMode ? (
+                  <div className="flex gap-2">
+                    <TextField
+                      variant="standard"
+                      type="number"
+                      value={renderedCellValue === "EA" ? 0 : parseInt(renderedCellValue as string, 10)}
+                      sx={{ width: '50%' }}
+                      onChange={(e) => {
+                        const numValue = e.target.value;
+                        const unit = renderedCellValue?.toString().match(/[A-Za-z]+/)?.[0] || 'D';
+                        handleEditChange(row.index, column.id as string, numValue === "0" ? "EA" : `${numValue}${unit}`);
+                      }}
+                    />
+                    <FormControl variant="standard" sx={{ width: '50%' }}>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={typeof renderedCellValue === 'string' ? renderedCellValue.match(/[A-Za-z]+/)?.[0] || '' : ''}
+                        onChange={(e) => {
+                          const numValue = parseInt(renderedCellValue as string, 10) || 0;
+                          handleEditChange(row.index, column.id as string, `${numValue}${e.target.value}`);
+                        }}
+                      >
+                        <MenuItem value={"D"}>Day</MenuItem>
+                        <MenuItem value={"MO"}>Month</MenuItem>
+                        <MenuItem value={"YR"}>Year</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                ) : renderedCellValue,
+            }
+        }
+      }
+      return {
+        ...column,
+        Cell: ({ renderedCellValue, cell, row, column }) =>
+          isEditMode ? (
             <TextField
               variant="standard"
-              value={cell.getValue<string>()}
+              value={renderedCellValue}
               onChange={(e) => handleEditChange(row.index, column.id as string, e.target.value)}
             />
-        ) : (
-          column.id == "active" ?
-            renderedCellValue ? "True" : "False" :
-            renderedCellValue
-        ),
-    })),
+          ) : renderedCellValue,
+      }
+    }),
     [isEditMode, baseColumns]
   );
 
@@ -191,10 +270,14 @@ const Page = () => {
     >
       {isLoading ? <Loader /> :
         <div>
-          <div className="px-12 grid grid-cols-3 gap-4 pb-8">
+          <div className="px-12 grid grid-cols-4 gap-4 pb-8">
             <div className="">
               <div className="text-base font-semibold">Lookup Name</div>
               <div className="text-sm font-normal text-[#808080]">{lookup?.lookup_name}</div>
+            </div>
+            <div className="">
+              <div className="text-base font-semibold">Lookup Type</div>
+              <div className="text-sm font-normal text-[#808080]">{lookup?.type}</div>
             </div>
             <div className="col-span-2">
               <div className="text-base font-semibold">Lookup Description</div>
