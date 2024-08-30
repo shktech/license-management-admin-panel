@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { HttpError, useList, usePermissions, useTable } from "@refinedev/core";
+import { HttpError, useList, useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Permission, Role, User } from "@/types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
@@ -12,6 +12,7 @@ import { RoleColors } from "@data/ColorData";
 import CommonTable from "@components/Table/CommonTable";
 import InviteUserDrawer from "@components/Users/InviteUserDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
+import GenericTable from "@components/Table/GenericTable";
 
 const Page = () => {
   const {
@@ -19,7 +20,7 @@ const Page = () => {
   } = useTable<User>({
     hasPagination: false
   });
-
+  const { push } = useNavigation();
   const {
     data: rolesData,
     isLoading: isRolesLoading,
@@ -54,7 +55,9 @@ const Page = () => {
     setSelectedUser(row);
     row.is_active ? handleOpenUserDrawer() : handleOpenCreateUserDrawer();
   };
-
+  const handleShowUser = (row: User) => {
+    push(`/dashboard/users/show?id=${row.user_id}`)
+  };
   const handleCreateUser = () => {
     setSelectedUser(null);
     handleOpenCreateUserDrawer();
@@ -118,75 +121,76 @@ const Page = () => {
           );
         },
       },
-      {
-        accessorKey: "action",
-        header: "Action",
-        size: 100,
-        enableSorting: false,
-        Cell: ({ row }) => (
-          <div className="flex gap-4">
-            {permissionsData?.update && <EditOutlinedIcon
-              onClick={() => handleModifyUser(row.original)}
-              fontSize="small"
-              className="text-[#818f99] hover:text-black cursor-pointer"
-            />}
-            {permissionsData?.delete && <DeleteIcon
-              onClick={() => handleDeleteUser(row.original)}
-              fontSize="small"
-              className="text-[#818f99] hover:text-black cursor-pointer"
-            />}
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "action",
+      //   header: "Action",
+      //   size: 100,
+      //   enableSorting: false,
+      //   Cell: ({ row }) => (
+      //     <div className="flex gap-4">
+      //       {permissionsData?.update && <EditOutlinedIcon
+      //         onClick={() => handleModifyUser(row.original)}
+      //         fontSize="small"
+      //         className="text-[#818f99] hover:text-black cursor-pointer"
+      //       />}
+      //       {permissionsData?.delete && <DeleteIcon
+      //         onClick={() => handleDeleteUser(row.original)}
+      //         fontSize="small"
+      //         className="text-[#818f99] hover:text-black cursor-pointer"
+      //       />}
+      //     </div>
+      //   ),
+      // },
     ],
     []
   );
 
   return (
-    permissionsData?.read ? (
-      <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-        {isLoading || isRolesLoading ? (
-          <Loader />
-        ) : (
+    // permissionsData?.read ? (
+    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
+      {isLoading || isRolesLoading ? (
+        <Loader />
+      ) : (
 
-          <CommonTable
-            title={
-              <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-                {" "}
-                User Management{" "}
-              </div>
-            }
-            data={data?.data}
-            columns={columns}
-            handleCreate={handleCreateUser}
-            addText={"Invite user"}
-            canCreate={permissionsData?.create}
-          />
-        )}
-        {
-          openCreateUserDrawer && (
-            <InviteUserDrawer inactiveUser={selectedUser} handleCloseModal={handleCloseCreateUserDrawer} />
-          )
-        }
-        {openUserDrawer && (
-          <UserDrawer
-            openModal={openUserDrawer}
-            handleCloseModal={handleCloseUserDrawer}
-            selectedUser={selectedUser}
-            userRoles={userRoles}
-          />
-        )}
-        {openDeleteModal && (
-          <DeleteUserModal
-            openModal={openDeleteModal}
-            handleCloseModal={handleCloseDeleteModal}
-            selectedUser={selectedUser}
-          />
-        )}
-      </div>
-    ) : (
-      <Unauthorized />
-    )
+        <GenericTable
+          title={
+            <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+              {" "}
+              User Management{" "}
+            </div>
+          }
+          data={data?.data}
+          columns={columns}
+          handleCreate={handleCreateUser}
+          addText={"Invite user"}
+          canCreate={permissionsData?.create}
+          onRowClick={handleShowUser}
+        />
+      )}
+      {
+        openCreateUserDrawer && (
+          <InviteUserDrawer inactiveUser={selectedUser} handleCloseModal={handleCloseCreateUserDrawer} />
+        )
+      }
+      {openUserDrawer && (
+        <UserDrawer
+          openModal={openUserDrawer}
+          handleCloseModal={handleCloseUserDrawer}
+          selectedUser={selectedUser}
+          userRoles={userRoles}
+        />
+      )}
+      {openDeleteModal && (
+        <DeleteUserModal
+          openModal={openDeleteModal}
+          handleCloseModal={handleCloseDeleteModal}
+          selectedUser={selectedUser}
+        />
+      )}
+    </div>
+    // ) : (
+    //   <Unauthorized />
+    // )
   );
 };
 
