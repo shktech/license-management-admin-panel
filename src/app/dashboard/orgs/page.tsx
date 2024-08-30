@@ -71,7 +71,7 @@ const Page = () => {
     handleOpenConfirmModal();
   }
   const handleSwitch = async () => {
-    const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate/", {
+    const response = await fetch("https://license-management-server-lysrkspm1.vercel.app/authenticate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
