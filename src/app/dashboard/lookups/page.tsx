@@ -42,6 +42,11 @@ const HomePage: React.FC = () => {
         size: 400,
       },
       {
+        accessorKey: "type",
+        header: "Type",
+        size: 50,
+      },
+      {
         accessorKey: "active",
         header: "Active",
         size: 50,
@@ -72,7 +77,7 @@ const HomePage: React.FC = () => {
           <GenericTable
             title={
               <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
-                References
+                Lookups
               </div>
             }
             data={data?.data}

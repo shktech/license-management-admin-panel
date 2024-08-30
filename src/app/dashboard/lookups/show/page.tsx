@@ -5,11 +5,13 @@ import Loader from "@components/common/Loader";
 import ReferenceCodeDetailDrawer from "@components/References/ReferenceCodeDetailDrawer";
 import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
 import GenericTable from "@components/Table/GenericTable";
-import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
-import { useDelete, useNavigation, useParsed, usePermissions, useShow, useTable } from "@refinedev/core";
+import { editRefineBtnStyle, refreshRefineBtnStyle, tableAddButton, tableCancelButton, tableSaveButton } from "@data/MuiStyles";
+import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
+import { useCreate, useDelete, useNavigation, useParsed, usePermissions, useShow, useTable, useUpdate } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const Page = () => {
 
@@ -19,34 +21,27 @@ const Page = () => {
     resource: "lookups",
     id: params?.id,
   });
+
   const { data, isLoading } = queryResult;
 
   const {
     tableQueryResult: { data: codeData, isLoading: codeIsLoading, refetch },
-    setCurrent,
-    setFilters,
-    setSorters,
   } = useTable<LookupValue>({
     resource: `lookups/${params?.id}/values`,
     hasPagination: false,
   });
+
+  const [codes, setCodes] = useState<LookupValue[]>([]);
+  useEffect(() => {
+    if (codeData) {
+      setCodes(codeData.data);
+      console.log("working");
+    }
+  }, [codeData, codeIsLoading]);
+
   const lookup: Lookup = data?.data as Lookup;
 
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const [clickedReferenceCode, setClickedReferenceCode] = useState<LookupValue | null>(null);
-
-  const handleCreate = () => {
-    // setOpenDrawer(true);
-    push(`/dashboard/lookups/values/create?id=${params?.id}`);
-  }
-
-  const handleEditClick = (row: LookupValue) => {
-    // setClickedReferenceCode(row);
-    // setOpenDrawer(true);
-    push(`/dashboard/lookups/values/edit?lookup_id=${params?.id}&value_id=${row.value}`);
-  };
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const { push } = useNavigation();
 
@@ -58,7 +53,51 @@ const Page = () => {
       </div>
     );
   };
-  const columns = useMemo<MRT_ColumnDef<LookupValue>[]>(
+  const handleCancelEdit = () => {
+    setIsEditMode(false);
+    setCodes(codeData?.data as LookupValue[]);
+  }
+  const handleEditChange = (index: number, id: string, value: any) => {
+    setCodes(prevCodes => {
+      const newCodes = [...prevCodes];
+      newCodes[index] = { ...newCodes[index], [id]: value };
+      return newCodes;
+    });
+  };
+  const handleEditAdd = () => {
+    if (isEditMode) {
+      setCodes(prevCodes => [
+        ...prevCodes,
+        {
+          value: "",
+          meaning: "",
+          attribute1: "",
+          attribute2: "",
+          attribute3: "",
+          active: true,
+        }
+      ]);
+    } else {
+      setIsEditMode(true);
+    }
+  }
+  const { mutate } = useCreate();
+  const handleSave = () => {
+    mutate(
+      {
+        resource: `lookups/${lookup.lookup_id}/values`,
+        values: codes,
+      },
+      {
+        onError: (error) => { },
+        onSuccess: () => {
+          setIsEditMode(false);
+          refetch();
+        },
+      }
+    );
+  }
+  const baseColumns = useMemo<MRT_ColumnDef<LookupValue>[]>(
     () => [
       {
         accessorKey: "value",
@@ -89,6 +128,39 @@ const Page = () => {
     ],
     []
   );
+
+  const columns = useMemo<MRT_ColumnDef<LookupValue>[]>(
+    () => baseColumns.map(column => ({
+      ...column,
+      Cell: ({ renderedCellValue, cell, row, column }) =>
+        isEditMode ? (
+          column.id == "active" ?
+            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={renderedCellValue}
+                onChange={(e) => handleEditChange(row.index, column.id as string, (e.target.value == "true"))}
+                label="Age"
+              >
+                <MenuItem value={"true"}>True</MenuItem>
+                <MenuItem value={"false"}>False</MenuItem>
+              </Select>
+            </FormControl> :
+            <TextField
+              variant="standard"
+              value={cell.getValue<string>()}
+              onChange={(e) => handleEditChange(row.index, column.id as string, e.target.value)}
+            />
+        ) : (
+          column.id == "active" ?
+            renderedCellValue ? "True" : "False" :
+            renderedCellValue
+        ),
+    })),
+    [isEditMode, baseColumns]
+  );
+
   return (
     <Show
       goBack={null}
@@ -133,12 +205,18 @@ const Page = () => {
             <GenericTable
               title="Lookup Codes"
               columns={columns}
-              handleCreate={handleCreate}
-              data={codeData?.data}
-              totalCount={codeData?.total}
-              onRowClick={handleEditClick}
+              handleCreate={handleEditAdd}
+              data={codes}
+              addText={<div className="flex gap-2"><EditOutlinedIcon fontSize="small" /> {isEditMode ? "Add" : "Edit"}</div>}
+              noSearchNeed={true}
               canCreate={true}
             />
+            {isEditMode && (
+              <div className="flex justify-end px-12 py-4 gap-2">
+                <Button onClick={handleSave} variant="contained" sx={tableSaveButton}> Save</Button>
+                <Button onClick={handleCancelEdit} variant="contained" sx={tableCancelButton}> Cancel</Button>
+              </div>
+            )}
           </div>
         </div>
       }
