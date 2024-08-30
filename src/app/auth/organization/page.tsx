@@ -24,7 +24,7 @@ const Page: React.FC = () => {
   const onSubmit = async (data: any) => {
     setLoading(true);
     const orgForm = data as FormData;
-    const response = await fetch("https://license-management-server.vercel.app/authenticate", {
+    const response = await fetch("https://license-management-server.vercel.app/api/authenticate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
