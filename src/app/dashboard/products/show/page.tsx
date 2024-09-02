@@ -17,6 +17,7 @@ import { useParsed } from "@refinedev/core";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
 import { useState } from "react";
 import GeneralInformation from "@components/common/View/GeneralInformation";
+import { getNestedValue } from "@utils/utilFunctions";
 
 const Item = () => {
   const { params } = useParsed();
@@ -48,6 +49,14 @@ const Item = () => {
     );
   };
 
+  const summaryfields = [
+    { title: "Product name", key: 'product_name', size: 6 },
+    { title: "Product Type", key: "product_type", size: 3 },
+    { title: "Vendor Name", key: "vendor_name", size: 3 },
+    { title: "Vender Part Number", key: "vendor_part_number", size: 3 },
+    { title: "Duration", key: "duration", size: 3 },
+  ]
+
   return (
     <div className="no-padding-card">
       <Show
@@ -73,6 +82,16 @@ const Item = () => {
         {isLoading ? <Loader /> :
           <>
             <div className="">
+              <div className="grid grid-cols-12 gap-x-6 gap-y-6 px-12 mt-8">
+                {
+                  summaryfields.map(field => (
+                    <div key={field.key} className="flex flex-col gap-1 col-span-4">
+                      <div className="text-[#778599]">{field.title}</div>
+                      <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(product, field.key)}</div>
+                    </div>
+                  ))
+                }
+              </div>
               <div className="px-12 pt-4">
                 <StyledTabs
                   value={value}
