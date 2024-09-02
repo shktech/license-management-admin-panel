@@ -26,7 +26,7 @@ const Item = () => {
         formState: { errors },
     } = useForm<Contact>({
         refineCoreProps: {
-            action: "edit",
+            action: "create",
             resource: `partners/${params?.partner_id}/contacts`,
             id: params?.address_id,
         },
