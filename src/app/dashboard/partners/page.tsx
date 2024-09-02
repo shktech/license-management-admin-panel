@@ -86,7 +86,7 @@ const Page = () => {
           <GenericTable
             title={
               <div className="flex gap-4 items-center py-3">
-                <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+                <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
                   Partners
                 </div>
 

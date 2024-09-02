@@ -69,7 +69,7 @@ const Item = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
-              <div className="text-2xl font-semibold text-[#515f72]">
+              <div className="text-2xl font-semibold text-[#1f325c]">
                 Partner
               </div>
               <div className={`rounded-full ${partner?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'} text-xs font-medium px-4 py-1 text-white`}>{partner?.active ? "Active" : "Deactive"}</div>

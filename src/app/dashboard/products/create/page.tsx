@@ -33,7 +33,7 @@ const Item = () => {
                     breadcrumb={false}
                     headerButtons={<></>}
                     title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#536175] flex items-center">
+                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
                             Create Transaction
                         </div>
                     }

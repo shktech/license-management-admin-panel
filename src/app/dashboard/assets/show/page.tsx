@@ -108,7 +108,7 @@ const Page = () => {
         }}
         title={
           <div className="!font-satoshi px-12">
-            <div className="flex items-end gap-4 text-2xl font-semibold text-[#515f72]">
+            <div className="flex items-end gap-4 text-2xl font-semibold text-[#1f325c]">
               License <div className="text-lg font-normal">{asset?.asset_id}</div>
             </div>
           </div>

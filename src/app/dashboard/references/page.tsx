@@ -105,7 +105,7 @@ const Page = () => {
           <Loader /> :
           <GenericTable
             title={
-              <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+              <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
                 References
               </div>
             }

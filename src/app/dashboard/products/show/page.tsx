@@ -69,7 +69,7 @@ const Item = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
-              <div className="text-2xl font-semibold text-[#515f72]">
+              <div className="text-2xl font-semibold text-[#1f325c]">
                 Product
               </div>
             </div>

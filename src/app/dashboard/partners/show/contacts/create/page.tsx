@@ -54,7 +54,7 @@ const Item = () => {
                         </button>
                     }
                     title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#536175]">
+                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
                             Create Contact
                         </div>
                     }

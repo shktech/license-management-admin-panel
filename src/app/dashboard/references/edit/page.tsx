@@ -53,7 +53,7 @@ const Item = () => {
                     }
                     canDelete={false}
                     title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#536175]">
+                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
                             Edit Reference
                             <div className="text-sm text-[#818f99]">{reference?.reference_name}</div>
                         </div>
