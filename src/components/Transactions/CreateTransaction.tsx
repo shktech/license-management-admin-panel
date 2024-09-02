@@ -94,6 +94,9 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
                     Create Transaction
                 </div>
             }
+            wrapperProps={{
+                className: "rounded-none bg-[#f2f6fa] shadow-none",
+            }}
             saveButtonProps={{ ...saveButtonProps, hidden: false }}
             footerButtons={({ saveButtonProps }) => (
                 <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
@@ -102,7 +105,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
             {formLoading || productLoading || initialInfo.transaction_action != "New" && (billLoading || shipLoading || resellerLoading) ? (
                 <Loader />
             ) : (
-                <div className="bg-white px-8 rounded-xl">
+                <div className="rounded-xl">
                     <TransactionForm
                         {...{ control, errors, trigger }}
                         transaction_action={initialInfo.transaction_action}

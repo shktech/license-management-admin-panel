@@ -41,7 +41,7 @@ const Item = () => {
     }, [formLoading, contact]);
 
     return (
-        <div className="flex justify-center py-4">
+        <div className="flex justify-center py-6">
             <div className='w-2/3'>
                 <Edit
                     goBack={

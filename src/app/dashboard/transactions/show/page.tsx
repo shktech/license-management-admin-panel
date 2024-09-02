@@ -47,11 +47,11 @@ const TransactionShow = () => {
         isLoading={isLoading}
         breadcrumb={false}
         wrapperProps={{
-          className: "rounded-none bg-[#f2f6fa] shadow-none pt-8 pb-2.5",
+          className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
         }}
         title={
           <div className="!font-satoshi px-12">
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-end">
               <div className="text-2xl font-semibold text-[#515f72]">
                 Transaction {transaction?.transaction_number}
               </div>

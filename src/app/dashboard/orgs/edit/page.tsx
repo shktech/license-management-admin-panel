@@ -37,7 +37,7 @@ const Item = () => {
     }, [formLoading, org]);
 
     return (
-        <div className="flex justify-center py-4">
+        <div className="flex justify-center py-6">
             <div className='w-2/3'>
                 <Edit
                     goBack={<button onClick={useBack()} className="inline-block p-2 rounded-xl border duration-500 border-transparent hover:border-black"> <ArrowIcon /></button>}
