@@ -231,6 +231,7 @@ const CustomerForm = ({
             id="demo-simple-select-standard"
             value={address?.address_id}
             onChange={handleAddressChange}
+            disabled={disabledSearch}
           >
             {addresses.map((ad, i) => (
               <MenuItem value={ad?.address_id}>
@@ -245,6 +246,7 @@ const CustomerForm = ({
             id="demo-simple-select-standard"
             value={contact?.contact_id}
             onChange={handleContactChange}
+            disabled={disabledSearch}
           >
             {contacts.map((c, i) => (
               <MenuItem value={c?.contact_id}>

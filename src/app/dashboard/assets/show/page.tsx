@@ -44,15 +44,16 @@ const Page = () => {
   const handleReActionBtn = (action: string) => {
     const path = '/dashboard/transactions/create?'; // your target route
     const queryParams = {
+      asset_id: asset.asset_id as string,
       transaction_action: action,
-      license_key: asset.license_key as string,
-      license_type: asset.license_type as string,
-      start_date: asset.start_date as string,
-      end_date: asset.end_date as string,
-      osc_part_number: asset.osc_product?.product_part_number as string,
-      bill_customer: asset.bill_customer?.account_id as string,
-      ship_customer: asset.owner?.account_id as string,
-      reseller: asset.reseller?.account_id as string,
+      // license_key: asset.license_key as string,
+      // license_type: asset.license_type as string,
+      // start_date: asset.start_date as string,
+      // end_date: asset.end_date as string,
+      // osc_part_number: asset.osc_product?.product_part_number as string,
+      // bill_customer: asset.bill_customer?.account_id as string,
+      // ship_customer: asset.owner?.account_id as string,
+      // reseller: asset.reseller?.account_id as string,
     };
 
     // Navigate to the path with the query parameters

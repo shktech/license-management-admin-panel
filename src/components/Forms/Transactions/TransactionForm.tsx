@@ -22,7 +22,7 @@ import { PartnerFormFields } from "../Partners/PartnerFormFields";
 import TransactionPartnerFormFields from "../Partners/TransactionPartnerFormFields";
 
 export type TransactionFormProps = GenericFormProps & {
-  transaction?: Transaction;
+  transaction?: any;
   transaction_action?: string;
   setValue?: any;
   reset?: any;
@@ -79,7 +79,7 @@ const TransactionForm = (props: TransactionFormProps) => {
         type: "shipping",
         prefix: "ship_",
         // data: props.transaction?.ship_customer || props.customers.ship_customers
-        customer: props.transaction?.ship_customer,
+        customer: props.transaction?.ship_customer || props.transaction?.owner,
         address: props.transaction?.ship_customer_address,
         contact: props.transaction?.ship_customer_contact,
       },
