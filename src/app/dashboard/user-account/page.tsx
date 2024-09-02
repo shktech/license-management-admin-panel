@@ -31,7 +31,7 @@ const Page = () => {
 
   const panels = [
     {
-      label: "General Information",
+      label: "User",
       value: (
         <>
           <div className="text-xl font-semibold pb-4">User Information</div>
@@ -42,11 +42,11 @@ const Page = () => {
       )
     },
     {
-      label: "User Role",
+      label: "Role",
       value: (
         <>
           <div className="text-xl font-semibold pb-8">
-            User Role
+            Role
             <span
               className={`${RoleColors[identity?.roles?.[0].name as string] || RoleColors["default"]} text-white mx-4 px-4 py-1 text-xs font-bold rounded-full`}
             >
