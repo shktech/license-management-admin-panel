@@ -107,10 +107,6 @@ const Item = () => {
                   singleColumn={true}
                   items={[
                     {
-                      label: "Product ID",
-                      value: product?.product_id,
-                    },
-                    {
                       label: "Product Name",
                       value: product?.product_name,
                     },

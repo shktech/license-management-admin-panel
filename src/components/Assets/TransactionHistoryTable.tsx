@@ -30,11 +30,6 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
     const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
         () => [
             {
-                accessorKey: 'transaction_id',
-                header: 'Transaction ID',
-                size: 150,
-            },
-            {
                 accessorKey: 'transaction_date',
                 header: 'Txn Date',
                 size: 100,

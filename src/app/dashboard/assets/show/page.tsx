@@ -62,9 +62,8 @@ const Page = () => {
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
       {
-        accessorKey: "seat_id",
-        header: "Seat ID",
-        size: 100,
+        accessorKey: "asset",
+        header: "License",
       },
       {
         accessorKey: "status",
@@ -73,10 +72,6 @@ const Page = () => {
       {
         accessorKey: "license_server_status",
         header: "License Server Status",
-      },
-      {
-        accessorKey: "asset",
-        header: "License",
       },
     ],
     []
@@ -109,7 +104,7 @@ const Page = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex items-end gap-4 text-2xl font-semibold text-[#1f325c]">
-              License <div className="text-lg font-normal">{asset?.asset_id}</div>
+              License <div className="text-lg font-normal">{asset?.license_key}</div>
             </div>
           </div>
         }
@@ -162,10 +157,6 @@ const Page = () => {
                 <GeneralInformation
                   singleColumn={true}
                   items={[
-                    {
-                      label: "License Id",
-                      value: asset?.asset_id,
-                    },
                     {
                       label: "Active",
                       value: <div className={`rounded-full h-4 w-4 ${asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
@@ -239,7 +230,7 @@ const Page = () => {
                     // },
                     {
                       label: "Product Name",
-                      value: asset?.osc_product?.product_id,
+                      value: asset?.osc_product?.product_name,
                     },
                     // {
                     //   label: "Product Part Number",

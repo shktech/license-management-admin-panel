@@ -22,12 +22,6 @@ const AddressTable: React.FC<AddressTableProps> = ({ data, partner_id }) => {
     const columns = useMemo<MRT_ColumnDef<Address>[]>(
         () => [
             {
-                accessorKey: 'active',
-                header: 'Active',
-                size: 50,
-                Cell: ({ renderedCellValue }) => <div className={`rounded-full h-4 w-4 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
-            },
-            {
                 accessorKey: 'address1',
                 header: 'Address1',
                 size: 50,
@@ -56,6 +50,12 @@ const AddressTable: React.FC<AddressTableProps> = ({ data, partner_id }) => {
                 accessorKey: 'country',
                 header: 'Country',
                 size: 50,
+            },
+            {
+                accessorKey: 'active',
+                header: 'Active',
+                size: 50,
+                Cell: ({ renderedCellValue }) => <div className={`rounded-full h-4 w-4 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
             },
         ],
         [],

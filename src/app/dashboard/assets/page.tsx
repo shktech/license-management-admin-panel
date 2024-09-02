@@ -27,10 +27,6 @@ const Page = () => {
   const columns = useMemo<MRT_ColumnDef<Asset>[]>(
     () => [
       {
-        accessorKey: "asset_id",
-        header: "License ID",
-      },
-      {
         accessorKey: "license_key",
         header: "License Number (LicKey/Srl#)",
       },

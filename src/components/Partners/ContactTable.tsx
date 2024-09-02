@@ -24,12 +24,6 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
     const columns = useMemo<MRT_ColumnDef<Contact>[]>(
         () => [
             {
-                accessorKey: 'active',
-                header: 'Active',
-                size: 50,
-                Cell: ({ renderedCellValue }) => <div className={`rounded-full h-4 w-4 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
-            },
-            {
                 accessorKey: 'first_name',
                 header: 'First Name',
                 size: 50,
@@ -48,6 +42,12 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
                 accessorKey: 'phone',
                 header: 'Phone',
                 size: 50,
+            },
+            {
+                accessorKey: 'active',
+                header: 'Active',
+                size: 50,
+                Cell: ({ renderedCellValue }) => <div className={`rounded-full h-4 w-4 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
             },
         ],
         [],
