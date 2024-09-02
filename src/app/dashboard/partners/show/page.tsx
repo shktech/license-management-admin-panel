@@ -1,6 +1,6 @@
 "use client";
 
-import { Permission, Partner } from "@/types/types";
+import { Permission, Partner, Transaction } from "@/types/types";
 import ShowTransaction from "@components/Transactions/Show/ShowTransaction";
 import Loader from "@components/common/Loader";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
@@ -11,7 +11,7 @@ import {
   tagStyle,
 } from "@data/MuiStyles";
 import { Box } from "@mui/material";
-import { useBack, useNavigation, usePermissions, useShow } from "@refinedev/core";
+import { useBack, useNavigation, usePermissions, useShow, useTable } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
@@ -20,6 +20,8 @@ import GeneralInformation from "@components/common/View/GeneralInformation";
 import { getNestedValue } from "@utils/utilFunctions";
 import AddressTable from "@components/Partners/AddressTable";
 import ContactTable from "@components/Partners/ContactTable";
+import PartnerTransactionTable from "@components/Partners/PartnerTransactionTable";
+import PartnerLicensesTable from "@components/Partners/PartnerLicensesTable";
 
 const Item = () => {
   const { params } = useParsed();
@@ -28,6 +30,8 @@ const Item = () => {
     id: params?.id,
   });
   const { data, isLoading } = queryResult;
+
+
 
   const [value, setValue] = useState(0);
 
@@ -102,16 +106,16 @@ const Item = () => {
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>
-                <AddressTable data={partner?.addresses ?? []} />
+                <AddressTable data={partner?.addresses ?? []} partner_id={params?.id} />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                <ContactTable data={partner?.contacts ?? []} />
+                <ContactTable data={partner?.contacts ?? []} partner_id={params?.id}/>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
-                
+                <PartnerLicensesTable partner_id={params?.id} />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
-                
+                <PartnerTransactionTable partner_id={params?.id} />
               </CustomTabPanel>
             </div>
           </>

@@ -1,9 +1,9 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Partner } from "@/types/types";
+import { Address } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import { PartnerFormFields } from "@components/Forms/Partners/PartnerFormFields";
+import AddressFormFields from "@components/Forms/Partners/AddressFormFields";
 import ProductForm from "@components/Forms/Products/ProductForm";
 import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
@@ -22,21 +22,21 @@ const Item = () => {
         reset,
         trigger,
         formState: { errors },
-    } = useForm<Partner>({
+    } = useForm<Address>({
         refineCoreProps: {
             action: "edit",
-            resource: "partners",
-            id: params?.id,
+            resource: `partners/${params?.partner_id}/addresses`,
+            id: params?.address_id,
         },
     });
 
-    const partner: Partner = queryResult?.data?.data as Partner;
+    const address: Address = queryResult?.data?.data as Address;
 
     useEffect(() => {
-        if (!formLoading && partner) {
-            reset({ ...partner });
+        if (!formLoading && address) {
+            reset({ ...address });
         }
-    }, [formLoading, partner]);
+    }, [formLoading, address]);
 
 
     return (
@@ -55,8 +55,7 @@ const Item = () => {
                     canDelete={false}
                     title={
                         <div className="!font-satoshi text-2xl font-semibold text-[#536175]">
-                            Edit Partner
-                            <div className="text-sm text-[#818f99]">{partner?.name}</div>
+                            Edit Address
                         </div>
                     }
                     breadcrumb={false}
@@ -72,7 +71,7 @@ const Item = () => {
                     {formLoading ? (
                         <Loader />
                     ) : (
-                        <GenericForm {...{ control, errors, trigger }} fields={PartnerFormFields.edit} />
+                        <GenericForm {...{ control, errors, trigger }} fields={AddressFormFields} />
                     )}
                 </Edit>
             </div>

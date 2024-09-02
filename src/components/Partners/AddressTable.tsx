@@ -1,6 +1,6 @@
 "use client";
 
-import { useDelete, useTable } from "@refinedev/core";
+import { useDelete, useNavigation, useParse, useParsed, useTable } from "@refinedev/core";
 import { Address, Customer } from "../../types/types";
 import React, { useMemo } from "react";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -13,11 +13,12 @@ import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import CommonDeleteModal from "@components/common/CommonDeleteModal";
 
 interface AddressTableProps {
-    data: Partial<Address[]>
+    data: Partial<Address[]>,
+    partner_id: string
 }
 
-const AddressTable: React.FC<AddressTableProps> = ({ data }) => {
-
+const AddressTable: React.FC<AddressTableProps> = ({ data, partner_id }) => {
+    const { push } = useNavigation();
     const columns = useMemo<MRT_ColumnDef<Address>[]>(
         () => [
             {
@@ -25,11 +26,6 @@ const AddressTable: React.FC<AddressTableProps> = ({ data }) => {
                 header: 'Active',
                 size: 50,
                 Cell: ({ renderedCellValue }) => <div className={`rounded-full h-4 w-4 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
-            },
-            {
-                accessorKey: 'address_id',
-                header: 'Address ID',
-                size: 50,
             },
             {
                 accessorKey: 'address1',
@@ -66,6 +62,13 @@ const AddressTable: React.FC<AddressTableProps> = ({ data }) => {
     );
     const filteredData = data.filter((item): item is Address => item !== undefined);
 
+    const handleRowClick = (row: Address) => {
+        console.log(partner_id);
+        push(`/dashboard/partners/show/addresses/edit?partner_id=${partner_id}&address_id=${row.address_id}`);
+    }
+    const handleCreate = () => {
+        push(`/dashboard/partners/show/addresses/create?partner_id=${partner_id}`);
+    }
     return (
         <GenericTable
             title={
@@ -77,8 +80,9 @@ const AddressTable: React.FC<AddressTableProps> = ({ data }) => {
             columns={columns}
             canCreate={true}
             totalCount={data?.length || 0}
-
+            onRowClick={handleRowClick}
             noSearchNeed
+            handleCreate={handleCreate}
         />
     );
 }
