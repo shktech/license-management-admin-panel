@@ -1,17 +1,22 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product } from "@/types/types";
+import { Contact } from "@/types/types";
+import GenericForm from "@components/Forms/GenericForm";
+import AddressFormFields from "@components/Forms/Partners/AddressFormFields";
+import ContactFormFields from "@components/Forms/Partners/ContactFormFields";
 import ProductForm from "@components/Forms/Products/ProductForm";
+import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useNavigation, useParsed } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
 
 const Item = () => {
     const { params } = useParsed();
+    const { push } = useNavigation();
     const {
         saveButtonProps,
         refineCore: { formLoading, queryResult },
@@ -19,22 +24,21 @@ const Item = () => {
         reset,
         trigger,
         formState: { errors },
-    } = useForm<Product>({
+    } = useForm<Contact>({
         refineCoreProps: {
             action: "edit",
-            resource: "products",
-            id: params?.id,
+            resource: `partners/${params?.partner_id}/contacts`,
+            id: params?.contact_id,
         },
     });
 
-    const product: Product = queryResult?.data?.data as Product;
+    const contact: Contact = queryResult?.data?.data as Contact;
 
     useEffect(() => {
-        if (!formLoading && product) {
-            reset({ ...product });
+        if (!formLoading && contact) {
+            reset({ ...contact });
         }
-    }, [formLoading, product]);
-
+    }, [formLoading, contact]);
 
     return (
         <div className="flex justify-center py-6">
@@ -52,8 +56,7 @@ const Item = () => {
                     canDelete={false}
                     title={
                         <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
-                            Edit Product
-                            <div className="text-sm text-[#818f99]">{product?.product_name}</div>
+                            Edit Contact
                         </div>
                     }
                     breadcrumb={false}
@@ -69,7 +72,7 @@ const Item = () => {
                     {formLoading ? (
                         <Loader />
                     ) : (
-                        <ProductForm {...{ control, errors, trigger }} />
+                        <GenericForm {...{ control, errors, trigger }} fields={ContactFormFields} />
                     )}
                 </Edit>
             </div>

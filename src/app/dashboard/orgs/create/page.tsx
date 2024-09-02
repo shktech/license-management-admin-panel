@@ -20,14 +20,14 @@ const Item = () => {
     } = useForm<Organization>();
 
     return (
-        <div className="flex justify-center py-4">
+        <div className="flex justify-center py-6">
             <div className='w-2/3'>
                 <Create
                     goBack={<button onClick={useBack()} className="inline-block p-2 rounded-xl border duration-500 border-transparent hover:border-black"> <ArrowIcon /></button>}
                     breadcrumb={false}
                     headerButtons={<></>}
                     title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#536175] flex items-center">
+                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
                             Create Organization
                         </div>
                     }

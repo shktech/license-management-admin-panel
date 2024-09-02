@@ -44,15 +44,16 @@ const Page = () => {
   const handleReActionBtn = (action: string) => {
     const path = '/dashboard/transactions/create?'; // your target route
     const queryParams = {
+      asset_id: asset.asset_id as string,
       transaction_action: action,
-      license_key: asset.license_key as string,
-      license_type: asset.license_type as string,
-      start_date: asset.start_date as string,
-      end_date: asset.end_date as string,
-      osc_part_number: asset.osc_product?.product_part_number as string,
-      bill_customer: asset.bill_customer?.account_id as string,
-      ship_customer: asset.owner?.account_id as string,
-      reseller: asset.reseller?.account_id as string,
+      // license_key: asset.license_key as string,
+      // license_type: asset.license_type as string,
+      // start_date: asset.start_date as string,
+      // end_date: asset.end_date as string,
+      // osc_part_number: asset.osc_product?.product_part_number as string,
+      // bill_customer: asset.bill_customer?.account_id as string,
+      // ship_customer: asset.owner?.account_id as string,
+      // reseller: asset.reseller?.account_id as string,
     };
 
     // Navigate to the path with the query parameters
@@ -62,9 +63,8 @@ const Page = () => {
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
       {
-        accessorKey: "seat_id",
-        header: "Seat ID",
-        size: 100,
+        accessorKey: "asset",
+        header: "License",
       },
       {
         accessorKey: "status",
@@ -73,10 +73,6 @@ const Page = () => {
       {
         accessorKey: "license_server_status",
         header: "License Server Status",
-      },
-      {
-        accessorKey: "asset",
-        header: "License",
       },
     ],
     []
@@ -104,12 +100,12 @@ const Page = () => {
         isLoading={isLoading}
         breadcrumb={false}
         wrapperProps={{
-          className: "rounded-none bg-[#f2f6fa] shadow-none pt-8 pb-2.5",
+          className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
         }}
         title={
           <div className="!font-satoshi px-12">
-            <div className="flex items-end gap-4 text-2xl font-semibold text-[#515f72]">
-              License <div className="text-lg font-normal">{asset?.asset_id}</div>
+            <div className="flex items-end gap-4 text-2xl font-semibold text-[#1f325c]">
+              License <div className="text-lg font-normal">{asset?.license_key}</div>
             </div>
           </div>
         }
@@ -162,10 +158,6 @@ const Page = () => {
                 <GeneralInformation
                   singleColumn={true}
                   items={[
-                    {
-                      label: "License Id",
-                      value: asset?.asset_id,
-                    },
                     {
                       label: "Active",
                       value: <div className={`rounded-full h-4 w-4 ${asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
@@ -239,7 +231,7 @@ const Page = () => {
                     // },
                     {
                       label: "Product Name",
-                      value: asset?.osc_product?.product_id,
+                      value: asset?.osc_product?.product_name,
                     },
                     // {
                     //   label: "Product Part Number",

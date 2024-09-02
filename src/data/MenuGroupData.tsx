@@ -58,6 +58,8 @@ export const menuGroups = [
           label: "Settings",
           route: "#",
           children: [
+            { label: "User Account", route: "/dashboard/user-account" },
+            { label: "Organizations", route: "/dashboard/organizations" },
             { label: "Profile", route: "/dashboard/profile" },
             { label: "Roles", route: "/dashboard/roles" },
             { label: "User", route: "/dashboard/users" },

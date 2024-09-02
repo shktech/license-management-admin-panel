@@ -202,6 +202,22 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
+    name: "user-account",
+    list: "/dashboard/settings/user-account",
+    meta: {
+      label: "User Account",
+      parent: "settings",
+    },
+  },
+  {
+    name: "organizations",
+    list: "/dashboard/settings/organizations",
+    meta: {
+      label: "User Account",
+      parent: "settings",
+    },
+  },
+  {
     name: "roles",
     list: "/dashboard/roles",
     create: "/dashboard/roles",

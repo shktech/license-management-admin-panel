@@ -27,10 +27,6 @@ const Page = () => {
   const columns = useMemo<MRT_ColumnDef<Asset>[]>(
     () => [
       {
-        accessorKey: "asset_id",
-        header: "License ID",
-      },
-      {
         accessorKey: "license_key",
         header: "License Number (LicKey/Srl#)",
       },
@@ -70,7 +66,7 @@ const Page = () => {
       ) : (
         <GenericTable
           title={
-            <div className="!font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
               Licenses
             </div>
           }

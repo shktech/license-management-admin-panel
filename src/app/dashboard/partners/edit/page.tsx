@@ -3,7 +3,7 @@
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Partner } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import PartnerFormFields from "@components/Forms/Partners/PartnerFormFields";
+import { PartnerFormFields } from "@components/Forms/Partners/PartnerFormFields";
 import ProductForm from "@components/Forms/Products/ProductForm";
 import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
@@ -40,7 +40,7 @@ const Item = () => {
 
 
     return (
-        <div className="flex justify-center py-4">
+        <div className="flex justify-center py-6">
             <div className='w-2/3'>
                 <Edit
                     goBack={
@@ -54,7 +54,7 @@ const Item = () => {
                     }
                     canDelete={false}
                     title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#536175]">
+                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
                             Edit Partner
                             <div className="text-sm text-[#818f99]">{partner?.name}</div>
                         </div>
@@ -72,7 +72,7 @@ const Item = () => {
                     {formLoading ? (
                         <Loader />
                     ) : (
-                        <GenericForm {...{ control, errors, trigger }} fields={PartnerFormFields} />
+                        <GenericForm {...{ control, errors, trigger }} fields={PartnerFormFields.edit} />
                     )}
                 </Edit>
             </div>

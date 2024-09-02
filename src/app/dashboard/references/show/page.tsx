@@ -137,7 +137,7 @@ const Page = () => {
         className: "p-0",
       }}
       title={
-        <div className="px-8 pt-4 !font-satoshi text-2xl font-semibold text-[#515f72] gap-2">
+        <div className="px-8 pt-6 !font-satoshi text-2xl font-semibold text-[#1f325c] gap-2">
           <div className="flex items-center gap-2">
             <div className="">Detailed Reference</div>
             <span className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}>

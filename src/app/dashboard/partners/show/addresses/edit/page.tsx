@@ -1,8 +1,11 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product } from "@/types/types";
+import { Address } from "@/types/types";
+import GenericForm from "@components/Forms/GenericForm";
+import AddressFormFields from "@components/Forms/Partners/AddressFormFields";
 import ProductForm from "@components/Forms/Products/ProductForm";
+import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useParsed } from "@refinedev/core";
@@ -19,21 +22,21 @@ const Item = () => {
         reset,
         trigger,
         formState: { errors },
-    } = useForm<Product>({
+    } = useForm<Address>({
         refineCoreProps: {
             action: "edit",
-            resource: "products",
-            id: params?.id,
+            resource: `partners/${params?.partner_id}/addresses`,
+            id: params?.address_id,
         },
     });
 
-    const product: Product = queryResult?.data?.data as Product;
+    const address: Address = queryResult?.data?.data as Address;
 
     useEffect(() => {
-        if (!formLoading && product) {
-            reset({ ...product });
+        if (!formLoading && address) {
+            reset({ ...address });
         }
-    }, [formLoading, product]);
+    }, [formLoading, address]);
 
 
     return (
@@ -52,8 +55,7 @@ const Item = () => {
                     canDelete={false}
                     title={
                         <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
-                            Edit Product
-                            <div className="text-sm text-[#818f99]">{product?.product_name}</div>
+                            Edit Address
                         </div>
                     }
                     breadcrumb={false}
@@ -69,7 +71,7 @@ const Item = () => {
                     {formLoading ? (
                         <Loader />
                     ) : (
-                        <ProductForm {...{ control, errors, trigger }} />
+                        <GenericForm {...{ control, errors, trigger }} fields={AddressFormFields} />
                     )}
                 </Edit>
             </div>

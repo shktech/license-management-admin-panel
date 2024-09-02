@@ -58,14 +58,15 @@ const customDataProvider: DataProvider = {
       }
     }
     if (filters && filters.length > 0) {
-      console.log(filters);
       params.filter = filters.find((filter: any) => filter?.field == 'searchKey')?.value;
       params.type = filters.find((filter: any) => filter?.field == 'type')?.value;
+      params.partner = filters.find((filter: any) => filter?.field == 'partner')?.value;
     }
 
     if (sorters && sorters.length > 0) {
       params.sort = sorters[0].field;
       params.order = sorters[0].order;
+
     }
 
     const response = await axiosInstance.get(`${API_URL ?? realAPI_URL}/${resource}`, {

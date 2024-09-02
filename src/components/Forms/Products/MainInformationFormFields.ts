@@ -21,9 +21,17 @@ const InitialField: InitialFieldConfig[] = [
     { name: "vendor_part_number", required: 'text' },
     { name: "license_source_set" },
     { name: "source_name" },
-    { name: "eval_set_name" },
-    { name: "renewal_set_name" },
-    { name: "new_set_name" },
+    // { name: "eval_set_name" },
+    // { name: "renewal_set_name" },
+    // { name: "new_set_name" },
+    // {
+    //     name: "type",
+    //     type: "dropdown",
+    //     required: 'text',
+    //     resource: "email-templates",
+    //     valueKey: "type",
+    //     labelKey: "type",
+    // },
     { name: "active", type: 'switch' },
 ];
 

@@ -33,7 +33,7 @@ const Item = () => {
 
 
     return (
-        <div className="flex justify-center py-4">
+        <div className="flex justify-center py-6">
             <div className='w-2/3'>
                 <Create
                     goBack={
@@ -46,7 +46,7 @@ const Item = () => {
                         </button>
                     }
                     title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#536175]">
+                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
                             Create Lookup
                         </div>
                     }

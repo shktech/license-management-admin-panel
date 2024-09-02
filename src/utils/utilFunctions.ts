@@ -97,25 +97,25 @@ export const getDurationFromString = (str: string) => {
     }
 }
 
-export const getInputCustomer = (customer: any, type: string) => {
-    let inputCustomer: { [key: string]: any } = {
-        customer_account:customer?.account,
-        customer_name:customer?.name,
-        address1:customer?.address1,
-        address2:customer?.address2,
-        city:customer?.city,
-        state:customer?.state,
-        postal_code:customer?.postal_code,
-        country:customer?.country,
-        contact_first_name:customer?.first_name,
-        contact_last_name:customer?.last_name,
-        contact_phone:customer?.phone,
-        contact_email:customer?.email,
-    };
+export const getInputCustomer = (data: any, type: string) => {
+    // let inputCustomer: { [key: string]: any } = {
+    //     customer_account:customer?.account,
+    //     customer_name:customer?.name,
+    //     address1:customer?.address1,
+    //     address2:customer?.address2,
+    //     city:customer?.city,
+    //     state:customer?.state,
+    //     postal_code:customer?.postal_code,
+    //     country:customer?.country,
+    //     contact_first_name:customer?.first_name,
+    //     contact_last_name:customer?.last_name,
+    //     contact_phone:customer?.phone,
+    //     contact_email:customer?.email,
+    // };
 
     let value: { [key: string]: any } = {};
-    Object.keys(inputCustomer).forEach(key => {
-        value[type + key] = inputCustomer[key] ? inputCustomer[key] : '';
+    Object.keys(data).forEach(key => {
+        value[type + key] = data[key] ? data[key] : '';
     })
     return value;
 }

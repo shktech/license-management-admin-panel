@@ -127,7 +127,7 @@ const GenericTable = <T extends MRT_RowData>({ addText, title, data, columns, to
                     </Box>
                 </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }} className='mt-4'>
                 <div style={{ maxWidth, minWidth, width: '100%' }}>
                     <MRT_TableContainer table={table} />
                     <Box>

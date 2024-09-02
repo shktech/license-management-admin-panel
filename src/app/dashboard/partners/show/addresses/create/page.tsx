@@ -1,12 +1,16 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product } from "@/types/types";
+import { Address } from "@/types/types";
+import GenericForm from "@components/Forms/GenericForm";
+import LookupFormFields from "@components/Forms/Lookups/LookupFormFields";
+import AddressFormFields from "@components/Forms/Partners/AddressFormFields";
 import ProductForm from "@components/Forms/Products/ProductForm";
+import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useParsed } from "@refinedev/core";
-import { Edit, SaveButton } from "@refinedev/mui";
+import { Create, Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
 
@@ -19,27 +23,26 @@ const Item = () => {
         reset,
         trigger,
         formState: { errors },
-    } = useForm<Product>({
+    } = useForm<Address>({
         refineCoreProps: {
-            action: "edit",
-            resource: "products",
-            id: params?.id,
+            action: "create",
+            resource: `partners/${params?.partner_id}/addresses`,
+            id: params?.address_id,
         },
     });
-
-    const product: Product = queryResult?.data?.data as Product;
+    const address: Address = queryResult?.data?.data as Address;
 
     useEffect(() => {
-        if (!formLoading && product) {
-            reset({ ...product });
+        if (!formLoading && address) {
+            reset({ ...address });
         }
-    }, [formLoading, product]);
+    }, [formLoading, address]);
 
 
     return (
         <div className="flex justify-center py-6">
             <div className='w-2/3'>
-                <Edit
+                <Create
                     goBack={
                         <button
                             onClick={useBack()}
@@ -49,11 +52,9 @@ const Item = () => {
                             <ArrowIcon />
                         </button>
                     }
-                    canDelete={false}
                     title={
                         <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
-                            Edit Product
-                            <div className="text-sm text-[#818f99]">{product?.product_name}</div>
+                            Create Address
                         </div>
                     }
                     breadcrumb={false}
@@ -69,9 +70,9 @@ const Item = () => {
                     {formLoading ? (
                         <Loader />
                     ) : (
-                        <ProductForm {...{ control, errors, trigger }} />
+                        <GenericForm {...{ control, errors, trigger }} fields={AddressFormFields} />
                     )}
-                </Edit>
+                </Create>
             </div>
         </div>
     );

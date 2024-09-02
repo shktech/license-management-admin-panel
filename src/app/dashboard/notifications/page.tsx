@@ -9,7 +9,7 @@ const Page = () => {
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      <div className="px-12 py-4 !font-satoshi text-2xl font-semibold text-[#515f72] flex items-center gap-2">
+      <div className="px-12 py-4 !font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
         Notifications
       </div>
       <div className="p-6 flex flex-col gap-4">

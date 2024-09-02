@@ -17,6 +17,7 @@ import { useParsed } from "@refinedev/core";
 import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
 import { useState } from "react";
 import GeneralInformation from "@components/common/View/GeneralInformation";
+import { getNestedValue } from "@utils/utilFunctions";
 
 const Item = () => {
   const { params } = useParsed();
@@ -48,6 +49,14 @@ const Item = () => {
     );
   };
 
+  const summaryfields = [
+    { title: "Product name", key: 'product_name', size: 6 },
+    { title: "Product Type", key: "product_type", size: 3 },
+    { title: "Vendor Name", key: "vendor_name", size: 3 },
+    { title: "Vender Part Number", key: "vendor_part_number", size: 3 },
+    { title: "Duration", key: "duration", size: 3 },
+  ]
+
   return (
     <div className="no-padding-card">
       <Show
@@ -55,12 +64,12 @@ const Item = () => {
         isLoading={isLoading}
         breadcrumb={false}
         wrapperProps={{
-          className: "rounded-none bg-[#f2f6fa] shadow-none pt-8 pb-2.5",
+          className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
         }}
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
-              <div className="text-2xl font-semibold text-[#515f72]">
+              <div className="text-2xl font-semibold text-[#1f325c]">
                 Product
               </div>
             </div>
@@ -73,6 +82,16 @@ const Item = () => {
         {isLoading ? <Loader /> :
           <>
             <div className="">
+              <div className="grid grid-cols-12 gap-x-6 gap-y-6 px-12 mt-8">
+                {
+                  summaryfields.map(field => (
+                    <div key={field.key} className="flex flex-col gap-1 col-span-4">
+                      <div className="text-[#778599]">{field.title}</div>
+                      <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(product, field.key)}</div>
+                    </div>
+                  ))
+                }
+              </div>
               <div className="px-12 pt-4">
                 <StyledTabs
                   value={value}
@@ -87,10 +106,6 @@ const Item = () => {
                 <GeneralInformation
                   singleColumn={true}
                   items={[
-                    {
-                      label: "Product ID",
-                      value: product?.product_id,
-                    },
                     {
                       label: "Product Name",
                       value: product?.product_name,
