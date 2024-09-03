@@ -7,8 +7,8 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useCreate, useGetIdentity } from "@refinedev/core";
-import { User } from "@/types/types";
+import { useCreate, useGetIdentity, useTable } from "@refinedev/core";
+import { Role, User } from "@/types/types";
 import React, { useMemo, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -18,6 +18,13 @@ import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
 const MemeberInvitePanel: React.FC = () => {
   const { data: identity } = useGetIdentity<User>();
+  const {
+    tableQueryResult: { data: rolesData, isLoading: isRolesLoading, refetch },
+  } = useTable<Role>({
+    resource: "roles",
+    hasPagination: false,
+  });
+
   const [sentValues, setSentValues] = useState<any[]>([
     {
       email: "",
@@ -113,7 +120,7 @@ const MemeberInvitePanel: React.FC = () => {
                 label="Age"
                 onChange={(e) => handleRoleChange(e, index)}
               >
-                {identity?.roles?.map((role) => (
+                {rolesData?.data?.map((role) => (
                   <MenuItem key={role.role_id} value={role.role_id}>
                     {role.name}
                   </MenuItem>

@@ -18,7 +18,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
       {fields?.map((field) => (
         <div key={field.name} className={field.size == 2 ? 'col-span-2' : ''}>
           <FormControlWrapper
-            name={field.name}
+            name={field.name2 ? field.name2 : field.name}
             control={control}
             rules={field.rules}
             error={errors[field.name]?.message?.toString()}
@@ -61,6 +61,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       {...fieldProps}
                       label={field.label}
                       placeholder={field.placeholder}
+                      name2={field.name2}
                       options={field.options || []}
                       resource={field.resource}
                       valueKey={field.valueKey}

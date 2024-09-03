@@ -71,10 +71,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   }
 
   const handleChange = (event: SelectChangeEvent) => {
+    console.log("props", props);
+    console.log("event", props.name2 ? props.name2 : props.name,);
     onChange &&
       onChange({
         target: {
-          name: props.name,
+          name: props.name2 ? props.name2 : props.name,
           value: event.target.value as string,
         },
       } as unknown as React.ChangeEvent<HTMLInputElement>);
