@@ -79,8 +79,8 @@ const APIKeyPanel: React.FC<APIKeyPanelProps> = () => {
     ];
 
     return (
-        <>
-            <div className="text-xl font-semibold pb-8 flex justify-between">
+        <div className="px-8 py-1">
+            <div className="text-lg text-[#1f325c] font-semibold pb-8 flex justify-between">
                 Personal API Keys
                 {apiData?.data ?
                     <Button onClick={handleDeleteKeyBtn} variant="contained" sx={modalOkBtnStyle}>Delete</Button> :
@@ -125,7 +125,7 @@ const APIKeyPanel: React.FC<APIKeyPanelProps> = () => {
                 open={openSnackbar}
                 onClose={handleSnackbarClose}
             />
-        </>
+        </div>
     );
 };
 

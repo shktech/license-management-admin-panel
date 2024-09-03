@@ -38,19 +38,19 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
                 },
                 {
                     label: "Organization",
-                    value: transaction?.asset?.organization?.organization_name
+                    value: transaction?.asset?.organization?.organization_code
                 },
                 {
                     label: "Bill Customer",
-                    value: transaction?.bill_customer?.account_id
+                    value: transaction?.bill_customer?.name
                 },
                 {
                     label: "Ship Customer",
-                    value: transaction?.ship_customer?.account_id
+                    value: transaction?.ship_customer?.name
                 },
                 {
                     label: "Reseller",
-                    value: transaction?.reseller?.account_id
+                    value: transaction?.reseller?.name
                 },
                 {
                     label: "Active Seats",

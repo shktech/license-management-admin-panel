@@ -160,7 +160,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
                     <Loader /> :
                     <GenericTable
                         title={
-                            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
                                 Customers
                             </div>
                         }

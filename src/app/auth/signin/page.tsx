@@ -56,7 +56,7 @@ const SignIn: React.FC = () => {
                     <h2 className="text-2xl font-bold text-black">
                       Sign In
                     </h2>
-                    <Link href={'/register-admin'} className='text-sm text-primary font-medium'>Don&apos;t have any account</Link>
+                    <Link href={'/auth/signin-superuser'} className='text-sm text-primary font-medium'>Login as super user</Link>
                   </div>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col space-y-4">

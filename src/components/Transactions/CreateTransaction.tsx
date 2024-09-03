@@ -33,10 +33,6 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     setValue,
     formState: { errors },
   } = useForm<InputTransaction>();
-  const asset_id = initialInfo.asset_id;
-  const [reseller, setReseller] = useState<Customer | null>(null);
-  const [billCustomer, setBillCustomer] = useState<Customer | null>(null);
-  const [shipCustomer, setShipCustomer] = useState<Customer | null>(null);
   useEffect(() => {
     const nowDateString = new Date().toISOString().split("T")[0];
     const resetTransaction: InputTransaction = {
@@ -62,6 +58,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     ...(assetData?.data as Transaction),
   };
 
+  console.log(transaction);
   useEffect(() => {
     const resetTransaction = {
       osc_part_number: assetData?.data?.osc_product?.product_part_number,
@@ -73,7 +70,6 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     };
     reset(resetTransaction);
   }, [assetData, assetLoading]);
-
 
   const start_date = watch("start_date");
   const osc_part_number = watch("osc_part_number");
