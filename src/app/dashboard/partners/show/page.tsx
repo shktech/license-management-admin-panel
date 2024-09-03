@@ -23,6 +23,14 @@ import ContactTable from "@components/Partners/ContactTable";
 import PartnerTransactionTable from "@components/Partners/PartnerTransactionTable";
 import PartnerLicensesTable from "@components/Partners/PartnerLicensesTable";
 
+const partnerColors = {
+  All: '#4A90E2',
+  Shipping: '#FFCC00',
+  Billing: '#34C759',
+  Reseller: '#8E44AD',
+}
+
+
 const Item = () => {
   const { params } = useParsed();
   const { queryResult } = useShow<Partner>({
@@ -70,8 +78,9 @@ const Item = () => {
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
               <div className="text-2xl font-semibold text-[#1f325c]">
-                Partner
+                Partner : {partner?.name}
               </div>
+              <span className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}>{partner?.type}</span>
               <div className={`rounded-full ${partner?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'} text-xs font-medium px-4 py-1 text-white`}>{partner?.active ? "Active" : "Deactive"}</div>
             </div>
           </div>
@@ -82,7 +91,7 @@ const Item = () => {
       >
         {isLoading ? <Loader /> :
           <>
-            <div className="flex gap-16 px-12 mt-8">
+            {/* <div className="flex gap-16 px-12 mt-8">
               {
                 summaryfields.map(field => (
                   <div key={field.key} className="flex flex-col gap-1">
@@ -91,7 +100,7 @@ const Item = () => {
                   </div>
                 ))
               }
-            </div>
+            </div> */}
             <div className="">
               <div className="px-12 pt-4">
                 <StyledTabs
