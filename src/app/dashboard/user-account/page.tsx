@@ -76,10 +76,10 @@ const Page = () => {
             {panels.map((panel, i) => (
               <div
                 onClick={() => setPage(i)}
-                className={`px-2 py-2 cursor-pointer duration-100 ${
+                className={`px-2 py-2 cursor-pointer transition duration-500 ${
                   page === i
                     ? "font-bold bg-slate-100"
-                    : "hover:bg-slate-100 hover:font-bold"
+                    : "hover:bg-slate-100"
                 }`}
               >
                 {panel.label}
