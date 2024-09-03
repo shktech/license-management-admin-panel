@@ -4,75 +4,59 @@ import MemeberPanel from "@components/Organizations/MemeberPanel";
 import OrganizationComponent from "@components/Organizations/OrganizationComponent";
 import RolePanel from "@components/Organizations/RolePanel";
 import APIKeyPanel from "@components/Profile/APIKeyPanel";
+import {
+  CustomTabPanel,
+  StyledTab,
+  StyledTabs,
+} from "@components/Tab/CustomizedTab";
 import { useGetIdentity, useList } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
 
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();
-  const {
-    data: apiData,
-    refetch,
-    isLoading,
-  } = useList({
-    resource: "orgs/key/api-key",
-    hasPagination: false,
-  });
-  const [page, setPage] = useState(0);
 
-  const {
-    control,
-    trigger,
-    reset,
-    formState: { errors },
-    watch,
-  } = useForm<User>();
+  console.log(identity);
+  const [value, setValue] = useState(0);
 
-  useEffect(() => {
-    reset(identity);
-  }, [identity]);
-
-  const panels = [
-    {
-      label: "Roles and Permissions",
-      value: <RolePanel />,
-    },
-    {
-      label: "Personal API Key",
-      value: <APIKeyPanel />,
-    },
-    {
-      label: "Notifications",
-      value: <></>,
-    },
-    {
-      label: "Memebers",
-      value: <MemeberPanel />,
-    },
-  ];
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   return (
     <div className="flex flex-col">
-      <OrganizationComponent />
-      <div className="flex flex-1 gap-8 px-8 py-10">
-        <div className="min-w-72">
-          <div className="bg-white rounded-lg px-3 gap-3 flex flex-col py-3 shadow-card">
-            {panels.map((panel, i) => (
-              <div
-                onClick={() => setPage(i)}
-                className={`px-2 py-2 cursor-pointer transition duration-500 ${
-                  page === i ? "font-bold bg-slate-100 text-[#1f325c]" : "hover:bg-slate-100"
-                }`}
-              >
-                {panel.label}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="py-4 flex-1 bg-white rounded-xl shadow-card">
-          {panels[page].value}
-        </div>
+      <div className="!font-satoshi px-12 pt-10 pb-4 text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
+        Organization 
+        <span className="text-base text-[#11ba82]">{identity?.organization}</span>
       </div>
+      <div className="px-12">
+        <StyledTabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <StyledTab label="Roles and Permissions" />
+          <StyledTab label="Personal API Key" />
+          <StyledTab label="Notifications" />
+          <StyledTab label="Memebers" />
+          <StyledTab label="Organizations" />
+        </StyledTabs>
+      </div>
+      <CustomTabPanel value={value} index={0}>
+        <RolePanel />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <APIKeyPanel />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <RolePanel />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <MemeberPanel />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        <OrganizationComponent />
+      </CustomTabPanel>
     </div>
   );
 };
