@@ -75,7 +75,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
         <>
             <GenericTable
                 data={transactions}
-                title="Transaction History"
+                title={<div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">Transaction History</div>}
                 columns={columns}
             />
             {

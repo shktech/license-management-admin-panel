@@ -115,7 +115,7 @@ const GenericTable = <T extends MRT_RowData>({ addText, title, data, columns, to
 
     return (
         <div className='scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200'>
-            <div className='flex justify-between px-12 py-4 gap-2 items-center'>
+            <div className='flex justify-between gap-2 items-center'>
                 <div className="text-xl font-semibold">{title}</div>
                 <div className='flex gap-2'>
                     {!noSearchNeed && <SearchInput handleChange={handleSearch} />}
@@ -127,7 +127,7 @@ const GenericTable = <T extends MRT_RowData>({ addText, title, data, columns, to
                     </Box>
                 </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }} className='mt-4'>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }} className=''>
                 <div style={{ maxWidth, minWidth, width: '100%' }}>
                     <MRT_TableContainer table={table} />
                     <Box>

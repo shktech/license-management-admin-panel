@@ -167,7 +167,7 @@ const Page = () => {
           </div>
           <div className="bg-white">
             <GenericTable
-              title="Reference Codes"
+              title={<div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">Reference Codes</div>}
               columns={columns}
               handleCreate={handleCreate}
               data={codeData?.data}
