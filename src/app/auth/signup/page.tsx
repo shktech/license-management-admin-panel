@@ -58,7 +58,7 @@ const SignUp: React.FC = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const token = queryParams.get("token") || "";
+    const token = queryParams.get("token")?.split("?to=")?.[0] || "";
     validateInviteToken(token)
       .then((data) => {
         setUserData(data);
@@ -67,7 +67,6 @@ const SignUp: React.FC = () => {
       })
       .catch((error) => {
         setIsLoading(false);
-        router.push("401");
       });
   }, [router]);
 
@@ -123,21 +122,6 @@ const SignUp: React.FC = () => {
                       )}
                     </FormControlWrapper>
                   </div>
-                  <FormControlWrapper
-                    name="username"
-                    control={control}
-                    rules={{ required: "Please enter your username!" }}
-                    error={errors.username?.message?.toString()}
-                  >
-                    {(field) => (
-                      <GeneralInput
-                        {...field}
-                        type={"text"}
-                        label="Username"
-                        placeholder={"Enter your username"}
-                      />
-                    )}
-                  </FormControlWrapper>
                   <FormControlWrapper name="organization" control={control}>
                     {(field) => (
                       <GeneralInput
