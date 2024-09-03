@@ -105,7 +105,7 @@ const Page = () => {
         size: 220,
       },
       {
-        accessorKey: "license_source_set",
+        accessorKey: "license_source",
         header: "License source",
         size: 200,
       },

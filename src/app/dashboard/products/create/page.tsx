@@ -19,7 +19,7 @@ const Item = () => {
         formState: { errors },
     } = useForm<Product>({
         refineCoreProps: {
-            action: "edit",
+            action: "create",
             resource: "products",
             id: params?.id,
         },

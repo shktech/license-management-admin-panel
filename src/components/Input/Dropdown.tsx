@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { BaseInputProps } from "./InputProps";
 import { useList } from "@refinedev/core";
-import { FormControl, makeStyles, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import {
+  FormControl,
+  makeStyles,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface DropdownOption {
   value: string;
@@ -41,12 +47,24 @@ const Dropdown: React.FC<DropdownProps> = ({
     });
     useEffect(() => {
       if (data && valueKey && labelKey) {
-        const options =
-          data?.data?.map((item: any) => ({
-            value: item[valueKey],
-            label: item[labelKey],
-          })) || [];
-        setDropdownOptions(options);
+        console.log("data", data);
+        console.log("valueKey", valueKey);
+        console.log("labelKey", labelKey);
+        if (data?.data) {
+          const options =
+            data?.data?.map((item: any) => ({
+              value: item[valueKey],
+              label: item[labelKey],
+            })) || [];
+          setDropdownOptions(options);
+        } else {
+          const options =
+            data?.map((item: any) => ({
+              value: item[valueKey],
+              label: item[labelKey],
+            })) || [];
+          setDropdownOptions(options);
+        }
       }
       setLoading(isLoading);
     }, [data, isLoading, valueKey, labelKey]);
@@ -72,34 +90,34 @@ const Dropdown: React.FC<DropdownProps> = ({
           {label}
         </label>
         <Select
-          value={value ? value as string : ''}
+          value={value ? (value as string) : ""}
           onChange={handleChange}
           displayEmpty
           size="small"
           disabled={props.disabled}
           sx={{
             pt: 3,
-            backgroundColor: '#dfe6ec',
+            backgroundColor: "#dfe6ec",
             ".MuiOutlinedInput-notchedOutline": { border: 0 },
-            "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0, },
-            "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: 1,
-              color: 'black',  // Adjust this color as needed
+            "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+              border: 0,
             },
+            "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+              {
+                border: 1,
+                color: "black", // Adjust this color as needed
+              },
           }}
         >
-          {
-            loading ? 
-            <MenuItem key='loading'>
-              Loading...
-            </MenuItem> : 
+          {loading ? (
+            <MenuItem key="loading">Loading...</MenuItem>
+          ) : (
             dropdownOptions.map((option, index) => (
               <MenuItem key={index} value={option.value}>
                 {option.label}
               </MenuItem>
             ))
-          }
+          )}
         </Select>
       </FormControl>
     </div>

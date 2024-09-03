@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
   }
 
   const handleEditClick = (row: Lookup) => {
-    push(`/dashboard/lookups/show?id=${row.lookup_id}`);
+    push(`/dashboard/lookups/show?id=${row.lookup_code}`);
   };
 
   const columns = useMemo<MRT_ColumnDef<Lookup>[]>(
