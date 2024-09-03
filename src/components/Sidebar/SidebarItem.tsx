@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import SidebarDropdown from "@/components/Sidebar/SidebarDropdown";
 import { usePathname } from "next/navigation";
 import { Button } from "@mui/material";
@@ -23,6 +22,7 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
 
   const [open, setOpen] = useState(false);
   useEffect(() => {
+    console.log(item)
     if (pageName === item.label.toLowerCase()) {
       setOpen(true);
     }

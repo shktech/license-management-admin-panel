@@ -6,23 +6,16 @@ import { RoleColors } from "@data/ColorData";
 import { useGetIdentity, useList } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
-import APIKeyPanel from "@components/Profile/APIKeyPanel";
 
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();
-  const { data: apiData, refetch, isLoading } = useList({
-    resource: "orgs/key/api-key",
-    hasPagination: false
-  });
   const [page, setPage] = useState(0);
-
 
   const {
     control,
     trigger,
     reset,
     formState: { errors },
-    watch
   } = useForm<User>();
 
   useEffect(() => {
@@ -31,18 +24,16 @@ const Page = () => {
 
   const panels = [
     {
-      label: "User",
+      label: "User account",
       value: (
         <>
           <div className="text-xl font-semibold pb-4">User Information</div>
-          <ProfileForm
-            {...{ control, errors, trigger }}
-          />
+          <ProfileForm {...{ control, errors, trigger }} />
         </>
-      )
+      ),
     },
     {
-      label: "Role",
+      label: "Roles & Permissions",
       value: (
         <>
           <div className="text-xl font-semibold pb-8">
@@ -58,15 +49,9 @@ const Page = () => {
             readonly
           />
         </>
-      )
+      ),
     },
-    // {
-    //   label: 'Personal API Key',
-    //   value: (
-    //     <APIKeyPanel />
-    //   )
-    // }
-  ]
+  ];
 
   return (
     <div className="flex flex-col">
@@ -75,30 +60,37 @@ const Page = () => {
         <div className="">
           <div className="text-2xl font-semibold">
             {`${identity?.first_name} ${identity?.last_name}`}
-            <span className={`mx-2 px-4 py-1 rounded-full text-xs ${identity?.is_active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}>
+            <span
+              className={`mx-2 px-4 py-1 rounded-full text-xs ${identity?.is_active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
+            >
               {identity?.is_active ? "Active" : "Deactive"}
             </span>
           </div>
           <div className="">{`Organization: ${identity?.organization}`}</div>
         </div>
-
       </div>
 
       <div className="flex flex-1 gap-8 px-8">
-        <div className="min-w-72">
-          <div className="bg-white rounded-lg px-3 gap-3 flex flex-col py-3">
-            {
-              panels.map((panel, i) => (
-                <div onClick={() => setPage(i)} className={`px-2 py-2 border-b-2 hover:border-[#1f325c] cursor-pointer font-medium duration-500 ${page != i ? 'border-transparent' : 'border-[#1f325c]'}`}>{panel.label}</div>
-              ))
-            }
+        <div className="min-w-60">
+          <div className="bg-white rounded-md px-3 gap-3 flex flex-col py-3 shadow-card">
+            {panels.map((panel, i) => (
+              <div
+                onClick={() => setPage(i)}
+                className={`px-2 py-2 cursor-pointer duration-100 ${
+                  page === i
+                    ? "font-bold bg-slate-100"
+                    : "hover:bg-slate-100 hover:font-bold"
+                }`}
+              >
+                {panel.label}
+              </div>
+            ))}
           </div>
         </div>
-        <div className="px-8 py-4 flex-1 bg-white rounded-xl">
+        <div className="px-8 py-4 flex-1 bg-white rounded-md shadow-card">
           {panels[page].value}
         </div>
       </div>
-
     </div>
   );
 };
