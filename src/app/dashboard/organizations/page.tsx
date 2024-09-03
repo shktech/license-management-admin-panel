@@ -1,13 +1,10 @@
 "use client";
-import { Permission, User } from "@/types/types";
-import ProfileForm from "@components/Forms/Profile/ProfileForm";
-import PermissionsTable from "@components/Role/PermissionsTable";
-import { RoleColors } from "@data/ColorData";
+import { User } from "@/types/types";
+import RolePanel from "@components/Organizations/RolePanel";
+import APIKeyPanel from "@components/Profile/APIKeyPanel";
 import { useGetIdentity, useList } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
-import APIKeyPanel from "@components/Profile/APIKeyPanel";
-import RolePanel from "@components/Organizations/RolePanel";
 
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();
