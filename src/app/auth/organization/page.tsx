@@ -39,7 +39,6 @@ const Page: React.FC = () => {
       localStorage.setItem("accessToken", data.access);
       localStorage.setItem("refreshToken", data.refresh);
       push("/dashboard");
-      setLoading(false);
     }
     // push("/dashboard");
   };
