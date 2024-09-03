@@ -56,7 +56,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <PaidOutlinedIcon />,
       title: "Transaction",
       description: "Setup your Transaction data",
-      fields: props.transaction
+      fields: !props.transaction_action
         ? GeneralTxnFormField.EditTransactionForm
         : props.transaction_action == "New"
           ? GeneralTxnFormField.CreateTransactionForm.newAction
