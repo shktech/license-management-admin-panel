@@ -12,10 +12,10 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
         <GeneralInformation
             singleColumn
             items={[
-                {
-                    label: "License ID",
-                    value: transaction?.asset?.asset_id
-                },
+                // {
+                //     label: "License ID",
+                //     value: transaction?.asset?.asset_id
+                // },
                 {
                     label: "License Key",
                     value: transaction?.asset?.license_key
@@ -42,15 +42,15 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
                 },
                 {
                     label: "Bill Customer",
-                    value: transaction?.bill_customer?.account
+                    value: transaction?.bill_customer?.account_id
                 },
                 {
                     label: "Ship Customer",
-                    value: transaction?.ship_customer?.account
+                    value: transaction?.ship_customer?.account_id
                 },
                 {
                     label: "Reseller",
-                    value: transaction?.reseller?.account
+                    value: transaction?.reseller?.account_id
                 },
                 {
                     label: "Active Seats",

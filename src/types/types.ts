@@ -162,8 +162,14 @@ export interface Transaction {
     transaction_number?: number;
     asset?: Partial<Asset>;
     bill_customer?: Partial<Customer>;
+    bill_customer_address?: Partial<Address>;
+    bill_customer_contact?: Partial<Contact>;
     ship_customer?: Partial<Customer>;
+    ship_customer_address?: Partial<Address>;
+    ship_customer_contact?: Partial<Address>;
     reseller?: Partial<Customer>;
+    reseller_address?: Partial<Address>;
+    reseller_contact?: Partial<Address>;
     created_at?: string;
     updated_at?: string;
     transaction_id: string;

@@ -58,7 +58,6 @@ const customDataProvider: DataProvider = {
       }
     }
     if (filters && filters.length > 0) {
-      console.log(filters);
       params.filter = filters.find((filter: any) => filter?.field == 'searchKey')?.value;
       params.type = filters.find((filter: any) => filter?.field == 'type')?.value;
       params.partner = filters.find((filter: any) => filter?.field == 'partner')?.value;

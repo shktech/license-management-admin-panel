@@ -21,10 +21,10 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
                     label: "Transaction Number",
                     value: transaction?.transaction_number,
                 },
-                {
-                    label: "Transaction ID",
-                    value: transaction?.transaction_id,
-                },
+                // {
+                //     label: "Transaction ID",
+                //     value: transaction?.transaction_id,
+                // },
                 {
                     label: "Transaction date",
                     value: getFormattedDate(transaction?.transaction_date),
