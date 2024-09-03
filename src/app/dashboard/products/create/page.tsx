@@ -19,7 +19,7 @@ const Item = () => {
         formState: { errors },
     } = useForm<Product>({
         refineCoreProps: {
-            action: "edit",
+            action: "create",
             resource: "products",
             id: params?.id,
         },
@@ -34,7 +34,7 @@ const Item = () => {
                     headerButtons={<></>}
                     title={
                         <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
-                            Create Transaction
+                            Create Product
                         </div>
                     }
                     saveButtonProps={{ ...saveButtonProps, hidden: false }}

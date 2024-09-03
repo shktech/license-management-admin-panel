@@ -81,7 +81,7 @@ const APIKeyPanel: React.FC<APIKeyPanelProps> = () => {
     return (
         <div className="px-8 py-1">
             <div className="text-lg text-[#1f325c] font-semibold pb-8 flex justify-between">
-                Personal API Keys
+                API Keys
                 {apiData?.data ?
                     <Button onClick={handleDeleteKeyBtn} variant="contained" sx={modalOkBtnStyle}>Delete</Button> :
                     <Button onClick={handleGenerateBtn} variant="contained" sx={modalOkBtnStyle}>Generate Key</Button>

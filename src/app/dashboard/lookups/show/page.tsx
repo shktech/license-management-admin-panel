@@ -88,7 +88,7 @@ const Page = () => {
   const handleSave = () => {
     mutate(
       {
-        resource: `lookups/${lookup.lookup_id}/values`,
+        resource: `lookups/${lookup.lookup_code}/values`,
         values: codes,
       },
       {

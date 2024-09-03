@@ -96,7 +96,7 @@ const RolePanel: React.FC<RolePanelProps> = () => {
       ) : (
         <div>
           <GenericTable
-            title={<div className="!font-satoshi px-8 text-lg font-semibold text-[#1f325c] flex items-center gap-2">Role & Permission</div>}
+            title={<div className="!font-satoshi px-12 text-lg font-semibold text-[#1f325c] flex items-center gap-2">Role & Permission</div>}
             data={sortedData}
             columns={columns}
             handleCreate={handleCreate}

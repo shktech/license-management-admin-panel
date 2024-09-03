@@ -15,6 +15,7 @@ import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
+import WavingHandIcon from "@mui/icons-material/WavingHand";
 const MemeberInvitePanel: React.FC = () => {
   const { data: identity } = useGetIdentity<User>();
   const [sentValues, setSentValues] = useState<any[]>([
@@ -66,9 +67,12 @@ const MemeberInvitePanel: React.FC = () => {
   };
 
   return (
-    <div className="px-8 py-4">
+    <div className="px-12 pb-4 pt-10">
       <div className="text-xl text-sm font-semibold py-4 text-[#1f325c] flex justify-between">
-        <div>Invite new members by email address</div>
+        <div className="flex items-center gap-2">
+          <WavingHandIcon />
+          Invite new members by email address
+        </div>
         <Button
           variant="outlined"
           color="primary"

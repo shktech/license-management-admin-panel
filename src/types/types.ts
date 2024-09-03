@@ -264,7 +264,7 @@ export interface Customer {
 
 
 export interface Lookup {
-    lookup_id?: string;
+    lookup_code?: string;
     lookup_name?: string;
     description?: string;
     type?: string;

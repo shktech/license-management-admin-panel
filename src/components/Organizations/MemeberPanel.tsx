@@ -6,6 +6,7 @@ import Loader from "@components/common/Loader";
 import { RoleColors } from "@data/ColorData";
 import GenericTable from "@components/Table/GenericTable";
 import MemeberInvitePanel from "./MemeberInvitePanel";
+import GroupIcon from '@mui/icons-material/Group';
 
 const MemeberPanel: React.FC = () => {
   const { push } = useNavigation();
@@ -81,8 +82,9 @@ const MemeberPanel: React.FC = () => {
     <div className="overflow-x-auto">
       <GenericTable
         title={
-          <div className="!font-satoshi px-8 text-lg font-semibold text-[#1f325c] flex items-center gap-2">
-            Memebers
+          <div className="!font-satoshi px-12 text-lg font-semibold text-[#1f325c] flex items-center gap-2">
+            <GroupIcon />
+            Members
           </div>
         }
         data={data?.data}
