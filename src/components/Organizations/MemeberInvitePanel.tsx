@@ -7,7 +7,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useGetIdentity } from "@refinedev/core";
+import { useCreate, useGetIdentity } from "@refinedev/core";
 import { User } from "@/types/types";
 import React, { useMemo, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -20,7 +20,7 @@ const MemeberInvitePanel: React.FC = () => {
   const [sentValues, setSentValues] = useState<any[]>([
     {
       email: "",
-      role: "",
+      role_id: "",
     },
   ]);
 
@@ -29,7 +29,7 @@ const MemeberInvitePanel: React.FC = () => {
       ...sentValues,
       {
         email: "",
-        role: "",
+        role_id: "",
       },
     ]);
   };
@@ -37,6 +37,7 @@ const MemeberInvitePanel: React.FC = () => {
     const newValues = sentValues.filter((_, i) => i !== index);
     setSentValues(newValues);
   };
+
   const handleEmailChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
@@ -47,12 +48,23 @@ const MemeberInvitePanel: React.FC = () => {
   };
   const handleRoleChange = (e: SelectChangeEvent, index: number) => {
     const newValues = [...sentValues];
-    newValues[index].role = e.target.value;
+    newValues[index].role_id = e.target.value;
     setSentValues(newValues);
   };
+
+  const { mutate } = useCreate();
   const handleInvite = () => {
-    console.log(sentValues);
+    mutate(
+      {
+        resource: "invite",
+        values: sentValues,
+      },
+      {
+        onSuccess: () => console.log("success"),
+      }
+    );
   };
+
   return (
     <div className="px-8 py-4">
       <div className="text-xl text-sm font-semibold py-4 text-[#1f325c] flex justify-between">
@@ -98,7 +110,7 @@ const MemeberInvitePanel: React.FC = () => {
                 onChange={(e) => handleRoleChange(e, index)}
               >
                 {identity?.roles?.map((role) => (
-                  <MenuItem key={role.name} value={role.name}>
+                  <MenuItem key={role.role_id} value={role.role_id}>
                     {role.name}
                   </MenuItem>
                 )) || []}
