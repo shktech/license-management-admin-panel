@@ -84,7 +84,7 @@ const MemeberPanel: React.FC = () => {
         title={
           <div className="!font-satoshi px-12 text-lg font-semibold text-[#1f325c] flex items-center gap-2">
             <GroupIcon />
-            Memebers
+            Members
           </div>
         }
         data={data?.data}

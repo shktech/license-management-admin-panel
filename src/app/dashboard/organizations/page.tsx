@@ -36,9 +36,9 @@ const Page = () => {
           aria-label="basic tabs example"
         >
           <StyledTab label="Roles and Permissions" />
-          <StyledTab label="Personal API Key" />
+          <StyledTab label="API Keys" />
           <StyledTab label="Notifications" />
-          <StyledTab label="Memebers" />
+          <StyledTab label="Members" />
           <StyledTab label="Organizations" />
         </StyledTabs>
       </div>
