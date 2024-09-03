@@ -275,7 +275,7 @@ const Page = () => {
                     },
                     {
                       label: "Organization",
-                      value: asset?.osc_product?.organization,
+                      value: asset?.osc_product?.organization?.organization_code,
                     },
                     {
                       label: "Attribute1",
