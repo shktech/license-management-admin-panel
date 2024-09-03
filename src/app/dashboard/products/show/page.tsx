@@ -124,7 +124,7 @@ const Item = () => {
                     },
                     {
                       label: "Organization",
-                      value: product?.organization,
+                      value: product?.organization?.organization_name,
                     },
                     {
                       label: "Vender Name",
@@ -142,26 +142,26 @@ const Item = () => {
                       label: "Active",
                       value: <div className={`rounded-full h-4 w-4 ${product?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
                     },
-                    {
-                      label: "Eval Set Name",
-                      value: product?.eval_set_name,
-                    },
-                    {
-                      label: "License Source Set",
-                      value: product?.license_source_set,
-                    },
-                    {
-                      label: "New Set Name",
-                      value: product?.new_set_name,
-                    },
-                    {
-                      label: "Renewal Set Name",
-                      value: product?.renewal_set_name,
-                    },
-                    {
-                      label: "Source Name",
-                      value: product?.source_name,
-                    },
+                    // {
+                    //   label: "Eval Set Name",
+                    //   value: product?.eval_set_name,
+                    // },
+                    // {
+                    //   label: "License Source Set",
+                    //   value: product?.license_source_set,
+                    // },
+                    // {
+                    //   label: "New Set Name",
+                    //   value: product?.new_set_name,
+                    // },
+                    // {
+                    //   label: "Renewal Set Name",
+                    //   value: product?.renewal_set_name,
+                    // },
+                    // {
+                    //   label: "Source Name",
+                    //   value: product?.source_name,
+                    // },
                   ]}
                 />
               </CustomTabPanel>

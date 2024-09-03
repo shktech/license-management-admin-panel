@@ -23,7 +23,8 @@ export interface Product {
     active?: boolean | null;
     created_by?: number;
     updated_by?: number;
-    organization?: string;
+    organization?: Partial<Organization>;
+    // email_template?: Partial<EmailTemplate>;
 }
 export interface Seat {
     id?: number;
