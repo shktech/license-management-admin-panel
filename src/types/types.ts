@@ -63,7 +63,12 @@ export interface Asset {
     bill_customer?: Partial<Customer>;
     ship_customer?: Partial<Customer>;
     reseller?: Partial<Customer>;
-
+    bill_customer_address?: Partial<Address>;
+    ship_customer_address?: Partial<Address>;
+    reseller_address?: Partial<Address>;
+    bill_customer_contact?: Partial<Contact>;
+    ship_customer_contact?: Partial<Contact>;
+    reseller_contact?: Partial<Contact>;
     license_key_created_email_notification_date?: string;
     one_month_reminder_notification_date?: string;
     two_month_reminder_notification_date?: string;

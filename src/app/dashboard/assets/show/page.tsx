@@ -168,7 +168,7 @@ const Page = () => {
                     },
                     {
                       label: "Organization",
-                      value: asset?.organization?.organization_name,
+                      value: asset?.organization?.organization_code,
                     },
                     {
                       label: "Bill Customer",
@@ -334,7 +334,7 @@ const Page = () => {
                   items={[
                     {
                       label: "Account",
-                      value: asset?.owner?.account,
+                      value: asset?.owner?.account_id,
                     },
                     // {
                     //   label: "Address",
@@ -342,43 +342,43 @@ const Page = () => {
                     // },
                     {
                       label: "Address1",
-                      value: asset?.owner?.address1,
+                      value: asset?.ship_customer_address?.address1,
                     },
                     {
                       label: "Address2",
-                      value: asset?.owner?.address2,
+                      value: asset?.ship_customer_address?.address2,
                     },
                     {
                       label: "City",
-                      value: asset?.owner?.city,
+                      value: asset?.ship_customer_address?.city,
                     },
                     {
                       label: "Country",
-                      value: asset?.owner?.country,
+                      value: asset?.ship_customer_address?.country,
                     },
                     {
                       label: "Postal Code",
-                      value: asset?.owner?.postal_code,
+                      value: asset?.ship_customer_address?.postal_code,
                     },
                     {
                       label: "State",
-                      value: asset?.owner?.state,
+                      value: asset?.ship_customer_address?.state,
                     },
                     {
                       label: "Contact Email",
-                      value: asset?.owner?.email,
+                      value: asset?.ship_customer_contact?.email,
                     },
                     {
                       label: "Contact Phone",
-                      value: asset?.owner?.phone,
+                      value: asset?.ship_customer_contact?.phone,
                     },
                     {
                       label: "Contact First Name",
-                      value: asset?.owner?.first_name,
+                      value: asset?.ship_customer_contact?.first_name,
                     },
                     {
                       label: "Contact Last Name",
-                      value: asset?.owner?.last_name,
+                      value: asset?.ship_customer_contact?.last_name,
                     },
                     {
                       label: "Organization",

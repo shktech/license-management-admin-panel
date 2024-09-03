@@ -55,18 +55,18 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({ trans
                     </Box>
                 ),
             },
-            {
-                accessorKey: "actions",
-                header: "Action",
-                size: 50,
-                enableSorting: false,
-                pin: 'right',
-                Cell: ({ row }) => (
-                    <div className="w-full h-full">
-                        <RemoveRedEyeIcon onClick={() => handleShowClick(row.original)} fontSize='small' className="text-[#818f99] hover:text-black cursor-pointer" />
-                    </div>
-                ),
-            },
+            // {
+            //     accessorKey: "actions",
+            //     header: "Action",
+            //     size: 50,
+            //     enableSorting: false,
+            //     pin: 'right',
+            //     Cell: ({ row }) => (
+            //         <div className="w-full h-full">
+            //             <RemoveRedEyeIcon onClick={() => handleShowClick(row.original)} fontSize='small' className="text-[#818f99] hover:text-black cursor-pointer" />
+            //         </div>
+            //     ),
+            // },
         ],
         [],
     );
