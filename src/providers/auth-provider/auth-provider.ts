@@ -136,6 +136,13 @@ export const authProvider: AuthProvider = {
         }
     },
     check: async () => {
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.get("token")) {
+            return {
+                authenticated: false,
+                redirectTo: "/auth/signup?token=" + queryParams.get("token")
+            }
+        }
         const response = await fetch(`${API_URL ?? realAPI_URL}/token/refresh`, {
             method: "POST",
             headers: {
