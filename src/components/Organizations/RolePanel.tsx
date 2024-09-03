@@ -46,13 +46,13 @@ const RolePanel: React.FC<RolePanelProps> = () => {
   const handleClickItem = (role: Role) => {
     // setClickedRole(role);
     // setOpenDrawer(true);
-    push(`/dashboard/roles/show?id=${role.role_id}`);
+    push(`/dashboard/organizations/roles/show?id=${role.role_id}`);
   };
 
   const handleCreate = () => {
     // setClickedRole(null);
     // setOpenDrawer(true);
-    push(`/dashboard/roles/create`);
+    push(`/dashboard/organizations/roles/create`);
   };
 
   const handleClose = () => {
@@ -96,7 +96,7 @@ const RolePanel: React.FC<RolePanelProps> = () => {
       ) : (
         <div>
           <GenericTable
-            title="Role & Permission"
+            title={<div className="!font-satoshi px-8 text-lg font-semibold text-[#1f325c] flex items-center gap-2">Role & Permission</div>}
             data={sortedData}
             columns={columns}
             handleCreate={handleCreate}
