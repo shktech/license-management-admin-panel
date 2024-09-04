@@ -158,7 +158,7 @@ const Page = () => {
                   <MenuItem value={"false"}>
                     <div className="flex items-center gap-2">
                       <div className={`rounded-full text-white py-1 text-xs px-3 bg-[#929ea8]`}>
-                        Deactive
+                        Inactive
                       </div>
                     </div>
                   </MenuItem>
@@ -167,7 +167,7 @@ const Page = () => {
             ) : (
               <div className="flex items-center gap-2">
                 <div className={`rounded-full text-white py-1 text-xs px-3 ${renderedCellValue ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}>
-                  {renderedCellValue ? "Active" : "Deactive"}
+                  {renderedCellValue ? "Active" : "Inactive"}
                 </div>
               </div>
             ),
@@ -273,7 +273,7 @@ const Page = () => {
           <div className="flex items-center gap-2">
             <div className="">Detailed Lookup</div>
             <span className={`mx-2 px-4 py-1 rounded-full text-xs ${lookup?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}>
-              {lookup?.active ? "Active" : "Deactive"}
+              {lookup?.active ? "Active" : "Inactive"}
             </span>
           </div>
         </div>

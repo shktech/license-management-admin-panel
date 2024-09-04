@@ -63,7 +63,7 @@ const Page = () => {
             <span
               className={`mx-2 px-4 py-1 rounded-full text-xs ${identity?.is_active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
             >
-              {identity?.is_active ? "Active" : "Deactive"}
+              {identity?.is_active ? "Active" : "Inactive"}
             </span>
           </div>
           <div className="">{`Organization: ${identity?.organization}`}</div>
