@@ -291,6 +291,8 @@ export interface Reference {
     reference_type?: string;
     organization?: Partial<Organization>;
     active?: boolean;
+    start_date?: string;
+    end_date?: string;
 }
 
 export interface ReferenceCode {
@@ -302,6 +304,11 @@ export interface ReferenceCode {
     osc_product_id?: string;
     transaction_line_id?: string;
     reference_code?: string;
+    organization?: Partial<Organization>;
+    osc_product?: Partial<Product>;
+    reference?: Partial<Reference>;
+    reference_code_id?: string;
+    transaction?: Partial<Transaction>;
 }
 
 export interface Partner {
