@@ -87,11 +87,11 @@ const Page = () => {
           </Box>
         ),
       },
-      {
-        accessorKey: "asset.license_key",
-        header: "License",
-        size: 200,
-      },
+      // {
+      //   accessorKey: "asset.license_key",
+      //   header: "License",
+      //   size: 200,
+      // },
       {
         accessorKey: "organization",
         header: "Organization",
@@ -108,6 +108,32 @@ const Page = () => {
         size: 50,
         Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue as string),
       },
+      {
+        accessorKey: "bill_customer.name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "ship_customer.name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      // {
+      //   accessorKey: "reseller.name",
+      //   header: "Bill Customer",
+      //   size: 50,
+      // }
+      {
+        accessorKey: "asset.osc_product.product_part_number",
+        header: "Product Part Number",
+        size: 50,
+      },
+      {
+        accessorKey: "seat_number",
+        header: "Number of Seats",
+        size: 50,
+        Cell: ({ row }) => row.original.asset?.seats?.length,
+      }
     ],
     []
   );
