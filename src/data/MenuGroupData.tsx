@@ -1,9 +1,11 @@
 import DashboardIcon from '@/assets/icons/dashboard.svg?icon';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import TransactionIcon from '@/assets/icons/transaction.svg?icon';
 import MasterMngtIcon from '@/assets/icons/mastermngt.svg?icon';
 import MaintenanceIcon from '@/assets/icons/maintenance.svg?icon';
 import ReportsIcon from '@/assets/icons/reports.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
+import DnsIcon from '@mui/icons-material/Dns';
 
 export const menuGroups = [
     {
@@ -17,14 +19,11 @@ export const menuGroups = [
         {
           icon: <TransactionIcon className="fill-current" />,
           label: "Transaction",
-          route: "#",
-          children: [
-            { label: "Transactions", route: "/dashboard/transactions" },
-          ],
+          route: "/dashboard/transactions",
         },
         {
           icon: <MasterMngtIcon className="fill-current" />,
-          label: "Management",
+          label: "Maintenance",
           route: "#",
           children: [
             { label: "Licenses", route: "/dashboard/assets" },
@@ -34,33 +33,39 @@ export const menuGroups = [
           ],
         },
         {
-          icon: <MaintenanceIcon className="fill-current" />,
-          label: "Maintenance",
-          route: "#",
-          children: [
-            { label: "License Code", route: "/dashboard/license-code" },
-            { label: "Setups", route: "/dashboard/lookups" },
-            { label: "Email Templates", route: "/dashboard/email-templates" },
-          ],
-        },
-        {
           icon: <ReportsIcon className="fill-current" />,
           label: "Reports",
           route: "#",
+        },
+        // {
+        //   icon: <MaintenanceIcon className="fill-current" />,
+        //   label: "Maintenance",
+        //   route: "#",
+        //   children: [
+        //     { label: "License Code", route: "/dashboard/license-code" },
+        //     { label: "Setups", route: "/dashboard/lookups" },
+        //     { label: "Email Templates", route: "/dashboard/email-templates" },
+        //   ],
+        // },
+        {
+          icon: <SettingsIcon className="fill-current" />,
+          label: "Setups",
+          route: "#",
           children: [
-            { label: "Business", route: "/dashboard/reports/business" },
-            { label: "Logs", route: "/dashboard/reports/logs" },
-            { label: "Schedule/View", route: "/dashboard/reports/schedule-view" },
+            { label: "User profile", route: "/dashboard/user-profile" },
+            { label: "Users", route: "/dashboard/users" },
+            { label: "Organizations", route: "/dashboard/organizations" },
+            { label: "Notification Templates", route: "/dashboard/notification-templates" },
+            { label: "Roles & Permissions", route: "/dashboard/roles" },
+            { label: "Organizations", route: "/dashboard/organizations" },
+            // { label: "User Account", route: "/dashboard/user-account" },
+            // { label: "Organization", route: "/dashboard/organizations" },
           ],
         },
         {
-          icon: <SettingsIcon className="fill-current" />,
-          label: "Settings",
+          icon: <DnsIcon fontSize='small'/>,
+          label: "Lookups",
           route: "#",
-          children: [
-            { label: "User Account", route: "/dashboard/user-account" },
-            { label: "Organization", route: "/dashboard/organizations" },
-          ],
         },
       ],
     }
