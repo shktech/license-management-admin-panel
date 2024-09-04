@@ -74,8 +74,8 @@ const MemeberInvitePanel: React.FC = () => {
   };
 
   return (
-    <div className="px-12 pb-4 pt-10">
-      <div className="text-xl text-sm font-semibold py-4 text-[#1f325c] flex justify-between">
+    <div className="mx-6 px-6 pb-4 my-6 pt-3 rounded-lg shadow-card bg-white">
+      <div className="text-xl text-sm font-semibold border-b border-[#c7c7c7] py-4 text-[#1f325c] flex justify-between">
         <div className="flex items-center gap-2">
           <WavingHandIcon />
           Invite new members by email address
@@ -90,16 +90,16 @@ const MemeberInvitePanel: React.FC = () => {
           Add more
         </Button>
       </div>
-      <div className="flex gap-8 mr-14 pb-4">
+      <div className="flex gap-8 mr-14 pb-4 px-12 pt-6">
         <div className="text-xs flex-1">Email Address</div>
         <div className="text-xs flex-1">Role</div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4 px-12 border-b border-[#c7c7c7] pb-8">
         <div className="flex flex-1 flex-col gap-6">
           {sentValues.map((value, index) => (
             <TextField
               id="standard-basic"
-              variant="standard"
+              variant="outlined"
               placeholder="Enter email address"
               size="small"
               type="email"
@@ -114,7 +114,7 @@ const MemeberInvitePanel: React.FC = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                variant="standard"
+                variant="outlined"
                 size="small"
                 value={value.role}
                 label="Age"
@@ -133,11 +133,10 @@ const MemeberInvitePanel: React.FC = () => {
           {sentValues.map((value, index) => (
             <div className="flex items-center gap-2">
               <IconButton
-                size="small"
                 onClick={() => handleRemove(index)}
                 disabled={sentValues.length === 1}
               >
-                <DoDisturbOnOutlinedIcon fontSize="small" />
+                <DoDisturbOnOutlinedIcon fontSize="medium" />
               </IconButton>
             </div>
           ))}

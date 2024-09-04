@@ -37,37 +37,37 @@ export const menuGroups = [
           label: "Reports",
           route: "#",
         },
-        // {
-        //   icon: <MaintenanceIcon className="fill-current" />,
-        //   label: "Maintenance",
-        //   route: "#",
-        //   children: [
-        //     { label: "License Code", route: "/dashboard/license-code" },
-        //     { label: "Setups", route: "/dashboard/lookups" },
-        //     { label: "Email Templates", route: "/dashboard/email-templates" },
-        //   ],
-        // },
         {
           icon: <SettingsIcon className="fill-current" />,
           label: "Setups",
           route: "#",
           children: [
             { label: "User profile", route: "/dashboard/user-profile" },
-            { label: "Users", route: "/dashboard/users" },
-            { label: "Organizations", route: "/dashboard/organizations" },
-            { label: "Notification Templates", route: "/dashboard/notification-templates" },
-            { label: "Roles & Permissions", route: "/dashboard/roles" },
-            { label: "Organizations", route: "/dashboard/organizations" },
-            // { label: "User Account", route: "/dashboard/user-account" },
-            // { label: "Organization", route: "/dashboard/organizations" },
+            { label: "Users", route: "/dashboard/users", is_superuser: true },
+            { label: "Organizations", route: "/dashboard/orgs", is_superuser: true },
+            { label: "Notification Templates", route: "/dashboard/email-templates" },
+            { label: "Roles & Permissions", route: "/dashboard/roles", is_superuser: true },
+            { label: "API Keys", route: "/dashboard/api-keys", is_superuser: true },
           ],
         },
         {
           icon: <DnsIcon fontSize='small'/>,
           label: "Lookups",
-          route: "#",
+          route: "/dashboard/lookups",
         },
       ],
     }
   ];
   
+  
+export const filterSuperUserItems = (groups: any) => {
+  return groups.map((group: any) => ({
+      ...group,
+      menuItems: group.menuItems.map((item: any) => ({
+      ...item,
+      children: item.children?.filter((child: any) => !child.is_superuser)
+    })).filter((item: any) => item.children?.length !== 0 || !item.children)
+  }));
+}
+
+export const notSuperUserMenu = filterSuperUserItems(menuGroups);

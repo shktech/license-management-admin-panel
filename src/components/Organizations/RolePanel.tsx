@@ -46,13 +46,13 @@ const RolePanel: React.FC<RolePanelProps> = () => {
   const handleClickItem = (role: Role) => {
     // setClickedRole(role);
     // setOpenDrawer(true);
-    push(`/dashboard/organizations/roles/show?id=${role.role_id}`);
+    push(`/dashboard/roles/show?id=${role.role_id}`);
   };
 
   const handleCreate = () => {
     // setClickedRole(null);
     // setOpenDrawer(true);
-    push(`/dashboard/organizations/roles/create`);
+    push(`/dashboard/roles/create`);
   };
 
   const handleClose = () => {

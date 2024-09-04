@@ -137,6 +137,7 @@ export interface User {
     last_name?: string;
     organization?: string;
     is_active?: boolean;
+    is_superuser?: boolean;
     roles?: Role[]
 };
 
