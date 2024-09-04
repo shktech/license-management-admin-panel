@@ -50,7 +50,6 @@ const Item = () => {
   };
 
   const summaryfields = [
-    { title: "Product name", key: 'product_name', size: 6 },
     { title: "Product Type", key: "product_type", size: 3 },
     { title: "Vendor Name", key: "vendor_name", size: 3 },
     { title: "Vender Part Number", key: "vendor_part_number", size: 3 },
@@ -69,8 +68,9 @@ const Item = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
-              <div className="text-2xl font-semibold text-[#1f325c]">
+              <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
                 Product
+                <div className="text-lg font-normal">{product?.product_name}</div>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ const Item = () => {
         {isLoading ? <Loader /> :
           <>
             <div className="">
-              <div className="grid grid-cols-12 gap-x-6 gap-y-6 px-12 mt-8">
+              <div className="flex items-end gap-x-8 gap-y-6 px-12 mt-8">
                 {
                   summaryfields.map(field => (
                     <div key={field.key} className="flex flex-col gap-1 col-span-4">

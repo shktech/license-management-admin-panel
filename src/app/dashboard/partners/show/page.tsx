@@ -75,8 +75,9 @@ const Item = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
-              <div className="text-2xl font-semibold text-[#1f325c]">
-                Partner : {partner?.name}
+              <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
+                Partner
+                <div className="text-lg font-normal">{partner?.name}</div>
               </div>
               <span className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}>{partner?.type}</span>
               <div className={`rounded-full ${partner?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'} text-xs font-medium px-4 py-1 text-white`}>{partner?.active ? "Active" : "Inactive"}</div>

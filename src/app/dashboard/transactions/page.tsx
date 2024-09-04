@@ -87,27 +87,6 @@ const Page = () => {
           </Box>
         ),
       },
-      // {
-      //   accessorKey: "asset.license_key",
-      //   header: "License",
-      //   size: 200,
-      // },
-      {
-        accessorKey: "organization",
-        header: "Organization",
-        size: 50,
-      },
-      {
-        accessorKey: "source_reference_number",
-        header: "Source Ref Number",
-        size: 50,
-      },
-      {
-        accessorKey: "source_reference_date",
-        header: "Source Ref Date",
-        size: 50,
-        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue as string),
-      },
       {
         accessorKey: "bill_customer.name",
         header: "Bill Customer",
@@ -118,11 +97,6 @@ const Page = () => {
         header: "Bill Customer",
         size: 50,
       },
-      // {
-      //   accessorKey: "reseller.name",
-      //   header: "Bill Customer",
-      //   size: 50,
-      // }
       {
         accessorKey: "asset.osc_product.product_part_number",
         header: "Product Part Number",

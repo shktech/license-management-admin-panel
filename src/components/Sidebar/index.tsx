@@ -7,7 +7,7 @@ import Image from "next/image";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { menuGroups, notSuperUserMenu } from "@/data/MenuGroupData";
+import { AdminMenu, CommonMenu, menuGroups } from "@/data/MenuGroupData";
 import LogoIcon from "@/assets/icons/logo.svg?icon";
 import UserItem from "./UserItem";
 import { useGetIdentity } from "@refinedev/core";
@@ -24,7 +24,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   console.log("sidebar", identity);
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
 
-  const menus = identity?.is_superuser ? menuGroups : notSuperUserMenu;
+  const menus = identity?.is_superuser ? AdminMenu : CommonMenu;
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside

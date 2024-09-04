@@ -52,8 +52,9 @@ const TransactionShow = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-end">
-              <div className="text-2xl font-semibold text-[#1f325c]">
-                Transaction {transaction?.transaction_number}
+              <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
+                Transaction
+                <div className="text-lg font-normal">{transaction?.transaction_number}</div>
               </div>
               <Box
                 component="span"
