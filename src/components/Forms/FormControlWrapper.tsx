@@ -4,7 +4,7 @@ import { Controller, Control, FieldErrors, UseFormTrigger } from 'react-hook-for
 
 export interface FieldConfig {
   name: string;
-  name2: string;
+  name2?: string;
   label: string;
   placeholder?: string;
   rules?: any;
