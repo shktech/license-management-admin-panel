@@ -24,12 +24,10 @@ import PartnerTransactionTable from "@components/Partners/PartnerTransactionTabl
 import PartnerLicensesTable from "@components/Partners/PartnerLicensesTable";
 
 const partnerColors = {
-  All: '#4A90E2',
-  Shipping: '#FFCC00',
-  Billing: '#34C759',
-  Reseller: '#8E44AD',
+  "All": '#4A90E2',
+  "Channel": '#FFCC00',
+  "Direct End User": '#34C759',
 }
-
 
 const Item = () => {
   const { params } = useParsed();
@@ -60,9 +58,9 @@ const Item = () => {
     );
   };
   const summaryfields = [
-    { title: "Account ID", key: 'account_id' },
-    { title: "Partner Name", key: "name" },
-    { title: "Partner Type", key: "type" },
+    { title: "Oracle Account", key: 'account_id' },
+    { title: "Partner Number", key: "partner_number" },
+    // { title: "Partner Type", key: "type" },
   ]
 
   return (
@@ -91,7 +89,7 @@ const Item = () => {
       >
         {isLoading ? <Loader /> :
           <>
-            {/* <div className="flex gap-16 px-12 mt-8">
+            <div className="flex gap-16 px-12 mt-8">
               {
                 summaryfields.map(field => (
                   <div key={field.key} className="flex flex-col gap-1">
@@ -100,7 +98,7 @@ const Item = () => {
                   </div>
                 ))
               }
-            </div> */}
+            </div>
             <div className="">
               <div className="px-12 pt-4">
                 <StyledTabs
