@@ -84,13 +84,13 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
   return (
     <div className="bg-white px-8 py-8 font-med flex flex-col">
       <div className="text-xl font-semibold text-black flex items-center gap-4">
-        <Link href={role && !isShow ? "/dashboard/organizations/roles/show?id=" + role?.role_id : "/dashboard/organizations"} className="pb-1 hover:text-slate-700">
+        <Link href={role && !isShow ? "/dashboard/roles/show?id=" + role?.role_id : "/dashboard/roles"} className="pb-1 hover:text-slate-700">
           <ArrowBackIosNewIcon fontSize="small" />
         </Link>
         <div className="flex flex-1 items-center justify-between">
           <div>{role ? isShow ? "" : "Edit" : "Create"} Role</div>
           {isShow && (
-            <Link href={`/dashboard/organizations/roles/edit?id=${role?.role_id}`} className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium">
+            <Link href={`/dashboard/roles/edit?id=${role?.role_id}`} className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium">
               Edit
             </Link>
           )}

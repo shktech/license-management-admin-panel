@@ -1,6 +1,12 @@
 "use client";
 import React, { useMemo } from "react";
-import { HttpError, useList, useNavigation, usePermissions, useTable } from "@refinedev/core";
+import {
+  HttpError,
+  useList,
+  useNavigation,
+  usePermissions,
+  useTable,
+} from "@refinedev/core";
 import { Permission, Role, User } from "@/types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
@@ -10,7 +16,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import UserDrawer from "@components/Users/UserDrawer";
 import { RoleColors } from "@data/ColorData";
 import CommonTable from "@components/Table/CommonTable";
-import InviteUserDrawer from "@components/Users/InviteUserDrawer";
+// import InviteUserDrawer from "@components/Users/InviteUserDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
 
@@ -18,7 +24,7 @@ const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
   } = useTable<User>({
-    hasPagination: false
+    hasPagination: false,
   });
   const { push } = useNavigation();
   const {
@@ -27,10 +33,12 @@ const Page = () => {
     isError: isRolesError,
   } = useList<Role, HttpError>({
     resource: "roles",
-    hasPagination: false
+    hasPagination: false,
   });
 
-  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "user" } });
+  const { data: permissionsData } = usePermissions<Permission>({
+    params: { codename: "user" },
+  });
 
   const userRoles = rolesData?.data || [];
 
@@ -56,7 +64,7 @@ const Page = () => {
     row.is_active ? handleOpenUserDrawer() : handleOpenCreateUserDrawer();
   };
   const handleShowUser = (row: User) => {
-    push(`/dashboard/users/show?id=${row.user_id}`)
+    push(`/dashboard/users/show?id=${row.user_id}`);
   };
   const handleCreateUser = () => {
     setSelectedUser(null);
@@ -151,7 +159,6 @@ const Page = () => {
       {isLoading || isRolesLoading ? (
         <Loader />
       ) : (
-
         <GenericTable
           title={
             <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
@@ -161,13 +168,10 @@ const Page = () => {
           }
           data={data?.data}
           columns={columns}
-          handleCreate={handleCreateUser}
-          addText={"Invite user"}
-          canCreate={permissionsData?.create}
           onRowClick={handleShowUser}
         />
       )}
-      {
+      {/* {
         openCreateUserDrawer && (
           <InviteUserDrawer inactiveUser={selectedUser} handleCloseModal={handleCloseCreateUserDrawer} />
         )
@@ -186,7 +190,7 @@ const Page = () => {
           handleCloseModal={handleCloseDeleteModal}
           selectedUser={selectedUser}
         />
-      )}
+      )} */}
     </div>
     // ) : (
     //   <Unauthorized />

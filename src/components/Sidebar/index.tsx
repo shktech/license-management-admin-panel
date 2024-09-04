@@ -7,9 +7,11 @@ import Image from "next/image";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { menuGroups } from "@/data/MenuGroupData";
+import { menuGroups, notSuperUserMenu } from "@/data/MenuGroupData";
 import LogoIcon from "@/assets/icons/logo.svg?icon";
 import UserItem from "./UserItem";
+import { useGetIdentity } from "@refinedev/core";
+import { User } from "@/types/types";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -18,8 +20,11 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
+  const { data: identity, isLoading } = useGetIdentity<User>();
+  console.log("sidebar", identity);
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
 
+  const menus = identity?.is_superuser ? menuGroups : notSuperUserMenu;
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
@@ -37,14 +42,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <div className="no-scrollbar flex-1 flex flex-col overflow-y-auto duration-300 ease-linear font-base">
           {/* <!-- Sidebar Menu --> */}
           <nav className="px-4 py-4 lg:px-4">
-            {menuGroups.map((group, groupIndex) => (
+            {menus.map((group: any, groupIndex: any) => (
               <div key={groupIndex}>
                 {/* <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
                   {group.name}
                 </h3> */}
 
                 <ul className="mb-6 flex flex-col gap-2">
-                  {group.menuItems.map((menuItem, menuIndex) => (
+                  {group.menuItems.map((menuItem: any, menuIndex: any) => (
                     <SidebarItem
                       key={menuIndex}
                       item={menuItem}

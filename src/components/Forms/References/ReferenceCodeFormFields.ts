@@ -24,15 +24,6 @@ const InitialField: InitialFieldConfig[] = [
         name: "transaction_line_id",
         size: 2,
     },
-    {
-        name: "start_date",
-        type: "date",
-    },
-    {
-        name: "end_date",
-        type: "date",
-        disabled: true,
-    },
 ];
 
 export default getRealFormFields(InitialField);

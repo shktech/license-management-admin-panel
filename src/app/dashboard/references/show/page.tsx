@@ -6,13 +6,20 @@ import ReferenceCodeDetailDrawer from "@components/References/ReferenceCodeDetai
 import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
 import GenericTable from "@components/Table/GenericTable";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
-import { useDelete, useNavigation, useParsed, usePermissions, useShow, useTable } from "@refinedev/core";
+import {
+  useDelete,
+  useNavigation,
+  useParsed,
+  usePermissions,
+  useShow,
+  useTable,
+} from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
+import { getFormattedDate } from "@utils/utilFunctions";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 
 const Page = () => {
-
   const { params } = useParsed();
 
   const { queryResult } = useShow<Reference>({
@@ -34,12 +41,15 @@ const Page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const [clickedReferenceCode, setClickedReferenceCode] = useState<ReferenceCode | null>(null);
+  const [clickedReferenceCode, setClickedReferenceCode] =
+    useState<ReferenceCode | null>(null);
 
   const handleCreate = () => {
     // setOpenDrawer(true);
-    push(`/dashboard/references/codes/create?id=${params?.id}`);
-  }
+    push(
+      `/dashboard/references/codes/create?id=${params?.id}&reference_name=${reference?.reference_name}`
+    );
+  };
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
@@ -47,25 +57,32 @@ const Page = () => {
   const handleEditClick = (row: ReferenceCode) => {
     // setClickedReferenceCode(row);
     // setOpenDrawer(true);
-    push(`/dashboard/references/codes/edit?reference_id=${params?.id}&code_id=${row.id}`);
+    push(
+      `/dashboard/references/codes/edit?reference_id=${params?.id}&code_id=${row.reference_code_id}`
+    );
   };
 
   const handleClose = () => {
     refetch();
     setClickedReferenceCode(null);
     setOpenDrawer(false);
-  }
+  };
 
   const { push } = useNavigation();
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        <EditButton {...editButtonProps} onClick={() => push(`/dashboard/references/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
+        <EditButton
+          {...editButtonProps}
+          onClick={() => push(`/dashboard/references/edit?id=${params?.id}`)}
+          sx={editRefineBtnStyle}
+        />
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
   };
+
   // const { mutate: deleteReferenceCode } = useDelete();
 
   // const handleDeleteBtn = (ReferenceCode: ReferenceCode) => {
@@ -101,26 +118,40 @@ const Page = () => {
         header: "Product Part ID",
       },
       {
-        accessorKey: "osc_product.product_id",
-        header: "OSC Product ID",
-      },
-      {
         accessorKey: "transaction_line_id",
         header: "Transaction Line ID",
       },
       {
-        accessorKey: "start_date",
-        header: "Start Date",
-        Cell: ({ cell }) => {
-          return <div>{new Date(cell.getValue() as string).toLocaleDateString()}</div>
-        }
+        accessorKey: "transaction.transaction_date",
+        header: "Transaction Date",
       },
       {
-        accessorKey: "end_date",
-        header: "End Date",
-        Cell: ({ cell }) => {
-          return <div>{new Date(cell.getValue() as string).toLocaleDateString()}</div>
-        }
+        accessorKey: "status",
+        header: "Status",
+        size: 50,
+        Cell: ({ renderedCellValue }) => {
+          return (
+            <div
+              className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue == "Active" ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
+            >
+              {renderedCellValue}
+            </div>
+          );
+        },
+      },
+      {
+        accessorKey: "active",
+        header: "Active",
+        size: 50,
+        Cell: ({ renderedCellValue }) => {
+          return (
+            <div
+              className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
+            >
+              {renderedCellValue ? "Active" : "Inactive"}
+            </div>
+          );
+        },
       },
     ],
     []
@@ -140,11 +171,15 @@ const Page = () => {
         <div className="px-8 pt-6 !font-satoshi text-2xl font-semibold text-[#1f325c] gap-2">
           <div className="flex items-center gap-2">
             <div className="">Detailed Reference</div>
-            <span className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}>
+            <span
+              className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}
+            >
               {reference?.reference_type}
             </span>
-            <span className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}>
-              {reference?.active ? "Active" : "Deactive"}
+            <span
+              className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
+            >
+              {reference?.active ? "Active" : "Inactive"}
             </span>
           </div>
         </div>
@@ -153,21 +188,44 @@ const Page = () => {
         getButtonProps(editButtonProps, refreshButtonProps)
       }
     >
-      {isLoading ? <Loader /> :
+      {isLoading ? (
+        <Loader />
+      ) : (
         <div>
-          <div className="px-12 grid grid-cols-4 gap-4  pt-4 pb-12">
+          <div className="px-12 flex gap-8 pt-4 pb-12">
             <div className="">
               <div className="text-[#778599]">Reference Name</div>
-              <div className="text-[#515f72] text-xl font-semibold">{reference?.reference_name}</div>
+              <div className="text-[#515f72] text-xl font-semibold">
+                {reference?.reference_name}
+              </div>
             </div>
             <div className="">
+              <div className="text-[#778599]">Start Date</div>
+              <div className="text-[#515f72] text-xl font-semibold">
+                {getFormattedDate(reference?.start_date)}
+              </div>
+            </div>
+            <div className="">
+              <div className="text-[#778599]">End Date</div>
+              <div className="text-[#515f72] text-xl font-semibold">
+                {getFormattedDate(reference?.end_date)}
+              </div>
+            </div>
+
+            <div className="">
               <div className="text-[#778599]">Reference Description</div>
-              <div className="text-[#515f72] text-xl font-semibold">{reference?.reference_description}</div>
+              <div className="text-[#515f72] text-xl font-semibold">
+                {reference?.reference_description}
+              </div>
             </div>
           </div>
           <div className="bg-white">
             <GenericTable
-              title={<div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">Reference Codes</div>}
+              title={
+                <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                  Reference Codes
+                </div>
+              }
               columns={columns}
               handleCreate={handleCreate}
               data={codeData?.data}
@@ -177,7 +235,7 @@ const Page = () => {
             />
           </div>
         </div>
-      }
+      )}
     </Show>
   );
 };

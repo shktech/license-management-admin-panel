@@ -30,10 +30,10 @@ const Page = () => {
         accessorKey: "license_key",
         header: "License Number (LicKey/Srl#)",
       },
-      {
-        accessorKey: "organization.organization_name",
-        header: "Organization",
-      },
+      // {
+      //   accessorKey: "organization.organization_name",
+      //   header: "Organization",
+      // },
       {
         accessorKey: "osc_product.product_part_number",
         header: "Product Part Number",
@@ -50,6 +50,11 @@ const Page = () => {
         accessorKey: "osc_product.product_name",
         header: "Vendor Part",
       },
+      {
+        accessorKey: "seat_number",
+        header: "Number of Seats",
+        Cell: ({ row }) => row.original?.seats?.length,
+      }
     ],
     []
   );

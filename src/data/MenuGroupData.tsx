@@ -1,9 +1,11 @@
 import DashboardIcon from '@/assets/icons/dashboard.svg?icon';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import TransactionIcon from '@/assets/icons/transaction.svg?icon';
 import MasterMngtIcon from '@/assets/icons/mastermngt.svg?icon';
 import MaintenanceIcon from '@/assets/icons/maintenance.svg?icon';
 import ReportsIcon from '@/assets/icons/reports.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
+import DnsIcon from '@mui/icons-material/Dns';
 
 export const menuGroups = [
     {
@@ -17,14 +19,11 @@ export const menuGroups = [
         {
           icon: <TransactionIcon className="fill-current" />,
           label: "Transaction",
-          route: "#",
-          children: [
-            { label: "Transactions", route: "/dashboard/transactions" },
-          ],
+          route: "/dashboard/transactions",
         },
         {
           icon: <MasterMngtIcon className="fill-current" />,
-          label: "Management",
+          label: "Maintenance",
           route: "#",
           children: [
             { label: "Licenses", route: "/dashboard/assets" },
@@ -34,35 +33,41 @@ export const menuGroups = [
           ],
         },
         {
-          icon: <MaintenanceIcon className="fill-current" />,
-          label: "Maintenance",
-          route: "#",
-          children: [
-            { label: "License Code", route: "/dashboard/license-code" },
-            { label: "Setups", route: "/dashboard/lookups" },
-            { label: "Email Templates", route: "/dashboard/email-templates" },
-          ],
-        },
-        {
           icon: <ReportsIcon className="fill-current" />,
           label: "Reports",
           route: "#",
-          children: [
-            { label: "Business", route: "/dashboard/reports/business" },
-            { label: "Logs", route: "/dashboard/reports/logs" },
-            { label: "Schedule/View", route: "/dashboard/reports/schedule-view" },
-          ],
         },
         {
           icon: <SettingsIcon className="fill-current" />,
-          label: "Settings",
+          label: "Setups",
           route: "#",
           children: [
-            { label: "User Account", route: "/dashboard/user-account" },
-            { label: "Organization", route: "/dashboard/organizations" },
+            { label: "User profile", route: "/dashboard/user-profile" },
+            { label: "Users", route: "/dashboard/users", is_superuser: true },
+            { label: "Organizations", route: "/dashboard/orgs", is_superuser: true },
+            { label: "Notification Templates", route: "/dashboard/email-templates" },
+            { label: "Roles & Permissions", route: "/dashboard/roles", is_superuser: true },
+            { label: "API Keys", route: "/dashboard/api-keys", is_superuser: true },
           ],
+        },
+        {
+          icon: <DnsIcon fontSize='small'/>,
+          label: "Lookups",
+          route: "/dashboard/lookups",
         },
       ],
     }
   ];
   
+  
+export const filterSuperUserItems = (groups: any) => {
+  return groups.map((group: any) => ({
+      ...group,
+      menuItems: group.menuItems.map((item: any) => ({
+      ...item,
+      children: item.children?.filter((child: any) => !child.is_superuser)
+    })).filter((item: any) => item.children?.length !== 0 || !item.children)
+  }));
+}
+
+export const notSuperUserMenu = filterSuperUserItems(menuGroups);

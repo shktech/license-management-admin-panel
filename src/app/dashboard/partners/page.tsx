@@ -14,10 +14,9 @@ import StateComponent from "@components/common/StateComponent";
 import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 const partnerColors = {
-  All: '#4A90E2',
-  Shipping: '#FFCC00',
-  Billing: '#34C759',
-  Reseller: '#8E44AD',
+  "All": '#4A90E2',
+  "Channel": '#FFCC00',
+  "Direct End User": '#34C759',
 }
 
 const Page = () => {
@@ -111,9 +110,8 @@ const Page = () => {
                     }}
                   >
                     <MenuItem value={''}><span className="text-xs bg-[#4A90E2] text-white w-full px-6 py-1 rounded-full text-center font-semibold">All</span></MenuItem>
-                    <MenuItem value={'shipping'}><span className="text-xs bg-[#FFCC00] text-white w-full px-2 py-1 rounded-full text-center font-semibold">Shipping</span></MenuItem>
-                    <MenuItem value={'billing'}><span className="text-xs bg-[#34C759] text-white w-full px-2 py-1 rounded-full text-center font-semibold">Billing</span></MenuItem>
-                    <MenuItem value={'reseller'}><span className="text-xs bg-[#8E44AD] text-white w-full px-2 py-1 rounded-full text-center font-semibold">Reseller</span></MenuItem>
+                    <MenuItem value={'Channel'}><span className="text-xs bg-[#FFCC00] text-white w-full px-2 py-1 rounded-full text-center font-semibold">Channel</span></MenuItem>
+                    <MenuItem value={'Direct End User'}><span className="text-xs bg-[#34C759] text-white w-full px-2 py-1 rounded-full text-center font-semibold">Direct End User</span></MenuItem>
                   </Select>
                 </FormControl>
               </div>

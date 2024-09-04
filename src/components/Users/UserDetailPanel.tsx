@@ -82,13 +82,13 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
   return (
     <div className="bg-white px-8 py-8 font-med flex flex-col">
       <div className="text-xl font-semibold text-black flex items-center gap-4">
-        <Link href={user && !isShow ? "/dashboard/organizations/users/show?id=" + user?.user_id : "/dashboard/organizations"} className="pb-1 hover:text-slate-700">
+        <Link href={user && !isShow ? "/dashboard/users/show?id=" + user?.user_id : "/dashboard/users"} className="pb-1 hover:text-slate-700">
           <ArrowBackIosNewIcon fontSize="small" />
         </Link>
         <div className="flex flex-1 items-center justify-between">
           <div>{user ? isShow ? "" : "Edit" : "Create"} User</div>
           {isShow && (
-            <Link href={`/dashboard/organizations/users/edit?id=${user?.user_id}`} className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium">
+            <Link href={`/dashboard/users/edit?id=${user?.user_id}`} className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium">
               Edit
             </Link>
           )}

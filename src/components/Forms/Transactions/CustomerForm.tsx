@@ -97,7 +97,7 @@ const CustomerForm = ({
     setFilters,
   } = useTable<Partner>({
     resource: `partners`,
-    initialFilter: [{ field: "type", operator: "eq", value: customer.type }],
+    // initialFilter: [{ field: "type", operator: "eq", value: customer.type }],
     syncWithLocation: false,
   });
 

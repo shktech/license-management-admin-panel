@@ -73,7 +73,7 @@ const MemeberPanel: React.FC = () => {
   );
 
   const handleRowClick = (row: User) => {
-    push(`/dashboard/organizations/users/show?id=${row.user_id}`);
+    push(`/dashboard/users/show?id=${row.user_id}`);
   };
 
   if (isLoading) return <Loader />;
