@@ -180,93 +180,95 @@ const Page = () => {
     []
   );
   return (
-    <Show
-      goBack={null}
-      isLoading={isLoading}
-      breadcrumb={false}
-      wrapperProps={{
-        className: "rounded-none bg-[#f2f6fa] shadow-none p-0",
-      }}
-      contentProps={{
-        className: "p-0",
-      }}
-      title={
-        <div className="px-8 pt-6 !font-satoshi text-2xl font-semibold text-[#1f325c] gap-2">
-          <div className="flex gap-2 items-end gap-6">
-            <div className="">Reference </div>
-            <div className="text-lg font-normal">
-              {reference?.reference_name}
-            </div>
-
-            <span
-              className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}
-            >
-              {reference?.reference_type}
-            </span>
-            <span
-              className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
-            >
-              {reference?.active ? "Active" : "Inactive"}
-            </span>
-          </div>
-        </div>
-      }
-      headerButtons={({ editButtonProps, refreshButtonProps }) =>
-        getButtonProps(editButtonProps, refreshButtonProps)
-      }
-    >
-      {isLoading ? (
+    <>
+      {isLoading || codeIsLoading ? (
         <Loader />
       ) : (
-        <div>
-          <div className="px-12 flex gap-8 pt-4 pb-12">
-            <div className="">
-              <div className="text-[#778599]">Reference Name</div>
-              <div className="text-[#515f72] text-xl font-semibold">
-                {reference?.reference_name}
-              </div>
-            </div>
-            <div className="">
-              <div className="text-[#778599]">Start Date</div>
-              <div className="text-[#515f72] text-xl font-semibold">
-                {getFormattedDate(reference?.start_date)}
-              </div>
-            </div>
-            <div className="">
-              <div className="text-[#778599]">End Date</div>
-              <div className="text-[#515f72] text-xl font-semibold">
-                {getFormattedDate(reference?.end_date)}
-              </div>
-            </div>
-
-            <div className="">
-              <div className="text-[#778599]">Reference Description</div>
-              <div className="text-[#515f72] text-xl font-semibold">
-                {reference?.reference_description}
-              </div>
-            </div>
-          </div>
-          <div className="bg-white">
-            <GenericTable
-              title={
-                <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-                  Reference Codes
+        <Show
+          goBack={null}
+          isLoading={isLoading || codeIsLoading}
+          breadcrumb={false}
+          wrapperProps={{
+            className: "rounded-none bg-[#f2f6fa] shadow-none p-0",
+          }}
+          contentProps={{
+            className: "p-0",
+          }}
+          title={
+            <div className="px-8 pt-6 !font-satoshi text-2xl font-semibold text-[#1f325c] gap-2">
+              <div className="flex gap-2 items-end gap-6">
+                <div className="">Reference </div>
+                <div className="text-lg font-normal">
+                  {reference?.reference_name}
                 </div>
-              }
-              columns={columns}
-              handleCreate={handleCreate}
-              data={codeData?.data}
-              totalCount={codeData?.total}
-              onRowClick={handleEditClick}
-              handlePage={handlePage}
-              handleSorting={handleSorting}
-              handleSearch={handleSearch}
-              canCreate={true}
-            />
+
+                <span
+                  className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}
+                >
+                  {reference?.reference_type}
+                </span>
+                <span
+                  className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
+                >
+                  {reference?.active ? "Active" : "Inactive"}
+                </span>
+              </div>
+            </div>
+          }
+          headerButtons={({ editButtonProps, refreshButtonProps }) =>
+            getButtonProps(editButtonProps, refreshButtonProps)
+          }
+        >
+          <div>
+            <div className="px-12 flex gap-8 pt-4 pb-12">
+              <div className="">
+                <div className="text-[#778599]">Reference Name</div>
+                <div className="text-[#515f72] text-xl font-semibold">
+                  {reference?.reference_name}
+                </div>
+              </div>
+              <div className="">
+                <div className="text-[#778599]">Start Date</div>
+                <div className="text-[#515f72] text-xl font-semibold">
+                  {getFormattedDate(reference?.start_date)}
+                </div>
+              </div>
+              <div className="">
+                <div className="text-[#778599]">End Date</div>
+                <div className="text-[#515f72] text-xl font-semibold">
+                  {getFormattedDate(reference?.end_date)}
+                </div>
+              </div>
+
+              <div className="">
+                <div className="text-[#778599]">Reference Description</div>
+                <div className="text-[#515f72] text-xl font-semibold">
+                  {reference?.reference_description}
+                </div>
+              </div>
+            </div>
+            <div className="bg-white">
+              <GenericTable
+                title={
+                  <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                    Reference Codes
+                  </div>
+                }
+                columns={columns}
+                handleCreate={handleCreate}
+                data={codeData?.data}
+                totalCount={codeData?.total}
+                onRowClick={handleEditClick}
+                handlePage={handlePage}
+                handleSorting={handleSorting}
+                handleSearch={handleSearch}
+                canCreate={true}
+              />
+            </div>
           </div>
-        </div>
+        </Show>
       )}
-    </Show>
+    </>
   );
 };
 

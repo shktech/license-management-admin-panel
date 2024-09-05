@@ -28,9 +28,7 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
   } = useTable<Asset>({
     syncWithLocation: false,
     resource: "assets",
-    // initialFilter: [
-    //     { field: "partner", operator: "eq", value: partner_id },
-    // ],
+    initialFilter: [{ field: 'partner', operator: 'eq', value: partner_id }],
   });
   
 

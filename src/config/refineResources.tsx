@@ -247,4 +247,16 @@ export const dashboardResources: ResourceProps[] = [
       canDelete: true,
     },
   },
+  {
+    name: "orgs/key/api-keys",
+    list: "/dashboard/api-keys",
+    create: "/dashboard/api-keys/create",
+    edit: "/dashboard/api-keys/edit/:id",
+    meta: {
+      label: "API Keys",
+      parent: "settings",
+      warnWhenUnsavedChanges: true,
+      canDelete: true,
+    },
+  },
 ];

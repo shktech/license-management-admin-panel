@@ -212,7 +212,7 @@ const Page = () => {
         handleOK={handleSwitch}
       />
       <APIKeyPanel /> */}
-      <MemeberInvitePanel />
+      <MemeberInvitePanel orgs={orgData ?? []} />
     </div>
   );
 };

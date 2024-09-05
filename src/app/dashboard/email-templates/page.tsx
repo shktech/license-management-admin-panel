@@ -4,6 +4,7 @@ import { useList } from "@refinedev/core";
 import React, { useEffect, useState } from "react";
 import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
 import { EmailTemplate } from "@/types/types";
+import Loader from "@components/common/Loader";
 
 const Page = () => {
   const { data, refetch, isLoading } = useList<EmailTemplate>({
@@ -31,15 +32,19 @@ const Page = () => {
           Configure common settings for sending emails
         </div>
         <div>
-          {eTData?.map((et: EmailTemplate, i: number) => (
-            <EmailTemplateComponent
-              key={et.email_id}
-              template={et}
-              expanded={expanded}
-              handleChangeAccordian={handleChangeAccordian}
-              onSave={refetch}
-            />
-          ))}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            eTData?.map((et: EmailTemplate, i: number) => (
+              <EmailTemplateComponent
+                key={et.email_id}
+                template={et}
+                expanded={expanded}
+                handleChangeAccordian={handleChangeAccordian}
+                onSave={refetch}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

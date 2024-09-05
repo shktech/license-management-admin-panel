@@ -7,7 +7,7 @@ import {
   usePermissions,
   useTable,
 } from "@refinedev/core";
-import { Permission, Role, User } from "@/types/types";
+import { Organization, Permission, Role, User } from "@/types/types";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
 import DeleteUserModal from "@components/Users/DeleteUserModal";
@@ -103,9 +103,16 @@ const Page = () => {
         size: 180,
       },
       {
-        accessorKey: "organization",
-        header: "Organization",
+        accessorKey: "organizations",
+        header: "Organizations",
         size: 150,
+        Cell: ({ renderedCellValue }) => {
+          return (
+            <div className="flex gap-2">
+              {(renderedCellValue as Organization[]).toString()}
+            </div>
+          );
+        },
       },
       {
         accessorKey: "is_active",

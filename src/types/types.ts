@@ -135,6 +135,7 @@ export interface User {
     email?: string;
     first_name?: string;
     last_name?: string;
+    organizations?: Organization[];
     organization?: string;
     is_active?: boolean;
     is_superuser?: boolean;
