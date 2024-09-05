@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useCreate, useGetIdentity, useTable } from "@refinedev/core";
-import { Role, User } from "@/types/types";
+import { Organization, Role, User } from "@/types/types";
 import React, { useMemo, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -16,7 +16,7 @@ import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
-const MemeberInvitePanel: React.FC = () => {
+const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
   const { data: identity } = useGetIdentity<User>();
   const {
     tableQueryResult: { data: rolesData, isLoading: isRolesLoading, refetch },
@@ -29,6 +29,7 @@ const MemeberInvitePanel: React.FC = () => {
     {
       email: "",
       role_id: "",
+      organization_code: "",
     },
   ]);
 
@@ -38,6 +39,7 @@ const MemeberInvitePanel: React.FC = () => {
       {
         email: "",
         role_id: "",
+        organization_code: "",
       },
     ]);
   };
@@ -59,18 +61,24 @@ const MemeberInvitePanel: React.FC = () => {
     newValues[index].role_id = e.target.value;
     setSentValues(newValues);
   };
+  const handleOrganizationChange = (e: SelectChangeEvent, index: number) => {
+    const newValues = [...sentValues];
+    newValues[index].organization_code = e.target.value;
+    setSentValues(newValues);
+  };
 
   const { mutate } = useCreate();
   const handleInvite = () => {
-    mutate(
-      {
-        resource: "invite",
-        values: sentValues,
-      },
-      {
-        onSuccess: () => console.log("success"),
-      }
-    );
+    console.log(sentValues);
+    // mutate(
+    //   {
+    //     resource: "invite",
+    //     values: sentValues,
+    //   },
+    //   {
+    //     onSuccess: () => console.log("success"),
+    //   }
+    // );
   };
 
   return (
@@ -90,9 +98,10 @@ const MemeberInvitePanel: React.FC = () => {
           Add more
         </Button>
       </div>
-      <div className="flex gap-8 mr-14 pb-4 px-12 pt-6">
+      <div className="flex gap-8 mr-18 pb-4 px-12 pt-6">
         <div className="text-xs flex-1">Email Address</div>
         <div className="text-xs flex-1">Role</div>
+        <div className="text-xs flex-1">Organization</div>
       </div>
       <div className="flex items-center gap-4 px-12 border-b border-[#c7c7c7] pb-8">
         <div className="flex flex-1 flex-col gap-6">
@@ -117,12 +126,31 @@ const MemeberInvitePanel: React.FC = () => {
                 variant="outlined"
                 size="small"
                 value={value.role}
-                label="Age"
                 onChange={(e) => handleRoleChange(e, index)}
               >
                 {rolesData?.data?.map((role) => (
                   <MenuItem key={role.role_id} value={role.role_id}>
                     {role.name}
+                  </MenuItem>
+                )) || []}
+              </Select>
+            </FormControl>
+          ))}
+        </div>
+        <div className="flex flex-1 flex-col gap-6">
+          {sentValues.map((value, index) => (
+            <FormControl fullWidth>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                variant="outlined"
+                size="small"
+                value={value.organization_code}
+                onChange={(e) => handleOrganizationChange(e, index)}
+              >
+                {orgs.map((org) => (
+                  <MenuItem key={org.organization_code} value={org.organization_code}>
+                    {org.organization_code}
                   </MenuItem>
                 )) || []}
               </Select>
