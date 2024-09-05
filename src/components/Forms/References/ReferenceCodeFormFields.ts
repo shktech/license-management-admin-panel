@@ -14,7 +14,6 @@ const InitialField: InitialFieldConfig[] = [
     {
         name: "osc_part_number",
         type: "dropdown",
-        required: 'text',
         resource: "products",
         valueKey: "product_part_number",
         labelKey: "product_part_number",

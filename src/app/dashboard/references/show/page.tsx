@@ -15,8 +15,11 @@ import {
   useTable,
 } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
-import { getFormattedDate } from "@utils/utilFunctions";
-import { MRT_ColumnDef } from "material-react-table";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
 
 const Page = () => {
@@ -67,6 +70,14 @@ const Page = () => {
     setClickedReferenceCode(null);
     setOpenDrawer(false);
   };
+
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
+
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
+
+  const handlePage = (value: number) => setCurrent(value);
 
   const { push } = useNavigation();
 
@@ -247,6 +258,9 @@ const Page = () => {
               data={codeData?.data}
               totalCount={codeData?.total}
               onRowClick={handleEditClick}
+              handlePage={handlePage}
+              handleSorting={handleSorting}
+              handleSearch={handleSearch}
               canCreate={true}
             />
           </div>

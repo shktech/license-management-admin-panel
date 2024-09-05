@@ -21,7 +21,6 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
   const { data: identity, isLoading } = useGetIdentity<User>();
-  console.log("sidebar", identity);
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
 
   const menus = identity?.is_superuser ? AdminMenu : CommonMenu;

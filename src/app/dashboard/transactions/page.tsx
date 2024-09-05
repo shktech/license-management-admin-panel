@@ -8,7 +8,10 @@ import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
-import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
 
 const Page = () => {
   const {
@@ -16,28 +19,34 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Transaction>({
-    initialSorter: [
-      {
-        field: "transaction_date",  // The field you want to sort by
-        order: "desc",    // The sorting order: "asc" or "desc"
-      },
-    ],
-  });
+  } = useTable<Transaction>();
+
+  const initialSorter: any = [
+    {
+      id: "transaction_date",
+      desc: true,
+    },
+  ];
 
   const { push } = useNavigation();
 
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
 
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
 
-  const handleCreate = () => push('/dashboard/transactions/create?transaction_action=New')
+  const handleCreate = () =>
+    push("/dashboard/transactions/create?transaction_action=New");
 
-  const handleRowClick = (row: Transaction) => push(`/dashboard/transactions/show?id=${row.transaction_id}`)
+  const handleRowClick = (row: Transaction) =>
+    push(`/dashboard/transactions/show?id=${row.transaction_id}`);
 
-  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "transaction" } });
+  const { data: permissionsData } = usePermissions<Permission>({
+    params: { codename: "transaction" },
+  });
 
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
     () => [
@@ -50,14 +59,21 @@ const Page = () => {
         accessorKey: "transaction_date",
         header: "Txn Date",
         size: 50,
-        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue as string),
+        Cell: ({ renderedCellValue }) =>
+          getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <Box component="span" sx={(theme) => ({ backgroundColor: TxtStatusColor[renderedCellValue as string], ...tagStyle })} >
+          <Box
+            component="span"
+            sx={(theme) => ({
+              backgroundColor: TxtStatusColor[renderedCellValue as string],
+              ...tagStyle,
+            })}
+          >
             {renderedCellValue}
           </Box>
         ),
@@ -67,7 +83,13 @@ const Page = () => {
         header: "Txn Type",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <Box component="span" sx={{ backgroundColor: TxtTypeColor[renderedCellValue as string], ...tagStyle }} >
+          <Box
+            component="span"
+            sx={{
+              backgroundColor: TxtTypeColor[renderedCellValue as string],
+              ...tagStyle,
+            }}
+          >
             {renderedCellValue}
           </Box>
         ),
@@ -82,7 +104,13 @@ const Page = () => {
         header: "Txn Action",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <Box component="span" sx={{ backgroundColor: TxtActionColor[renderedCellValue as string], ...tagStyle }} >
+          <Box
+            component="span"
+            sx={{
+              backgroundColor: TxtActionColor[renderedCellValue as string],
+              ...tagStyle,
+            }}
+          >
             {renderedCellValue}
           </Box>
         ),
@@ -107,34 +135,36 @@ const Page = () => {
         header: "Number of Seats",
         size: 50,
         Cell: ({ row }) => row.original.asset?.seats?.length,
-      }
+      },
     ],
     []
   );
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {
-        isLoading ?
-          <Loader /> :
-          <GenericTable
-            title={
-              <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-                Transactions
-              </div>
-            }
-            data={data?.data}
-            columns={columns}
-            onRowClick={handleRowClick}
-            handleCreate={handleCreate}
-            canCreate={permissionsData?.create}
-            totalCount={data?.total}
-            handlePage={handlePage}
-            handleSorting={handleSorting}
-            handleSearch={handleSearch}
-            canDelete={false}
-            canEdit={permissionsData?.update} />
-      }
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <GenericTable
+          title={
+            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              Transactions
+            </div>
+          }
+          data={data?.data}
+          columns={columns}
+          onRowClick={handleRowClick}
+          handleCreate={handleCreate}
+          canCreate={permissionsData?.create}
+          totalCount={data?.total}
+          handlePage={handlePage}
+          handleSorting={handleSorting}
+          handleSearch={handleSearch}
+          canDelete={false}
+          canEdit={permissionsData?.update}
+          initialSorter={initialSorter}
+        />
+      )}
     </div>
   );
 };

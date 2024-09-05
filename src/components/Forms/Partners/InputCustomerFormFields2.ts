@@ -4,7 +4,6 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 const InitialCustomerFormFields: InitialFieldConfig[] = [
   {
     name: "account",
-    required: "text"
   },
   {
     name: "name",
@@ -20,7 +19,6 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
   },
   {
     name: "email",
-    required: 'email'
   },
   {
     name: "address1",

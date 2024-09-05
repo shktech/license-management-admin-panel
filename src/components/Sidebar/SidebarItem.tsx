@@ -22,7 +22,6 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
 
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    console.log(item)
     if (pageName === item.label.toLowerCase()) {
       setOpen(true);
     }

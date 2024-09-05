@@ -8,7 +8,7 @@ const InitialField: InitialFieldConfig[] = [
     name: "reference_type",
     type: "dropdown",
     size: 2,
-    required: "text",
+    
     options: [
       { value: "Unique", label: "Unique" },
       { value: "Common", label: "Common" },
@@ -16,13 +16,13 @@ const InitialField: InitialFieldConfig[] = [
   },
   {
     name: "start_date",
-    required: "text",
+    
     type: "date",
   },
   {
     name: "end_date",
     type: "date",
-    required: "text",
+    
   },
 ];
 

@@ -109,6 +109,7 @@ const Page = () => {
             // onRowClick={handleRowClick}
             onRowClick={handleClickItem}
             noSearchNeed
+            noSortNeed
           />
           {openDrawer && (
             <RoleDrawer

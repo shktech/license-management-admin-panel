@@ -60,22 +60,6 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         ),
       },
       {
-        accessorKey: "asset.license_type",
-        header: "Txn Type",
-        size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={{
-              backgroundColor: TxtTypeColor[renderedCellValue as string],
-              ...tagStyle,
-            }}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
-      },
-      {
         accessorKey: "transaction_source",
         header: "Txn Source",
         size: 50,
@@ -97,25 +81,24 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         ),
       },
       {
-        accessorKey: "bill_customer.name",
+        accessorKey: "bill_customer_name",
         header: "Bill Customer",
         size: 50,
       },
       {
-        accessorKey: "ship_customer.name",
-        header: "Bill Customer",
+        accessorKey: "ship_customer_name",
+        header: "Ship Customer",
         size: 50,
       },
       {
-        accessorKey: "asset.osc_product.product_part_number",
-        header: "Product Part Number",
+        accessorKey: "reseller_name",
+        header: "Reseller",
         size: 50,
       },
       {
-        accessorKey: "seat_number",
-        header: "Number of Seats",
+        accessorKey: "quantity",
+        header: "quentity",
         size: 50,
-        Cell: ({ row }) => row.original.asset?.seats?.length,
       },
     ],
     []

@@ -6,7 +6,6 @@ const InitialCreateField: InitialFieldConfig[] = [
         name: "osc_part_number",
         type: "dropdown",
         size: 2,
-        required: 'text',
         resource: "products",
         valueKey: "product_part_number",
         labelKey: "product_part_number",
@@ -15,7 +14,6 @@ const InitialCreateField: InitialFieldConfig[] = [
         name: "license_type",
         type: "dropdown",
         size: 1,
-        required: 'text',
         options: [
             { value: "Eval", label: "Eval" },
             { value: "Subscription", label: "Subscription" },
@@ -26,17 +24,14 @@ const InitialCreateField: InitialFieldConfig[] = [
     {
         name: "quantity",
         type: "number",
-        required: 'text',
     },
     {
         name: "start_date",
-        required: 'text',
         type: "date",
     },
     {
         name: "end_date",
         type: "date",
-        required: 'text',
         disabled: true
     },
 ];
@@ -46,7 +41,6 @@ const InitialReActionField: InitialFieldConfig[] = [
         name: "osc_part_number",
         type: "dropdown",
         size: 2,
-        required: 'text',
         disabled: true,
         resource: "products",
         valueKey: "product_part_number",
@@ -57,7 +51,6 @@ const InitialReActionField: InitialFieldConfig[] = [
         type: "dropdown",
         disabled: true,
         size: 1,
-        required: 'text',
         options: [
             { value: "Eval", label: "Eval" },
             { value: "Subscription", label: "Subscription" },
@@ -68,18 +61,15 @@ const InitialReActionField: InitialFieldConfig[] = [
     {
         name: "quantity",
         type: "number",
-        required: 'text',
     },
     {
         name: "start_date",
-        required: 'text',
         type: "date",
         disabled: true
     },
     {
         name: "end_date",
         type: "date",
-        required: 'text',
         disabled: true
     },
 ];

@@ -6,13 +6,11 @@ const InitialField: InitialFieldConfig[] = [
   { name: "name", size: 2 },
   {
     name: "type",
-    required: 'text',
     type: "dropdown",
     size: 2,
     options: [
-      { value: "Billing", label: "Billing" },
-      { value: "Shipping", label: "Shipping" },
-      { value: "Reseller", label: "Reseller" },
+      { value: "Direct End User", label: "Direct End User" },
+      { value: "Channel", label: "Channel" },
     ],
   },
 ];
@@ -22,13 +20,11 @@ const InitialCreateField: InitialFieldConfig[] = [
   { name: "name", size: 2 },
   {
     name: "type",
-    required: 'text',
     type: "dropdown",
     size: 2,
     options: [
-      { value: "Billing", label: "Billing" },
-      { value: "Shipping", label: "Shipping" },
-      { value: "Reseller", label: "Reseller" },
+      { value: "Direct End User", label: "Direct End User" },
+      { value: "Channel", label: "Channel" },
     ],
   },
   { name: "address1" },

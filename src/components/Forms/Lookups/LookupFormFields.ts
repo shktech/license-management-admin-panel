@@ -6,7 +6,6 @@ const InitialField: InitialFieldConfig[] = [
     { name: "description", size: 2 },
     {
         name: "type",
-        required: 'text',
         type: "dropdown",
         size: 2,
         options: [

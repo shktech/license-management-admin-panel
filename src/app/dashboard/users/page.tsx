@@ -8,7 +8,7 @@ import {
   useTable,
 } from "@refinedev/core";
 import { Permission, Role, User } from "@/types/types";
-import { MRT_ColumnDef } from "material-react-table";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
 import DeleteUserModal from "@components/Users/DeleteUserModal";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -19,13 +19,15 @@ import CommonTable from "@components/Table/CommonTable";
 // import InviteUserDrawer from "@components/Users/InviteUserDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
+import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-  } = useTable<User>({
-    hasPagination: false,
-  });
+    setCurrent,
+    setFilters,
+    setSorters,
+  } = useTable<User>();
   const { push } = useNavigation();
   const {
     data: rolesData,
@@ -75,6 +77,13 @@ const Page = () => {
     handleOpenDeleteModal();
     setSelectedUser(row);
   };
+
+  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+
+  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+
+  const handlePage = (value: number) => setCurrent(value);
+
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
@@ -169,6 +178,9 @@ const Page = () => {
           data={data?.data}
           columns={columns}
           onRowClick={handleShowUser}
+          handlePage={handlePage}
+          handleSorting={handleSorting}
+          handleSearch={handleSearch}
         />
       )}
       {/* {
