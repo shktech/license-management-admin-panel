@@ -26,7 +26,7 @@ export default function DefaultLayout({
               </IconButton>
             </div>
 
-            <div className="mx-auto">
+            <div className="mx-auto pt-4">
               {children}
             </div>
           </main>
