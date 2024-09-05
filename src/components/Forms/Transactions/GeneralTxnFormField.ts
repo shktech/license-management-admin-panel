@@ -6,7 +6,6 @@ const InitialCreateField: InitialFieldConfig[] = [
         name: "transaction_source",
         type: "dropdown",
         size: 2,
-        required: 'text',
         options: [
             { value: "Oracle ERP", label: "Oracle ERP" },
             { value: "Prod Reg", label: "Prod Reg" },
@@ -16,7 +15,6 @@ const InitialCreateField: InitialFieldConfig[] = [
     {
         name: "transaction_action",
         type: "dropdown",
-        required: 'text',
         disabled: true,
         options: [
             { value: "New", label: "New" },
@@ -25,7 +23,7 @@ const InitialCreateField: InitialFieldConfig[] = [
         ],
     },
     { name: "source_reference_number" },
-    { name: "source_reference_date", type: "date", required: 'text' },
+    { name: "source_reference_date", type: "date" },
     { name: "source_reference_id" },
 ];
 
@@ -34,7 +32,6 @@ const InitialEditField: InitialFieldConfig[] = [
         name: "transaction_source",
         type: "dropdown",
         size: 2,
-        required: 'text',
         disabled: true,
         options: [
             { value: "Oracle ERP", label: "Oracle ERP" },
@@ -45,7 +42,6 @@ const InitialEditField: InitialFieldConfig[] = [
     {
         name: "transaction_action",
         type: "dropdown",
-        required: 'text',
         disabled: true,
         options: [
             { value: "New", label: "New" },
@@ -54,7 +50,7 @@ const InitialEditField: InitialFieldConfig[] = [
         ],
     },
     { name: "source_reference_number" },
-    { name: "source_reference_date", type: "date", required: 'text' },
+    { name: "source_reference_date", type: "date" },
     { name: "source_reference_id" },
 ];
 

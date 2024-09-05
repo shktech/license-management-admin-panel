@@ -34,13 +34,17 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     formState: { errors },
   } = useForm<InputTransaction>();
   useEffect(() => {
-    const nowDateString = new Date().toISOString().split("T")[0];
-    const resetTransaction: InputTransaction = {
-      source_reference_date: nowDateString,
-      start_date: nowDateString,
-      end_date: nowDateString,
-    };
-    reset({ ...resetTransaction });
+    if (initialInfo.transaction_action == "New") {
+      const nowDateString = new Date().toISOString().split("T")[0];
+      const resetTransaction: InputTransaction = {
+        source_reference_date: nowDateString,
+        start_date: nowDateString,
+        end_date: nowDateString,
+        transaction_action: initialInfo.transaction_action,
+      };
+      console.log(resetTransaction);
+      reset({ ...resetTransaction });
+    }
   }, []);
 
   const { data: productData, isLoading: productLoading } = useList<Product>({
@@ -58,17 +62,18 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     ...(assetData?.data as Transaction),
   };
 
-  console.log(transaction);
   useEffect(() => {
-    const resetTransaction = {
-      osc_part_number: assetData?.data?.osc_product?.product_part_number,
-      transaction_action: initialInfo.transaction_action,
-      license_key: assetData?.data?.license_key,
-      license_type: assetData?.data?.license_type,
-      start_date: assetData?.data?.start_date,
-      end_date: assetData?.data?.end_date,
-    };
-    reset(resetTransaction);
+    if (initialInfo.transaction_action != "New") {
+      const resetTransaction = {
+        osc_part_number: assetData?.data?.osc_product?.product_part_number,
+        transaction_action: initialInfo.transaction_action,
+        license_key: assetData?.data?.license_key,
+        license_type: assetData?.data?.license_type,
+        start_date: assetData?.data?.start_date,
+        end_date: assetData?.data?.end_date,
+      };
+      reset({ ...resetTransaction });
+    }
   }, [assetData, assetLoading]);
 
   const start_date = watch("start_date");

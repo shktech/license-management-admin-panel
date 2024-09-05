@@ -15,8 +15,11 @@ import {
   useTable,
 } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
-import { getFormattedDate } from "@utils/utilFunctions";
-import { MRT_ColumnDef } from "material-react-table";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
 
 const Page = () => {
@@ -68,6 +71,14 @@ const Page = () => {
     setOpenDrawer(false);
   };
 
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
+
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
+
+  const handlePage = (value: number) => setCurrent(value);
+
   const { push } = useNavigation();
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
@@ -116,6 +127,18 @@ const Page = () => {
       {
         accessorKey: "product_part_id",
         header: "Product Part ID",
+      },
+      {
+        accessorKey: "osc_product.product_part_number",
+        header: "Software Part",
+      },
+      {
+        accessorKey: "osc_product.vendor_part_number",
+        header: "Vender Part",
+      },
+      {
+        accessorKey: "osc_product.vendor_name",
+        header: "Vender Name",
       },
       {
         accessorKey: "transaction_line_id",
@@ -169,8 +192,12 @@ const Page = () => {
       }}
       title={
         <div className="px-8 pt-6 !font-satoshi text-2xl font-semibold text-[#1f325c] gap-2">
-          <div className="flex items-center gap-2">
-            <div className="">Detailed Reference</div>
+          <div className="flex gap-2 items-end gap-6">
+            <div className="">Reference </div>
+            <div className="text-lg font-normal">
+              {reference?.reference_name}
+            </div>
+
             <span
               className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}
             >
@@ -231,6 +258,9 @@ const Page = () => {
               data={codeData?.data}
               totalCount={codeData?.total}
               onRowClick={handleEditClick}
+              handlePage={handlePage}
+              handleSorting={handleSorting}
+              handleSearch={handleSearch}
               canCreate={true}
             />
           </div>

@@ -24,7 +24,7 @@ export interface Product {
     created_by?: number;
     updated_by?: number;
     organization?: Partial<Organization>;
-    // email_template?: Partial<EmailTemplate>;
+    email_template?: Partial<EmailTemplate>;
 }
 export interface Seat {
     id?: number;
@@ -289,7 +289,7 @@ export interface Reference {
     reference_name?: string;
     reference_description?: string;
     reference_type?: string;
-    organization?: Partial<Organization>;
+    organization?: string;
     active?: boolean;
     start_date?: string;
     end_date?: string;

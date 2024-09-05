@@ -58,7 +58,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
       updateRole(
         {
           resource: "roles",
-          id: `${(role?.role_id as string)}/`,
+          id: `${(role?.role_id as string)}`,
           values: payload,
         },
         {

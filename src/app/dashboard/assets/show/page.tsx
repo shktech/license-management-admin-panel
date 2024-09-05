@@ -12,13 +12,18 @@ import {
 import GenericTable from "@components/Table/GenericTable";
 import { outlineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import { Button } from "@mui/material";
-import { useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
+import {
+  useNavigation,
+  useParsed,
+  usePermissions,
+  useShow,
+} from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
-import AutorenewIcon from '@mui/icons-material/Autorenew';
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 const Page = () => {
   const { params } = useParsed();
@@ -29,7 +34,6 @@ const Page = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
 
   const { queryResult } = useShow<Asset>({
     resource: "assets",
@@ -42,7 +46,7 @@ const Page = () => {
   const seats: Seat[] = data?.data?.seats as Seat[];
 
   const handleReActionBtn = (action: string) => {
-    const path = '/dashboard/transactions/create?'; // your target route
+    const path = "/dashboard/transactions/create?"; // your target route
     const queryParams = {
       asset_id: asset.asset_id as string,
       transaction_action: action,
@@ -57,15 +61,11 @@ const Page = () => {
     };
 
     // Navigate to the path with the query parameters
-    push(path + (new URLSearchParams(queryParams).toString()));
-  }
+    push(path + new URLSearchParams(queryParams).toString());
+  };
 
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
-      {
-        accessorKey: "asset",
-        header: "License",
-      },
       {
         accessorKey: "status",
         header: "Status",
@@ -91,8 +91,6 @@ const Page = () => {
     return key.split(".").reduce((acc, part) => acc && acc[part], obj);
   };
 
-
-
   return (
     <div className="no-padding-card">
       <Show
@@ -105,22 +103,29 @@ const Page = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex items-end gap-4 text-2xl font-semibold text-[#1f325c]">
-              License <div className="text-lg font-normal">{asset?.license_key}</div>
+              License{" "}
+              <div className="text-lg font-normal">{asset?.license_key}</div>
             </div>
           </div>
         }
         headerButtons={({ refreshButtonProps }) => (
           <div className="flex gap-2 pr-10">
-            <Button sx={refreshRefineBtnStyle} onClick={() => handleReActionBtn("Renewal")}>
+            <Button
+              sx={refreshRefineBtnStyle}
+              onClick={() => handleReActionBtn("Renewal")}
+            >
               <AutorenewIcon fontSize="small" />
               Renew
             </Button>
-            <Button sx={refreshRefineBtnStyle} onClick={() => handleReActionBtn("Revoke")}>
-              <AutorenewIcon fontSize="small" />Revoke
+            <Button
+              sx={refreshRefineBtnStyle}
+              onClick={() => handleReActionBtn("Revoke")}
+            >
+              <AutorenewIcon fontSize="small" />
+              Revoke
             </Button>
 
             <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
-
           </div>
         )}
       >
@@ -160,7 +165,11 @@ const Page = () => {
                   items={[
                     {
                       label: "Active",
-                      value: <div className={`rounded-full h-4 w-4 ${asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
+                      value: (
+                        <div
+                          className={`rounded-full h-4 w-4 ${asset?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
+                        ></div>
+                      ),
                     },
                     {
                       label: "License Key",
@@ -255,7 +264,11 @@ const Page = () => {
                     },
                     {
                       label: "Active",
-                      value: <div className={`rounded-full h-4 w-4 ${asset?.osc_product?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
+                      value: (
+                        <div
+                          className={`rounded-full h-4 w-4 ${asset?.osc_product?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
+                        ></div>
+                      ),
                     },
                     {
                       label: "Duration",
@@ -275,7 +288,8 @@ const Page = () => {
                     },
                     {
                       label: "Organization",
-                      value: asset?.osc_product?.organization?.organization_code,
+                      value:
+                        asset?.osc_product?.organization?.organization_name,
                     },
                     {
                       label: "Attribute1",
@@ -326,7 +340,10 @@ const Page = () => {
                     },
                   ]}
                 />
-                <SendNotificationDrawer license_key={asset.license_key} receiver={asset?.owner?.email}/>
+                <SendNotificationDrawer
+                  license_key={asset.license_key}
+                  receiver={asset?.owner?.email}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
                 <GeneralInformation
@@ -396,7 +413,11 @@ const Page = () => {
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}
-                    title="Seats"
+                    title={
+                      <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                        Seats
+                      </div>
+                    }
                     columns={SeatsColumns}
                   />
                 </div>

@@ -197,6 +197,7 @@ const Page = () => {
             handleCreate={handleCreate}
             onRowClick={handleEditClick}
             noSearchNeed={true}
+            noSortNeed={true}
           />
         )}
       </div>

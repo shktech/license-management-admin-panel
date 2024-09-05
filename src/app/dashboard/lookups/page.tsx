@@ -86,6 +86,8 @@ const HomePage: React.FC = () => {
             onRowClick={handleEditClick}
             totalCount={data?.total}
             handleCreate={handleCreate}
+            noSearchNeed={true}
+            noSortNeed={true}
           />
       }
     </div>

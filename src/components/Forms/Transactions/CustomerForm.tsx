@@ -80,7 +80,6 @@ const CustomerForm = ({
     (customer.customer as Partner) || { account_id: ADDLABEL }
   );
 
-  console.log("customer.address?.address_id", customer.address?.address_id);
   const [inputValue, setInputValue] = useState("");
   const [partners, setPartners] = useState<Partner[]>([]);
   const [addresses, setAddresses] = useState<(Address | undefined)[]>(
@@ -103,6 +102,7 @@ const CustomerForm = ({
 
   const handleValueChange = (event: any, newValue: Partner | null) => {
     setValue(newValue as Partner);
+    console.log("newValue", newValue);
     setAddresses(newValue?.addresses || []);
     setContacts(newValue?.contacts || []);
   };
@@ -160,13 +160,15 @@ const CustomerForm = ({
   }, [address]);
 
   useEffect(() => {
-    const data = {
-      contact_first_name: contact?.first_name,
-      contact_last_name: contact?.last_name,
-      contact_phone: contact?.phone,
-      contact_email: contact?.email,
-    };
-    handleReset(data);
+    if (contact) {
+      const data = {
+        contact_first_name: contact?.first_name,
+        contact_last_name: contact?.last_name,
+        contact_phone: contact?.phone,
+        contact_email: contact?.email,
+      };
+      handleReset(data);
+    }
   }, [contact]);
 
   useEffect(() => {
