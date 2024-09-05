@@ -37,10 +37,6 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
                     value: <div className={`rounded-full h-4 w-4 ${transaction?.asset?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
                 },
                 {
-                    label: "Organization",
-                    value: transaction?.asset?.organization?.organization_code
-                },
-                {
                     label: "Bill Customer",
                     value: transaction?.bill_customer?.name
                 },

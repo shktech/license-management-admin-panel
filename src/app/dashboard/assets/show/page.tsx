@@ -67,12 +67,28 @@ const Page = () => {
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
       {
+        accessorKey: "seat_id",
+        header: "Seat Number",
+      },
+      {
         accessorKey: "status",
         header: "Status",
       },
       {
         accessorKey: "license_server_status",
         header: "License Server Status",
+      },
+      {
+        accessorKey: "vendor_part_number",
+        header: "Vendor part number",
+      },
+      {
+        accessorKey: "start_date",
+        header: "Start Date",
+      },
+      {
+        accessorKey: "end_date",
+        header: "End Date",
       },
     ],
     []
@@ -174,10 +190,6 @@ const Page = () => {
                     {
                       label: "License Key",
                       value: asset?.license_key,
-                    },
-                    {
-                      label: "Organization",
-                      value: asset?.organization?.organization_code,
                     },
                     {
                       label: "Bill Customer",
@@ -287,11 +299,6 @@ const Page = () => {
                       value: asset?.osc_product?.new_set_name,
                     },
                     {
-                      label: "Organization",
-                      value:
-                        asset?.osc_product?.organization?.organization_name,
-                    },
-                    {
                       label: "Attribute1",
                       value: asset?.osc_product?.attribute1,
                     },
@@ -396,10 +403,6 @@ const Page = () => {
                     {
                       label: "Contact Last Name",
                       value: asset?.ship_customer_contact?.last_name,
-                    },
-                    {
-                      label: "Organization",
-                      value: asset?.organization?.organization_name,
                     },
                   ]}
                 />

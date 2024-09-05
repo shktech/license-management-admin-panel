@@ -31,9 +31,7 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
   } = useTable<Transaction>({
     syncWithLocation: false,
     resource: "transactions",
-    // initialFilter: [
-    //     { field: "partner", operator: "eq", value: partner_id },
-    // ],
+    initialFilter: [{ field: 'partner', operator: 'eq', value: partner_id }],
   });
 
   const router = useRouter();

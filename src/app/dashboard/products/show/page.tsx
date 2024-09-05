@@ -123,10 +123,6 @@ const Item = () => {
                       value: product?.product_type,
                     },
                     {
-                      label: "Organization",
-                      value: product?.organization?.organization_name,
-                    },
-                    {
                       label: "Vender Name",
                       value: product?.vendor_name,
                     },

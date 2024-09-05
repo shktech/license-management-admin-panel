@@ -10,6 +10,7 @@ import { type MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import TransactionDetailDrawer from "./TransactionDetailDrawer";
 import { getFormattedDate } from "@utils/utilFunctions";
+import { useNavigation } from "@refinedev/core";
 
 interface TransactionHistoryTableProps {
   transactions?: Transaction[];
@@ -18,13 +19,15 @@ interface TransactionHistoryTableProps {
 const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   transactions,
 }) => {
+  const { push } = useNavigation();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [clickedTransaction, setClickedTransaction] = useState<string | null>(
     null
   );
   const handleShowClick = (row: Transaction) => {
-    setClickedTransaction(row.transaction_id);
-    setOpenDrawer(true);
+    // setClickedTransaction(row.transaction_id);
+    // setOpenDrawer(true);
+    push(`/dashboard/transactions/show?id=${row.transaction_id}`);
   };
   const handleClose = () => {
     setOpenDrawer(false);
@@ -114,6 +117,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
           </div>
         }
         columns={columns}
+        onRowClick={handleShowClick}
       />
       {clickedTransaction && (
         <TransactionDetailDrawer

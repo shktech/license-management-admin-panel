@@ -85,10 +85,6 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
                     label: "Error Message",
                     value: transaction?.error_message,
                 },
-                {
-                    label: "Organization",
-                    value: transaction?.organization,
-                },
             ]}
         ></GeneralInformation>
     )
