@@ -92,7 +92,7 @@ const MemeberPanel: React.FC = () => {
         onRowClick={handleRowClick}
         noSearchNeed
       />
-      <MemeberInvitePanel />
+      {/* <MemeberInvitePanel /> */}
     </div>
   );
 };

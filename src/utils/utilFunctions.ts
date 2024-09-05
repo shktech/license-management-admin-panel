@@ -8,7 +8,7 @@ import { MRT_SortingState } from 'material-react-table';
 export const getFormattedDate = (timestamp: any) => {
     const date = new Date(timestamp);
     if (!isNaN(date.getTime())) {
-        const formattedDate = format(date, 'yyyy-MM-dd');
+        const formattedDate = format(date, 'dd-MM-yyyy');
         return formattedDate;
     }
     return timestamp
