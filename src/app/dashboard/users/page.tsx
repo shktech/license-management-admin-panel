@@ -20,6 +20,7 @@ import CommonTable from "@components/Table/CommonTable";
 import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import MemeberInvitePanel from "@components/Organizations/MemeberInvitePanel";
 
 const Page = () => {
   const {
@@ -35,6 +36,15 @@ const Page = () => {
     isError: isRolesError,
   } = useList<Role, HttpError>({
     resource: "roles",
+    hasPagination: false,
+  });
+
+  const {
+    data: orgs,
+    isLoading: isOrgLoading,
+    refetch: refetchOrgs,
+  } = useList<Organization, HttpError>({
+    resource: "orgs",
     hasPagination: false,
   });
 
@@ -78,12 +88,13 @@ const Page = () => {
     setSelectedUser(row);
   };
 
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
 
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
-
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
@@ -210,6 +221,8 @@ const Page = () => {
           selectedUser={selectedUser}
         />
       )} */}
+
+      <MemeberInvitePanel orgs={orgs?.data ?? []} />
     </div>
     // ) : (
     //   <Unauthorized />

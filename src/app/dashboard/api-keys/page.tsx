@@ -156,7 +156,7 @@ const Page = () => {
               ...tagStyle,
             }}
           >
-            {renderedCellValue ? "Active" : "Closed"}
+            {renderedCellValue ? "Revoked" : "Closed"}
           </Box>
         ),
       },
