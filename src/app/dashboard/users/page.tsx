@@ -228,24 +228,11 @@ const Page = () => {
           selectedUser={selectedUser}
         />
       )} */}
-      <Modal
-        open={openSuccessModal}
-        onClose={handleCloseSuccessModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            width: "70%",
-            position: "absolute" as "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <MemeberInvitePanel orgs={orgs?.data ?? []} />
-        </Box>
-      </Modal>
+      <MemeberInvitePanel
+        orgs={orgs?.data ?? []}
+        openSuccessModal={openSuccessModal}
+        handleCloseSuccessModal={handleCloseSuccessModal}
+      />
     </div>
     // ) : (
     //   <Unauthorized />

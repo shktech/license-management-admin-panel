@@ -25,6 +25,7 @@ const SignUp: React.FC = () => {
   const {
     handleSubmit,
     control,
+    setError,
     formState: { errors },
   } = useForm<FormData>();
   const { mutate: register } = useRegister<FormData>();
@@ -62,7 +63,7 @@ const SignUp: React.FC = () => {
     validateInviteToken(token)
       .then((data) => {
         setUserData(data);
-        setToken(token)
+        setToken(token);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -71,9 +72,17 @@ const SignUp: React.FC = () => {
   }, [router]);
 
   const onSubmit = (data: any) => {
+    if (data.password !== data.password2) {
+      setError("password2", {
+        type: "manual",
+        message: "Passwords do not match",
+      });
+      return;
+    }
+    const { password2, ...dataWithoutPassword2 } = data;
     register({
-      ...data,
-      token
+      ...dataWithoutPassword2,
+      token,
     });
   };
 
@@ -86,7 +95,9 @@ const SignUp: React.FC = () => {
           <div className="w-full border-stroke dark:border-strokedark">
             <div className="w-full p-8">
               <div className="flex justify-between items-center mb-9">
-                <h2 className="text-2xl font-bold text-black">Activate your account</h2>
+                <h2 className="text-2xl font-bold text-black">
+                  Activate your account
+                </h2>
               </div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col space-y-4">
@@ -102,6 +113,7 @@ const SignUp: React.FC = () => {
                           {...field}
                           type={"text"}
                           label="First name"
+                          required={true}
                           placeholder={"Enter your first name"}
                         />
                       )}
@@ -128,6 +140,7 @@ const SignUp: React.FC = () => {
                         {...field}
                         type={"text"}
                         label="Organization"
+                        required={true}
                         value={userData?.organization}
                         disabled={true}
                       />
@@ -141,6 +154,7 @@ const SignUp: React.FC = () => {
                         label="Email address"
                         value={userData?.email}
                         disabled={true}
+                        required={true}
                         icon={<EmailIcon className="fill-current" />}
                       />
                     )}
@@ -158,6 +172,25 @@ const SignUp: React.FC = () => {
                         label="Password"
                         placeholder="Enter your password"
                         disabled={false}
+                        required={true}
+                        icon={<PasswordIcon className="fill-current" />}
+                      />
+                    )}
+                  </FormControlWrapper>
+                  <FormControlWrapper
+                    name="password2"
+                    control={control}
+                    rules={{ required: "Please enter your password!" }}
+                    error={errors.password2?.message?.toString()}
+                  >
+                    {(field) => (
+                      <GeneralInput
+                        {...field}
+                        type={"password"}
+                        label="Confirm password"
+                        placeholder="Enter your password"
+                        disabled={false}
+                        required={true}
                         icon={<PasswordIcon className="fill-current" />}
                       />
                     )}
