@@ -19,6 +19,7 @@ import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
 import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Page = () => {
   const { params } = useParsed();
@@ -326,10 +327,10 @@ const Page = () => {
                     },
                   ]}
                 />
-                <SendNotificationDrawer
+                {/* <SendNotificationDrawer
                   license_key={asset.license_key}
                   receiver={asset?.owner?.email}
-                />
+                /> */}
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
                 <GeneralInformation
