@@ -63,7 +63,6 @@ const AddressTable: React.FC<AddressTableProps> = ({ data, partner_id }) => {
     const filteredData = data.filter((item): item is Address => item !== undefined);
 
     const handleRowClick = (row: Address) => {
-        console.log(partner_id);
         push(`/dashboard/partners/show/addresses/edit?partner_id=${partner_id}&address_id=${row.address_id}`);
     }
     const handleCreate = () => {

@@ -2,17 +2,15 @@
 
 import { Lookup, LookupValue } from "@/types/types";
 import Loader from "@components/common/Loader";
-import ReferenceCodeDetailDrawer from "@components/References/ReferenceCodeDetailDrawer";
-import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
 import GenericTable from "@components/Table/GenericTable";
-import { editRefineBtnStyle, refreshRefineBtnStyle, tableAddButton, tableCancelButton, tableSaveButton } from "@data/MuiStyles";
+import { editRefineBtnStyle, refreshRefineBtnStyle, tableCancelButton, tableSaveButton } from "@data/MuiStyles";
 import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
-import { useCreate, useDelete, useNavigation, useParsed, usePermissions, useShow, useTable, useUpdate } from "@refinedev/core";
+import { useCreate, useNavigation, useParsed, useShow, useTable } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -38,7 +36,6 @@ const Page = () => {
   useEffect(() => {
     if (codeData) {
       setCodes(codeData.data);
-      console.log("working");
     }
   }, [codeData, codeIsLoading]);
 

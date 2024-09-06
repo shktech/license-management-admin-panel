@@ -1,15 +1,13 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product, Reference, ReferenceCode } from "@/types/types";
+import { Product, ReferenceCode } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import ProductForm from "@components/Forms/Products/ProductForm";
 import ReferenceCodeFormFields from "@components/Forms/References/ReferenceCodeFormFields";
-import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useList, useParsed } from "@refinedev/core";
-import { Create, Edit, SaveButton } from "@refinedev/mui";
+import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { getDurationFromString } from "@utils/utilFunctions";
 import { useEffect } from "react";
@@ -31,14 +29,6 @@ const Item = () => {
       resource: `references/${params?.id}/codes`,
     },
   });
-
-  // const referenceCode: ReferenceCode = queryResult?.data?.data as ReferenceCode;
-
-  // useEffect(() => {
-  //     if (!formLoading && reference) {
-  //         reset({ ...reference });
-  //     }
-  // }, [formLoading, reference]);
 
   const { data: productData, isLoading: productLoading } = useList<Product>({
     resource: "products",

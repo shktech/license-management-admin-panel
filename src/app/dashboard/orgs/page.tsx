@@ -10,17 +10,11 @@ import {
 } from "@refinedev/core";
 import { Organization, User } from "@/types/types";
 import { useEffect, useMemo, useState } from "react";
-import OrganizationDetailDrawer from "@components/Organizations/OrganizationDrawer";
 import { MRT_ColumnDef } from "material-react-table";
 import { ProductActiveColor } from "@data/ColorData";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Loader from "@components/common/Loader";
-import CommonTable from "@components/Table/CommonTable";
 import { tagStyle } from "@data/MuiStyles";
-import ConfirmModal from "@components/common/ConfirmModal";
-import APIKeyPanel from "@components/Organizations/APIKeyPanel";
 import GenericTable from "@components/Table/GenericTable";
-import MemeberInvitePanel from "@components/Organizations/MemeberInvitePanel";
 
 const Page = () => {
   const { data: identity, isLoading: isIdentityLoading } =

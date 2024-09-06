@@ -41,34 +41,16 @@ const Page = () => {
   });
   const reference: Reference = data?.data as Reference;
 
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const [clickedReferenceCode, setClickedReferenceCode] =
-    useState<ReferenceCode | null>(null);
-
   const handleCreate = () => {
-    // setOpenDrawer(true);
     push(
       `/dashboard/references/codes/create?id=${params?.id}&reference_name=${reference?.reference_name}`
     );
   };
 
-  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
-
   const handleEditClick = (row: ReferenceCode) => {
-    // setClickedReferenceCode(row);
-    // setOpenDrawer(true);
     push(
       `/dashboard/references/codes/edit?reference_id=${params?.id}&code_id=${row.reference_code_id}`
     );
-  };
-
-  const handleClose = () => {
-    refetch();
-    setClickedReferenceCode(null);
-    setOpenDrawer(false);
   };
 
   const handleSearch = (value: string) =>
@@ -93,24 +75,6 @@ const Page = () => {
       </div>
     );
   };
-
-  // const { mutate: deleteReferenceCode } = useDelete();
-
-  // const handleDeleteBtn = (ReferenceCode: ReferenceCode) => {
-  //   handleOpenDeleteModal();
-  //   setClickedReferenceCode(ReferenceCode);
-  // }
-
-  // const handleDelete = () => {
-  //   deleteReferenceCode(
-  //     { resource: "ReferenceCodes", id: `${(clickedReferenceCode?.ReferenceCode_id)}` },
-  //     {
-  //       onError: (error) => { console.log(error); },
-  //       onSuccess: () => { console.log("Success"); },
-  //     }
-  //   )
-  //   handleCloseDeleteModal();
-  // }
 
   const columns = useMemo<MRT_ColumnDef<ReferenceCode>[]>(
     () => [

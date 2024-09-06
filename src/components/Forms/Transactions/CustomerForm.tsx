@@ -102,7 +102,6 @@ const CustomerForm = ({
 
   const handleValueChange = (event: any, newValue: Partner | null) => {
     setValue(newValue as Partner);
-    console.log("newValue", newValue);
     setAddresses(newValue?.addresses || []);
     setContacts(newValue?.contacts || []);
   };

@@ -34,7 +34,10 @@ const Item = () => {
 
   useEffect(() => {
     if (!formLoading && referenceCode) {
-      reset({ ...referenceCode, osc_part_number: referenceCode.osc_product?.product_part_number });
+      reset({
+        ...referenceCode,
+        osc_part_number: referenceCode.osc_product?.product_part_number,
+      });
     }
   }, [formLoading, referenceCode]);
 
