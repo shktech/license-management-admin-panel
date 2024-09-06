@@ -76,6 +76,7 @@ const SignIn: React.FC = () => {
                           type={'text'}
                           label="Email address"
                           placeholder="Enter your email"
+                          required={true}
                           disabled={false}
                           icon={<EmailIcon className="fill-current" />}
                         />
@@ -92,6 +93,7 @@ const SignIn: React.FC = () => {
                           label="Password"
                           placeholder="Enter your password"
                           disabled={false}
+                          required={true}
                           icon={<PasswordIcon className="fill-current" />}
                         />
 

@@ -31,6 +31,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     reset,
     watch,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<InputTransaction>();
   useEffect(() => {
@@ -66,15 +67,15 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
 
   useEffect(() => {
     if (initialInfo.transaction_action != "New") {
-      const resetTransaction = {
-        osc_part_number: assetData?.data?.osc_product?.product_part_number,
-        transaction_action: initialInfo.transaction_action,
-        license_key: assetData?.data?.license_key,
-        license_type: assetData?.data?.license_type,
-        start_date: assetData?.data?.start_date,
-        end_date: assetData?.data?.end_date,
-      };
-      reset(resetTransaction, { keepValues: true });
+      setValue(
+        "osc_part_number",
+        assetData?.data.osc_product?.product_part_number
+      );
+      setValue("transaction_action", initialInfo.transaction_action);
+      setValue("license_key", assetData?.data.license_key);
+      setValue("license_type", assetData?.data.license_type);
+      setValue("start_date", assetData?.data.start_date);
+      setValue("end_date", assetData?.data.end_date);
     }
   }, [assetData, assetLoading]);
 
