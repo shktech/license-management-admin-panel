@@ -35,11 +35,13 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
   } = useForm<InputTransaction>();
   useEffect(() => {
     if (initialInfo.transaction_action == "New") {
-      const nowDateString = new Date().toISOString().split("T")[0];
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayString = yesterday.toISOString().split("T")[0];
       const resetTransaction: InputTransaction = {
-        source_reference_date: nowDateString,
-        start_date: nowDateString,
-        end_date: nowDateString,
+        // source_reference_date: nowDateString,
+        start_date: yesterdayString,
+        end_date: yesterdayString,
         transaction_action: initialInfo.transaction_action,
       };
       console.log(resetTransaction);

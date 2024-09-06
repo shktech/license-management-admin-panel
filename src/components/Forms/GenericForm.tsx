@@ -13,6 +13,7 @@ interface GenericFormProps {
 }
 
 const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) => {
+  
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-6">
       {fields?.map((field) => (
@@ -32,6 +33,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       {...fieldProps}
                       type={field.type}
                       label={field.label}
+                      required={!!field.rules}
                       disabled={field.disabled}
                     // placeholder={field.placeholder}
                     />
@@ -53,6 +55,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       label={field.label}
                       placeholder={field.placeholder}
                       disabled={field.disabled}
+                      required={!!field.rules}
                     />
                   );
                 case 'dropdown':
@@ -67,6 +70,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       valueKey={field.valueKey}
                       labelKey={field.labelKey}
                       disabled={field.disabled}
+                      required={!!field.rules}
                     // fetchOptions={field.fetchOptions}
                     />
                   );

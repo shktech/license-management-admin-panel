@@ -140,6 +140,11 @@ const Page = () => {
         },
       },
       {
+        accessorKey: "organization",
+        header: "Organization",
+        size: 300,
+      },
+      {
         accessorKey: "revoked",
         header: "Revoked",
         size: 200,

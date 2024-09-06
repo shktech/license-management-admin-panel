@@ -100,7 +100,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
       },
       {
         accessorKey: "quantity",
-        header: "quentity",
+        header: "quantity",
         size: 50,
       },
     ],
