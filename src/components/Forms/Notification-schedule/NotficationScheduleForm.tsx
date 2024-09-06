@@ -66,8 +66,8 @@ const NotificationSchedulesComponent: React.FC<
 
   const { mutate } = useCreate();
   const { mutate: update } = useUpdate();
-  const [sendNow, setSendNow] = useState(emailSchedule?.send_now);
-  const [recurring, setRecurring] = useState(emailSchedule?.is_recurring);
+  const [sendNow, setSendNow] = useState(emailSchedule?.send_now ? true : false);
+  const [recurring, setRecurring] = useState(emailSchedule?.is_recurring ? true : false);
   const [browserTimezone, setBrowserTimezone] = useState("");
 
   useEffect(() => {
@@ -77,15 +77,17 @@ const NotificationSchedulesComponent: React.FC<
 
   const onSubmit = () => {
     const data = getValues();
+    console.log(data);
     const payload: any = {
-      email_emailSchedule: data.email_emailSchedule,
+      email_template: data.email_template,
       user_timezone: browserTimezone,
-      sendNow: sendNow,
-      recurring: recurring,
+      is_recurring: recurring,
+      send_now: sendNow,
     };
 
-    sendNow ? (payload.scheduled_time = data.scheduled_time) : null;
-    recurring ? (payload.recurring_task = data.recurring_task) : null;
+    payload.scheduled_time = sendNow ? data.scheduled_time : new Date().toISOString().replace('T', ' ').slice(0, 19);
+    // recurring ? (payload.recurring_task = data.recurring_task) : null;
+    payload.recurring_task = recurring ? data.recurring_task : 'daily'
 
     console.log(payload);
     if (emailSchedule) {
@@ -215,15 +217,15 @@ const NotificationSchedulesComponent: React.FC<
             </FormControlWrapper>
           </Collapse>
           <FormControlWrapper
-            name="email-template"
+            name="email_template"
             control={control}
             rules={{ required: "Select an option" }}
-            error={errors.email_emailSchedule?.message?.toString()}
+            error={errors.email_template?.message?.toString()}
           >
             {(field) => (
               <Dropdown
                 {...field}
-                id="templates"
+                id="email_template"
                 label="Select Email emailSchedule"
                 required={true}
                 type="dropdown"

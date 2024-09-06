@@ -25,7 +25,7 @@ const Item = () => {
       <div className="w-2/3">
         <NotificationSchedulesComponent
           emailSchedule={notificationSchedule}
-          onSave={useBack()}
+          // onSave={useBack()}
         />
       </div>
     </div>
