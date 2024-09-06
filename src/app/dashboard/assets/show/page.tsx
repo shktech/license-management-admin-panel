@@ -1,6 +1,6 @@
 "use client";
 
-import { Asset, Permission, Seat, Transaction } from "@/types/types";
+import { Asset, Seat, Transaction } from "@/types/types";
 import TransactionHistoryTable from "@components/Assets/TransactionHistoryTable";
 import Loader from "@components/common/Loader";
 import GeneralInformation from "@components/common/View/GeneralInformation";
@@ -10,26 +10,20 @@ import {
   StyledTabs,
 } from "@components/Tab/CustomizedTab";
 import GenericTable from "@components/Table/GenericTable";
-import { outlineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
+import { refreshRefineBtnStyle } from "@data/MuiStyles";
 import { Button } from "@mui/material";
-import {
-  useNavigation,
-  useParsed,
-  usePermissions,
-  useShow,
-} from "@refinedev/core";
+import { useNavigation, useParsed, useShow } from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-// import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
+import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
 import EditIcon from "@mui/icons-material/Edit";
 
 const Page = () => {
   const { params } = useParsed();
   const [value, setValue] = useState(0);
   const { push } = useNavigation();
-  const [openNotiDrawer, setOpenDrawer] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -50,14 +44,6 @@ const Page = () => {
     const queryParams = {
       asset_id: asset.asset_id as string,
       transaction_action: action,
-      // license_key: asset.license_key as string,
-      // license_type: asset.license_type as string,
-      // start_date: asset.start_date as string,
-      // end_date: asset.end_date as string,
-      // osc_part_number: asset.osc_product?.product_part_number as string,
-      // bill_customer: asset.bill_customer?.account_id as string,
-      // ship_customer: asset.owner?.account_id as string,
-      // reseller: asset.reseller?.account_id as string,
     };
 
     // Navigate to the path with the query parameters
@@ -171,6 +157,7 @@ const Page = () => {
                   <StyledTab label="Notifications" />
                   <StyledTab label="License Owner" />
                   <StyledTab label="Transaction History" />
+                  <StyledTab label="Email History" />
                   <StyledTab label="Seats" />
                 </StyledTabs>
               </div>
@@ -246,18 +233,10 @@ const Page = () => {
                 <GeneralInformation
                   singleColumn={true}
                   items={[
-                    // {
-                    //   label: "Product ID",
-                    //   value: asset?.osc_product?.product_id,
-                    // },
                     {
                       label: "Product Name",
                       value: asset?.osc_product?.product_name,
                     },
-                    // {
-                    //   label: "Product Part Number",
-                    //   value: asset?.osc_product?.product_part_number,
-                    // },
                     {
                       label: "Product Description",
                       value: asset?.osc_product?.product_description,
@@ -360,10 +339,6 @@ const Page = () => {
                       label: "Account",
                       value: asset?.owner?.account_id,
                     },
-                    // {
-                    //   label: "Address",
-                    //   value: asset?.owner?.address1 + " " + asset?.owner?.address2,
-                    // },
                     {
                       label: "Address1",
                       value: asset?.ship_customer_address?.address1,
@@ -413,6 +388,11 @@ const Page = () => {
                 </div>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={5}>
+                <div className="max-w-full overflow-x-auto">
+                  <EmailHistoryTable assetId={asset.asset_id as string} />
+                </div>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={6}>
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}

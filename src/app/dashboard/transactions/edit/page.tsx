@@ -43,19 +43,19 @@ const TransactionEdit = () => {
 
   useEffect(() => {
     if (!formLoading && transaction) {
-      const resetTransaction: InputTransaction = {
-        transaction_source: transaction.transaction_source,
-        transaction_action: transaction.transaction_action,
-        license_type: transaction.asset?.license_type,
-        source_reference_number: transaction.source_reference_number,
-        source_reference_date: transaction.source_reference_date,
-        source_reference_id: transaction.source_reference_id,
-        osc_part_number: transaction.asset?.osc_product?.product_part_number,
-        quantity: transaction.quantity,
-        start_date: transaction.start_date,
-        end_date: transaction.end_date,
-      };
-      reset({ ...resetTransaction });
+      setValue("transaction_source", transaction.transaction_source);
+      setValue("transaction_action", transaction.transaction_action);
+      setValue("license_type", transaction.asset?.license_type);
+      setValue("source_reference_number", transaction.source_reference_number);
+      setValue("source_reference_date", transaction.source_reference_date);
+      setValue("source_reference_id", transaction.source_reference_id);
+      setValue(
+        "osc_part_number",
+        transaction.asset?.osc_product?.product_part_number
+      );
+      setValue("quantity", transaction.quantity);
+      setValue("start_date", transaction.start_date);
+      setValue("end_date", transaction.end_date);
     }
   }, [formLoading, transaction]);
 
@@ -73,6 +73,9 @@ const TransactionEdit = () => {
       originalDate.setFullYear(
         originalDate.getFullYear() + getDurationFromString(duration as string)
       );
+      if (duration != "EA") {
+        originalDate.setDate(originalDate.getDate() - 1);
+      }
       const end_date = originalDate.toISOString().split("T")[0];
       setValue("end_date", end_date);
     }

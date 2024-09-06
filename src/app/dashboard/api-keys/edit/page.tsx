@@ -3,7 +3,6 @@
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Reference } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import ProductForm from "@components/Forms/Products/ProductForm";
 import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";

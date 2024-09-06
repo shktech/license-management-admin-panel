@@ -55,7 +55,6 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
     const filteredData = data.filter((item): item is Contact => item !== undefined);
 
     const handleRowClick = (row: Contact) => {
-        console.log(partner_id);
         push(`/dashboard/partners/show/contacts/edit?partner_id=${partner_id}&contact_id=${row.contact_id}`);
     }
     const handleCreate = () => {

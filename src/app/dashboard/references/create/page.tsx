@@ -3,12 +3,11 @@
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Reference } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import ProductForm from "@components/Forms/Products/ProductForm";
 import ReferenceFormFields from "@components/Forms/References/ReferenceFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
-import { Create, Edit, SaveButton } from "@refinedev/mui";
+import { useBack } from "@refinedev/core";
+import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
 

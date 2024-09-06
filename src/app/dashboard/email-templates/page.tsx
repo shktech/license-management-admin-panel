@@ -1,32 +1,26 @@
 "use client";
 
-import { useList, useNavigation, useTable } from "@refinedev/core";
-import React, { useEffect, useMemo, useState } from "react";
-import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
+import { useList, useNavigation } from "@refinedev/core";
+import React, { useMemo } from "react";
 import { EmailTemplate } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
-import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 
 const Page = () => {
-  const {
-    data: emailTemplateData,
-    isLoading,
-    refetch,
-  } = useList<EmailTemplate>({
+  const { data: emailTemplateData, isLoading } = useList<EmailTemplate>({
     hasPagination: false,
   });
 
   const { push } = useNavigation();
 
   const handleRowClick = (row: EmailTemplate) => {
-    push(`/dashboard/email-templates/edit?id=${row.email_id}`)
-  }
+    push(`/dashboard/email-templates/edit?id=${row.email_id}`);
+  };
 
   const handleCreate = () => {
-    push(`/dashboard/email-templates/create`)
-  }
+    push(`/dashboard/email-templates/create`);
+  };
 
   const columns = useMemo<MRT_ColumnDef<EmailTemplate>[]>(
     () => [
@@ -49,11 +43,10 @@ const Page = () => {
         accessorKey: "description",
         header: "Description",
         size: 200,
-      }
+      },
     ],
     []
   );
-
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">

@@ -16,6 +16,7 @@ import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
   const { data: identity } = useGetIdentity<User>();
   const {
@@ -104,7 +105,10 @@ const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
           Add more
         </Button>
       </div>
-      <div className="flex gap-8 mr-18 pb-4 px-12 pt-6">
+      <div className="text-sm text-normal py-4 flex gap-1 items-center">
+        <InfoOutlinedIcon fontSize="small" />
+        If the user already has an active account, the user will be added to the organization</div>
+      <div className="flex gap-8 mr-18 pb-4 px-12">
         <div className="text-xs flex-1">Email Address</div>
         <div className="text-xs flex-1">Role</div>
         <div className="text-xs flex-1">Organization</div>

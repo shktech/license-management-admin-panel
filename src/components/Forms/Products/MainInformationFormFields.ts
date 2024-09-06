@@ -57,8 +57,8 @@ const InitialField: InitialFieldConfig[] = [
     type: "dropdown",
     required: "text",
     resource: "lookups/EMAIL_TEMPLATE_SOURCE/values",
-    valueKey: "email_id",
-    labelKey: "type",
+    valueKey: "value",
+    labelKey: "value",
   },
   { name: "active", type: "switch", required: "text" },
 ];
