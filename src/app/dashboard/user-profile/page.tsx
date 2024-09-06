@@ -3,7 +3,9 @@ import { Permission, User } from "@/types/types";
 import ProfileForm from "@components/Forms/Profile/ProfileForm";
 import PermissionsTable from "@components/Role/PermissionsTable";
 import { RoleColors } from "@data/ColorData";
-import { useGetIdentity, useList } from "@refinedev/core";
+import { modalOkBtnStyle } from "@data/MuiStyles";
+import { Button } from "@mui/material";
+import { useCreate, useCustom, useCustomMutation, useGetIdentity, useList, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
 
@@ -11,16 +13,8 @@ const Page = () => {
   const { data: identity } = useGetIdentity<User>();
   const [page, setPage] = useState(0);
 
-  const {
-    control,
-    trigger,
-    reset,
-    formState: { errors },
-  } = useForm<User>();
 
-  useEffect(() => {
-    reset(identity);
-  }, [identity]);
+
 
   const panels = [
     {
@@ -28,7 +22,8 @@ const Page = () => {
       value: (
         <>
           <div className="text-xl font-semibold pb-4">User Information</div>
-          <ProfileForm {...{ control, errors, trigger }} />
+          <ProfileForm identity={identity} />
+          
         </>
       ),
     },
@@ -77,9 +72,7 @@ const Page = () => {
               <div
                 onClick={() => setPage(i)}
                 className={`px-2 py-2 cursor-pointer transition duration-500 ${
-                  page === i
-                    ? "font-bold bg-slate-100"
-                    : "hover:bg-slate-100"
+                  page === i ? "font-bold bg-slate-100" : "hover:bg-slate-100"
                 }`}
               >
                 {panel.label}

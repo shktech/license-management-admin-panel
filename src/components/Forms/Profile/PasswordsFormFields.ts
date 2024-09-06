@@ -2,14 +2,6 @@ import { FieldConfig } from "../FormControlWrapper";
 
 const PasswordsFormFields: FieldConfig[] = [
     {
-        name: "password",
-        label: "Current Password",
-        placeholder: "Current Password",
-        rules: { required: "Current is required" },
-        type: "text",
-        size: 2,
-    },
-    {
         name: "password1",
         label: "New Password",
         placeholder: "New Password",
