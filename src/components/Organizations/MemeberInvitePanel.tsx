@@ -68,6 +68,7 @@ const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
   };
 
   const { mutate } = useCreate();
+  const [invited, setInvited] = useState(false);
   const handleInvite = () => {
     mutate(
       {
@@ -75,10 +76,16 @@ const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
         values: sentValues,
       },
       {
-        onSuccess: () => console.log("success"),
+        onSuccess: () => {
+          setInvited(true);
+        },
       }
     );
   };
+
+  if (invited) {
+    return null;
+  }
 
   return (
     <div className="mx-6 px-6 pb-4 my-6 pt-3 rounded-lg shadow-card bg-white">
