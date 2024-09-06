@@ -1,12 +1,19 @@
 "use client";
 import { IOSSwitch } from "@components/Input/GeneralSwitch";
-import { Button, FormControl, FormControlLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import React, { useMemo } from "react";
+import React from "react";
 const Page = () => {
-
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
       <div className="px-12 py-4 !font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
@@ -19,29 +26,11 @@ const Page = () => {
           </div>
           <div className="flex items-center text-base px-2 py-4 justify-between font-medium">
             <div className="">License key is created</div>
-            <FormControlLabel
-              control={
-                <IOSSwitch
-                  // checked={changePassword}
-                  // onChange={handleChange}
-                  sx={{ mx: 1 }}
-                />
-              }
-              label=""
-            />
+            <FormControlLabel control={<IOSSwitch sx={{ mx: 1 }} />} label="" />
           </div>
           <div className="flex items-center text-base px-2 py-4 justify-between font-medium">
             <div className="">License key is expired</div>
-            <FormControlLabel
-              control={
-                <IOSSwitch
-                  // checked={changePassword}
-                  // onChange={handleChange}
-                  sx={{ mx: 1 }}
-                />
-              }
-              label=""
-            />
+            <FormControlLabel control={<IOSSwitch sx={{ mx: 1 }} />} label="" />
           </div>
         </div>
 
@@ -57,25 +46,32 @@ const Page = () => {
                 type="number"
                 id="filled-hidden-label-small"
                 size="small"
-                sx={{ width: '100px' }}
+                sx={{ width: "100px" }}
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
-                  defaultValue={dayjs('2022-04-17')}
-                  slotProps={{ textField: { size: 'small', sx: { width: '180px' } } }}
+                  defaultValue={dayjs("2022-04-17")}
+                  slotProps={{
+                    textField: { size: "small", sx: { width: "180px" } },
+                  }}
                 />
               </LocalizationProvider>
-              <FormControl sx={{ width: '100px' }}>
-                <Select defaultValue={'before'} displayEmpty size="small" inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value={'before'}>Before</MenuItem>
-                  <MenuItem value={'after'}>After</MenuItem>
+              <FormControl sx={{ width: "100px" }}>
+                <Select
+                  defaultValue={"before"}
+                  displayEmpty
+                  size="small"
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value={"before"}>Before</MenuItem>
+                  <MenuItem value={"after"}>After</MenuItem>
                 </Select>
               </FormControl>
               <TextField
                 hiddenLabel
                 id="filled-hidden-label-small"
                 size="small"
-                sx={{ width: '100px' }}
+                sx={{ width: "100px" }}
               />
               <Button variant="contained">Apply</Button>
             </div>

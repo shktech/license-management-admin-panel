@@ -16,13 +16,17 @@ const Page = () => {
   } = useTable<Asset>();
   const { push } = useNavigation();
 
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
 
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
 
-  const { data: permissionsData } = usePermissions<Permission>({ params: { codename: "asset" } });
+  const { data: permissionsData } = usePermissions<Permission>({
+    params: { codename: "asset" },
+  });
 
   const columns = useMemo<MRT_ColumnDef<Asset>[]>(
     () => [
@@ -30,10 +34,6 @@ const Page = () => {
         accessorKey: "license_key",
         header: "License Number (LicKey/Srl#)",
       },
-      // {
-      //   accessorKey: "organization.organization_name",
-      //   header: "Organization",
-      // },
       {
         accessorKey: "osc_product.product_part_number",
         header: "Product Part Number",
@@ -54,7 +54,7 @@ const Page = () => {
         accessorKey: "seat_number",
         header: "Number of Seats",
         Cell: ({ row }) => row.original?.seats?.length,
-      }
+      },
     ],
     []
   );
@@ -62,7 +62,6 @@ const Page = () => {
   const handleRowClick = (row: Asset) => {
     push(`/dashboard/assets/show?id=${row.asset_id}`);
   };
-
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">

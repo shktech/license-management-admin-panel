@@ -48,28 +48,6 @@ const Page = () => {
     setOpenDrawer(false);
   };
 
-  const { mutate: deleteReference } = useDelete();
-
-  const handleDeleteBtn = (reference: Reference) => {
-    handleOpenDeleteModal();
-    setClickedReference(reference);
-  };
-
-  const handleDelete = () => {
-    deleteReference(
-      { resource: "references", id: `${clickedReference?.reference_id}` },
-      {
-        onError: (error) => {
-          console.log(error);
-        },
-        onSuccess: () => {
-          console.log("Success");
-        },
-      }
-    );
-    handleCloseDeleteModal();
-  };
-
   const handleRowClick = (row: Reference) => {
     push(`/dashboard/references/show?id=${row.reference_id}`);
   };
@@ -121,17 +99,6 @@ const Page = () => {
           noSortNeed={true}
         />
       )}
-
-      {/* <ReferenceDetailDrawer
-        open={openDrawer}
-        onClose={() => handleClose()}
-        reference={clickedReference}
-      />
-      <ConfirmModal
-        openModal={openDeleteModal}
-        handleOK={handleDelete}
-        handleCloseModal={handleCloseDeleteModal}
-      /> */}
     </div>
   );
 };

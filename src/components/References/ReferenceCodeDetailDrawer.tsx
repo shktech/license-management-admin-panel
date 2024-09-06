@@ -45,7 +45,6 @@ const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ r
       };
 
       const referenceCodeData = getValues();
-      console.log(referenceCodeData);
       if (referenceCode) {
         // updateReference(
         //   {

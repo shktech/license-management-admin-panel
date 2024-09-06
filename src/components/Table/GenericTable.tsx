@@ -85,23 +85,27 @@ const GenericTable = <T extends MRT_RowData>({
 
   const [sorting, setSorting] = useState<MRT_SortingState>(initialSorter || []);
 
-  const handleSortingChange = (newSorting: any) => {
-    console.log(newSorting);
+  const handleSortingChange = (newSorting: MRT_SortingState) => {
     setSorting(newSorting);
+    handleSorting?.(newSorting);
   };
 
-  useEffect(() => {
-    if (handleSorting) {
-      handleSorting(sorting);
-    }
-  }, [sorting]);
+  // useEffect(() => {
+  //   if (handleSorting) {
+  //     handleSorting(sorting);
+  //   }
+  // }, [sorting]);
 
   const table = useMaterialReactTable({
     columns: enhancedColumns,
     data: data || [],
     enableColumnActions: false,
     enableColumnPinning: true,
-    onSortingChange: handleSortingChange,
+    onSortingChange: (updater) => {
+      const newSorting = updater instanceof Function ? updater(sorting) : updater;
+      setSorting(newSorting);
+      handleSorting?.(newSorting);
+    },
     manualSorting: !noSortNeed,
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => handleRowClick(row.original),

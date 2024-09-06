@@ -50,9 +50,6 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
       } as React.ChangeEvent<HTMLInputElement>);
     }
   };
-  if (props.name == "end_date") {
-    console.log(props);
-  }
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="relative my-datepicker">

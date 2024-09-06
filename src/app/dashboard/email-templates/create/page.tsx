@@ -1,13 +1,11 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { EmailTemplate, Organization, Product } from "@/types/types";
+import { EmailTemplate } from "@/types/types";
 import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
-import GenericForm from "@components/Forms/GenericForm";
-import { OrganizationCreateFormFields } from "@components/Forms/Organizations/OrganizationFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack } from "@refinedev/core";
 import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
@@ -27,8 +25,8 @@ const Item = () => {
   const [emailBody, setEmailBody] = useState<string>("");
 
   useEffect(() => {
-    setValue('body', emailBody)
-  }, [emailBody, setValue])
+    setValue("body", emailBody);
+  }, [emailBody, setValue]);
 
   return (
     <div className="flex justify-center py-6">
