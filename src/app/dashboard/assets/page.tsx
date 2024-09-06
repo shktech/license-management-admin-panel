@@ -13,7 +13,14 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Asset>();
+  } = useTable<Asset>({
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
+  });
   const { push } = useNavigation();
 
   const handleSearch = (value: string) =>
