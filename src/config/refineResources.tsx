@@ -140,6 +140,7 @@ export const dashboardResources: ResourceProps[] = [
   {
     name: "email-templates",
     list: "/dashboard/email-templates",
+    create: "/dashboard/email-templates/create",
     meta: {
       label: "Email Templates",
       parent: "maintenance",

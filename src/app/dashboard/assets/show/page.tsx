@@ -22,7 +22,7 @@ import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
+// import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
 import EditIcon from "@mui/icons-material/Edit";
 
 const Page = () => {
@@ -347,10 +347,10 @@ const Page = () => {
                     },
                   ]}
                 />
-                <SendNotificationDrawer
+                {/* <SendNotificationDrawer
                   license_key={asset.license_key}
                   receiver={asset?.owner?.email}
-                />
+                /> */}
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
                 <GeneralInformation

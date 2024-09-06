@@ -160,26 +160,26 @@ const Page = () => {
           </Box>
         ),
       },
-      {
-        accessorKey: "actions",
-        header: "Actions",
-        size: 30,
-        Cell: ({ row }) => (
-          <div className="flex gap-2">
-            <button
-              onClick={() => handleRevoke(row.original)}
-              disabled={!row.original.revoked}
-              className={`
-                flex items-center gap-1 text-[13px] text-[#1f325c] font-medium hover:text-[#4a6297] cursor-pointer rounded-full px-2 py-1
-                ${!row.original.revoked ? "opacity-50 cursor-not-allowed" : ""}
-              `}
-            >
-              <EditOutlinedIcon fontSize="small" />
-              Edit
-            </button>
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: "actions",
+      //   header: "Actions",
+      //   size: 30,
+      //   Cell: ({ row }) => (
+      //     <div className="flex gap-2">
+      //       <button
+      //         onClick={() => handleRevoke(row.original)}
+      //         disabled={!row.original.revoked}
+      //         className={`
+      //           flex items-center gap-1 text-[13px] text-[#1f325c] font-medium hover:text-[#4a6297] cursor-pointer rounded-full px-2 py-1
+      //           ${!row.original.revoked ? "opacity-50 cursor-not-allowed" : ""}
+      //         `}
+      //       >
+      //         <EditOutlinedIcon fontSize="small" />
+      //         Edit
+      //       </button>
+      //     </div>
+      //   ),
+      // },
     ],
     []
   );
