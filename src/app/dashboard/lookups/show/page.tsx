@@ -38,7 +38,6 @@ const Page = () => {
   useEffect(() => {
     if (codeData) {
       setCodes(codeData.data);
-      console.log("working");
     }
   }, [codeData, codeIsLoading]);
 

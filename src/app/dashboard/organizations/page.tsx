@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();
 
-  console.log(identity);
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

@@ -16,7 +16,6 @@ const Item = () => {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
     control,
-    trigger,
     reset,
     watch,
     formState: { errors },
@@ -40,8 +39,8 @@ const Item = () => {
   }, [formLoading, emailTemplate]);
 
   useEffect(() => {
-    reset({...emailTemplate, body: emailBody})
-  }, [emailBody])
+    reset({ ...emailTemplate, body: emailBody });
+  }, [emailBody]);
 
   return (
     <div className="flex justify-center py-6">
@@ -74,14 +73,14 @@ const Item = () => {
           {formLoading ? (
             <Loader />
           ) : (
-              <EmailTemplateComponent
-                template={emailTemplate}
-                errors={errors}
-                control={control}
-                watch={watch}
-                reset={reset}
-                setEmailBody={setEmailBody}
-              />
+            <EmailTemplateComponent
+              template={emailTemplate}
+              errors={errors}
+              control={control}
+              watch={watch}
+              reset={reset}
+              setEmailBody={setEmailBody}
+            />
           )}
         </Edit>
       </div>

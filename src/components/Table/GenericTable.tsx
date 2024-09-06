@@ -86,7 +86,6 @@ const GenericTable = <T extends MRT_RowData>({
   const [sorting, setSorting] = useState<MRT_SortingState>(initialSorter || []);
 
   const handleSortingChange = (newSorting: MRT_SortingState) => {
-    console.log(newSorting);
     setSorting(newSorting);
     handleSorting?.(newSorting);
   };

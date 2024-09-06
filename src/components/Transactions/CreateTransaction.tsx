@@ -45,7 +45,6 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         end_date: yesterdayString,
         transaction_action: initialInfo.transaction_action,
       };
-      console.log(resetTransaction);
       reset({ ...resetTransaction });
     }
   }, []);
