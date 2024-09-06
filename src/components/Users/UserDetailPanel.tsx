@@ -96,7 +96,7 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
       </div>
       <div className='flex flex-col gap-6'>
         <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}>General Information</Divider>
-        <FormControl className="w-full">
+        {/* <FormControl className="w-full">
           <GeneralInput
             id="user_id"
             name="user_id"
@@ -105,7 +105,7 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
             defaultValue={user?.user_id}
             disabled={true}
           />
-        </FormControl>
+        </FormControl> */}
         <div className='flex gap-6'>
           <FormControl className="w-full">
             <GeneralInput

@@ -100,22 +100,21 @@ export type AssetTransaction = {
     end_date?: string,
 };
 
-export enum EmailType {
-    USER_INVITATION = 'USER_INVITATION',
-    LICENSE_KEY_CREATED = 'LICENSE_KEY_CREATED',
-    LICENSE_KEY_1_MONTH_REMINDER = 'LICENSE_KEY_1_MONTH_REMINDER',
-    LICENSE_KEY_2_MONTH_REMINDER = 'LICENSE_KEY_2_MONTH_REMINDER',
-    LICENSE_KEY_RENEW_DUE_REMINDER = 'LICENSE_KEY_RENEW_DUE_REMINDER',
-    LICENSE_KEY_EXPIRED_1_MONTH = 'LICENSE_KEY_EXPIRED_1_MONTH'
-}
+// export enum EmailType {
+//     USER_INVITATION = 'USER_INVITATION',
+//     LICENSE_KEY_CREATED = 'LICENSE_KEY_CREATED',
+//     LICENSE_KEY_1_MONTH_REMINDER = 'LICENSE_KEY_1_MONTH_REMINDER',
+//     LICENSE_KEY_2_MONTH_REMINDER = 'LICENSE_KEY_2_MONTH_REMINDER',
+//     LICENSE_KEY_RENEW_DUE_REMINDER = 'LICENSE_KEY_RENEW_DUE_REMINDER',
+//     LICENSE_KEY_EXPIRED_1_MONTH = 'LICENSE_KEY_EXPIRED_1_MONTH'
+// }
 
 export interface EmailTemplate {
-    id?: string
     email_id?: string;
-    type?: EmailType;
-    title?: string;
+    type?: string;
+    event_type?: string;
     subject?: string;
-    from_email?: string;
+    description?: string;
     cc?: string;
     bcc?: string;
     body?: string;
