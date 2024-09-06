@@ -70,7 +70,7 @@ const UserItem = () => {
                 }}
             >
                 <MenuItem onClick={handleClose}>
-                    <Link href="/dashboard/profile" className='flex gap-2 py-1 pr-2 text-sm items-center'>
+                    <Link href="/dashboard/user-profile" className='flex gap-2 py-1 pr-2 text-sm items-center'>
                         <PersonIcon />My Profile
                     </Link>
                 </MenuItem>

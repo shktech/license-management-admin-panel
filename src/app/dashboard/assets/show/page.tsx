@@ -18,6 +18,7 @@ import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
+import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
 
 const Page = () => {
   const { params } = useParsed();
@@ -156,6 +157,7 @@ const Page = () => {
                   <StyledTab label="Notifications" />
                   <StyledTab label="License Owner" />
                   <StyledTab label="Transaction History" />
+                  <StyledTab label="Email History" />
                   <StyledTab label="Seats" />
                 </StyledTabs>
               </div>
@@ -386,6 +388,11 @@ const Page = () => {
                 </div>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={5}>
+                <div className="max-w-full overflow-x-auto">
+                  <EmailHistoryTable assetId={asset.asset_id as string} />
+                </div>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={6}>
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}
