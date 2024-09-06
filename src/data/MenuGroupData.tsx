@@ -63,6 +63,7 @@ export const menuGroups: MenuGroup[] = [
           { label: "Users", route: "/dashboard/users", is_superuser: true },
           { label: "Organizations", route: "/dashboard/orgs", is_superuser: true },
           { label: "Notification Templates", route: "/dashboard/email-templates" },
+          { label: "Notification Schedules", route: "/dashboard/notification-schedules",is_superuser: true },
           { label: "Roles & Permissions", route: "/dashboard/roles", is_superuser: true },
           { label: "API Keys", route: "/dashboard/api-keys", is_superuser: true },
           { label: "Lookups", route: "/dashboard/lookups" },

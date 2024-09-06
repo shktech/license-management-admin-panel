@@ -64,6 +64,7 @@ const GenericTable = <T extends MRT_RowData>({
   };
 
   const enhancedColumns = columns.map((col) => {
+
     if (col.Cell) return col;
     return {
       ...col,

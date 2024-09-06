@@ -63,6 +63,7 @@ const GeneralSwitch = ({ label, onChange, value, ...props }: BaseInputProps) => 
       },
     } as React.ChangeEvent<HTMLInputElement>);
   }
+ 
   return (
 
     <FormControlLabel
