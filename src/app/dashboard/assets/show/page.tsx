@@ -17,7 +17,6 @@ import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-import SendNotificationDrawer from "@components/Assets/SendNotificationDrawer";
 import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
 import EditIcon from "@mui/icons-material/Edit";
 
