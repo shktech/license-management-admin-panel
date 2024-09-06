@@ -50,7 +50,7 @@ const Item = () => {
                     {formLoading ? (
                         <Loader />
                     ) : (
-                        <NotificationSchedulesComponent expanded={true}      onSave={useBack()}/>
+                        <NotificationSchedulesComponent onSave={useBack()}/>
                     )}
                 </Create>
             </div>
