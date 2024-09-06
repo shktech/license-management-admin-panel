@@ -94,6 +94,10 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       originalDate.setFullYear(
         originalDate.getFullYear() + getDurationFromString(duration as string)
       );
+      if (duration != "EA") {
+        originalDate.setDate(originalDate.getDate() - 1);
+      }
+
       const end_date = originalDate.toISOString().split("T")[0];
       setValue("end_date", end_date);
     }

@@ -19,7 +19,14 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Transaction>({});
+  } = useTable<Transaction>({
+    initialSorter: [
+      {
+        field: "transaction_date",
+        order: "desc",
+      },
+    ],
+  });
 
   const initialSorter: any = [
     {
@@ -162,7 +169,7 @@ const Page = () => {
           handleSearch={handleSearch}
           canDelete={false}
           canEdit={permissionsData?.update}
-          initialSorter={initialSorter}
+          // initialSorter={initialSorter}
         />
       )}
     </div>
