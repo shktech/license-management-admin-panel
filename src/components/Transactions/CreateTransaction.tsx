@@ -72,7 +72,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         start_date: assetData?.data?.start_date,
         end_date: assetData?.data?.end_date,
       };
-      reset({ ...resetTransaction });
+      reset(resetTransaction, { keepValues: true });
     }
   }, [assetData, assetLoading]);
 
