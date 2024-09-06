@@ -28,16 +28,16 @@ export interface Product {
 }
 
 export interface Email_Schedule{
-    id?:string,
-    subject?:string,
-    body?:string,
-    email?:string,
-    scheduled_time?:string,
-    user_timezone?:string,
-    recurring_task?:string,
-    is_active?:boolean
-
-
+    id?: string;
+    email_template?: string;
+    send_now?: boolean;
+    schedule_time?: string;
+    is_sent?: boolean;
+    schedule_server?: string;
+    periodic_task?: string;
+    is_recurring?: boolean;
+    active?: boolean;
+    organization?: string;
 }
 
 export interface Seat {
@@ -133,6 +133,7 @@ export interface EmailTemplate {
   bcc?: string;
   body?: string;
   from_email?: string;
+  name?: string;
 }
 
 export interface Organization {
