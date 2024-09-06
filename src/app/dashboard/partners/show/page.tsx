@@ -1,22 +1,17 @@
 "use client";
 
-import { Permission, Partner, Transaction } from "@/types/types";
-import ShowTransaction from "@components/Transactions/Show/ShowTransaction";
+import { Partner } from "@/types/types";
 import Loader from "@components/common/Loader";
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import {
-  editRefineBtnStyle,
-  refreshRefineBtnStyle,
-  tagStyle,
-} from "@data/MuiStyles";
-import { Box } from "@mui/material";
-import { useBack, useNavigation, usePermissions, useShow, useTable } from "@refinedev/core";
+import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
+import { useNavigation, useShow } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
-import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
+import {
+  CustomTabPanel,
+  StyledTab,
+  StyledTabs,
+} from "@components/Tab/CustomizedTab";
 import { useState } from "react";
-import GeneralInformation from "@components/common/View/GeneralInformation";
 import { getNestedValue } from "@utils/utilFunctions";
 import AddressTable from "@components/Partners/AddressTable";
 import ContactTable from "@components/Partners/ContactTable";
@@ -24,10 +19,10 @@ import PartnerTransactionTable from "@components/Partners/PartnerTransactionTabl
 import PartnerLicensesTable from "@components/Partners/PartnerLicensesTable";
 
 const partnerColors = {
-  "All": '#4A90E2',
-  "Channel": '#FFCC00',
-  "Direct End User": '#34C759',
-}
+  All: "#4A90E2",
+  Channel: "#FFCC00",
+  "Direct End User": "#34C759",
+};
 
 const Item = () => {
   const { params } = useParsed();
@@ -36,8 +31,6 @@ const Item = () => {
     id: params?.id,
   });
   const { data, isLoading } = queryResult;
-
-
 
   const [value, setValue] = useState(0);
 
@@ -52,16 +45,19 @@ const Item = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        <EditButton {...editButtonProps} onClick={() => push(`/dashboard/partners/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
+        <EditButton
+          {...editButtonProps}
+          onClick={() => push(`/dashboard/partners/edit?id=${params?.id}`)}
+          sx={editRefineBtnStyle}
+        />
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
   };
   const summaryfields = [
-    { title: "Oracle Account", key: 'account_id' },
+    { title: "Oracle Account", key: "account_id" },
     { title: "Partner Number", key: "partner_number" },
-    // { title: "Partner Type", key: "type" },
-  ]
+  ];
 
   return (
     <div className="no-padding-card">
@@ -79,8 +75,16 @@ const Item = () => {
                 Partner
                 <div className="text-lg font-normal">{partner?.name}</div>
               </div>
-              <span className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}>{partner?.type}</span>
-              <div className={`rounded-full ${partner?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'} text-xs font-medium px-4 py-1 text-white`}>{partner?.active ? "Active" : "Inactive"}</div>
+              <span
+                className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}
+              >
+                {partner?.type}
+              </span>
+              <div
+                className={`rounded-full ${partner?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"} text-xs font-medium px-4 py-1 text-white`}
+              >
+                {partner?.active ? "Active" : "Inactive"}
+              </div>
             </div>
           </div>
         }
@@ -88,17 +92,19 @@ const Item = () => {
           getButtonProps(editButtonProps, refreshButtonProps)
         }
       >
-        {isLoading ? <Loader /> :
+        {isLoading ? (
+          <Loader />
+        ) : (
           <>
             <div className="flex gap-16 px-12 mt-8">
-              {
-                summaryfields.map(field => (
-                  <div key={field.key} className="flex flex-col gap-1">
-                    <div className="text-[#778599]">{field.title}</div>
-                    <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(partner, field.key)}</div>
+              {summaryfields.map((field) => (
+                <div key={field.key} className="flex flex-col gap-1">
+                  <div className="text-[#778599]">{field.title}</div>
+                  <div className="text-[#515f72] text-xl font-semibold">
+                    {getNestedValue(partner, field.key)}
                   </div>
-                ))
-              }
+                </div>
+              ))}
             </div>
             <div className="">
               <div className="px-12 pt-4">
@@ -114,10 +120,16 @@ const Item = () => {
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>
-                <AddressTable data={partner?.addresses ?? []} partner_id={params?.id} />
+                <AddressTable
+                  data={partner?.addresses ?? []}
+                  partner_id={params?.id}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                <ContactTable data={partner?.contacts ?? []} partner_id={params?.id}/>
+                <ContactTable
+                  data={partner?.contacts ?? []}
+                  partner_id={params?.id}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
                 <PartnerLicensesTable partner_id={params?.id} />
@@ -127,7 +139,7 @@ const Item = () => {
               </CustomTabPanel>
             </div>
           </>
-        }
+        )}
       </Show>
     </div>
   );

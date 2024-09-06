@@ -9,9 +9,8 @@ import {
   StyledTab,
   StyledTabs,
 } from "@components/Tab/CustomizedTab";
-import { useGetIdentity, useList } from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
-import { useEffect, useState } from "react";
+import { useGetIdentity } from "@refinedev/core";
+import { useState } from "react";
 
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();
@@ -25,8 +24,10 @@ const Page = () => {
   return (
     <div className="flex flex-col">
       <div className="!font-satoshi px-12 pt-10 pb-4 text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
-        Organization 
-        <span className="text-base text-[#11ba82]">{identity?.organization}</span>
+        Organization
+        <span className="text-base text-[#11ba82]">
+          {identity?.organization}
+        </span>
       </div>
       <div className="px-12">
         <StyledTabs

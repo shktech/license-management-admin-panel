@@ -1,20 +1,16 @@
 "use client";
 
-import { Permission, Product } from "@/types/types";
-import ShowTransaction from "@components/Transactions/Show/ShowTransaction";
+import { Product } from "@/types/types";
 import Loader from "@components/common/Loader";
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import {
-  editRefineBtnStyle,
-  refreshRefineBtnStyle,
-  tagStyle,
-} from "@data/MuiStyles";
-import { Box } from "@mui/material";
-import { useBack, useNavigation, usePermissions, useShow } from "@refinedev/core";
+import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
+import { useNavigation, useShow } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
-import { CustomTabPanel, StyledTab, StyledTabs } from "@components/Tab/CustomizedTab";
+import {
+  CustomTabPanel,
+  StyledTab,
+  StyledTabs,
+} from "@components/Tab/CustomizedTab";
 import { useState } from "react";
 import GeneralInformation from "@components/common/View/GeneralInformation";
 import { getNestedValue } from "@utils/utilFunctions";
@@ -26,9 +22,6 @@ const Item = () => {
     id: params?.id,
   });
   const { data, isLoading } = queryResult;
-  const { data: permissionsData } = usePermissions<Permission>({
-    params: { codename: "product" },
-  });
 
   const [value, setValue] = useState(0);
 
@@ -43,7 +36,11 @@ const Item = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        <EditButton {...editButtonProps} onClick={() => push(`/dashboard/products/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
+        <EditButton
+          {...editButtonProps}
+          onClick={() => push(`/dashboard/products/edit?id=${params?.id}`)}
+          sx={editRefineBtnStyle}
+        />
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
@@ -54,7 +51,7 @@ const Item = () => {
     { title: "Vendor Name", key: "vendor_name", size: 3 },
     { title: "Vender Part Number", key: "vendor_part_number", size: 3 },
     { title: "Duration", key: "duration", size: 3 },
-  ]
+  ];
 
   return (
     <div className="no-padding-card">
@@ -70,7 +67,9 @@ const Item = () => {
             <div className="flex gap-4 items-center">
               <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
                 Product
-                <div className="text-lg font-normal">{product?.product_name}</div>
+                <div className="text-lg font-normal">
+                  {product?.product_name}
+                </div>
               </div>
             </div>
           </div>
@@ -79,18 +78,23 @@ const Item = () => {
           getButtonProps(editButtonProps, refreshButtonProps)
         }
       >
-        {isLoading ? <Loader /> :
+        {isLoading ? (
+          <Loader />
+        ) : (
           <>
             <div className="">
               <div className="flex items-end gap-x-8 gap-y-6 px-12 mt-8">
-                {
-                  summaryfields.map(field => (
-                    <div key={field.key} className="flex flex-col gap-1 col-span-4">
-                      <div className="text-[#778599]">{field.title}</div>
-                      <div className="text-[#515f72] text-xl font-semibold">{getNestedValue(product, field.key)}</div>
+                {summaryfields.map((field) => (
+                  <div
+                    key={field.key}
+                    className="flex flex-col gap-1 col-span-4"
+                  >
+                    <div className="text-[#778599]">{field.title}</div>
+                    <div className="text-[#515f72] text-xl font-semibold">
+                      {getNestedValue(product, field.key)}
                     </div>
-                  ))
-                }
+                  </div>
+                ))}
               </div>
               <div className="px-12 pt-4">
                 <StyledTabs
@@ -136,28 +140,12 @@ const Item = () => {
                     },
                     {
                       label: "Active",
-                      value: <div className={`rounded-full h-4 w-4 ${product?.active ? 'bg-[#11ba82]' : 'bg-[#929ea8]'}`}></div>
+                      value: (
+                        <div
+                          className={`rounded-full h-4 w-4 ${product?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
+                        ></div>
+                      ),
                     },
-                    // {
-                    //   label: "Eval Set Name",
-                    //   value: product?.eval_set_name,
-                    // },
-                    // {
-                    //   label: "License Source Set",
-                    //   value: product?.license_source_set,
-                    // },
-                    // {
-                    //   label: "New Set Name",
-                    //   value: product?.new_set_name,
-                    // },
-                    // {
-                    //   label: "Renewal Set Name",
-                    //   value: product?.renewal_set_name,
-                    // },
-                    // {
-                    //   label: "Source Name",
-                    //   value: product?.source_name,
-                    // },
                   ]}
                 />
               </CustomTabPanel>
@@ -190,7 +178,7 @@ const Item = () => {
               </CustomTabPanel>
             </div>
           </>
-        }
+        )}
       </Show>
     </div>
   );

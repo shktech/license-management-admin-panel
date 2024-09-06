@@ -10,50 +10,58 @@ import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 
 const Item = () => {
-    const { params } = useParsed();
-    const {
-        saveButtonProps,
-        refineCore: { formLoading, queryResult },
-        control,
-        trigger,
-        formState: { errors },
-    } = useForm<Product>({
-        refineCoreProps: {
-            action: "create",
-            resource: "products",
-            id: params?.id,
-        },
-    });
+  const { params } = useParsed();
+  const {
+    saveButtonProps,
+    refineCore: { formLoading, queryResult },
+    control,
+    trigger,
+    formState: { errors },
+  } = useForm<Product>({
+    refineCoreProps: {
+      action: "create",
+      resource: "products",
+      id: params?.id,
+    },
+  });
 
-    return (
-        <div className="flex justify-center py-6">
-            <div className='w-2/3'>
-                <Create
-                    goBack={<button onClick={useBack()} className="inline-block p-2 rounded-xl border duration-500 border-transparent hover:border-black"> <ArrowIcon /></button>}
-                    breadcrumb={false}
-                    headerButtons={<></>}
-                    title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
-                            Create Product
-                        </div>
-                    }
-                    saveButtonProps={{ ...saveButtonProps, hidden: false }}
-                    footerButtons={({ saveButtonProps }) => (
-                        <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
-                    )}
-                    wrapperProps={{
-                        className: "rounded-none bg-[#f2f6fa] shadow-none",
-                    }}
-                >
-                    {formLoading ? (
-                        <Loader />
-                    ) : (
-                        <ProductForm {...{ control, errors, trigger }} />
-                    )}
-                </Create>
+  return (
+    <div className="flex justify-center py-6">
+      <div className="w-2/3">
+        <Create
+          goBack={
+            <button
+              onClick={useBack()}
+              className="inline-block p-2 rounded-xl border duration-500 border-transparent hover:border-black"
+            >
+              {" "}
+              <ArrowIcon />
+            </button>
+          }
+          breadcrumb={false}
+          headerButtons={<></>}
+          title={
+            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
+              Create Product
             </div>
-        </div>
-    );
+          }
+          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          footerButtons={({ saveButtonProps }) => (
+            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+          )}
+          wrapperProps={{
+            className: "rounded-none bg-[#f2f6fa] shadow-none",
+          }}
+        >
+          {formLoading ? (
+            <Loader />
+          ) : (
+            <ProductForm {...{ control, errors, trigger }} />
+          )}
+        </Create>
+      </div>
+    </div>
+  );
 };
 
 export default Item;
