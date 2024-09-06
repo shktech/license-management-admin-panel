@@ -28,6 +28,7 @@ export const TxtStatusColor: { [key: string]: string } = {
 }
 
 export const ProductActiveColor = (status: boolean) => status ? '#11ba82' : '#c2c2c2'
+export const ScheduleActiveColor = (status: boolean) => status ? '#11ba82' : '#ed0e42'
 
 export const RoleColors: { [key: string]: string } = {
     "Admin": 'bg-[#3d50e0]',

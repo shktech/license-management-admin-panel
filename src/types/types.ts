@@ -26,6 +26,20 @@ export interface Product {
   organization?: Partial<Organization>;
   email_template?: Partial<EmailTemplate>;
 }
+
+export interface Email_Schedule{
+    id?:string,
+    subject?:string,
+    body?:string,
+    email?:string,
+    scheduled_time?:string,
+    user_timezone?:string,
+    recurring_task?:string,
+    is_active?:boolean
+
+
+}
+
 export interface Seat {
   id?: number;
   created_at?: string;

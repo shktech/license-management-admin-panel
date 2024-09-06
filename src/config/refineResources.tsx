@@ -147,6 +147,18 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
+    name: "notification-schedules",
+    list: "/dashboard/notification-schedules",
+    create: "/dashboard/notification-schedules/create",
+    edit: "/dashboard/notification-schedulesedit/:id",
+    show: "/dashboard/notification-schedules/show/:id",
+
+    meta: {
+      label: "Notification Schedules",
+      parent: "maintenance",
+    },
+  },
+  {
     name: "unsubscribe",
     list: "/dashboard/maintenance/unsubscribe",
     meta: {
