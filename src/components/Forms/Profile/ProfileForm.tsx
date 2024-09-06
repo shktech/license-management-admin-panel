@@ -66,7 +66,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ identity }) => {
       },
       {
         onError: () => {},
-        onSuccess: () => {},
+        onSuccess: () => {
+          window.location.reload();
+        },
       }
     );
   };
