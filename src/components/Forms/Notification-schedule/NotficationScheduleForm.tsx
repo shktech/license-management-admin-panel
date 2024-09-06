@@ -12,159 +12,160 @@ import NoteIcon from "@/assets/icons/note.svg?icon";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import FormControlWrapper from "../FormControlWrapper";
-import { useBack, useCreate, useUpdate } from "@refinedev/core";
+import { useBack, useCreate, useList, useUpdate } from "@refinedev/core";
 import { timeZones } from "@utils/timeZones";
-import { Button } from "@mui/material";
+import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { modalOkBtnStyle } from "@data/MuiStyles";
-import GeneralSwitch from "@components/Input/GeneralSwitch";
+import GeneralSwitch, { IOSSwitch } from "@components/Input/GeneralSwitch";
+import ArrowIcon from "@/assets/icons/arrow.svg?icon";
+import Loader from "@components/common/Loader";
 
 interface NotificationSchedulesComponentProps {
-  template?: Email_Schedule;
-
-  onSave: () => void;
+  emailSchedule?: Email_Schedule;
+  onSave?: () => void;
 }
 
-const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  lineNumbers: "off",
-};
-
-const handleEditorDidMount = (editor: any, monaco: any) => {
-  monaco.editor.defineTheme("custom-theme", {
-    base: "vs",
-    inherit: true,
-    rules: [],
-    colors: { "editor.background": "#e6eaed" },
-  });
-  monaco.editor.setTheme("custom-theme");
-};
-
-const NotificationSchedulesComponent: React.FC<NotificationSchedulesComponentProps> = ({
-  template,
-  onSave
-}) => {
+const NotificationSchedulesComponent: React.FC<
+  NotificationSchedulesComponentProps
+> = ({ emailSchedule, onSave }) => {
   const {
-    handleSubmit,
     control,
     reset,
-    
     formState: { errors },
+    getValues,
+    setValue,
   } = useForm<Email_Schedule>();
 
-  useEffect(() => {
-    reset({ ...template });
-  }, [template]);
-
-  const [testRecipient, setTestRecipient] = useState<string>("");
-  const [emailBody, setEmailBody] = useState<string>(template?.body as string);
-  const [revoke, setRevoke] = React.useState(template?.is_active);
-  const { mutate } = useCreate();
-  const { mutate: update } = useUpdate();
-
-  const onSubmit = (data: any) => {
-    const payload = {
-        ...data,
-        body: emailBody,
-        is_active:revoke
-      };
-    
-    if(template)
-    {
-        payload.is_active = revoke;
-        update(
-            {
-              resource: "notification-schedules",
-              id: `${template.id as string}`,
-              values: payload,
-            },
-            {
-              onError: () => { },
-              onSuccess: () => {
-                onSave();
-              },
-            }
-          );
-    }else{
-        payload.is_recurring = true;
-        payload.is_active = true;
-          mutate(
-            {
-              resource: "notification-schedules",
-              values: payload,
-            },
-            {
-              onError: (error) => { },
-              onSuccess: () => {
-                  onSave();
-              },
-            }
-          );
-    }
-   
+  const {
+    data: emailTemplatesData,
+    isLoading: emailTemplatesLoading,
+    refetch,
+  } = useList<EmailTemplate>({
+    resource: "email-templates",
+    hasPagination: false,
+  }) as {
+    data: { data: EmailTemplate[] } | undefined;
+    isLoading: boolean;
+    refetch: () => void;
   };
 
-const options = [
-    {
-    value:"daily",
-    label:"Daily"
-},
-    {
-    value:"weekly",
-    label:"Weekly"
-},
-    {
-    value:"yearly",
-    label:"Yearly"
-}
-]
+  useEffect(() => {
+    if (!emailTemplatesLoading && emailSchedule && emailTemplatesData?.data) {
+      reset({ ...emailSchedule });
+      console.log(emailTemplatesData, emailTemplatesLoading);
+      if (emailTemplatesData?.data) {
+        console.log(emailSchedule?.email_template);
+        const email_id = emailTemplatesData.data.find(
+          (item) => item.name === emailSchedule?.email_template
+        )?.email_id;
+        console.log(email_id);
+        setValue("email-template", email_id);
+      }
+    }
+  }, [emailSchedule, emailTemplatesLoading, emailTemplatesData]);
 
-  const onEmailBodyChange = (value: string) => {
-    setEmailBody(value);
-  }
+  const { mutate } = useCreate();
+  const { mutate: update } = useUpdate();
+  const [sendNow, setSendNow] = useState(emailSchedule?.send_now);
+  const [recurring, setRecurring] = useState(emailSchedule?.is_recurring);
+  const [browserTimezone, setBrowserTimezone] = useState("");
+
+  useEffect(() => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setBrowserTimezone(timezone);
+  }, []);
+
+  const onSubmit = () => {
+    const data = getValues();
+    const payload: any = {
+      email_emailSchedule: data.email_emailSchedule,
+      user_timezone: browserTimezone,
+      sendNow: sendNow,
+      recurring: recurring,
+    };
+
+    sendNow ? (payload.scheduled_time = data.scheduled_time) : null;
+    recurring ? (payload.recurring_task = data.recurring_task) : null;
+
+    console.log(payload);
+    if (emailSchedule) {
+      update(
+        {
+          resource: "schedule",
+          id: `${emailSchedule.id as string}`,
+          values: payload,
+        },
+        {
+          onError: () => {},
+          onSuccess: () => {
+            onSave?.();
+          },
+        }
+      );
+    } else {
+      mutate(
+        {
+          resource: "schedule",
+          values: payload,
+        },
+        {
+          onError: (error) => {},
+          onSuccess: () => {
+            onSave?.();
+          },
+        }
+      );
+    }
+  };
+
+  const emailOptions = emailTemplatesData?.data?.map((item) => ({
+    value: item.email_id,
+    label: item.name,
+  }));
+
+  const options = [
+    {
+      value: "daily",
+      label: "Daily",
+    },
+    {
+      value: "weekly",
+      label: "Weekly",
+    },
+    {
+      value: "yearly",
+      label: "Yearly",
+    },
+  ];
 
   return (
- <>
-    
- 
-   
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4 w-full py-2 px-2">
-            <FormControlWrapper
-              name="email"
-              control={control}
-              rules={{ required: "Email address is required" }}
-              error={errors.email?.message?.toString()}
-            >
-              {(field) => (
-                <GeneralInput
-                  {...field}
-                  required={true}
-                  id="email"
-                  label="Email Address"
-                  type="text"
-                  defaultValue={template?.email}
+    <>
+      <div className="flex items-center gap-3">
+        <div className="py-8 !font-satoshi text-2xl font-semibold text-[#1f325c]">
+          {emailSchedule
+            ? "Edit Notification Schedule"
+            : "Create Notification Schedule"}
+        </div>
+      </div>
+      {emailTemplatesLoading ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col gap-4 bg-white p-5 rounded-lg">
+          <div className="flex items-center text-base px-2 gap-4 font-medium">
+            <div className="">Do you want to send Now?</div>
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  sx={{ mx: 1 }}
+                  checked={sendNow}
+                  onChange={() => setSendNow(!sendNow)}
                 />
-              )}
-            </FormControlWrapper>
+              }
+              label=""
+            />
+          </div>
+          <Collapse in={sendNow}>
             <FormControlWrapper
-              name="subject"
-              control={control}
-              rules={{ required: "Subject is required" }}
-              error={errors.subject?.message?.toString()}
-            >
-              {(field) => (
-                <GeneralInput
-                  {...field}
-                  id="subject"
-                  label="Subject"
-                  required={true}
-                  type="text"
-                  defaultValue={template?.subject}
-                />
-              )}
-            </FormControlWrapper>
-      <div className="md:flex block items-center  justify-between">
-
-<FormControlWrapper
               name="scheduled_time"
               control={control}
               rules={{ required: "Time is required" }}
@@ -176,15 +177,26 @@ const options = [
                   id="scheduled_time"
                   label="Select Time"
                   required={true}
-                  type='time'
-                 
-                  defaultValue={template?.subject}
+                  type="time"
                 />
               )}
             </FormControlWrapper>
-        
-            <div className="md:ms-6 w-full">
-      <FormControlWrapper
+          </Collapse>
+          <div className="flex items-center text-base px-2 gap-4 font-medium">
+            <div className="">Is this recurring?</div>
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  sx={{ mx: 1 }}
+                  checked={recurring}
+                  onChange={() => setRecurring(!recurring)}
+                />
+              }
+              label=""
+            />
+          </div>
+          <Collapse in={recurring}>
+            <FormControlWrapper
               name="recurring_task"
               control={control}
               rules={{ required: "Select an option" }}
@@ -198,83 +210,35 @@ const options = [
                   required={true}
                   type="dropdown"
                   options={options}
-                  defaultValue={template?.subject}
                 />
               )}
             </FormControlWrapper>
-        </div>
-      </div>
-      {
-        template && template?.id ?
-        null:
-        <FormControlWrapper
-        name="user_timezone"
-        control={control}
-        rules={{ required: "Select an option" }}
-        error={errors.user_timezone?.message?.toString()}
-      >
-        {(field) => (
-          <Dropdown
-            {...field}
-            id="user_timezone"
-            label="Select timezone"
-            required={true}
-            type="dropdown"
-            options={timeZones}
-            defaultValue={template?.subject}
-          />
-        )}
-      </FormControlWrapper> 
-      }
-     
-            <div className="">
-              <div className="bg-[#e6eaed] rounded-t-lg border-r-ful font-medium text-sm p-4 text-[#0000009c]">
-               Email Template(HTML)
-              </div>
-              <Editor
-                 
-                defaultValue={template?.body}
-                height="300px"
-                defaultLanguage="html"
-                options={editorOptions}
-                theme="custom-theme"
-                onMount={handleEditorDidMount}
-                onChange={(value) => onEmailBodyChange(value as string)}
+          </Collapse>
+          <FormControlWrapper
+            name="email-template"
+            control={control}
+            rules={{ required: "Select an option" }}
+            error={errors.email_emailSchedule?.message?.toString()}
+          >
+            {(field) => (
+              <Dropdown
+                {...field}
+                id="templates"
+                label="Select Email emailSchedule"
+                required={true}
+                type="dropdown"
+                options={emailOptions}
               />
-            
-            <div className="flex justify-end gap-2 mt-5">
-            {
-        template && template?.id ?
-        <FormControlWrapper
-        name="is_active"
-        control={control}
-       
-        error={errors.subject?.message?.toString()}
-      >
-        {(field) => (
-          <GeneralSwitch
-            {...field}
-            id="is_active"
-            label="Is Active"
-          
-            onChange={() => setRevoke(!revoke)}
-            value={revoke}
-           
-        
-          />
-        )}
-      </FormControlWrapper> :null
-       
-      }</div>
-            <div className="flex justify-end gap-2 mt-5">
-              <Button type="submit" variant="contained" sx={modalOkBtnStyle}>
-                Save
-              </Button>
-            </div>
-      </div>
+            )}
+          </FormControlWrapper>
+          <div className="flex justify-end gap-2">
+            <Button onClick={onSubmit} variant="contained" sx={modalOkBtnStyle}>
+              {emailSchedule ? "Save" : "Create"}
+            </Button>
           </div>
-        </form>
-        </>
+        </div>
+      )}
+    </>
   );
 };
 

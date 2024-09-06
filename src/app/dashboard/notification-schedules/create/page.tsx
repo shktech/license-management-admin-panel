@@ -10,52 +10,28 @@ import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 
 const Item = () => {
-    const { params } = useParsed();
-  
-    const {
-        saveButtonProps,
-        refineCore: { formLoading, queryResult },
-        control,
-        trigger,
-        formState: { errors },
-    } = useForm<Email_Schedule>({
-        refineCoreProps: {
-            action: "create",
-            resource: "notification-schedules",
-            id: params?.id,
-        },
-    });
-   
+  const { params } = useParsed();
 
-    return (
-        <div className="flex justify-center py-6">
-            <div className='w-2/3'>
-                <Create
-                    goBack={<button onClick={useBack()} className="inline-block p-2 rounded-xl border duration-500 border-transparent hover:border-black"> <ArrowIcon /></button>}
-                    breadcrumb={false}
-                    headerButtons={<></>}
-                    title={
-                        <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
-                            Create Notification Schedule
-                        </div>
-                    }
-                    saveButtonProps={{ ...saveButtonProps, hidden: true }}
-                    footerButtons={({ saveButtonProps }) => (
-                        <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
-                    )}
-                    wrapperProps={{
-                        className: "rounded-none bg-[#f2f6fa] shadow-none",
-                    }}
-                >
-                    {formLoading ? (
-                        <Loader />
-                    ) : (
-                        <NotificationSchedulesComponent expanded={true}      onSave={useBack()}/>
-                    )}
-                </Create>
-            </div>
-        </div>
-    );
+  const {
+    saveButtonProps,
+    refineCore: { formLoading, queryResult },
+    control,
+    trigger,
+    formState: { errors },
+  } = useForm<Email_Schedule>({
+    refineCoreProps: {
+      action: "create",
+      id: params?.id,
+    },
+  });
+
+  return (
+    <div className="flex justify-center py-6">
+      <div className="w-2/3">
+        <NotificationSchedulesComponent onSave={useBack()} />
+      </div>
+    </div>
+  );
 };
 
 export default Item;

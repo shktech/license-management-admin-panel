@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable , useDelete, useNavigation  } from "@refinedev/core";
+import { useTable, useDelete, useNavigation } from "@refinedev/core";
 import { Email_Schedule, Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -15,179 +15,113 @@ import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
-    setCurrent,
-    setFilters,
-    setSorters,
-  } = useTable<Product>();
+  } = useTable<Email_Schedule>({
+    hasPagination: false,
+  });
 
   const { push } = useNavigation();
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-  
-  const [clickedProduct, setClickedProduct] = React.useState<Product | null>(null);
 
   const handleCreate = () => {
     // setOpenDrawer(true);
-    push(`/dashboard/notification-schedules/create`)
-  }
-
-  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
-
-
-  const handleEditClick = (row: Product) => {
-    // setClickedProduct(row);
-    // setOpenDrawer(true);
-    push(`/dashboard/notification-schedules/edit?id=${row.id}`)
+    push(`/dashboard/notification-schedules/create`);
   };
 
-  const handleRowClick = (row: Product) => {
-    push(`/dashboard/notification-schedules/show?id=${row.id}`)
-  }
+  const handleRowClick = (row: Email_Schedule) => {
+    push(`/dashboard/notification-schedules/edit?id=${row.id}`);
+  };
 
-  const handlePage = (value: number) => setCurrent(value);
-
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
-
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
-
-  const handleClose = () => {
-    refetch();
-    setClickedProduct(null);
-    setOpenDrawer(false);
-  }
-
-  const { mutate: deleteProduct } = useDelete();
-
-  const handleDeleteBtn = (product: Product) => {
-    handleOpenDeleteModal();
-    setClickedProduct(product);
-  }
-  const formatTime=(_date:any)=>{
-    var date =  new Date(_date);
-    return  date.getDate() + "-" +  (date.getMonth()+1) + "-" + date.getFullYear() + " " +date.getHours() + ":" +  date.getMinutes();
-  } 
-  const formatDate=(_date:any)=>{
-    var date =  new Date(_date);
-    return date.getDate() + "-" +  (date.getMonth()+1) + "-" + date.getFullYear();
-  } 
-  const handleDelete = () => {
-    deleteProduct(
-      { resource: "products", id: `${(clickedProduct?.product_id)}` },
-      {
-        onError: (error) => { console.log(error); },
-        onSuccess: () => { console.log("Success"); },
-      }
-    )
-    handleCloseDeleteModal();
-  }
+  const formatTime = (_date: any) => {
+    var date = new Date(_date);
+    return (
+      date.getDate() +
+      "-" +
+      (date.getMonth() + 1) +
+      "-" +
+      date.getFullYear() +
+      " " +
+      date.getHours() +
+      ":" +
+      date.getMinutes()
+    );
+  };
+  const formatDate = (_date: any) => {
+    var date = new Date(_date);
+    return (
+      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+    );
+  };
 
   const columns = useMemo<MRT_ColumnDef<Email_Schedule>[]>(
     () => [
       {
-        accessorKey: "email",
-        header: "Email",
-        size: 200
-      },
-      {
-        accessorKey: "subject",
-        header: "Subject",
-        size: 150,
-      },
-      {
         accessorKey: "scheduled_time",
         header: "Scheduled Time",
         size: 150,
+        Cell: ({ renderedCellValue }) => <>{formatTime(renderedCellValue)}</>,
+      },
+      {
+        accessorKey: "is_recurring",
+        header: "Recurring",
+        size: 180,
         Cell: ({ renderedCellValue }) => (
-       
-          <>
-          {formatTime(renderedCellValue)}
-          </>
-   
-        )
+          <div
+            className={`rounded-full w-4 h-4 ${renderedCellValue ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
+          ></div>
+        ),
       },
       {
         accessorKey: "recurring_task",
-        header: "Recurring",
+        header: "Recurring Interval",
         size: 180,
       },
       {
-        accessorKey: "created",
-        header: "Creation Date",
-        size: 220,
-        Cell: ({ renderedCellValue }) => (
-       
-          <>
-          {formatDate(renderedCellValue)}
-          </>
-   
-        )
+        accessorKey: "email_template",
+        header: "Email Template",
+        size: 200,
       },
       {
         accessorKey: "is_active",
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-     
-        
-          <Box component="span" sx={{ backgroundColor: ScheduleActiveColor(renderedCellValue as boolean), ...tagStyle }} >
+          <Box
+            component="span"
+            sx={{
+              backgroundColor: ScheduleActiveColor(
+                renderedCellValue as boolean
+              ),
+              ...tagStyle,
+            }}
+          >
             {renderedCellValue ? "Active" : "Stopped"}
           </Box>
-        
         ),
       },
-      // {
-      //   accessorKey: "actions",
-      //   header: "Action",
-      //   size: 100,
-      //   enableSorting: false,
-      //   pin: 'right',
-      //   Cell: ({ row }) => (
-      //     <div className="w-full h-full">
-      //       <div className="flex gap-4">
-      //         <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-      //         <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-      //       </div>
-      //     </div>
-      //   ),
-      // },
     ],
     []
   );
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {
-        isLoading ?
-          <Loader /> :
-          <GenericTable
-            title={
-              <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-                Notification Schedules
-              </div>
-            }
-            data={data?.results}
-            columns={columns}
-            canCreate={true}
-            totalCount={data?.count}
-            handlePage={handlePage}
-            onRowClick={handleRowClick}
-            handleSorting={handleSorting}
-            handleSearch={handleSearch}
-            handleCreate={handleCreate} />
-      }
-
-      <ProductDetailDrawer
-        open={openDrawer}
-        onClose={() => handleClose()}
-        product={clickedProduct}
-      />
-      <DeleteModal
-        openModal={openDeleteModal}
-        handleDelete={handleDelete}
-        handleCloseModal={handleCloseDeleteModal}
-        selectedProduct={clickedProduct}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <GenericTable
+          title={
+            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              Notification Schedules
+            </div>
+          }
+          data={data?.data}
+          columns={columns as any}
+          canCreate={true}
+          totalCount={data?.count}
+          onRowClick={handleRowClick}
+          handleCreate={handleCreate}
+          noSearchNeed
+          noSortNeed
+        />
+      )}
     </div>
   );
 };

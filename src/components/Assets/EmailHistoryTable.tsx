@@ -54,7 +54,7 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
           return (
             <div>
               <span
-                className={`rounded-full text-xs ${renderedCellValue == "success" ? "py-2 px-4 bg-[#11ba82] text-white" : "bg-[#929ea8] text-black"}`}
+                className={`rounded-full text-xs py-2 px-4 ${renderedCellValue == "success" ? "bg-[#11ba82] text-white" : "bg-[#929ea8] text-black"}`}
               >
                 {renderedCellValue}
               </span>
