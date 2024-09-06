@@ -28,6 +28,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
               switch (field.type) {
                 case 'text':
                 case 'number':
+                case 'password':
                   return (
                     <GeneralInput
                       {...fieldProps}
