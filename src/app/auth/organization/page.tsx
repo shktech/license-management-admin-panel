@@ -71,6 +71,7 @@ const Page: React.FC = () => {
                               type={"dropdown"}
                               label="Organization"
                               placeholder="Select your organization"
+                              required={true}
                               options={organizations.map(
                                 (organization: Organization) => ({
                                   label: organization.organization_code,

@@ -4,13 +4,13 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 const OrganizationEditFormInitialFields: InitialFieldConfig[] = [
   {
     name: "organization_code",
-
+    required: "text",
     disabled: true,
     size: 1,
   },
   {
     name: "organization_name",
-
+    required: "text",
     size: 1,
   },
   {
@@ -32,12 +32,12 @@ const OrganizationEditFormInitialFields: InitialFieldConfig[] = [
 const OrganizationCreateInitialFields: InitialFieldConfig[] = [
   {
     name: "organization_code",
-
+    required: "text",
     size: 1,
   },
   {
     name: "organization_name",
-
+    required: "text",
     size: 1,
   },
   {

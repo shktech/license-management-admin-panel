@@ -5,13 +5,13 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 import { getRealFormFields } from "@utils/utilFunctions";
 
 const InitialField: InitialFieldConfig[] = [
-  { name: "address1" },
+  { name: "address1", required: "text" },
   { name: "address2" },
-  { name: "city" },
-  { name: "state" },
-  { name: "postal_code" },
-  { name: "country" },
-  { name: "active", type: "switch" },
+  { name: "city", required: "text" },
+  { name: "state", required: "text" },
+  { name: "postal_code", required: "text" },
+  { name: "country", required: "text" },
+  { name: "active", type: "switch", required: "text" },
 ];
 
 

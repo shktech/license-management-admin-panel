@@ -105,6 +105,7 @@ const Page: React.FC = () => {
                             label="Username"
                             placeholder="Enter your username"
                             disabled={false}
+                            required={true}
                             icon={<EmailIcon className="fill-current" />}
                           />
                         )}
@@ -122,6 +123,7 @@ const Page: React.FC = () => {
                             label="Password"
                             placeholder="Enter your password"
                             disabled={false}
+                            required={true}
                             icon={<PasswordIcon className="fill-current" />}
                           />
                         )}

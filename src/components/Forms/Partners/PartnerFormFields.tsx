@@ -2,12 +2,13 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 import { getRealFormFields } from "@utils/utilFunctions";
 
 const InitialField: InitialFieldConfig[] = [
-  { name: "account_id", size: 2 },
-  { name: "name", size: 2 },
+  { name: "account_id", size: 2, required: "text" },
+  { name: "name", size: 2, required: "text" },
   {
     name: "type",
     type: "dropdown",
     size: 2,
+    required: "text",
     options: [
       { value: "Direct End User", label: "Direct End User" },
       { value: "Channel", label: "Channel" },
@@ -16,27 +17,28 @@ const InitialField: InitialFieldConfig[] = [
 ];
 
 const InitialCreateField: InitialFieldConfig[] = [
-  { name: "account_id", size: 2 },
-  { name: "name", size: 2 },
+  { name: "account_id", size: 2, required: "text" },
+  { name: "name", size: 2, required: "text" },
   {
     name: "type",
     type: "dropdown",
     size: 2,
+    required: "text",
     options: [
       { value: "Direct End User", label: "Direct End User" },
       { value: "Channel", label: "Channel" },
     ],
   },
-  { name: "address1" },
+  { name: "address1", required: "text" },
   { name: "address2" },
-  { name: "city" },
-  { name: "state" },
-  { name: "postal_code" },
-  { name: "country" },
-  { name: "first_name" },
-  { name: "last_name" },
-  { name: "phone" },
-  { name: "email" },
+  { name: "city", required: "text" },
+  { name: "state", required: "text" },
+  { name: "postal_code", required: "text" },
+  { name: "country", required: "text" },
+  { name: "first_name", required: "text" },
+  { name: "last_name", required: "text" },
+  { name: "phone", required: "text" },
+  { name: "email", required: "text" },
 ];
 
 export const PartnerFormFields = {
