@@ -12,19 +12,6 @@ import { useForm } from "@refinedev/react-hook-form";
 const Item = () => {
   const { params } = useParsed();
 
-  const {
-    saveButtonProps,
-    refineCore: { formLoading, queryResult },
-    control,
-    trigger,
-    formState: { errors },
-  } = useForm<Email_Schedule>({
-    refineCoreProps: {
-      action: "create",
-      id: params?.id,
-    },
-  });
-
   return (
     <div className="flex justify-center py-6">
       <div className="w-2/3">
