@@ -5,6 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { InputProps } from "@mui/base";
 import { TextField } from "@mui/material";
+import { DateTimePicker } from "@mui/x-date-pickers";
 interface CustomizedInputProps {
   label: string;
   [key: string]: any;
@@ -45,7 +46,7 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
       onChange({
         target: {
           name: props.name,
-          value: newValue.format("YYYY-MM-DD"),
+          value: props.type==='time'?newValue.format("YYYY-MM-DD hh:mm:ss"):newValue.format("YYYY-MM-DD"),
         },
       } as React.ChangeEvent<HTMLInputElement>);
     }
@@ -53,6 +54,7 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
   if (props.name == "end_date") {
     console.log(props);
   }
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="relative my-datepicker">
@@ -63,16 +65,29 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
             <span className="text-gray-500 text-xs">(Optional)</span>
           )}
         </div>
-        <DesktopDatePicker
-          onChange={(newValue) => handleChange(newValue as Dayjs)}
-          value={props.value ? dayjs(props.value as string) : null}
-          disabled={props.disabled}
-          slots={{
-            textField: (textFieldProps) => (
-              <CustomTextField {...textFieldProps} />
-            ),
-          }}
-        />
+        {
+        props.type==='time' ?   <DateTimePicker 
+        onChange={(newValue) => handleChange(newValue as Dayjs)}
+        value={props.value ? dayjs(props.value as string) : null}
+        disabled={props.disabled}
+        slots={{
+          textField: (textFieldProps) => (
+            <CustomTextField {...textFieldProps} />
+          ),
+        }}
+      />:
+      <DesktopDatePicker
+      onChange={(newValue) => handleChange(newValue as Dayjs)}
+      value={props.value ? dayjs(props.value as string) : null}
+      disabled={props.disabled}
+      slots={{
+        textField: (textFieldProps) => (
+          <CustomTextField {...textFieldProps} />
+        ),
+      }}
+    />
+      }
+      
       </div>
     </LocalizationProvider>
   );

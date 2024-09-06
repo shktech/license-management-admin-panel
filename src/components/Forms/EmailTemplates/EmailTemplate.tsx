@@ -112,6 +112,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
         id={template.email_id}
         sx={{
           py: 1,
+         
           "&:hover": {
             backgroundColor: "#e6eaed", // Light grey background on hover
           },
@@ -134,9 +135,11 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
               {(field) => (
                 <GeneralInput
                   {...field}
+              
                   id="senderAddress"
                   label="Sender Address"
                   type="text"
+                  
                   defaultValue={template.from_email}
                 />
               )}
