@@ -29,7 +29,7 @@ const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
     {
       email: "",
       role_id: "",
-      organization_code: "",
+      organization: "",
     },
   ]);
 
@@ -39,7 +39,7 @@ const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
       {
         email: "",
         role_id: "",
-        organization_code: "",
+        organization: "",
       },
     ]);
   };
@@ -63,22 +63,21 @@ const MemeberInvitePanel: React.FC<{ orgs: Organization[] }> = ({ orgs }) => {
   };
   const handleOrganizationChange = (e: SelectChangeEvent, index: number) => {
     const newValues = [...sentValues];
-    newValues[index].organization_code = e.target.value;
+    newValues[index].organization = e.target.value;
     setSentValues(newValues);
   };
 
   const { mutate } = useCreate();
   const handleInvite = () => {
-    console.log(sentValues);
-    // mutate(
-    //   {
-    //     resource: "invite",
-    //     values: sentValues,
-    //   },
-    //   {
-    //     onSuccess: () => console.log("success"),
-    //   }
-    // );
+    mutate(
+      {
+        resource: "invite",
+        values: sentValues,
+      },
+      {
+        onSuccess: () => console.log("success"),
+      }
+    );
   };
 
   return (

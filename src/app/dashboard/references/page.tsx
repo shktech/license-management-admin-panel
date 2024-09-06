@@ -90,10 +90,6 @@ const Page = () => {
         header: "Description",
       },
       {
-        accessorKey: "organization",
-        header: "Organization",
-      },
-      {
         accessorKey: "active",
         header: "Active",
         Cell: ({ renderedCellValue }) => (

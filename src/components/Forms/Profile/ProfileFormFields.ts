@@ -7,24 +7,8 @@ const ProfileFormFields: FieldConfig[] = [
         placeholder: "Email",
         rules: { required: "Email is required" },
         type: "text",
+        disabled: true,
         size: 2,
-    },
-    {
-        name: "username",
-        label: "Username",
-        placeholder: "Username",
-        rules: { required: "Username is required" },
-        type: "text",
-        size: 1,
-    },
-    {
-        name: "organization",
-        label: "Organization",
-        placeholder: "Organization",
-        rules: { required: "Organization is required" },
-        type: "text",
-        size: 1,
-        disabled: true
     },
     {
         name: "first_name",

@@ -69,7 +69,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const handleChange = (event: SelectChangeEvent) => {
     console.log("props", props);
-    console.log("event", props.name2 ? props.name2 : props.name,);
+    console.log("event", props.name2 ? props.name2 : props.name);
     onChange &&
       onChange({
         target: {
@@ -84,9 +84,13 @@ const Dropdown: React.FC<DropdownProps> = ({
       <FormControl className="w-full relative">
         <label
           htmlFor={props.id}
-          className="mb-1.5 block text-[#0000009c] font-medium z-10 absolute text-sm left-4 top-2"
+          className="mb-1.5 block text-[#0000009c] font-medium z-10 absolute text-sm left-4 top-2 flex items-center gap-1"
         >
+          {props.required && <span className="text-red-500">*</span>}
           {label}
+          {!props.required && (
+            <span className="text-gray-500 text-xs">(Optional)</span>
+          )}
         </label>
         <Select
           value={value ? (value as string) : ""}

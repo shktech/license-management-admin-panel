@@ -3,14 +3,17 @@ import { Input } from '@mui/base/Input';
 import { BaseInputProps } from './InputProps';
 
 const GeneralInput = ({ label, ...props }: BaseInputProps) => {
+  console.log(props);
   return (
 
     <div className="relative">
       <label
         htmlFor={props.id}
-        className="mb-1.5 block text-[#0000009c] font-medium dark:text-white absolute text-sm left-4 top-2"
+        className="mb-1.5 block text-[#0000009c] font-medium dark:text-white absolute text-sm left-4 top-2 flex items-center gap-1"
       >
+        {props.required && <span className="text-red-500">*</span>}
         {label}
+        {!props.required && <span className="text-gray-500 text-xs">(Optional)</span>}
       </label>
       <Input
         {...props}

@@ -9,6 +9,7 @@ const InitialCreateField: InitialFieldConfig[] = [
         resource: "products",
         valueKey: "product_part_number",
         labelKey: "product_part_number",
+        required: "text",
     },
     {
         name: "license_type",
@@ -20,19 +21,23 @@ const InitialCreateField: InitialFieldConfig[] = [
             { value: "NFR", label: "NFR" },
             { value: "Promotion", label: "Promotion" },
         ],
+        required: "text",
     },
     {
         name: "quantity",
         type: "number",
+        required: "text",
     },
     {
         name: "start_date",
         type: "date",
+        required: "text",
     },
     {
         name: "end_date",
         type: "date",
-        disabled: true
+        disabled: true,
+        required: "text",
     },
 ];
 
@@ -57,20 +62,24 @@ const InitialReActionField: InitialFieldConfig[] = [
             { value: "NFR", label: "NFR" },
             { value: "Promotion", label: "Promotion" },
         ],
+        required: "text",
     },
     {
         name: "quantity",
         type: "number",
+        required: "text",
     },
     {
         name: "start_date",
         type: "date",
-        disabled: true
+        disabled: true,
+        required: "text",
     },
     {
         name: "end_date",
         type: "date",
-        disabled: true
+        disabled: true,
+        required: "text",
     },
 ];
 
