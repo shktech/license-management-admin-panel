@@ -19,7 +19,7 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Transaction>();
+  } = useTable<Transaction>({});
 
   const initialSorter: any = [
     {

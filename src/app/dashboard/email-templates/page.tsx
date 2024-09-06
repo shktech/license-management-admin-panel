@@ -1,52 +1,80 @@
 "use client";
 
-import { useList } from "@refinedev/core";
-import React, { useEffect, useState } from "react";
+import { useList, useNavigation, useTable } from "@refinedev/core";
+import React, { useEffect, useMemo, useState } from "react";
 import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
 import { EmailTemplate } from "@/types/types";
 import Loader from "@components/common/Loader";
+import GenericTable from "@components/Table/GenericTable";
+import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
+import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 
 const Page = () => {
-  const { data, refetch, isLoading } = useList<EmailTemplate>({
-    resource: "email-templates",
+  const {
+    data: emailTemplateData,
+    isLoading,
+    refetch,
+  } = useList<EmailTemplate>({
     hasPagination: false,
   });
 
-  const [eTData, setETData] = useState<EmailTemplate[]>();
+  const { push } = useNavigation();
 
-  useEffect(() => {
-    setETData(data?.data);
-  }, [isLoading]);
+  const handleRowClick = (row: EmailTemplate) => {
+    push(`/dashboard/email-templates/edit?id=${row.email_id}`)
+  }
 
-  const [expanded, setExpanded] = useState<string | false>(false);
+  const handleCreate = () => {
+    push(`/dashboard/email-templates/create`)
+  }
 
-  const handleChangeAccordian =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  const columns = useMemo<MRT_ColumnDef<EmailTemplate>[]>(
+    () => [
+      {
+        accessorKey: "type",
+        header: "Type",
+        size: 100,
+      },
+      {
+        accessorKey: "event_type",
+        header: "Event Type",
+        size: 150,
+      },
+      {
+        accessorKey: "subject",
+        header: "Subject",
+        size: 200,
+      },
+      {
+        accessorKey: "description",
+        header: "Description",
+        size: 200,
+      }
+    ],
+    []
+  );
+
 
   return (
-    <div className="flex w-full justify-center text-black text-sm py-8">
-      <div className="min-w-[800px] rounded-xl px-8 py-8 shadow-md bg-white">
-        <div className="text-lg font-medium pb-4 text-[#515f72]">
-          Configure common settings for sending emails
-        </div>
-        <div>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            eTData?.map((et: EmailTemplate, i: number) => (
-              <EmailTemplateComponent
-                key={et.email_id}
-                template={et}
-                expanded={expanded}
-                handleChangeAccordian={handleChangeAccordian}
-                onSave={refetch}
-              />
-            ))
-          )}
-        </div>
-      </div>
+    <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <GenericTable
+          title={
+            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              Notification Templates
+            </div>
+          }
+          data={emailTemplateData?.data}
+          columns={columns}
+          canCreate={true}
+          onRowClick={handleRowClick}
+          noSearchNeed={true}
+          noSortNeed={true}
+          handleCreate={handleCreate}
+        />
+      )}
     </div>
   );
 };

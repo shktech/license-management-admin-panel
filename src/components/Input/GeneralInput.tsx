@@ -3,7 +3,6 @@ import { Input } from '@mui/base/Input';
 import { BaseInputProps } from './InputProps';
 
 const GeneralInput = ({ label, ...props }: BaseInputProps) => {
-
   return (
 
     <div className="relative">

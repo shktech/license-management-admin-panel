@@ -6,7 +6,7 @@ const PasswordsFormFields: FieldConfig[] = [
         label: "New Password",
         placeholder: "New Password",
         rules: { required: "New Password is required" },
-        type: "text",
+        type: "password",
         size: 2,
     },
     {
@@ -14,7 +14,7 @@ const PasswordsFormFields: FieldConfig[] = [
         label: "Confirm Password",
         placeholder: "Confirm Password",
         rules: { required: "Confirm Password is required" },
-        type: "text",
+        type: "password",
         size: 2,
     },
 ];

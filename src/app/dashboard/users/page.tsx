@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   HttpError,
   useList,
@@ -21,6 +21,8 @@ import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import MemeberInvitePanel from "@components/Organizations/MemeberInvitePanel";
+import { Box, Modal } from "@mui/material";
+import { modalStyle, tagStyle } from "@data/MuiStyles";
 
 const Page = () => {
   const {
@@ -78,10 +80,7 @@ const Page = () => {
   const handleShowUser = (row: User) => {
     push(`/dashboard/users/show?id=${row.user_id}`);
   };
-  const handleCreateUser = () => {
-    setSelectedUser(null);
-    handleOpenCreateUserDrawer();
-  };
+  const handleCreateUser = () => {};
 
   const handleDeleteUser = (row: User) => {
     handleOpenDeleteModal();
@@ -95,6 +94,9 @@ const Page = () => {
     setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
+
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
+  const handleCloseSuccessModal = () => setOpenSuccessModal(false);
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
@@ -186,20 +188,25 @@ const Page = () => {
       {isLoading || isRolesLoading ? (
         <Loader />
       ) : (
-        <GenericTable
-          title={
-            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-              {" "}
-              User Management{" "}
-            </div>
-          }
-          data={data?.data}
-          columns={columns}
-          onRowClick={handleShowUser}
-          handlePage={handlePage}
-          handleSorting={handleSorting}
-          handleSearch={handleSearch}
-        />
+        <div>
+          <GenericTable
+            title={
+              <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                {" "}
+                User Management{" "}
+              </div>
+            }
+            data={data?.data}
+            columns={columns}
+            totalCount={data?.total}
+            onRowClick={handleShowUser}
+            handlePage={handlePage}
+            handleSorting={handleSorting}
+            handleSearch={handleSearch}
+            canCreate={true}
+            handleCreate={() => setOpenSuccessModal(true)}
+          />
+        </div>
       )}
       {/* {
         openCreateUserDrawer && (
@@ -221,8 +228,16 @@ const Page = () => {
           selectedUser={selectedUser}
         />
       )} */}
-
-      <MemeberInvitePanel orgs={orgs?.data ?? []} />
+      <Modal
+        open={openSuccessModal}
+        onClose={handleCloseSuccessModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...modalStyle, width: "70%"}}>
+          <MemeberInvitePanel orgs={orgs?.data ?? []} />
+        </Box>
+      </Modal>
     </div>
     // ) : (
     //   <Unauthorized />

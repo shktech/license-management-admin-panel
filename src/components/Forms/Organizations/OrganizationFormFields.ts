@@ -42,12 +42,10 @@ const OrganizationCreateInitialFields: InitialFieldConfig[] = [
   },
   {
     name: "address",
-
     size: 2,
   },
   {
     name: "country",
-
     size: 2,
   },
 ];
