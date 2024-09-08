@@ -17,7 +17,7 @@ const InviteUserDrawer: React.FC<UserDrawerProps> = ({  handleCloseModal, inacti
 
   const handleSave = () => {
     mutate({
-        resource: "invite/",
+        resource: "invite",
         values: {
             email: invitationEmail,
         }

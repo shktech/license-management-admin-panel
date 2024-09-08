@@ -3,7 +3,6 @@ import TransactionIcon from '@/assets/icons/transaction.svg?icon';
 import MasterMngtIcon from '@/assets/icons/mastermngt.svg?icon';
 import ReportsIcon from '@/assets/icons/reports.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
-import DnsIcon from '@mui/icons-material/Dns';
 
 // Define types for menu items and groups
 type MenuItem = {
@@ -31,7 +30,7 @@ export const menuGroups: MenuGroup[] = [
       {
         icon: <DashboardIcon className="fill-current" />,
         label: "Dashboard",
-        route: "/dashboard",
+        route: "/",
       },
       {
         icon: <TransactionIcon className="fill-current" />,

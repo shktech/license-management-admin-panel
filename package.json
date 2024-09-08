@@ -39,6 +39,7 @@
     "jsvectormap": "^1.6.0",
     "jwt-decode": "^4.0.0",
     "material-react-table": "^2.13.0",
+    "moment-timezone": "^0.5.45",
     "next": "^14.2.4",
     "react": "^18.0.0",
     "react-apexcharts": "^1.4.1",

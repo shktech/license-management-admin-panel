@@ -1,16 +1,15 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable, useDelete, useNavigation } from "@refinedev/core";
+import { useTable, useNavigation } from "@refinedev/core";
 import { Email_Schedule, Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
 import { Box } from "@mui/material";
-import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";
 import { ScheduleActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
-import DeleteModal from "@components/Products/DeleteModal";
-import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import moment from 'moment-timezone';
+
 
 const Page = () => {
   const {
@@ -22,7 +21,6 @@ const Page = () => {
   const { push } = useNavigation();
 
   const handleCreate = () => {
-    // setOpenDrawer(true);
     push(`/dashboard/notification-schedules/create`);
   };
 
@@ -30,25 +28,13 @@ const Page = () => {
     push(`/dashboard/notification-schedules/edit?id=${row.id}`);
   };
 
+  const formatDateTimeWithCustomFormat = (date: Date, timeZone: string): string => {
+    return moment(date).tz(timeZone).format('MM-DD-YYYY HH:mm:ss z');
+  }
+
   const formatTime = (_date: any) => {
-    var date = new Date(_date);
-    return (
-      date.getDate() +
-      "-" +
-      (date.getMonth() + 1) +
-      "-" +
-      date.getFullYear() +
-      " " +
-      date.getHours() +
-      ":" +
-      date.getMinutes()
-    );
-  };
-  const formatDate = (_date: any) => {
-    var date = new Date(_date);
-    return (
-      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
-    );
+    const userTimezone = moment.tz.guess();
+    return formatDateTimeWithCustomFormat(_date, userTimezone);
   };
 
   const columns = useMemo<MRT_ColumnDef<Email_Schedule>[]>(
@@ -80,7 +66,7 @@ const Page = () => {
         size: 200,
       },
       {
-        accessorKey: "is_active",
+        accessorKey: "active",
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (
