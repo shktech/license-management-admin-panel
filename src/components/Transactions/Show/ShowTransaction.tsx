@@ -10,6 +10,8 @@ import { getNestedValue } from "@utils/utilFunctions";
 import BasicInformation from "./BasicInformation";
 import AssetInformation from "./AssetInformation";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartBar, faCircleInfo, faSignal } from "@fortawesome/free-solid-svg-icons";
 
 interface ShowTransactionProps {
   transaction?: Transaction;
@@ -52,8 +54,19 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <StyledTab label="Basic Information" />
-            <StyledTab label="License Status" />
+            <StyledTab label={
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faCircleInfo} />
+                Basic Information
+              </div>
+            } />
+            <StyledTab label={
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faSignal} />
+                License Status
+              </div>
+            }
+            />
             {/* <StyledTab label="Bill Customer" />
                         <StyledTab label="Ship Customer" />
                         <StyledTab label="Reseller" /> */}

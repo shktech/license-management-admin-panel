@@ -19,6 +19,16 @@ import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
 import EditIcon from "@mui/icons-material/Edit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleInfo,
+  faCubes,
+  faEnvelope,
+  faGlassWater,
+  faSignal,
+  faTentArrowLeftRight,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const { params } = useParsed();
@@ -105,7 +115,10 @@ const Page = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex items-end gap-4 text-2xl font-semibold text-[#1f325c]">
-              License{" "}
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faGlassWater} />
+                License{" "}
+              </div>
               <div className="text-lg font-normal">{asset?.license_key}</div>
             </div>
           </div>
@@ -152,13 +165,54 @@ const Page = () => {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <StyledTab label="General Information" />
-                  <StyledTab label="Products" />
-                  <StyledTab label="Notifications" />
-                  <StyledTab label="License Owner" />
-                  <StyledTab label="Transaction History" />
-                  <StyledTab label="Email History" />
-                  <StyledTab label="Seats" />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCircleInfo} />
+                        General Information
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCubes} />
+                        Products
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faUser} />
+                        License Status
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faTentArrowLeftRight} />
+                        Transaction History
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faEnvelope} />
+                        Email History
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faEnvelope} />
+                        Seats
+                      </div>
+                    }
+                  />
                 </StyledTabs>
               </div>
 
@@ -305,37 +359,6 @@ const Page = () => {
                   singleColumn={true}
                   items={[
                     {
-                      label: "First reminder notification date",
-                      value: asset?.one_month_reminder_notification_date,
-                    },
-                    {
-                      label: "Second reminder notification date",
-                      value: asset?.two_month_reminder_notification_date,
-                    },
-                    {
-                      label: "On expired notification date",
-                      value: asset?.renew_due_notification_date,
-                    },
-                    {
-                      label: "After expired notification date",
-                      value: asset?.expired_notification_date,
-                    },
-                    {
-                      label: "Last email send date",
-                      value: asset?.last_email_date,
-                    },
-                  ]}
-                />
-                {/* <SendNotificationDrawer
-                  license_key={asset.license_key}
-                  receiver={asset?.owner?.email}
-                /> */}
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={3}>
-                <GeneralInformation
-                  singleColumn={true}
-                  items={[
-                    {
                       label: "Account",
                       value: asset?.owner?.account_id,
                     },
@@ -382,17 +405,45 @@ const Page = () => {
                   ]}
                 />
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={4}>
+              {/* <CustomTabPanel value={value} index={3}>
+                <GeneralInformation
+                  singleColumn={true}
+                  items={[
+                    {
+                      label: "First reminder notification date",
+                      value: asset?.one_month_reminder_notification_date,
+                    },
+                    {
+                      label: "Second reminder notification date",
+                      value: asset?.two_month_reminder_notification_date,
+                    },
+                    {
+                      label: "On expired notification date",
+                      value: asset?.renew_due_notification_date,
+                    },
+                    {
+                      label: "After expired notification date",
+                      value: asset?.expired_notification_date,
+                    },
+                    {
+                      label: "Last email send date",
+                      value: asset?.last_email_date,
+                    },
+                  ]}
+                />
+              </CustomTabPanel> */}
+
+              <CustomTabPanel value={value} index={3}>
                 <div className="max-w-full overflow-x-auto">
                   <TransactionHistoryTable transactions={transactions} />
                 </div>
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={5}>
+              <CustomTabPanel value={value} index={4}>
                 <div className="max-w-full overflow-x-auto">
                   <EmailHistoryTable assetId={asset.asset_id as string} />
                 </div>
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={6}>
+              <CustomTabPanel value={value} index={5}>
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}

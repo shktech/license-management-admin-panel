@@ -17,6 +17,8 @@ import AddressTable from "@components/Partners/AddressTable";
 import ContactTable from "@components/Partners/ContactTable";
 import PartnerTransactionTable from "@components/Partners/PartnerTransactionTable";
 import PartnerLicensesTable from "@components/Partners/PartnerLicensesTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAddressBook, faGlassWater, faLocationDot, faRightLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const partnerColors = {
   All: "#4A90E2",
@@ -72,7 +74,10 @@ const Item = () => {
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
               <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
-                Partner
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faUser} />
+                  Partner
+                </div>
                 <div className="text-lg font-normal">{partner?.name}</div>
               </div>
               <span
@@ -113,10 +118,38 @@ const Item = () => {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <StyledTab label="Address" />
-                  <StyledTab label="Contacts" />
-                  <StyledTab label="Licenses" />
-                  <StyledTab label="Transactions" />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faLocationDot} />
+                        Address
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faAddressBook} />
+                        Contacts
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faGlassWater} />
+                        License Status
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faRightLeft} />
+                        Transactions
+                      </div>
+                    }
+                  />
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>

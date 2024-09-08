@@ -1,4 +1,5 @@
 import { Box, Fade, styled, Tab, Tabs } from "@mui/material";
+import React from "react";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,7 +51,7 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
 });
 
 interface StyledTabProps {
-  label: string;
+  label: React.ReactNode;
 }
 
 export const StyledTab = styled((props: StyledTabProps) => (

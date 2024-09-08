@@ -3,7 +3,9 @@ import TransactionIcon from '@/assets/icons/transaction.svg?icon';
 import MasterMngtIcon from '@/assets/icons/mastermngt.svg?icon';
 import ReportsIcon from '@/assets/icons/reports.svg?icon';
 import SettingsIcon from '@/assets/icons/settings.svg?icon';
-
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartSimple, faGear, faRightLeft, faTentArrowLeftRight, faToolbox } from '@fortawesome/free-solid-svg-icons';
 // Define types for menu items and groups
 type MenuItem = {
   icon: React.ReactNode;
@@ -28,17 +30,17 @@ export const menuGroups: MenuGroup[] = [
     name: "MENU",
     menuItems: [
       {
-        icon: <DashboardIcon className="fill-current" />,
+        icon: <GridViewRoundedIcon sx={{fontSize: "16px", }}/>,
         label: "Dashboard",
         route: "/",
       },
       {
-        icon: <TransactionIcon className="fill-current" />,
+        icon: <FontAwesomeIcon icon={faRightLeft} />,
         label: "Transaction",
         route: "/dashboard/transactions",
       },
       {
-        icon: <MasterMngtIcon className="fill-current" />,
+        icon: <FontAwesomeIcon icon={faToolbox} />,
         label: "Maintenance",
         route: "#",
         children: [
@@ -49,12 +51,12 @@ export const menuGroups: MenuGroup[] = [
         ],
       },
       {
-        icon: <ReportsIcon className="fill-current" />,
+        icon: <FontAwesomeIcon icon={faChartSimple} />,
         label: "Reports",
         route: "#",
       },
       {
-        icon: <SettingsIcon className="fill-current" />,
+        icon: <FontAwesomeIcon icon={faGear} />,
         label: "Setups",
         route: "#",
         children: [

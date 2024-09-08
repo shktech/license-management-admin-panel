@@ -13,6 +13,8 @@ import { Box } from "@mui/material";
 import { useNavigation, usePermissions, useShow } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 
 const TransactionShow = () => {
   const { params } = useParsed();
@@ -32,9 +34,16 @@ const TransactionShow = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        {transaction?.transaction_status != "Completed" &&permissionsData?.update && (
-          <EditButton {...editButtonProps} onClick={() => push(`/dashboard/transactions/edit?id=${params?.id}`)} sx={editRefineBtnStyle} />
-        )}
+        {transaction?.transaction_status != "Completed" &&
+          permissionsData?.update && (
+            <EditButton
+              {...editButtonProps}
+              onClick={() =>
+                push(`/dashboard/transactions/edit?id=${params?.id}`)
+              }
+              sx={editRefineBtnStyle}
+            />
+          )}
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
@@ -52,9 +61,12 @@ const TransactionShow = () => {
         title={
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-end">
-              <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
+              <div className="text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                <FontAwesomeIcon icon={faRightLeft} />
                 Transaction
-                <div className="text-lg font-normal">{transaction?.transaction_number}</div>
+                <div className="text-lg font-normal">
+                  {transaction?.transaction_number}
+                </div>
               </div>
               <Box
                 component="span"
