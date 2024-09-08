@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { Email_Schedule, EmailTemplate } from "@/types/types";
-import GeneralInput from "@components/Input/GeneralInput";
 import DatePicker from "@components/Input/DatePicker";
 import Dropdown from "@components/Input/Dropdown";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import NoteIcon from "@/assets/icons/note.svg?icon";
-import Editor from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
 import FormControlWrapper from "../FormControlWrapper";
-import { useBack, useCreate, useList, useUpdate } from "@refinedev/core";
-import { timeZones } from "@utils/timeZones";
+import { useCreate, useList, useUpdate } from "@refinedev/core";
 import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { modalOkBtnStyle } from "@data/MuiStyles";
 import GeneralSwitch, { IOSSwitch } from "@components/Input/GeneralSwitch";
-import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import Loader from "@components/common/Loader";
 
 interface NotificationSchedulesComponentProps {
@@ -77,18 +67,17 @@ const NotificationSchedulesComponent: React.FC<
 
   const onSubmit = () => {
     const data = getValues();
-    console.log(data);
-    const payload: any = {
+    const payload = {
       email_template: data.email_template,
       user_timezone: browserTimezone,
       is_recurring: recurring,
       send_now: sendNow,
+      scheduled_time: sendNow
+        ? new Date().toISOString().replace('T', ' ').slice(0, 19)
+        : data.scheduled_time,
+      ...(recurring && { recurring_task: data.recurring_task })
     };
-
-    payload.scheduled_time = sendNow ? data.scheduled_time : new Date().toISOString().replace('T', ' ').slice(0, 19);
-    // recurring ? (payload.recurring_task = data.recurring_task) : null;
-    payload.recurring_task = recurring ? data.recurring_task : 'daily'
-
+    
     console.log(payload);
     if (emailSchedule) {
       update(
@@ -166,7 +155,7 @@ const NotificationSchedulesComponent: React.FC<
               label=""
             />
           </div>
-          <Collapse in={sendNow}>
+          <Collapse in={!sendNow}>
             <FormControlWrapper
               name="scheduled_time"
               control={control}
