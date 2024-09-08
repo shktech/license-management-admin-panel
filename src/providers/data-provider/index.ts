@@ -5,9 +5,9 @@ import { DataProvider } from "@refinedev/core";
 import { stringify } from "querystring";
 import axios, { AxiosError } from "axios";
 
-// const localAPI_URL = "http://localhost:3000/api";
+// const localAPI_URL = "http://localhost:8000/api";
 // const virtualAPI_URL = "https://lic-refine.vercel.app/api";
-const realAPI_URL = "https://license-management-server.vercel.app/api";
+const realAPI_URL = "http://localhost:8000/api";
 
 const API_URL = process.env.API_URL;
 

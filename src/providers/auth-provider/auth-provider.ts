@@ -4,7 +4,7 @@ import useStore from "@hooks/globalStore";
 import { AuthProvider } from "@refinedev/core";
 import { Organization, Permission, Role, User } from "@/types/types";
 
-const realAPI_URL = "https://license-management-server.vercel.app/api";
+const realAPI_URL = "http://localhost:8000/api";
 const API_URL = process.env.API_URL;
 
 export interface LoginResponse {

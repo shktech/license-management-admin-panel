@@ -11,6 +11,8 @@ import { ScheduleActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
 import DeleteModal from "@components/Products/DeleteModal";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import moment from 'moment-timezone';
+
 
 const Page = () => {
   const {
@@ -30,25 +32,13 @@ const Page = () => {
     push(`/dashboard/notification-schedules/edit?id=${row.id}`);
   };
 
+  const formatDateTimeWithCustomFormat = (date: Date, timeZone: string): string => {
+    return moment(date).tz(timeZone).format('MM-DD-YYYY HH:mm:ss z');
+  }
+
   const formatTime = (_date: any) => {
-    var date = new Date(_date);
-    return (
-      date.getDate() +
-      "-" +
-      (date.getMonth() + 1) +
-      "-" +
-      date.getFullYear() +
-      " " +
-      date.getHours() +
-      ":" +
-      date.getMinutes()
-    );
-  };
-  const formatDate = (_date: any) => {
-    var date = new Date(_date);
-    return (
-      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
-    );
+    const userTimezone = moment.tz.guess();
+    return formatDateTimeWithCustomFormat(_date, userTimezone);
   };
 
   const columns = useMemo<MRT_ColumnDef<Email_Schedule>[]>(
@@ -80,7 +70,7 @@ const Page = () => {
         size: 200,
       },
       {
-        accessorKey: "is_active",
+        accessorKey: "active",
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (

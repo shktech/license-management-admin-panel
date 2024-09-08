@@ -77,18 +77,17 @@ const NotificationSchedulesComponent: React.FC<
 
   const onSubmit = () => {
     const data = getValues();
-    console.log(data);
-    const payload: any = {
+    const payload = {
       email_template: data.email_template,
       user_timezone: browserTimezone,
       is_recurring: recurring,
       send_now: sendNow,
+      scheduled_time: sendNow
+        ? new Date().toISOString().replace('T', ' ').slice(0, 19)
+        : data.scheduled_time,
+      ...(recurring && { recurring_task: data.recurring_task })
     };
-
-    payload.scheduled_time = sendNow ? data.scheduled_time : new Date().toISOString().replace('T', ' ').slice(0, 19);
-    // recurring ? (payload.recurring_task = data.recurring_task) : null;
-    payload.recurring_task = recurring ? data.recurring_task : 'daily'
-
+    
     console.log(payload);
     if (emailSchedule) {
       update(
@@ -166,7 +165,7 @@ const NotificationSchedulesComponent: React.FC<
               label=""
             />
           </div>
-          <Collapse in={sendNow}>
+          <Collapse in={!sendNow}>
             <FormControlWrapper
               name="scheduled_time"
               control={control}

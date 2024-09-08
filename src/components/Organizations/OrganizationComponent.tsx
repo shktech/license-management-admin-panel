@@ -78,7 +78,7 @@ const OrganizationComponent = () => {
     handleOpenConfirmModal();
   };
   const handleSwitch = async () => {
-    const realAPI_URL = "https://license-management-server.vercel.app/api";
+    const realAPI_URL = "http://localhost:8000/api";
     const API_URL = process.env.API_URL;
     const response = await fetch(`${API_URL ?? realAPI_URL}/authenticate`, {
       method: "POST",

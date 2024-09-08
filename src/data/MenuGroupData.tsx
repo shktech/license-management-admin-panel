@@ -31,7 +31,7 @@ export const menuGroups: MenuGroup[] = [
       {
         icon: <DashboardIcon className="fill-current" />,
         label: "Dashboard",
-        route: "/dashboard",
+        route: "/",
       },
       {
         icon: <TransactionIcon className="fill-current" />,
