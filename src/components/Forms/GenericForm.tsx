@@ -12,12 +12,15 @@ interface GenericFormProps {
   fields: FieldConfig[];
 }
 
-const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) => {
-  
+const GenericForm: React.FC<GenericFormProps> = ({
+  control,
+  errors,
+  fields,
+}) => {
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-6">
       {fields?.map((field) => (
-        <div key={field.name} className={field.size == 2 ? 'col-span-2' : ''}>
+        <div key={field.name} className={field.size == 2 ? "col-span-2" : ""}>
           <FormControlWrapper
             name={field.name2 ? field.name2 : field.name}
             control={control}
@@ -26,9 +29,9 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
           >
             {(fieldProps) => {
               switch (field.type) {
-                case 'text':
-                case 'number':
-                case 'password':
+                case "text":
+                case "number":
+                case "password":
                   return (
                     <GeneralInput
                       {...fieldProps}
@@ -36,20 +39,20 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       label={field.label}
                       required={!!field.rules}
                       disabled={field.disabled}
-                    // placeholder={field.placeholder}
+                      // placeholder={field.placeholder}
                     />
                   );
-                case 'switch':
+                case "switch":
                   return (
                     <GeneralSwitch
                       {...fieldProps}
                       type={field.type}
                       label={field.label}
                       disabled={field.disabled}
-                    // placeholder={field.placeholder}
+                      // placeholder={field.placeholder}
                     />
                   );
-                case 'date':
+                case "date":
                   return (
                     <DatePicker
                       {...fieldProps}
@@ -59,7 +62,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       required={!!field.rules}
                     />
                   );
-                case 'dropdown':
+                case "dropdown":
                   return (
                     <Dropdown
                       {...fieldProps}
@@ -72,7 +75,7 @@ const GenericForm: React.FC<GenericFormProps> = ({ control, errors, fields }) =>
                       labelKey={field.labelKey}
                       disabled={field.disabled}
                       required={!!field.rules}
-                    // fetchOptions={field.fetchOptions}
+                      // fetchOptions={field.fetchOptions}
                     />
                   );
                 default:

@@ -56,8 +56,12 @@ const NotificationSchedulesComponent: React.FC<
 
   const { mutate } = useCreate();
   const { mutate: update } = useUpdate();
-  const [sendNow, setSendNow] = useState(emailSchedule?.send_now ? true : false);
-  const [recurring, setRecurring] = useState(emailSchedule?.is_recurring ? true : false);
+  const [sendNow, setSendNow] = useState(
+    emailSchedule?.send_now ? true : false
+  );
+  const [recurring, setRecurring] = useState(
+    emailSchedule?.is_recurring ? true : false
+  );
   const [browserTimezone, setBrowserTimezone] = useState("");
 
   useEffect(() => {
@@ -73,11 +77,11 @@ const NotificationSchedulesComponent: React.FC<
       is_recurring: recurring,
       send_now: sendNow,
       scheduled_time: sendNow
-        ? new Date().toISOString().replace('T', ' ').slice(0, 19)
+        ? new Date().toISOString().replace("T", " ").slice(0, 19)
         : data.scheduled_time,
-      ...(recurring && { recurring_task: data.recurring_task })
+      ...(recurring && { recurring_task: data.recurring_task }),
     };
-    
+
     console.log(payload);
     if (emailSchedule) {
       update(

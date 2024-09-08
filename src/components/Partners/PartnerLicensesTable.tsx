@@ -1,12 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import {
-  MaterialReactTable,
-  MRT_SortingState,
-  useMaterialReactTable,
-  type MRT_ColumnDef,
-} from "material-react-table";
+import { MRT_SortingState, type MRT_ColumnDef } from "material-react-table";
 import { Asset, Transaction } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useTable } from "@refinedev/core";
@@ -28,15 +23,16 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
   } = useTable<Asset>({
     syncWithLocation: false,
     resource: "assets",
-    initialFilter: [{ field: 'partner', operator: 'eq', value: partner_id }],
+    initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
   });
-  
 
   const router = useRouter();
 
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
 
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
 

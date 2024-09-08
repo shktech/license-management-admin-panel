@@ -5,7 +5,11 @@ import { Permission } from "@/types/types";
 
 interface PermissionsTableProps {
   permissions: Permission[];
-  handleCheckboxChange?: (codename: string, field: keyof Permission, checked: boolean) => void;
+  handleCheckboxChange?: (
+    codename: string,
+    field: keyof Permission,
+    checked: boolean
+  ) => void;
   readonly?: boolean;
 }
 
@@ -17,7 +21,15 @@ const checkboxGroupInfo = [
   { title: "Products", key: "product" },
 ];
 
-const MyCheckbox = ({ checked, onChange, readonly }: { checked: boolean; onChange: any; readonly?: boolean }) => {
+const MyCheckbox = ({
+  checked,
+  onChange,
+  readonly,
+}: {
+  checked: boolean;
+  onChange: any;
+  readonly?: boolean;
+}) => {
   return (
     <div className="text-center flex-1">
       <Checkbox
@@ -38,7 +50,11 @@ const MyCheckbox = ({ checked, onChange, readonly }: { checked: boolean; onChang
   );
 };
 
-const PermissionsTable: React.FC<PermissionsTableProps> = ({ permissions, handleCheckboxChange, readonly }) => {
+const PermissionsTable: React.FC<PermissionsTableProps> = ({
+  permissions,
+  handleCheckboxChange,
+  readonly,
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex-1 flex text-base font-medium text-[#65758c] px-8">
@@ -55,22 +71,30 @@ const PermissionsTable: React.FC<PermissionsTableProps> = ({ permissions, handle
             <div className="w-20 text-[#65758c] font-medium">{title}</div>
             <MyCheckbox
               checked={!!permission?.create}
-              onChange={(e: any) => handleCheckboxChange?.(key, "create", e.target.checked)}
+              onChange={(e: any) =>
+                handleCheckboxChange?.(key, "create", e.target.checked)
+              }
               readonly={readonly}
             />
             <MyCheckbox
               checked={!!permission?.read}
-              onChange={(e: any) => handleCheckboxChange?.(key, "read", e.target.checked)}
+              onChange={(e: any) =>
+                handleCheckboxChange?.(key, "read", e.target.checked)
+              }
               readonly={readonly}
             />
             <MyCheckbox
               checked={!!permission?.update}
-              onChange={(e: any) => handleCheckboxChange?.(key, "update", e.target.checked)}
+              onChange={(e: any) =>
+                handleCheckboxChange?.(key, "update", e.target.checked)
+              }
               readonly={readonly}
             />
             <MyCheckbox
               checked={!!permission?.delete}
-              onChange={(e: any) => handleCheckboxChange?.(key, "delete", e.target.checked)}
+              onChange={(e: any) =>
+                handleCheckboxChange?.(key, "delete", e.target.checked)
+              }
               readonly={readonly}
             />
           </div>

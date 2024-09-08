@@ -1,18 +1,8 @@
 "use client";
 
 import { Address, Contact, Partner, Transaction } from "@/types/types";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import DetailsIcon from "@mui/icons-material/Details";
-import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
-import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
 import { FieldConfig, GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
-import GeneralTxnFormField from "./GeneralTxnFormField";
-import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
 import {
   Autocomplete,
@@ -24,8 +14,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useOne, useTable } from "@refinedev/core";
-import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
+import { useTable } from "@refinedev/core";
 import { getInputCustomer } from "@utils/utilFunctions";
 import { IOSSwitch } from "@components/Input/GeneralSwitch";
 

@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react';
-import { Button, Drawer, IconButton } from '@mui/material';
-import { useCreate, useDelete, useUpdate } from '@refinedev/core';
+import React, { useEffect } from "react";
+import { Button, Drawer, IconButton } from "@mui/material";
+import { useCreate, useDelete, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { Product } from '../../types/types';
-import ProductForm from '@components/Forms/Products/ProductForm';
+import { Product } from "../../types/types";
+import ProductForm from "@components/Forms/Products/ProductForm";
 
 interface ProductDetailDrawerProps {
   open: boolean;
   onClose: () => void;
-  product: Product | null
+  product: Product | null;
 }
 
-const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose, product }) => {
+const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({
+  open,
+  onClose,
+  product,
+}) => {
   const {
     control,
     trigger,
@@ -27,7 +31,7 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
     if (product != null) {
       reset(product);
     } else {
-      Object.keys(previousProduct).forEach(key => setValue(key, null))
+      Object.keys(previousProduct).forEach((key) => setValue(key, null));
     }
   }, [open]);
 
@@ -38,9 +42,7 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
     const isValid = await trigger(); // Triggers validation for all fields
 
     if (isValid) {
-      const handleError = (error: any) => {
-
-      };
+      const handleError = (error: any) => {};
 
       const productData = getValues();
 
@@ -48,19 +50,19 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
         updateProduct(
           {
             resource: "products",
-            id: `${(product?.product_id)}`,
-            values: productData
+            id: `${product?.product_id}`,
+            values: productData,
           },
           {
             onError: handleError,
             onSuccess: () => onClose(),
           }
-        )
+        );
       } else {
         createProduct(
           {
             resource: "products",
-            values: productData
+            values: productData,
           },
           {
             onError: handleError,
@@ -69,7 +71,7 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
         );
       }
     } else {
-      console.log('Validation errors:', errors);
+      console.log("Validation errors:", errors);
     }
   };
   return (
@@ -78,10 +80,8 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({ open, onClose
         <div className="py-4 px-2 text-lg font-bold text-[#65758c] flex items-center">
           Detail Information
         </div>
-        <div className='flex-1'>
-          <ProductForm
-            {...{ control, errors, trigger }}
-          />
+        <div className="flex-1">
+          <ProductForm {...{ control, errors, trigger }} />
         </div>
         <div className="flex justify-end gap-4">
           <Button
