@@ -1,6 +1,11 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { FormControl, FormHelperText } from '@mui/material';
-import { Controller, Control, FieldErrors, UseFormTrigger } from 'react-hook-form';
+import React, { ReactElement, useEffect, useState } from "react";
+import { FormControl, FormHelperText } from "@mui/material";
+import {
+  Controller,
+  Control,
+  FieldErrors,
+  UseFormTrigger,
+} from "react-hook-form";
 
 export interface FieldConfig {
   name: string;
@@ -8,13 +13,13 @@ export interface FieldConfig {
   label: string;
   placeholder?: string;
   rules?: any;
-  type?: 'text' | 'date' | 'dropdown'| 'number' | 'switch' | 'password';
+  type?: "text" | "date" | "dropdown" | "number" | "switch" | "password";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;
   labelKey?: string;
-  size?: number,
-  disabled?: boolean
+  size?: number;
+  disabled?: boolean;
 }
 
 export interface GenericFormProps {
@@ -31,7 +36,13 @@ export interface FormControlWrapperProps {
   error?: string;
 }
 
-const FormControlWrapper: React.FC<FormControlWrapperProps> = ({ name, control, rules, children, error }) => {
+const FormControlWrapper: React.FC<FormControlWrapperProps> = ({
+  name,
+  control,
+  rules,
+  children,
+  error,
+}) => {
   return (
     <FormControl error={!!error} className="w-full">
       <Controller

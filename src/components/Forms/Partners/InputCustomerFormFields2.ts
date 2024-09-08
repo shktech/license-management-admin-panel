@@ -12,7 +12,7 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
     name: "first_name",
   },
   {
-    name: "last_name"
+    name: "last_name",
   },
   {
     name: "phone",
@@ -39,5 +39,6 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
     name: "country",
   },
 ];
-export const InputCustomerFormFields2 = getRealFormFields(InitialCustomerFormFields);
-
+export const InputCustomerFormFields2 = getRealFormFields(
+  InitialCustomerFormFields
+);

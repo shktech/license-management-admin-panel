@@ -5,8 +5,7 @@ import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
 import { RoleColors } from "@data/ColorData";
 import GenericTable from "@components/Table/GenericTable";
-import MemeberInvitePanel from "./MemeberInvitePanel";
-import GroupIcon from '@mui/icons-material/Group';
+import GroupIcon from "@mui/icons-material/Group";
 
 const MemeberPanel: React.FC = () => {
   const { push } = useNavigation();

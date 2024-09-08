@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Divider, Drawer, FormControl } from '@mui/material';
-import { Role, User, Permission } from '../../types/types';
-import GeneralInput from '@components/Input/GeneralInput';
-import { modalCancelBtnStyle, modalOkBtnStyle } from '@data/MuiStyles';
-import { RoleColors } from '@data/ColorData';
-import { useUpdate } from '@refinedev/core';
-import PermissionsTable from '@components/Role/PermissionsTable';
+import React, { useEffect, useState } from "react";
+import { Button, Divider, Drawer, FormControl } from "@mui/material";
+import { Role, User, Permission } from "../../types/types";
+import GeneralInput from "@components/Input/GeneralInput";
+import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
+import { RoleColors } from "@data/ColorData";
+import { useUpdate } from "@refinedev/core";
+import PermissionsTable from "@components/Role/PermissionsTable";
 
 interface UserDrawerProps {
   openModal: boolean;
@@ -14,7 +14,12 @@ interface UserDrawerProps {
   userRoles: Role[];
 }
 
-const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, selectedUser, userRoles }) => {
+const UserDrawer: React.FC<UserDrawerProps> = ({
+  openModal,
+  handleCloseModal,
+  selectedUser,
+  userRoles,
+}) => {
   const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const { mutate } = useUpdate();
@@ -28,8 +33,10 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
   }, [selectedRoles]);
 
   const handleEachRole = (role: Role) => {
-    const newRoles = selectedRoles.some(selectedRole => selectedRole.name === role.name)
-      ? selectedRoles.filter(selectedRole => selectedRole.name !== role.name)
+    const newRoles = selectedRoles.some(
+      (selectedRole) => selectedRole.name === role.name
+    )
+      ? selectedRoles.filter((selectedRole) => selectedRole.name !== role.name)
       : [...selectedRoles, role];
     setSelectedRoles(newRoles);
   };
@@ -37,17 +44,21 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
   const updatePermissions = () => {
     const aggregatedPermissions: Permission[] = [];
 
-    selectedRoles.forEach(role => {
-      role?.permissions?.forEach(rolePermission => {
+    selectedRoles.forEach((role) => {
+      role?.permissions?.forEach((rolePermission) => {
         const existingPermission = aggregatedPermissions.find(
-          perm => perm.codename === rolePermission.codename
+          (perm) => perm.codename === rolePermission.codename
         );
 
         if (existingPermission) {
-          existingPermission.create = existingPermission.create || rolePermission.create;
-          existingPermission.read = existingPermission.read || rolePermission.read;
-          existingPermission.update = existingPermission.update || rolePermission.update;
-          existingPermission.delete = existingPermission.delete || rolePermission.delete;
+          existingPermission.create =
+            existingPermission.create || rolePermission.create;
+          existingPermission.read =
+            existingPermission.read || rolePermission.read;
+          existingPermission.update =
+            existingPermission.update || rolePermission.update;
+          existingPermission.delete =
+            existingPermission.delete || rolePermission.delete;
         } else {
           aggregatedPermissions.push({ ...rolePermission });
         }
@@ -58,27 +69,39 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
 
   const handleSave = () => {
     const payload = {
-      role_ids: selectedRoles.map(role => role.role_id),
+      role_ids: selectedRoles.map((role) => role.role_id),
     };
-    mutate({
-      resource: "users",
-      id: `${selectedUser.user_id}/roles`,
-      values: payload
-    }, {
-      onError: (error) => console.log(error),
-      onSuccess: () => handleCloseModal(),
-    });
+    mutate(
+      {
+        resource: "users",
+        id: `${selectedUser.user_id}/roles`,
+        values: payload,
+      },
+      {
+        onError: (error) => console.log(error),
+        onSuccess: () => handleCloseModal(),
+      }
+    );
   };
 
   return (
     <Drawer anchor="right" open={openModal} onClose={handleCloseModal}>
       <div className="min-w-[800px] min-h-screen px-7 pb-4 font-med flex flex-col justify-between">
         <div>
-          <div className='py-4 text-lg font-bold text-[#65758c] flex items-center'>
+          <div className="py-4 text-lg font-bold text-[#65758c] flex items-center">
             {selectedUser ? "Edit User" : "Create User"}
           </div>
-          <div className='flex flex-col gap-6'>
-            <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}>General Information</Divider>
+          <div className="flex flex-col gap-6">
+            <Divider
+              sx={{
+                fontSize: "1rem",
+                py: "0.5rem",
+                fontWeight: "bold",
+                color: "#65758c",
+              }}
+            >
+              General Information
+            </Divider>
             <FormControl className="w-full">
               <GeneralInput
                 id="user_id"
@@ -89,7 +112,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                 disabled={true}
               />
             </FormControl>
-            <div className='flex gap-6'>
+            <div className="flex gap-6">
               <FormControl className="w-full">
                 <GeneralInput
                   id="first_name"
@@ -111,7 +134,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                 />
               </FormControl>
             </div>
-            <div className='flex gap-6'>
+            <div className="flex gap-6">
               <FormControl className="w-full">
                 <GeneralInput
                   id="email"
@@ -133,14 +156,25 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
                 />
               </FormControl>
             </div>
-            <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}>User Role</Divider>
-            <div className='flex items-center justify-center'>
+            <Divider
+              sx={{
+                fontSize: "1rem",
+                py: "0.5rem",
+                fontWeight: "bold",
+                color: "#65758c",
+              }}
+            >
+              User Role
+            </Divider>
+            <div className="flex items-center justify-center">
               <div className="flex gap-2">
-                {userRoles.map(role => {
-                  const isSelected = selectedRoles.some(selectedRole => selectedRole.name === role.name);
+                {userRoles.map((role) => {
+                  const isSelected = selectedRoles.some(
+                    (selectedRole) => selectedRole.name === role.name
+                  );
                   const className = isSelected
                     ? `${RoleColors[role.name as string] || RoleColors.default} border border-transparent text-white`
-                    : 'bg-white text-[#818f99] border border-[#818f99]';
+                    : "bg-white text-[#818f99] border border-[#818f99]";
                   return (
                     <div
                       key={role.name}
@@ -154,11 +188,21 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ openModal, handleCloseModal, se
               </div>
             </div>
             {/* <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}></Divider> */}
-            <PermissionsTable permissions={permissions} handleCheckboxChange={() => {}} readonly />
+            <PermissionsTable
+              permissions={permissions}
+              handleCheckboxChange={() => {}}
+              readonly
+            />
           </div>
         </div>
-        <div className='flex justify-end gap-4'>
-          <Button variant="contained" onClick={handleCloseModal} sx={modalCancelBtnStyle}>Cancel</Button>
+        <div className="flex justify-end gap-4">
+          <Button
+            variant="contained"
+            onClick={handleCloseModal}
+            sx={modalCancelBtnStyle}
+          >
+            Cancel
+          </Button>
           <Button variant="contained" onClick={handleSave} sx={modalOkBtnStyle}>
             {selectedUser ? "Save" : "Create"}
           </Button>

@@ -1,7 +1,7 @@
 // Unauthorized.tsx
-import React from 'react';
-import Link from 'next/link';
-import { CSSProperties } from 'react';
+import React from "react";
+import Link from "next/link";
+import { CSSProperties } from "react";
 
 const Unauthorized: React.FC = () => {
   return (
@@ -26,14 +26,18 @@ const Unauthorized: React.FC = () => {
         }
       `}</style>
       <div style={innerContainerStyle}>
-        <h1 className="next-error-h1" style={errorCodeStyle}>401</h1>
+        <h1 className="next-error-h1" style={errorCodeStyle}>
+          401
+        </h1>
         <div style={descriptionContainerStyle}>
           <h2 style={messageStyle}>Unauthorized</h2>
           <p style={descriptionStyle}>
-            The page you are trying to access is unauthorized. Please contact your administrator or{' '}
+            The page you are trying to access is unauthorized. Please contact
+            your administrator or{" "}
             <Link href="/" style={linkStyle}>
               go back to the homepage
-            </Link>.
+            </Link>
+            .
           </p>
         </div>
       </div>
@@ -42,49 +46,50 @@ const Unauthorized: React.FC = () => {
 };
 
 const containerStyle: CSSProperties = {
-  fontFamily: 'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-  height: '50vh',
-  textAlign: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
+  fontFamily:
+    'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+  height: "50vh",
+  textAlign: "center",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 const innerContainerStyle: CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
+  display: "flex",
+  alignItems: "center",
 };
 
 const errorCodeStyle: CSSProperties = {
-  marginRight: '20px',
-  paddingRight: '23px',
-  fontSize: '24px',
+  marginRight: "20px",
+  paddingRight: "23px",
+  fontSize: "24px",
   fontWeight: 500,
-  verticalAlign: 'top',
-  lineHeight: '49px',
+  verticalAlign: "top",
+  lineHeight: "49px",
 };
 
 const descriptionContainerStyle: CSSProperties = {
-  textAlign: 'left',
+  textAlign: "left",
 };
 
 const messageStyle: CSSProperties = {
-  fontSize: '14px',
+  fontSize: "14px",
   fontWeight: 600,
-  lineHeight: '49px',
+  lineHeight: "49px",
   margin: 0,
 };
 
 const descriptionStyle: CSSProperties = {
-  fontSize: '14px',
-  lineHeight: '1.5',
-  maxWidth: '560px',
+  fontSize: "14px",
+  lineHeight: "1.5",
+  maxWidth: "560px",
 };
 
 const linkStyle: CSSProperties = {
-  color: '#0070f3',
-  textDecoration: 'none',
+  color: "#0070f3",
+  textDecoration: "none",
 };
 
 export default Unauthorized;

@@ -5,6 +5,7 @@ import React, { useMemo } from "react";
 import { useNavigation, useTable } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
+import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
 
 const HomePage: React.FC = () => {
   const {
@@ -57,6 +58,7 @@ const HomePage: React.FC = () => {
           <GenericTable
             title={
               <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                <DnsRoundedIcon />
                 Lookups
               </div>
             }

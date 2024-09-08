@@ -5,7 +5,7 @@ import { Permission, Role } from "@/types/types";
 import { modalOkBtnStyle } from "@data/MuiStyles";
 import { useCreate, useUpdate } from "@refinedev/core";
 import PermissionsTable from "./PermissionsTable";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Link from "next/link";
 
 interface RoleDetailPanelProps {
@@ -38,11 +38,17 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
 
   const [name, setName] = useState(role?.name || "");
   const [description, setDescription] = useState(role?.description || "");
-  const [permissions, setPermissions] = useState<Permission[]>(initializePermissions());
+  const [permissions, setPermissions] = useState<Permission[]>(
+    initializePermissions()
+  );
   const { mutate: updateRole } = useUpdate();
   const { mutate: createRole } = useCreate();
 
-  const handleCheckboxChange = (codename: string, field: keyof Permission, checked: boolean) => {
+  const handleCheckboxChange = (
+    codename: string,
+    field: keyof Permission,
+    checked: boolean
+  ) => {
     setPermissions((prevPermissions) =>
       prevPermissions.map((permission) =>
         permission.codename === codename
@@ -58,7 +64,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
       updateRole(
         {
           resource: "roles",
-          id: `${(role?.role_id as string)}`,
+          id: `${role?.role_id as string}`,
           values: payload,
         },
         {
@@ -84,13 +90,23 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
   return (
     <div className="bg-white px-8 py-8 font-med flex flex-col">
       <div className="text-xl font-semibold text-black flex items-center gap-4">
-        <Link href={role && !isShow ? "/dashboard/roles/show?id=" + role?.role_id : "/dashboard/roles"} className="pb-1 hover:text-slate-700">
+        <Link
+          href={
+            role && !isShow
+              ? "/dashboard/roles/show?id=" + role?.role_id
+              : "/dashboard/roles"
+          }
+          className="pb-1 hover:text-slate-700"
+        >
           <ArrowBackIosNewIcon fontSize="small" />
         </Link>
         <div className="flex flex-1 items-center justify-between">
-          <div>{role ? isShow ? "" : "Edit" : "Create"} Role</div>
+          <div>{role ? (isShow ? "" : "Edit") : "Create"} Role</div>
           {isShow && (
-            <Link href={`/dashboard/roles/edit?id=${role?.role_id}`} className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium">
+            <Link
+              href={`/dashboard/roles/edit?id=${role?.role_id}`}
+              className="bg-[#003133] text-white px-8 py-2 rounded-md text-sm font-medium"
+            >
               Edit
             </Link>
           )}

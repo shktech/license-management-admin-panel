@@ -46,7 +46,10 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
       onChange({
         target: {
           name: props.name,
-          value: props.type==='time'?newValue.format("YYYY-MM-DD hh:mm:ss"):newValue.format("YYYY-MM-DD"),
+          value:
+            props.type === "time"
+              ? newValue.format("YYYY-MM-DD hh:mm:ss")
+              : newValue.format("YYYY-MM-DD"),
         },
       } as React.ChangeEvent<HTMLInputElement>);
     }
@@ -62,29 +65,29 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
             <span className="text-gray-500 text-xs">(Optional)</span>
           )}
         </div>
-        {
-        props.type==='time' ?   <DateTimePicker 
-        onChange={(newValue) => handleChange(newValue as Dayjs)}
-        value={props.value ? dayjs(props.value as string) : null}
-        disabled={props.disabled}
-        slots={{
-          textField: (textFieldProps) => (
-            <CustomTextField {...textFieldProps} />
-          ),
-        }}
-      />:
-      <DesktopDatePicker
-      onChange={(newValue) => handleChange(newValue as Dayjs)}
-      value={props.value ? dayjs(props.value as string) : null}
-      disabled={props.disabled}
-      slots={{
-        textField: (textFieldProps) => (
-          <CustomTextField {...textFieldProps} />
-        ),
-      }}
-    />
-      }
-      
+        {props.type === "time" ? (
+          <DateTimePicker
+            onChange={(newValue) => handleChange(newValue as Dayjs)}
+            value={props.value ? dayjs(props.value as string) : null}
+            disabled={props.disabled}
+            slots={{
+              textField: (textFieldProps) => (
+                <CustomTextField {...textFieldProps} />
+              ),
+            }}
+          />
+        ) : (
+          <DesktopDatePicker
+            onChange={(newValue) => handleChange(newValue as Dayjs)}
+            value={props.value ? dayjs(props.value as string) : null}
+            disabled={props.disabled}
+            slots={{
+              textField: (textFieldProps) => (
+                <CustomTextField {...textFieldProps} />
+              ),
+            }}
+          />
+        )}
       </div>
     </LocalizationProvider>
   );

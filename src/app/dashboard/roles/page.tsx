@@ -11,6 +11,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import RoleDrawer from "@components/Role/RoleDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const {
@@ -98,6 +100,7 @@ const Page = () => {
           <GenericTable
             title={
               <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                <FontAwesomeIcon icon={faShieldHalved} />
                 Role & Permission
               </div>
             }

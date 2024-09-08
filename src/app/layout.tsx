@@ -7,7 +7,8 @@ import { Suspense } from "react"
 import { dataProvider } from "@providers/data-provider";
 import { authProvider } from "@providers/auth-provider";
 import { dashboardResources } from "../config/refineResources";
-
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 // Tailwind and TailAdmin Styles
 import "jsvectormap/dist/jsvectormap.css";
 import "flatpickr/dist/flatpickr.min.css";
