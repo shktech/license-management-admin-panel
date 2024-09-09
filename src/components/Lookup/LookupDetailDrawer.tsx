@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
-import { Button, Drawer, IconButton } from '@mui/material';
-import { useCreate, useDelete, useUpdate } from '@refinedev/core';
+import React, { useEffect } from "react";
+import { Button, Drawer, IconButton } from "@mui/material";
+import { useCreate, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { Lookup } from '../../types/types';
-import ProductForm from '@components/Forms/Products/ProductForm';
-import LookupForm from '@components/Forms/Lookups/LookupForm';
+import { Lookup } from "../../types/types";
+import LookupForm from "@components/Forms/Lookups/LookupForm";
 
 interface LookupDetailDrawerProps {
   open: boolean;
   onClose: () => void;
-  lookup: Lookup | null
+  lookup: Lookup | null;
 }
 
-const LookupDetailDrawer: React.FC<LookupDetailDrawerProps> = ({ open, onClose, lookup }) => {
+const LookupDetailDrawer: React.FC<LookupDetailDrawerProps> = ({
+  open,
+  onClose,
+  lookup,
+}) => {
   const {
     control,
     trigger,
@@ -28,7 +31,7 @@ const LookupDetailDrawer: React.FC<LookupDetailDrawerProps> = ({ open, onClose, 
     if (lookup != null) {
       reset(lookup);
     } else {
-      Object.keys(previousProduct).forEach(key => setValue(key, null))
+      Object.keys(previousProduct).forEach((key) => setValue(key, null));
     }
   }, [open]);
 
@@ -39,9 +42,7 @@ const LookupDetailDrawer: React.FC<LookupDetailDrawerProps> = ({ open, onClose, 
     const isValid = await trigger(); // Triggers validation for all fields
 
     if (isValid) {
-      const handleError = (error: any) => {
-
-      };
+      const handleError = (error: any) => {};
 
       const lookupData = getValues();
 
@@ -70,7 +71,7 @@ const LookupDetailDrawer: React.FC<LookupDetailDrawerProps> = ({ open, onClose, 
         // );
       }
     } else {
-      console.log('Validation errors:', errors);
+      console.log("Validation errors:", errors);
     }
   };
   return (
@@ -79,10 +80,8 @@ const LookupDetailDrawer: React.FC<LookupDetailDrawerProps> = ({ open, onClose, 
         <div className="py-4 px-2 text-lg font-bold text-[#65758c] flex items-center">
           Detail Information
         </div>
-        <div className='flex-1'>
-          <LookupForm
-            {...{ control, errors, trigger }}
-          />
+        <div className="flex-1">
+          <LookupForm {...{ control, errors, trigger }} />
         </div>
         <div className="flex justify-end gap-4">
           <Button

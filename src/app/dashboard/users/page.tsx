@@ -23,6 +23,8 @@ import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import MemeberInvitePanel from "@components/Organizations/MemeberInvitePanel";
 import { Box, Modal } from "@mui/material";
 import { modalStyle, tagStyle } from "@data/MuiStyles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
   const {
@@ -192,7 +194,7 @@ const Page = () => {
           <GenericTable
             title={
               <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-                {" "}
+                <FontAwesomeIcon icon={faUsers} />
                 User Management{" "}
               </div>
             }

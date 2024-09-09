@@ -99,6 +99,7 @@ const SignIn: React.FC = () => {
 
                       )}
                       </FormControlWrapper>
+                      <Link href={'/auth/forgot-password'} className='text-sm text-primary font-medium text-right'>Forgot password?</Link>
                       <Button type="submit" className="text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90">Sign in</Button>
                     </div>
                   </form>

@@ -1,6 +1,3 @@
-import { FieldConfig } from "../FormControlWrapper";
-import { InputCustomerFormFields } from "./InputCustomerFormFields";
-
 import { InitialFieldConfig } from "../InitialFieldConfig";
 import { getRealFormFields } from "@utils/utilFunctions";
 
@@ -13,6 +10,5 @@ const InitialField: InitialFieldConfig[] = [
   { name: "country", required: "text" },
   { name: "active", type: "switch", required: "text" },
 ];
-
 
 export default getRealFormFields(InitialField);

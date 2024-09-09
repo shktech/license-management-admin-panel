@@ -13,6 +13,7 @@ import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer"
 import ConfirmModal from "@components/common/ConfirmModal";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import StateComponent from "@components/common/StateComponent";
+import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
 
 const Page = () => {
   const {
@@ -86,6 +87,7 @@ const Page = () => {
         <GenericTable
           title={
             <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              <FindInPageRoundedIcon />
               References
             </div>
           }

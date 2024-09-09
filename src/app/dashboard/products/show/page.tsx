@@ -14,6 +14,8 @@ import {
 import { useState } from "react";
 import GeneralInformation from "@components/common/View/GeneralInformation";
 import { getNestedValue } from "@utils/utilFunctions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo, faCubes } from "@fortawesome/free-solid-svg-icons";
 
 const Item = () => {
   const { params } = useParsed();
@@ -66,7 +68,10 @@ const Item = () => {
           <div className="!font-satoshi px-12">
             <div className="flex gap-4 items-center">
               <div className="text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
-                Product
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faCubes} />
+                  Product
+                </div>
                 <div className="text-lg font-normal">
                   {product?.product_name}
                 </div>
@@ -102,8 +107,19 @@ const Item = () => {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <StyledTab label="Main Information" />
-                  <StyledTab label="Attribute" />
+                  <StyledTab label={
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faCircleInfo} />
+                      General Information
+                    </div>
+                  }
+                  />
+                  <StyledTab label={
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faCubes} />
+                      Attribute
+                    </div>
+                  } />
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>

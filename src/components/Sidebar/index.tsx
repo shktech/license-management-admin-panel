@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { AdminMenu, CommonMenu, menuGroups } from "@/data/MenuGroupData";
-import LogoIcon from "@/assets/icons/logo.svg?icon";
 import UserItem from "./UserItem";
 import { useGetIdentity } from "@refinedev/core";
 import { User } from "@/types/types";
@@ -27,12 +25,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`bg-[#1f325c] fixed left-0 top-0 z-999 flex h-screen w-64 flex-col overflow-y-hidden duration-300 ease-linear lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`bg-[#1f325c] fixed left-0 top-0 z-999 flex h-screen w-64 flex-col overflow-y-hidden duration-300 ease-linear lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-          <Link href="/" className="text-[#e3ebff] font-bold flex justify-center items-center">
+          <Link
+            href="/"
+            className="text-[#e3ebff] font-bold flex justify-center items-center"
+          >
             <div className="font-bold pl-4 text-3xl">CALM</div>
           </Link>
         </div>

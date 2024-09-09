@@ -36,24 +36,24 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
           onClick={handleClick}
           sx={{
             // backgroundColor: isItemActive ? '#ebf0fa' : 'transparent',
-            color: isItemActive ? '#e3ebff' : '#7184ab',
-            borderRadius: '0.375rem', // rounded-md
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            gap: '0.625rem', // gap-2.5
-            paddingX: '1rem', // px-4
-            paddingY: '0.5rem', // py-3
-            textTransform: 'none',
-            transition: 'background-color 0.3s ease-in-out', // duration-300 ease-in-out
-            '&:hover': {
-              backgroundColor: 'slate.100', // hover:bg-slate-100
+            color: isItemActive ? "#e3ebff" : "#7184ab",
+            borderRadius: "0.375rem", // rounded-md
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "0.625rem", // gap-2.5
+            paddingX: "1rem", // px-4
+            paddingY: "0.5rem", // py-3
+            textTransform: "none",
+            transition: "background-color 0.3s ease-in-out", // duration-300 ease-in-out
+            "&:hover": {
+              backgroundColor: "slate.100", // hover:bg-slate-100
             },
           }}
         >
           {item.icon}
-          <span className={`${isItemActive ? 'font-medium' : 'font-normal'}`}>
+          <span className={`${isItemActive ? "font-medium" : "font-normal"}`}>
             {item.label}
           </span>
           {item.children && (

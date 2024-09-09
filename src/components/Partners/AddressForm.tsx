@@ -3,7 +3,6 @@ import { useBack, useCreate, useNavigation, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { Address } from "@/types/types";
 import { useEffect } from "react";
-import Loader from "@components/common/Loader";
 import GenericForm from "@components/Forms/GenericForm";
 import AddressFormFields from "@components/Forms/Partners/AddressFormFields";
 import { Button } from "@mui/material";

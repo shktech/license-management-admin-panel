@@ -3,7 +3,6 @@ import { modalOkBtnStyle } from "@data/MuiStyles";
 import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { useEffect, useState } from "react";
 import { User } from "../../../types/types";
-import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import PasswordsFormFields from "./PasswordsFormFields";
 import ProfileFormFields from "./ProfileFormFields";

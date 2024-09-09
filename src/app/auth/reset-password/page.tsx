@@ -10,14 +10,16 @@ import GeneralInput from "@components/Input/GeneralInput";
 import EmailIcon from "@/assets/icons/email.svg?icon";
 import PasswordIcon from "@/assets/icons/password.svg?icon";
 import { Button } from "@mui/base";
-import { useRegister } from "@refinedev/core";
+import { useRegister, useUpdatePassword } from "@refinedev/core";
 
 interface DecodedToken {
-  organization?: string;
-  uid?: string;
-  email?: string;
-  scope?: string;
-  exp?: number;
+  token_type: string;
+  exp: number;
+  iat: number;
+  jti: string;
+  user_id: number;
+  uid: string;
+  scope: string;
 }
 
 const SignUp: React.FC = () => {
@@ -28,7 +30,7 @@ const SignUp: React.FC = () => {
     setError,
     formState: { errors },
   } = useForm<FormData>();
-  const { mutate: register } = useRegister<FormData>();
+  const { mutate: updatePassword } = useUpdatePassword<any>();
   const [token, setToken] = useState<string>("");
   const [userData, setUserData] = useState<DecodedToken>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -36,11 +38,15 @@ const SignUp: React.FC = () => {
   const validateInviteToken = async (token: string): Promise<DecodedToken> => {
     try {
       const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
+      console.log(decodedToken);
       if (
-        !decodedToken.organization ||
+        !decodedToken.token_type ||
         !decodedToken.uid ||
-        !decodedToken.email ||
-        !decodedToken.scope
+        !decodedToken.user_id ||
+        !decodedToken.scope ||
+        !decodedToken.jti ||
+        !decodedToken.exp ||
+        !decodedToken.iat
       ) {
         return Promise.reject(
           new Error("Invalid token: Missing required fields")
@@ -59,11 +65,11 @@ const SignUp: React.FC = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const token = queryParams.get("token")?.split("?to=")?.[0] || "";
-    validateInviteToken(token)
+    const reset = queryParams.get("reset")?.split("?to=")?.[0] || "";
+    validateInviteToken(reset)
       .then((data) => {
         setUserData(data);
-        setToken(token);
+        setToken(reset);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -72,17 +78,16 @@ const SignUp: React.FC = () => {
   }, [router]);
 
   const onSubmit = (data: any) => {
-    if (data.password !== data.password2) {
+    if (data.new_password !== data.password2) {
       setError("password2", {
         type: "manual",
         message: "Passwords do not match",
       });
       return;
     }
-    const { password2, ...dataWithoutPassword2 } = data;
-    register({
-      ...dataWithoutPassword2,
-      token,
+    updatePassword({
+      new_password: data.new_password,
+      token: token,
     });
   };
 
@@ -96,71 +101,13 @@ const SignUp: React.FC = () => {
             <div className="w-full p-8">
               <div className="flex justify-between items-center mb-9">
                 <h2 className="text-2xl font-bold text-black">
-                  Activate your account
+                  Reset your password
                 </h2>
               </div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col space-y-4">
-                  <div className="flex flex-row space-x-4">
-                    <FormControlWrapper
-                      name="first_name"
-                      control={control}
-                      rules={{ required: "Please enter your first name!" }}
-                      error={errors.first_name?.message?.toString()}
-                    >
-                      {(field) => (
-                        <GeneralInput
-                          {...field}
-                          type={"text"}
-                          label="First name"
-                          required={true}
-                          placeholder={"Enter your first name"}
-                        />
-                      )}
-                    </FormControlWrapper>
-                    <FormControlWrapper
-                      name="last_name"
-                      control={control}
-                      rules={{ required: "Please enter your last name!" }}
-                      error={errors.last_name?.message?.toString()}
-                    >
-                      {(field) => (
-                        <GeneralInput
-                          {...field}
-                          type={"text"}
-                          label="Last name"
-                          placeholder={"Enter your last name"}
-                        />
-                      )}
-                    </FormControlWrapper>
-                  </div>
-                  <FormControlWrapper name="organization" control={control}>
-                    {(field) => (
-                      <GeneralInput
-                        {...field}
-                        type={"text"}
-                        label="Organization"
-                        required={true}
-                        value={userData?.organization}
-                        disabled={true}
-                      />
-                    )}
-                  </FormControlWrapper>
-                  <FormControlWrapper name="email" control={control}>
-                    {(field) => (
-                      <GeneralInput
-                        {...field}
-                        type={"text"}
-                        label="Email address"
-                        value={userData?.email}
-                        disabled={true}
-                        required={true}
-                        icon={<EmailIcon className="fill-current" />}
-                      />
-                    )}
-                  </FormControlWrapper>
                   <FormControlWrapper
-                    name="password"
+                    name="new_password"
                     control={control}
                     rules={{ required: "Please enter your password!" }}
                     error={errors.password?.message?.toString()}
@@ -199,7 +146,7 @@ const SignUp: React.FC = () => {
                     type="submit"
                     className="text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90"
                   >
-                    Register
+                    Reset password
                   </Button>
                 </div>
               </form>

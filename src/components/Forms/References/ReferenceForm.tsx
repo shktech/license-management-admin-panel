@@ -1,20 +1,18 @@
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { Reference } from "../../../types/types";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import ReferenceFormFields from "./ReferenceFormFields";
 
 export type ReferenceFormProps = GenericFormProps & {
-    reference?: Reference;
+  reference?: Reference;
 };
 
 const ReferenceForm = (props: GenericFormProps) => {
-    return (
-        <div className="px-4">
-            <GenericForm {...{ ...props, fields: ReferenceFormFields }} />
-        </div>
-    )
-}
+  return (
+    <div className="px-4">
+      <GenericForm {...{ ...props, fields: ReferenceFormFields }} />
+    </div>
+  );
+};
 
 export default ReferenceForm;

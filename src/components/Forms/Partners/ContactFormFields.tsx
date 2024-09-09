@@ -1,6 +1,3 @@
-import { FieldConfig } from "../FormControlWrapper";
-import { InputCustomerFormFields } from "./InputCustomerFormFields";
-
 import { InitialFieldConfig } from "../InitialFieldConfig";
 import { getRealFormFields } from "@utils/utilFunctions";
 

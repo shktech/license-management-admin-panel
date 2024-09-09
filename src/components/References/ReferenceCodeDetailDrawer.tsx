@@ -1,20 +1,25 @@
-import React, { useEffect } from 'react';
-import { Button, Drawer, IconButton } from '@mui/material';
-import { useCreate, useDelete, useUpdate } from '@refinedev/core';
+import React, { useEffect } from "react";
+import { Button, Drawer, IconButton } from "@mui/material";
+import { useCreate, useDelete, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { Reference, ReferenceCode } from '../../types/types';
-import ReferenceForm from '@components/Forms/References/ReferenceForm';
-import ReferenceCodeForm from '@components/Forms/References/ReferenceCodeForm';
+import { Reference, ReferenceCode } from "../../types/types";
+import ReferenceForm from "@components/Forms/References/ReferenceForm";
+import ReferenceCodeForm from "@components/Forms/References/ReferenceCodeForm";
 
 interface ReferenceCodeDetailDrawerProps {
   open: boolean;
   onClose: () => void;
-  referenceCode: ReferenceCode | null
-  reference_id: string | undefined
+  referenceCode: ReferenceCode | null;
+  reference_id: string | undefined;
 }
 
-const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ reference_id, open, onClose, referenceCode }) => {
+const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({
+  reference_id,
+  open,
+  onClose,
+  referenceCode,
+}) => {
   const {
     control,
     trigger,
@@ -29,7 +34,7 @@ const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ r
     if (referenceCode != null) {
       reset(referenceCode);
     } else {
-      reset({})
+      reset({});
     }
   }, [open]);
 
@@ -61,7 +66,7 @@ const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ r
         createReferenceCode(
           {
             resource: `references/${reference_id}/codes`,
-            values: referenceCodeData
+            values: referenceCodeData,
           },
           {
             onError: handleError,
@@ -70,7 +75,7 @@ const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ r
         );
       }
     } else {
-      console.log('Validation errors:', errors);
+      console.log("Validation errors:", errors);
     }
   };
   return (
@@ -79,10 +84,8 @@ const ReferenceCodeDetailDrawer: React.FC<ReferenceCodeDetailDrawerProps> = ({ r
         <div className="py-4 px-2 text-lg font-bold text-[#65758c] flex items-center">
           Detail Information
         </div>
-        <div className='flex-1'>
-          <ReferenceCodeForm
-            {...{ control, errors, trigger }}
-          />
+        <div className="flex-1">
+          <ReferenceCodeForm {...{ control, errors, trigger }} />
         </div>
         <div className="flex justify-end gap-4">
           <Button

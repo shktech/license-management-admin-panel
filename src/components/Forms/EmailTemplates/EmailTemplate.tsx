@@ -56,7 +56,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
         event_type: template?.event_type || "",
       }));
     }
-    }, [type, reset, template]);
+  }, [type, reset, template]);
 
   return (
     <Accordion

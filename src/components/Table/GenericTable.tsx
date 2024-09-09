@@ -64,7 +64,6 @@ const GenericTable = <T extends MRT_RowData>({
   };
 
   const enhancedColumns = columns.map((col) => {
-
     if (col.Cell) return col;
     return {
       ...col,
@@ -103,7 +102,8 @@ const GenericTable = <T extends MRT_RowData>({
     enableColumnActions: false,
     enableColumnPinning: true,
     onSortingChange: (updater) => {
-      const newSorting = updater instanceof Function ? updater(sorting) : updater;
+      const newSorting =
+        updater instanceof Function ? updater(sorting) : updater;
       setSorting(newSorting);
       handleSorting?.(newSorting);
     },

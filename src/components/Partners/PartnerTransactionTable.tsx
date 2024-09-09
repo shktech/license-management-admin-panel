@@ -1,17 +1,15 @@
 "use client";
 
 import { useMemo } from "react";
-import {
-  MaterialReactTable,
-  MRT_SortingState,
-  useMaterialReactTable,
-  type MRT_ColumnDef,
-} from "material-react-table";
+import { MRT_SortingState, type MRT_ColumnDef } from "material-react-table";
 import { Transaction } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useTable } from "@refinedev/core";
 import GenericTable from "@components/Table/GenericTable";
-import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
@@ -31,14 +29,16 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
   } = useTable<Transaction>({
     syncWithLocation: false,
     resource: "transactions",
-    initialFilter: [{ field: 'partner', operator: 'eq', value: partner_id }],
+    initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
   });
 
   const router = useRouter();
 
-  const handleSearch = (value: string) => setFilters([{ field: 'searchKey', operator: 'contains', value: value }])
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
 
-  const handleSorting = (sorting: MRT_SortingState) => setSorters(convertSortingStateToCrudSort(sorting));
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
 
   const handlePage = (value: number) => setCurrent(value);
 

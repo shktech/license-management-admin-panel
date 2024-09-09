@@ -43,5 +43,5 @@ const InitialCreateField: InitialFieldConfig[] = [
 
 export const PartnerFormFields = {
   edit: getRealFormFields(InitialField),
-  create: getRealFormFields(InitialCreateField)
+  create: getRealFormFields(InitialCreateField),
 };

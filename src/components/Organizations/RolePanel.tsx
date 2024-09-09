@@ -3,12 +3,8 @@ import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Permission, Role } from "@/types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
-import CommonTable from "@components/Table/CommonTable";
 import { RoleColors } from "@data/ColorData";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import RoleDrawer from "@components/Role/RoleDrawer";
-import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
 interface RolePanelProps {}
 
@@ -17,7 +13,7 @@ const RolePanel: React.FC<RolePanelProps> = () => {
     tableQueryResult: { data, isLoading, refetch },
   } = useTable<Role>({
     hasPagination: false,
-    resource: 'roles'
+    resource: "roles",
   });
   const { push } = useNavigation();
   const sortedData = data?.data.sort((a, b) => {
@@ -96,7 +92,11 @@ const RolePanel: React.FC<RolePanelProps> = () => {
       ) : (
         <div>
           <GenericTable
-            title={<div className="!font-satoshi px-12 text-lg font-semibold text-[#1f325c] flex items-center gap-2">Role & Permission</div>}
+            title={
+              <div className="!font-satoshi px-12 text-lg font-semibold text-[#1f325c] flex items-center gap-2">
+                Role & Permission
+              </div>
+            }
             data={sortedData}
             columns={columns}
             handleCreate={handleCreate}

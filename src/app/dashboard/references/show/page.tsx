@@ -21,6 +21,7 @@ import {
 } from "@utils/utilFunctions";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
+import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
 
 const Page = () => {
   const { params } = useParsed();
@@ -161,7 +162,10 @@ const Page = () => {
           title={
             <div className="px-8 pt-6 !font-satoshi text-2xl font-semibold text-[#1f325c] gap-2">
               <div className="flex gap-2 items-end gap-6">
-                <div className="">Reference </div>
+                <div className="flex items-center gap-2">
+                  <FindInPageRoundedIcon />
+                  Reference{" "}
+                </div>
                 <div className="text-lg font-normal">
                   {reference?.reference_name}
                 </div>

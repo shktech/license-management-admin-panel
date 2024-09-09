@@ -9,6 +9,8 @@ import {
   StyledTab,
   StyledTabs,
 } from "@components/Tab/CustomizedTab";
+import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGetIdentity } from "@refinedev/core";
 import { useState } from "react";
 
@@ -24,6 +26,7 @@ const Page = () => {
   return (
     <div className="flex flex-col">
       <div className="!font-satoshi px-12 pt-10 pb-4 text-2xl font-semibold text-[#1f325c] flex items-end gap-2">
+        <FontAwesomeIcon icon={faUserGroup} />
         Organization
         <span className="text-base text-[#11ba82]">
           {identity?.organization}

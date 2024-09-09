@@ -12,11 +12,9 @@ import {
 import { useCreate, useGetIdentity, useTable } from "@refinedev/core";
 import { Organization, Role, User } from "@/types/types";
 import React, { useMemo, useState } from "react";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import DoDisturbOnOutlinedIcon from "@mui/icons-material/DoDisturbOnOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { modalOkBtnStyle, sendEmailBtnStyle } from "@data/MuiStyles";
+import { modalOkBtnStyle } from "@data/MuiStyles";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 interface MemeberInvitePanelProps {
@@ -27,7 +25,7 @@ interface MemeberInvitePanelProps {
 const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
   openSuccessModal,
   handleCloseSuccessModal,
-  orgs
+  orgs,
 }) => {
   const { data: identity } = useGetIdentity<User>();
   const {
@@ -90,7 +88,7 @@ const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
       {
         onSuccess: () => {
           setInvited(true);
-          handleCloseSuccessModal()
+          handleCloseSuccessModal();
         },
       }
     );

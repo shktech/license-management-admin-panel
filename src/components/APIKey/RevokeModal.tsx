@@ -2,17 +2,11 @@ import React, { useEffect } from "react";
 import {
   Box,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
   Modal,
-  Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { APIKey, Organization, User } from "../../types/types";
+import { APIKey } from "../../types/types";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
-import { useList } from "@refinedev/core";
 import GeneralSwitch from "@components/Input/GeneralSwitch";
 
 interface CreateModalProps {
@@ -43,15 +37,6 @@ const RevokeModal: React.FC<CreateModalProps> = ({
   handleRevoke,
   selectedAPIKey,
 }) => {
-  const {
-    data: orgs,
-    isLoading,
-    refetch,
-  } = useList<Organization>({
-    hasPagination: false,
-    resource: "orgs",
-  });
-
   const [name, setName] = React.useState(selectedAPIKey?.name);
 
   const [revoke, setRevoke] = React.useState(selectedAPIKey?.revoked);

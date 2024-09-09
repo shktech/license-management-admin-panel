@@ -4,19 +4,22 @@ import { useCreate, useUpdate } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import { Organization } from "@/types/types";
-import { OrganizationCreateFormFields, OrganizationEditFormFields } from "@components/Forms/Organizations/OrganizationFormFields";
+import {
+  OrganizationCreateFormFields,
+  OrganizationEditFormFields,
+} from "@components/Forms/Organizations/OrganizationFormFields";
 import GenericForm from "@components/Forms/GenericForm";
 
 interface OrganizationDetailDrawerProps {
   open: boolean;
   onClose: () => void;
-  org: Organization | null
+  org: Organization | null;
 }
 
 const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
   open,
   onClose,
-  org
+  org,
 }) => {
   const {
     control,
@@ -24,7 +27,7 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
     formState: { errors },
     getValues,
     setValue,
-    reset
+    reset,
   } = useForm<Organization>();
 
   useEffect(() => {
@@ -37,15 +40,14 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
 
   const { mutate: createOrg } = useCreate();
   const { mutate: updateOrg } = useUpdate();
-  const fields = org ? OrganizationEditFormFields : OrganizationCreateFormFields;
+  const fields = org
+    ? OrganizationEditFormFields
+    : OrganizationCreateFormFields;
 
   const handleSubmit = async () => {
     const isValid = await trigger();
     if (isValid) {
-
-      const handleError = (error: any) => {
-
-      };
+      const handleError = (error: any) => {};
 
       const orgData = getValues();
 
@@ -53,14 +55,14 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
         updateOrg(
           {
             resource: "orgs",
-            id: `${(org?.organization_code)}`,
-            values: orgData
+            id: `${org?.organization_code}`,
+            values: orgData,
           },
           {
             onError: handleError,
             onSuccess: () => onClose(),
           }
-        )
+        );
       } else {
         createOrg(
           {
@@ -73,7 +75,6 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
           }
         );
       }
-
     } else {
       console.log("Validation errors:", errors);
     }

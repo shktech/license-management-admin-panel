@@ -2,15 +2,10 @@
 
 import { EmailHistory, Transaction } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import { tagStyle } from "@data/MuiStyles";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { Box } from "@mui/material";
 import { type MRT_ColumnDef } from "material-react-table";
-import { useMemo, useState } from "react";
-import TransactionDetailDrawer from "./TransactionDetailDrawer";
+import { useMemo } from "react";
 import { getFormattedDate } from "@utils/utilFunctions";
-import { useList, useNavigation } from "@refinedev/core";
+import { useList } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 
 interface EmailHistoryTableProps {
