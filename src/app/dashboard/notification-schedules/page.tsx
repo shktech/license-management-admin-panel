@@ -1,17 +1,16 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable, useDelete, useNavigation } from "@refinedev/core";
+import { useTable, useNavigation } from "@refinedev/core";
 import { Email_Schedule, Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
 import { Box } from "@mui/material";
-import ProductDetailDrawer from "@components/Products/ProductDetailDrawer";
 import { ScheduleActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
-import DeleteModal from "@components/Products/DeleteModal";
-import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import moment from 'moment-timezone';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
 
 const Page = () => {
@@ -24,7 +23,6 @@ const Page = () => {
   const { push } = useNavigation();
 
   const handleCreate = () => {
-    // setOpenDrawer(true);
     push(`/dashboard/notification-schedules/create`);
   };
 
@@ -99,6 +97,7 @@ const Page = () => {
         <GenericTable
           title={
             <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              <FontAwesomeIcon icon={faClipboardList} />
               Notification Schedules
             </div>
           }

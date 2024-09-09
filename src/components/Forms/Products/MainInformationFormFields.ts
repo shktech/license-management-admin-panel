@@ -45,14 +45,14 @@ const InitialField: InitialFieldConfig[] = [
     valueKey: "value",
     labelKey: "value",
   },
-  { 
+  {
     name: "source_name",
     type: "dropdown",
     required: "text",
     resource: "lookups/SOURCE_API_NAME/values",
     valueKey: "value",
     labelKey: "value",
- },
+  },
   // { name: "license_source_set" },
   // { name: "source_name" },
   // { name: "eval_set_name" },

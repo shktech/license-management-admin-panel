@@ -38,11 +38,17 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
 
   const [name, setName] = useState(role?.name || "");
   const [description, setDescription] = useState(role?.description || "");
-  const [permissions, setPermissions] = useState<Permission[]>(initializePermissions());
+  const [permissions, setPermissions] = useState<Permission[]>(
+    initializePermissions()
+  );
   const { mutate: updateRole } = useUpdate();
   const { mutate: createRole } = useCreate();
 
-  const handleCheckboxChange = (codename: string, field: keyof Permission, checked: boolean) => {
+  const handleCheckboxChange = (
+    codename: string,
+    field: keyof Permission,
+    checked: boolean
+  ) => {
     setPermissions((prevPermissions) =>
       prevPermissions.map((permission) =>
         permission.codename === codename
@@ -70,7 +76,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
       updateRole(
         {
           resource: "roles",
-          id: `${(role?.role_id as string)}/`,
+          id: `${role?.role_id as string}/`,
           values: payload,
         },
         {
@@ -88,7 +94,9 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
           <div className="py-4 text-lg font-bold text-[#65758c] flex items-center">
             {create ? "Create Role" : "Edit Role"}
             {!create && (
-              <span className={`px-4 mx-4 py-1 text-xs font-bold rounded-full text-white ${RoleColors[role?.name as string] || RoleColors.default}`}>
+              <span
+                className={`px-4 mx-4 py-1 text-xs font-bold rounded-full text-white ${RoleColors[role?.name as string] || RoleColors.default}`}
+              >
                 {role?.name}
               </span>
             )}

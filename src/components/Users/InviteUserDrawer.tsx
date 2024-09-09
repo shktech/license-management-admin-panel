@@ -1,41 +1,58 @@
-import React from 'react';
-import { Button, Divider, Drawer, FormControl } from '@mui/material';
-import { User } from '../../types/types';
-import GeneralInput from '@components/Input/GeneralInput';
-import { modalCancelBtnStyle, modalOkBtnStyle } from '@data/MuiStyles';
-import { useCreate } from '@refinedev/core';
-import useStore from '@hooks/globalStore';
+import React from "react";
+import { Button, Divider, Drawer, FormControl } from "@mui/material";
+import { User } from "../../types/types";
+import GeneralInput from "@components/Input/GeneralInput";
+import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
+import { useCreate } from "@refinedev/core";
+import useStore from "@hooks/globalStore";
 
 interface UserDrawerProps {
   handleCloseModal: () => void;
   inactiveUser?: User;
 }
 
-const InviteUserDrawer: React.FC<UserDrawerProps> = ({  handleCloseModal, inactiveUser }) => {
+const InviteUserDrawer: React.FC<UserDrawerProps> = ({
+  handleCloseModal,
+  inactiveUser,
+}) => {
   const { mutate } = useCreate();
-  const [invitationEmail, setInvitationEmail] = React.useState<string>(inactiveUser?.email as string);
+  const [invitationEmail, setInvitationEmail] = React.useState<string>(
+    inactiveUser?.email as string
+  );
 
   const handleSave = () => {
-    mutate({
+    mutate(
+      {
         resource: "invite",
         values: {
-            email: invitationEmail,
-        }
-    }, {
+          email: invitationEmail,
+        },
+      },
+      {
         onSuccess: () => handleCloseModal(),
-    })
-  }
+      }
+    );
+  };
 
   return (
     <Drawer anchor="right" open={true} onClose={handleCloseModal}>
       <div className="min-w-[800px] min-h-screen px-7 pb-4 font-med flex flex-col justify-between">
         <div>
-          <div className='py-4 text-lg font-bold text-[#65758c] flex items-center'>
+          <div className="py-4 text-lg font-bold text-[#65758c] flex items-center">
             {"Invite User"}
           </div>
-          <div className='flex flex-col gap-6'>
-            <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}>General Information</Divider>
-            <div className='flex gap-6'>
+          <div className="flex flex-col gap-6">
+            <Divider
+              sx={{
+                fontSize: "1rem",
+                py: "0.5rem",
+                fontWeight: "bold",
+                color: "#65758c",
+              }}
+            >
+              General Information
+            </Divider>
+            <div className="flex gap-6">
               <FormControl className="w-full">
                 <GeneralInput
                   id="email"
@@ -58,11 +75,24 @@ const InviteUserDrawer: React.FC<UserDrawerProps> = ({  handleCloseModal, inacti
                 />
               </FormControl>
             </div>
-            <Divider sx={{ fontSize: '1rem', py: '0.5rem', fontWeight: 'bold', color: '#65758c' }}></Divider>
+            <Divider
+              sx={{
+                fontSize: "1rem",
+                py: "0.5rem",
+                fontWeight: "bold",
+                color: "#65758c",
+              }}
+            ></Divider>
           </div>
         </div>
-        <div className='flex justify-end gap-4'>
-          <Button variant="contained" onClick={handleCloseModal} sx={modalCancelBtnStyle}>Cancel</Button>
+        <div className="flex justify-end gap-4">
+          <Button
+            variant="contained"
+            onClick={handleCloseModal}
+            sx={modalCancelBtnStyle}
+          >
+            Cancel
+          </Button>
           <Button variant="contained" onClick={handleSave} sx={modalOkBtnStyle}>
             {"Send invitation email"}
           </Button>

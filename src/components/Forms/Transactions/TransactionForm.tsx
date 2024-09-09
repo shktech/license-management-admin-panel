@@ -1,6 +1,5 @@
 "use client";
 
-import { Transaction } from "@/types/types";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import DetailsIcon from "@mui/icons-material/Details";
@@ -13,12 +12,9 @@ import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import GeneralTxnFormField from "./GeneralTxnFormField";
 import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
-import { useEffect, useState } from "react";
-import { Autocomplete, Box, FormControlLabel, TextField } from "@mui/material";
+import { useState } from "react";
 import CustomerForm from "./CustomerForm";
 import { getDisabledFields } from "@utils/utilFunctions";
-import { IOSSwitch } from "@components/Input/GeneralSwitch";
-import { PartnerFormFields } from "../Partners/PartnerFormFields";
 import TransactionPartnerFormFields from "../Partners/TransactionPartnerFormFields";
 
 export type TransactionFormProps = GenericFormProps & {
@@ -34,15 +30,6 @@ const TransactionForm = (props: TransactionFormProps) => {
   const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>(
     { Transaction: true }
   );
-  // useEffect(() => {
-  //   const errors = props.errors;
-  //   const newExpandedPanels = FormGroups.reduce((acc, group, index) => {
-  //     const hasErrors = group.fields.some((field: any) => errors?.[field.name]);;
-  //     const shouldExpand = hasErrors || index === 0;
-  //     return { ...acc, [group.title]: shouldExpand };
-  //   }, {});
-  //   setExpandedPanels(newExpandedPanels);
-  // }, [props]);
 
   const handleAccordionChange = (panel: string) => {
     setExpandedPanels((prev) => ({
