@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import Loader from "@components/common/Loader";
 import FormControlWrapper from "@components/Forms/FormControlWrapper";
-import GeneralInput from "@components/Input/GeneralInput";
 import EmailIcon from "@/assets/icons/email.svg?icon";
 import PasswordIcon from "@/assets/icons/password.svg?icon";
 import { Button } from "@mui/base";
 import { useRegister } from "@refinedev/core";
+import LoginInput from "@components/Input/LoginInput";
+import Link from "next/link";
 
 interface DecodedToken {
   organization?: string;
@@ -89,15 +90,21 @@ const SignUp: React.FC = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="flex justify-center items-center min-h-screen py-10">
-      <div className="min-w-[480px] rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="bg-[#1f325c] flex justify-center items-center min-h-screen py-10">
+      <div className="min-w-[480px] border border-stroke bg-[#e8f0fe] shadow-default dark:border-strokedark dark:bg-boxdark relative">
         <div className="flex flex-wrap items-center">
           <div className="w-full border-stroke dark:border-strokedark">
-            <div className="w-full p-8">
+            <div className="w-full px-10 pt-8 pb-12">
               <div className="flex justify-between items-center mb-9">
                 <h2 className="text-2xl font-bold text-black">
                   Activate your account
                 </h2>
+                <Link
+                  href={"/auth/signin"}
+                  className="text-sm text-[#416ac2] font-medium"
+                >
+                  back
+                </Link>
               </div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col space-y-4">
@@ -109,7 +116,7 @@ const SignUp: React.FC = () => {
                       error={errors.first_name?.message?.toString()}
                     >
                       {(field) => (
-                        <GeneralInput
+                        <LoginInput
                           {...field}
                           type={"text"}
                           label="First name"
@@ -125,7 +132,7 @@ const SignUp: React.FC = () => {
                       error={errors.last_name?.message?.toString()}
                     >
                       {(field) => (
-                        <GeneralInput
+                        <LoginInput
                           {...field}
                           type={"text"}
                           label="Last name"
@@ -136,7 +143,7 @@ const SignUp: React.FC = () => {
                   </div>
                   <FormControlWrapper name="organization" control={control}>
                     {(field) => (
-                      <GeneralInput
+                      <LoginInput
                         {...field}
                         type={"text"}
                         label="Organization"
@@ -148,7 +155,7 @@ const SignUp: React.FC = () => {
                   </FormControlWrapper>
                   <FormControlWrapper name="email" control={control}>
                     {(field) => (
-                      <GeneralInput
+                      <LoginInput
                         {...field}
                         type={"text"}
                         label="Email address"
@@ -166,7 +173,7 @@ const SignUp: React.FC = () => {
                     error={errors.password?.message?.toString()}
                   >
                     {(field) => (
-                      <GeneralInput
+                      <LoginInput
                         {...field}
                         type={"password"}
                         label="Password"
@@ -184,7 +191,7 @@ const SignUp: React.FC = () => {
                     error={errors.password2?.message?.toString()}
                   >
                     {(field) => (
-                      <GeneralInput
+                      <LoginInput
                         {...field}
                         type={"password"}
                         label="Confirm password"
@@ -197,9 +204,9 @@ const SignUp: React.FC = () => {
                   </FormControlWrapper>
                   <Button
                     type="submit"
-                    className="text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90"
+                    className="tracking-widest absolute translate-y-1/2 bottom-0 left-10 right-10 text-center p-4 block cursor-pointer border border-primary bg-primary text-white transition"
                   >
-                    Register
+                    REGISTER
                   </Button>
                 </div>
               </form>
