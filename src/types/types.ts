@@ -294,6 +294,7 @@ export interface LookupValue {
   attribute2?: string;
   attribute3?: string;
   active?: boolean;
+  is_new?: boolean;
 }
 
 export interface Reference {
