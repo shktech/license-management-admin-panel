@@ -66,5 +66,8 @@ export default {
       { name: "license_key", size: 2, disabled: true },
     ]),
   },
-  EditTransactionForm: getRealFormFields(InitialEditField),
+  EditTransactionForm: getRealFormFields([
+    ...InitialEditField,
+    { name: "license_key", size: 2, disabled: true },
+  ]),
 };
