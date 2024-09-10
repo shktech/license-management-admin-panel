@@ -50,9 +50,9 @@ const Dropdown: React.FC<DropdownProps> = ({
         if (data?.data) {
           const options =
             data?.data?.filter((item: any) => item.active).map((item: any) => ({
-              value: item[valueKey],
-              label: item[labelKey],
-            })) || [];
+                value: item[valueKey],
+                label: item[labelKey],
+              })) || [];
           setDropdownOptions(options);
         } else {
           const options =
@@ -82,10 +82,10 @@ const Dropdown: React.FC<DropdownProps> = ({
       <FormControl className="w-full relative">
         <label
           htmlFor={props.id}
-          className="mb-1.5 block text-[#0000009c] font-medium z-10 absolute text-sm left-4 top-2 flex items-center gap-1"
+          className="mb-1.5 block text-[#000000cc] z-10 absolute text-sm left-4 top-2 flex items-center gap-1"
         >
-          {props.required && <span className="text-red-500">*</span>}
           {label}
+          {props.required && <span className="text-red-500">*</span>}
           {!props.required && (
             <span className="text-gray-500 text-xs">(Optional)</span>
           )}
@@ -97,7 +97,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           size="small"
           disabled={props.disabled}
           sx={{
-            pt: 3,
+            pt: "26px",
             backgroundColor: "#dfe6ec",
             ".MuiOutlinedInput-notchedOutline": { border: 0 },
             "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
