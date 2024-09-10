@@ -22,6 +22,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo,
+  faCube,
   faCubes,
   faEnvelope,
   faGlassWater,
@@ -208,7 +209,7 @@ const Page = () => {
                   <StyledTab
                     label={
                       <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faEnvelope} />
+                        <FontAwesomeIcon icon={faCube} />
                         Seats
                       </div>
                     }
@@ -449,6 +450,7 @@ const Page = () => {
                     data={seats}
                     title={
                       <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCube} />
                         Seats
                       </div>
                     }
