@@ -115,11 +115,6 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
       //   size: 200,
       // },
       {
-        accessorKey: "organization",
-        header: "Organization",
-        size: 50,
-      },
-      {
         accessorKey: "source_reference_number",
         header: "Source Ref Number",
         size: 50,

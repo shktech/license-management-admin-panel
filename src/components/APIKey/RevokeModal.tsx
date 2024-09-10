@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
-import {
-  Box,
-  Button,
-  Modal,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Modal, TextField } from "@mui/material";
 import { APIKey } from "../../types/types";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import GeneralSwitch from "@components/Input/GeneralSwitch";
+import { red } from "@mui/material/colors";
 
 interface CreateModalProps {
   openModal: boolean;
   handleCloseModal: () => void;
-  handleRevoke: (name: string, revoke: boolean) => void;
+  handleUpdate: (name: string) => void;
+  handleRevoke: () => void;
   selectedAPIKey: APIKey | null;
 }
 
@@ -35,6 +32,7 @@ const RevokeModal: React.FC<CreateModalProps> = ({
   openModal,
   handleCloseModal,
   handleRevoke,
+  handleUpdate,
   selectedAPIKey,
 }) => {
   const [name, setName] = React.useState(selectedAPIKey?.name);
@@ -45,9 +43,6 @@ const RevokeModal: React.FC<CreateModalProps> = ({
     setRevoke(selectedAPIKey?.revoked);
     setName(selectedAPIKey?.name);
   }, [selectedAPIKey]);
-  const handleOk = () => {
-    handleRevoke(name as string, revoke as boolean);
-  };
 
   return (
     <Modal
@@ -74,7 +69,7 @@ const RevokeModal: React.FC<CreateModalProps> = ({
               />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-2 items-center">
+          {/* <div className="grid grid-cols-3 gap-2 items-center">
             <div className="text-sm font-medium">Revoke</div>
             <div className="col-span-2">
               <GeneralSwitch
@@ -83,7 +78,7 @@ const RevokeModal: React.FC<CreateModalProps> = ({
                 label=""
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-end gap-2 py-2 border-t border-[#e0e0e0]">
           <Button
@@ -93,8 +88,20 @@ const RevokeModal: React.FC<CreateModalProps> = ({
           >
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleOk} sx={modalOkBtnStyle}>
-            Edit
+          <Button variant="contained" disabled={revoke} onClick={handleRevoke} sx={{
+            ...modalOkBtnStyle,
+            bgcolor: '#d10000', // Background color
+            color: 'white', // Text color
+            '&:hover': {
+                bgcolor: '#d10000', // Background color on hover
+                opacity: 0.9, // Adjust opacity on hover
+                boxShadow: 'none',
+            },
+          }}>
+            Revoke
+          </Button>
+          <Button variant="contained" onClick={() => handleUpdate(name as string)} sx={modalOkBtnStyle}>
+            Update
           </Button>
         </div>
       </Box>
