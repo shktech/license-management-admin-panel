@@ -47,9 +47,15 @@ const Page = () => {
   const handleOpenSuccessModal = () => setOpenSuccessModal(true);
   const handleCloseSuccessModal = () => setOpenSuccessModal(false);
   const handleOpenCreateModal = () => setOpenCreateModal(true);
-  const handleCloseCreateModal = () => setOpenCreateModal(false);
+  const handleCloseCreateModal = () => {
+    refetch();
+    setOpenCreateModal(false);
+  };
   const handleOpenRevokeModal = () => setOpenRevokeModal(true);
-  const handleCloseRevokeModal = () => setOpenRevokeModal(false);
+  const handleCloseRevokeModal = () => {
+    refetch();
+    setOpenRevokeModal(false);
+  };
   const handleRevokeAPIKey = () => {
     revokeAPIKey(
       {
@@ -74,7 +80,7 @@ const Page = () => {
         resource: "orgs/key/api-keys",
         id: selectedAPIKey?.id as string,
         values: {
-          name: name
+          name: name,
         },
       },
       {
@@ -147,7 +153,9 @@ const Page = () => {
           <Box
             component="span"
             sx={{
-              backgroundColor: ProductActiveColor(!renderedCellValue as boolean),
+              backgroundColor: ProductActiveColor(
+                !renderedCellValue as boolean
+              ),
               ...tagStyle,
             }}
           >
