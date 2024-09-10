@@ -49,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       if (data && valueKey && labelKey) {
         if (data?.data) {
           const options =
-            data?.data?.map((item: any) => ({
+            data?.data?.filter((item: any) => item.active).map((item: any) => ({
               value: item[valueKey],
               label: item[labelKey],
             })) || [];
