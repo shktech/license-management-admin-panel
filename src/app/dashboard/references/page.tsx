@@ -13,7 +13,7 @@ import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer"
 import ConfirmModal from "@components/common/ConfirmModal";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import StateComponent from "@components/common/StateComponent";
-import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
+import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 
 const Page = () => {
   const {

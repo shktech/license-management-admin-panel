@@ -406,34 +406,6 @@ const Page = () => {
                   ]}
                 />
               </CustomTabPanel>
-              {/* <CustomTabPanel value={value} index={3}>
-                <GeneralInformation
-                  singleColumn={true}
-                  items={[
-                    {
-                      label: "First reminder notification date",
-                      value: asset?.one_month_reminder_notification_date,
-                    },
-                    {
-                      label: "Second reminder notification date",
-                      value: asset?.two_month_reminder_notification_date,
-                    },
-                    {
-                      label: "On expired notification date",
-                      value: asset?.renew_due_notification_date,
-                    },
-                    {
-                      label: "After expired notification date",
-                      value: asset?.expired_notification_date,
-                    },
-                    {
-                      label: "Last email send date",
-                      value: asset?.last_email_date,
-                    },
-                  ]}
-                />
-              </CustomTabPanel> */}
-
               <CustomTabPanel value={value} index={3}>
                 <div className="max-w-full overflow-x-auto">
                   <TransactionHistoryTable transactions={transactions} />

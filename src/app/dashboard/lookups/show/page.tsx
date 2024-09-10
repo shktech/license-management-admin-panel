@@ -30,7 +30,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
+import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 
 const Page = () => {
   const { params } = useParsed();
@@ -96,7 +96,7 @@ const Page = () => {
           attribute2: "",
           attribute3: "",
           active: true,
-          is_new: true
+          is_new: true,
         },
       ]);
     } else {

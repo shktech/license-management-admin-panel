@@ -1,13 +1,9 @@
 "use client";
 
-import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Email_Schedule } from "@/types/types";
 import NotificationSchedulesComponent from "@components/Forms/Notification-schedule/NotficationScheduleForm";
 import Loader from "@components/common/Loader";
-import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useOne, useParsed } from "@refinedev/core";
-import { Create, SaveButton } from "@refinedev/mui";
-import { useForm } from "@refinedev/react-hook-form";
 
 const Item = () => {
   const { params } = useParsed();

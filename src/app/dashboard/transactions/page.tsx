@@ -13,7 +13,10 @@ import {
   getFormattedDate,
 } from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightLeft, faTentArrowLeftRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRightLeft,
+  faTentArrowLeftRight,
+} from "@fortawesome/free-solid-svg-icons";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading },
@@ -28,13 +31,6 @@ const Page = () => {
       },
     ],
   });
-
-  const initialSorter: any = [
-    {
-      id: "transaction_date",
-      desc: true,
-    },
-  ];
 
   const { push } = useNavigation();
 

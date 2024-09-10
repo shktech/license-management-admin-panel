@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { EmailTemplate, Organization, Product } from "@/types/types";
+import { EmailTemplate } from "@/types/types";
 import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";

@@ -21,7 +21,7 @@ import {
 } from "@utils/utilFunctions";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
-import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
+import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 
 const Page = () => {
   const { params } = useParsed();

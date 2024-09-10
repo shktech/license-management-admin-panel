@@ -107,19 +107,22 @@ const Item = () => {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <StyledTab label={
-                    <div className="flex items-center gap-2">
-                      <FontAwesomeIcon icon={faCircleInfo} />
-                      General Information
-                    </div>
-                  }
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCircleInfo} />
+                        General Information
+                      </div>
+                    }
                   />
-                  <StyledTab label={
-                    <div className="flex items-center gap-2">
-                      <FontAwesomeIcon icon={faCubes} />
-                      Attribute
-                    </div>
-                  } />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCubes} />
+                        Attribute
+                      </div>
+                    }
+                  />
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>
