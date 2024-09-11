@@ -45,7 +45,6 @@ const Item = () => {
               onClick={useBack()}
               className="inline-block p-2 rounded-xl border duration-500 border-transparent hover:border-black"
             >
-              {" "}
               <ArrowIcon />
             </button>
           }

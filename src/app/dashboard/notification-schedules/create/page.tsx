@@ -1,10 +1,8 @@
 "use client";
 
 import NotificationSchedulesComponent from "@components/Forms/Notification-schedule/NotficationScheduleForm";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack } from "@refinedev/core";
 const Item = () => {
-  const { params } = useParsed();
-
   return (
     <div className="flex justify-center py-6">
       <div className="w-2/3">

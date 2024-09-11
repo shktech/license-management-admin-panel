@@ -5,13 +5,6 @@ import { Reference } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
-import { Box } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { tagStyle } from "@data/MuiStyles";
-import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
-import ConfirmModal from "@components/common/ConfirmModal";
-import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import StateComponent from "@components/common/StateComponent";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 
@@ -24,29 +17,9 @@ const Page = () => {
 
   const { push } = useNavigation();
 
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-
-  const [clickedReference, setClickedReference] =
-    React.useState<Reference | null>(null);
-
   const handleCreate = () => {
     // setOpenDrawer(true);
     push("/dashboard/references/create");
-  };
-
-  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
-
-  const handleEditClick = (row: Reference) => {
-    setClickedReference(row);
-    setOpenDrawer(true);
-  };
-
-  const handleClose = () => {
-    refetch();
-    setClickedReference(null);
-    setOpenDrawer(false);
   };
 
   const handleRowClick = (row: Reference) => {

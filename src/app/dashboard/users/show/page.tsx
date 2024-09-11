@@ -1,7 +1,6 @@
 "use client";
 
 import { User } from "@/types/types";
-import RoleDetailPanel from "@components/Role/RoleDetailPanel";
 import UserDetailPanel from "@components/Users/UserDetailPanel";
 import Loader from "@components/common/Loader";
 import { useParsed } from "@refinedev/core";
