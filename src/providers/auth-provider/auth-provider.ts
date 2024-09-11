@@ -3,7 +3,7 @@
 import useStore from "@hooks/globalStore";
 import { AuthProvider } from "@refinedev/core";
 import { Organization, Permission, Role, User } from "@/types/types";
-
+import crypto from "crypto";
 const realAPI_URL = "https://license-management-server.vercel.app/api";
 const API_URL = process.env.API_URL;
 
@@ -64,12 +64,16 @@ const getCurrentUser = async (): Promise<User | null> => {
   });
 };
 
+const getRamdonToken = () => {
+  return crypto.randomBytes(64).toString('hex');
+}
 export const authProvider: AuthProvider = {
   login: async ({ email, password }) => {
     const response = await fetch(`${API_URL ?? realAPI_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "paicalm": getRamdonToken()
       },
       body: JSON.stringify({ email, password }),
     });
@@ -116,6 +120,7 @@ export const authProvider: AuthProvider = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        "paicalm": getRamdonToken()
       },
       body: JSON.stringify({
         token,
@@ -142,6 +147,7 @@ export const authProvider: AuthProvider = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        "paicalm": getRamdonToken()
       },
       body: JSON.stringify({ token, new_password }),
     });
@@ -164,6 +170,7 @@ export const authProvider: AuthProvider = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "paicalm": getRamdonToken()
       },
       body: JSON.stringify({ email }),
     });
@@ -212,6 +219,7 @@ export const authProvider: AuthProvider = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "paicalm": getRamdonToken()
       },
       body: JSON.stringify({ refresh: localStorage.getItem("refreshToken") }),
     });
@@ -244,6 +252,7 @@ export const authProvider: AuthProvider = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "paicalm": getRamdonToken()
         },
       });
       if (response.ok) {
