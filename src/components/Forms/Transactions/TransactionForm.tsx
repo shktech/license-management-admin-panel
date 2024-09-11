@@ -10,16 +10,18 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
-import GeneralTxnFormField from "./GeneralTxnFormField";
+import { GeneralTxnFormFields } from "./GeneralTxnFormField";
 import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
 import { useState } from "react";
 import CustomerForm from "./CustomerForm";
 import { getDisabledFields } from "@utils/utilFunctions";
 import TransactionPartnerFormFields from "../Partners/TransactionPartnerFormFields";
 
+type TransactionAction = 'New' | 'Edit' | 'Renewal' | 'Revoke';
+
 export type TransactionFormProps = GenericFormProps & {
   transaction?: any;
-  transaction_action?: string;
+  transaction_action: TransactionAction;
   setValue?: any;
   reset?: any;
   customers?: any;
@@ -43,11 +45,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <PaidOutlinedIcon />,
       title: "Transaction",
       description: "Setup your Transaction data",
-      fields: !props.transaction_action
-        ? GeneralTxnFormField.EditTransactionForm
-        : props.transaction_action == "New"
-          ? GeneralTxnFormField.CreateTransactionForm.newAction
-          : GeneralTxnFormField.CreateTransactionForm.notNewAction,
+      fields: GeneralTxnFormFields[props.transaction_action as TransactionAction],
     },
     {
       icon: <PaidOutlinedIcon />,
@@ -65,7 +63,6 @@ const TransactionForm = (props: TransactionFormProps) => {
       customer: {
         type: "shipping",
         prefix: "ship_",
-        // data: props.transaction?.ship_customer || props.customers.ship_customers
         customer: props.transaction?.ship_customer || props.transaction?.owner,
         address: props.transaction?.ship_customer_address,
         contact: props.transaction?.ship_customer_contact,
@@ -118,11 +115,8 @@ const TransactionForm = (props: TransactionFormProps) => {
     {
       icon: <DetailsIcon />,
       title: "Licensing Details",
-      description: "Setup your Reseller Information",
-      fields:
-        props.transaction_action == "New"
-          ? LicensingDetailFormFields.newAction
-          : LicensingDetailFormFields.notNewAction,
+      description: "Setup your Licensing Information",
+      fields: LicensingDetailFormFields[props.transaction_action as TransactionAction],
     },
   ];
   return (

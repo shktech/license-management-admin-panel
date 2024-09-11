@@ -116,6 +116,7 @@ const TransactionEdit = () => {
           ) : (
             <TransactionForm
               {...{ control, errors, trigger }}
+              transaction_action="Edit"
               transaction={transaction}
               setValue={setValue}
               watch={watch}

@@ -1,7 +1,6 @@
 import { getRealFormFields } from "@utils/utilFunctions";
 import { InitialFieldConfig } from "../InitialFieldConfig";
-
-const InitialCreateField: InitialFieldConfig[] = [
+const InitialField: InitialFieldConfig[] = [
   {
     name: "osc_part_number",
     type: "dropdown",
@@ -41,49 +40,27 @@ const InitialCreateField: InitialFieldConfig[] = [
   },
 ];
 
-const InitialReActionField: InitialFieldConfig[] = [
-  {
-    name: "osc_part_number",
-    type: "dropdown",
-    size: 2,
-    disabled: true,
-    resource: "products",
-    valueKey: "product_part_number",
-    labelKey: "product_part_number",
-  },
-  {
-    name: "license_type",
-    type: "dropdown",
-    disabled: true,
-    size: 1,
-    options: [
-      { value: "Eval", label: "Eval" },
-      { value: "Subscription", label: "Subscription" },
-      { value: "NFR", label: "NFR" },
-      { value: "Promotion", label: "Promotion" },
-    ],
-    required: "text",
-  },
-  {
-    name: "quantity",
-    type: "number",
-    required: "text",
-  },
-  {
-    name: "start_date",
-    type: "date",
-    disabled: true,
-    required: "text",
-  },
-  {
-    name: "end_date",
-    type: "date",
-    disabled: true,
-    required: "text",
-  },
-];
+const getFields = (fields: any[], disabledName: string[]) => {
+  return fields.map((field) => {
+    if (disabledName.includes(field.name)) {
+      return { ...field, disabled: true };
+    }
+    return field;
+  });
+};
 
 export const LicensingDetailFormFields = {
-  newAction: getRealFormFields(InitialCreateField),
-  notNewAction: getRealFormFields(InitialReActionField),
+  New: getRealFormFields(InitialField),
+  Edit: getRealFormFields(InitialField),
+  Renewal: getFields(getRealFormFields(InitialField), [
+    "osc_part_number",
+    "license_type",
+    "end_date",
+  ]),
+  Revoke: getFields(getRealFormFields(InitialField), [
+    "osc_part_number",
+    "license_type",
+    "start_date",
+    "end_date",
+  ]),
 };
