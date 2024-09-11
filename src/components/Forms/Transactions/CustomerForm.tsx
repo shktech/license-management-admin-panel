@@ -227,6 +227,9 @@ const CustomerForm = ({
                     "&.Mui-focused": {
                       backgroundColor: "#dfe6ec",
                     },
+                    "&.Mui-disabled": {
+                      backgroundColor: "#dfe6ec",
+                    },
                   },
                 }}
               />
@@ -246,6 +249,9 @@ const CustomerForm = ({
               backgroundColor: "#dfe6ec", // Change this to your desired color
               "&:hover": {
                 backgroundColor: "#dfe6ec", // Optional: change background on hover
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#dfe6ec",
               },
             }}
           >
@@ -268,6 +274,9 @@ const CustomerForm = ({
               backgroundColor: "#dfe6ec", // Change this to your desired color
               "&:hover": {
                 backgroundColor: "#dfe6ec", // Optional: change background on hover
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#dfe6ec",
               },
             }}
           >
