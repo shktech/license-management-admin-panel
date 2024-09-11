@@ -41,6 +41,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   if (resource && valueKey && labelKey) {
     const { data, isLoading } = useList({
       resource: resource || "",
+      hasPagination: false,
       queryOptions: {
         enabled: !!resource && !!valueKey && !!labelKey,
       },
