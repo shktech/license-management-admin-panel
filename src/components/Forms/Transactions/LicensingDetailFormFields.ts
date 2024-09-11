@@ -3,7 +3,8 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 const InitialField: InitialFieldConfig[] = [
   {
     name: "osc_part_number",
-    type: "dropdown",
+    // type: "dropdown",
+    type: "autocomplete",
     size: 2,
     resource: "products",
     valueKey: "product_part_number",

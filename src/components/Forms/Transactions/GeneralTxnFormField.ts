@@ -24,10 +24,18 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Revoke", label: "Revoke" },
     ],
   },
-  { name: "source_reference_number" },
+  {
+    name: "source_reference_number",
+    type: "autocomplete",
+    size: 1,
+    resource: "references/reference-codes",
+    valueKey: "reference_code",
+    labelKey: "reference_code",
+    required: "text",
+  },
   { name: "source_reference_date", type: "date" },
   { name: "source_reference_id" },
-  { name: "license_key", size: 2, disabled: true, },
+  { name: "license_key", size: 2, disabled: true },
 ];
 
 const getFields = (fields: any[], disabledName: string[]) => {

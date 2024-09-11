@@ -2,7 +2,7 @@ export interface InitialFieldConfig {
   name: string;
   name2?: string;
   required?: "text" | "email";
-  type?: "text" | "date" | "dropdown" | "number" | "switch";
+  type?: "text" | "date" | "dropdown" | "number" | "switch" | "autocomplete";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;

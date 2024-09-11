@@ -5,6 +5,7 @@ import DatePicker from "@components/Input/DatePicker";
 import Dropdown from "@components/Input/Dropdown";
 import { FieldConfig } from "./FormControlWrapper";
 import GeneralSwitch from "@components/Input/GeneralSwitch";
+import AutoComplete from "@components/Input/AutoComplete";
 
 interface GenericFormProps {
   control: any;
@@ -65,6 +66,22 @@ const GenericForm: React.FC<GenericFormProps> = ({
                 case "dropdown":
                   return (
                     <Dropdown
+                      {...fieldProps}
+                      label={field.label}
+                      placeholder={field.placeholder}
+                      name2={field.name2}
+                      options={field.options || []}
+                      resource={field.resource}
+                      valueKey={field.valueKey}
+                      labelKey={field.labelKey}
+                      disabled={field.disabled}
+                      required={!!field.rules}
+                      // fetchOptions={field.fetchOptions}
+                    />
+                  );
+                case "autocomplete":
+                  return (
+                    <AutoComplete
                       {...fieldProps}
                       label={field.label}
                       placeholder={field.placeholder}
