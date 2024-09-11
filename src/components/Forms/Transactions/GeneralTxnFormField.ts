@@ -27,6 +27,7 @@ const InitialCreateField: InitialFieldConfig[] = [
   { name: "source_reference_number" },
   { name: "source_reference_date", type: "date" },
   { name: "source_reference_id" },
+  { name: "license_key", size: 2, disabled: true },
 ];
 
 const InitialEditField: InitialFieldConfig[] = [
@@ -56,15 +57,13 @@ const InitialEditField: InitialFieldConfig[] = [
   { name: "source_reference_number" },
   { name: "source_reference_date", type: "date" },
   { name: "source_reference_id" },
+  { name: "license_key", size: 2, disabled: true },
 ];
 
 export default {
   CreateTransactionForm: {
     newAction: getRealFormFields(InitialCreateField),
-    notNewAction: getRealFormFields([
-      ...InitialCreateField,
-      { name: "license_key", size: 2, disabled: true },
-    ]),
+    notNewAction: getRealFormFields(InitialCreateField),
   },
   EditTransactionForm: getRealFormFields(InitialEditField),
 };

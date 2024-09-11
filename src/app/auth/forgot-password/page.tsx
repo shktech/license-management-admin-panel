@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { useForgotPassword, useGetIdentity, useLogin } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
@@ -10,29 +9,22 @@ import GeneralInput from "@components/Input/GeneralInput";
 import { User } from "../../../types/types";
 import { useNavigation } from "@refinedev/core";
 import Loader from "@components/common/Loader";
-import LoginInput from "@components/Input/LoginInput";
-import Link from "next/link";
 
 interface FormData {
   email: string;
   password: string;
 }
-
 const SignIn: React.FC = () => {
   const { push } = useNavigation();
-
   const { data: identity, isLoading } = useGetIdentity<User>();
-
   if (identity) {
     push("/dashboard");
   }
-
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormData>();
-
   const { mutate: forgotPassword, isLoading: isLoadingForgotPasswordEmail } =
     useForgotPassword<any>();
 
@@ -40,29 +32,22 @@ const SignIn: React.FC = () => {
     const values = {
       email: data.email,
     };
-
     forgotPassword(values);
   };
 
   return (
-    <div className="bg-[#1f325c] flex justify-center items-center min-h-screen py-10">
+    <div className="bg-[#f7f9fa] flex justify-center items-center min-h-screen py-10">
       {isLoading || isLoadingForgotPasswordEmail ? (
         <Loader />
       ) : (
-        <div className="min-w-[480px] border border-stroke bg-[#e8f0fe] shadow-default relative">
+        <div className="min-w-[480px] rounded-xl border border-stroke bg-white shadow-default">
           <div className="flex flex-wrap items-center">
             <div className="w-full border-stroke dark:border-strokedark">
-              <div className="w-full px-10 pt-8 pb-12">
+              <div className="w-full p-8">
                 <div className="flex justify-between items-center mb-9">
                   <h2 className="text-2xl font-bold text-black">
                     Forgot password?
                   </h2>
-                  <Link
-                    href={"/auth/signin"}
-                    className="text-sm text-[#416ac2] font-medium"
-                  >
-                    back
-                  </Link>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="flex flex-col space-y-4">
@@ -80,7 +65,7 @@ const SignIn: React.FC = () => {
                       error={errors.email?.message?.toString()}
                     >
                       {(field) => (
-                        <LoginInput
+                        <GeneralInput
                           {...field}
                           type={"text"}
                           label="Email address"
@@ -93,7 +78,7 @@ const SignIn: React.FC = () => {
                     </FormControlWrapper>
                     <Button
                       type="submit"
-                      className="tracking-widest absolute translate-y-1/2 bottom-0 left-10 right-10 text-center p-4 block cursor-pointer border border-primary bg-primary text-white transition"
+                      className="text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90"
                     >
                       Reset Password
                     </Button>
@@ -107,5 +92,4 @@ const SignIn: React.FC = () => {
     </div>
   );
 };
-
 export default SignIn;

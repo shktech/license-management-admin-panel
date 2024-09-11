@@ -9,6 +9,7 @@ import {
   Box,
   FormControl,
   FormControlLabel,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -211,17 +212,48 @@ const CustomerForm = ({
             );
           }}
           renderInput={(params) => {
-            return <TextField {...params} variant="standard" />;
+            return (
+              <TextField
+                {...params}
+                variant="filled"
+                label="Customer"
+                sx={{
+                  backgroundColor: "#dfe6ec",
+                  "& .MuiFilledInput-root": {
+                    backgroundColor: "#dfe6ec",
+                    "&:hover": {
+                      backgroundColor: "#dfe6ec",
+                    },
+                    "&.Mui-focused": {
+                      backgroundColor: "#dfe6ec",
+                    },
+                    "&.Mui-disabled": {
+                      backgroundColor: "#dfe6ec",
+                    },
+                  },
+                }}
+              />
+            );
           }}
         />
 
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">Address</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             value={address?.address_id}
             onChange={handleAddressChange}
             disabled={disabledSearch}
+            sx={{
+              backgroundColor: "#dfe6ec", // Change this to your desired color
+              "&:hover": {
+                backgroundColor: "#dfe6ec", // Optional: change background on hover
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#dfe6ec",
+              },
+            }}
           >
             {addresses.map((ad, i) => (
               <MenuItem value={ad?.address_id}>
@@ -230,13 +262,23 @@ const CustomerForm = ({
             ))}
           </Select>
         </FormControl>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">Contact</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             value={contact?.contact_id}
             onChange={handleContactChange}
             disabled={disabledSearch}
+            sx={{
+              backgroundColor: "#dfe6ec", // Change this to your desired color
+              "&:hover": {
+                backgroundColor: "#dfe6ec", // Optional: change background on hover
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#dfe6ec",
+              },
+            }}
           >
             {contacts.map((c, i) => (
               <MenuItem value={c?.contact_id}>

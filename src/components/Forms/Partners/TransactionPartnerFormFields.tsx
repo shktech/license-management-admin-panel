@@ -20,7 +20,7 @@ const ResellerFields: FieldConfig[] = InputCustomerFormFields.map((field) => ({
   name: "reseller_" + field.name,
   label: "Reseller " + field.label,
   placeholder: field.placeholder,
-  rules: field.rules,
+  rules: null,
   type: field.type,
 }));
 

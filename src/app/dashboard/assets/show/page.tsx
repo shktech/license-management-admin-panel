@@ -18,14 +18,13 @@ import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
-import EditIcon from "@mui/icons-material/Edit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo,
+  faCube,
   faCubes,
   faEnvelope,
   faGlassWater,
-  faSignal,
   faTentArrowLeftRight,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -208,7 +207,7 @@ const Page = () => {
                   <StyledTab
                     label={
                       <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faEnvelope} />
+                        <FontAwesomeIcon icon={faCube} />
                         Seats
                       </div>
                     }
@@ -405,34 +404,6 @@ const Page = () => {
                   ]}
                 />
               </CustomTabPanel>
-              {/* <CustomTabPanel value={value} index={3}>
-                <GeneralInformation
-                  singleColumn={true}
-                  items={[
-                    {
-                      label: "First reminder notification date",
-                      value: asset?.one_month_reminder_notification_date,
-                    },
-                    {
-                      label: "Second reminder notification date",
-                      value: asset?.two_month_reminder_notification_date,
-                    },
-                    {
-                      label: "On expired notification date",
-                      value: asset?.renew_due_notification_date,
-                    },
-                    {
-                      label: "After expired notification date",
-                      value: asset?.expired_notification_date,
-                    },
-                    {
-                      label: "Last email send date",
-                      value: asset?.last_email_date,
-                    },
-                  ]}
-                />
-              </CustomTabPanel> */}
-
               <CustomTabPanel value={value} index={3}>
                 <div className="max-w-full overflow-x-auto">
                   <TransactionHistoryTable transactions={transactions} />
@@ -449,6 +420,7 @@ const Page = () => {
                     data={seats}
                     title={
                       <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCube} />
                         Seats
                       </div>
                     }

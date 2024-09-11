@@ -2,15 +2,11 @@
 
 import { Reference, ReferenceCode } from "@/types/types";
 import Loader from "@components/common/Loader";
-import ReferenceCodeDetailDrawer from "@components/References/ReferenceCodeDetailDrawer";
-import ReferenceDetailDrawer from "@components/References/ReferenceDetailDrawer";
 import GenericTable from "@components/Table/GenericTable";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import {
-  useDelete,
   useNavigation,
   useParsed,
-  usePermissions,
   useShow,
   useTable,
 } from "@refinedev/core";
@@ -21,7 +17,7 @@ import {
 } from "@utils/utilFunctions";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
-import FindInPageRoundedIcon from '@mui/icons-material/FindInPageRounded';
+import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 
 const Page = () => {
   const { params } = useParsed();

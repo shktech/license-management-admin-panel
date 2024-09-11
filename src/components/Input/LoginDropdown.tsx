@@ -11,19 +11,19 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-interface DropdownOption {
+interface LoginDropdownOption {
   value: string;
   label: string;
 }
 
-type DropdownProps = BaseInputProps & {
+type LoginDropdownProps = BaseInputProps & {
   resource?: string;
   valueKey?: string;
   labelKey?: string;
-  options?: DropdownOption[];
+  options?: LoginDropdownOption[];
 };
 
-const Dropdown: React.FC<DropdownProps> = ({
+const LoginDropdown: React.FC<LoginDropdownProps> = ({
   label,
   onChange,
   value,
@@ -32,9 +32,9 @@ const Dropdown: React.FC<DropdownProps> = ({
   labelKey,
   ...props
 }) => {
-  const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
-    props.options || []
-  );
+  const [LoginDropdownOptions, setLoginDropdownOptions] = useState<
+    LoginDropdownOption[]
+  >(props.options || []);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -49,18 +49,18 @@ const Dropdown: React.FC<DropdownProps> = ({
       if (data && valueKey && labelKey) {
         if (data?.data) {
           const options =
-            data?.data?.filter((item: any) => item.active).map((item: any) => ({
-                value: item[valueKey],
-                label: item[labelKey],
-              })) || [];
-          setDropdownOptions(options);
+            data?.data?.map((item: any) => ({
+              value: item[valueKey],
+              label: item[labelKey],
+            })) || [];
+          setLoginDropdownOptions(options);
         } else {
           const options =
             data?.map((item: any) => ({
               value: item[valueKey],
               label: item[labelKey],
             })) || [];
-          setDropdownOptions(options);
+          setLoginDropdownOptions(options);
         }
       }
       setLoading(isLoading);
@@ -79,10 +79,10 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div className="relative">
-      <FormControl className="w-full relative">
+      <FormControl className="w-full relative" variant="standard">
         <label
           htmlFor={props.id}
-          className="mb-1.5 block text-[#000000cc] z-10 absolute text-sm left-4 top-2 flex items-center gap-1"
+          className="mb-1.5 block text-[#0000009c] font-medium z-10 absolute text-sm left-3.5 top-2 flex items-center gap-1"
         >
           {label}
           {props.required && <span className="text-red-500">*</span>}
@@ -97,23 +97,19 @@ const Dropdown: React.FC<DropdownProps> = ({
           size="small"
           disabled={props.disabled}
           sx={{
-            pt: "26px",
-            backgroundColor: "#dfe6ec",
-            ".MuiOutlinedInput-notchedOutline": { border: 0 },
-            "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-              border: 0,
-            },
+            pt: 3,
+            px: 2,
+            backgroundColor: "transparent !important",
             "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
               {
-                border: 1,
-                color: "black", // Adjust this color as needed
+                bgcolor: "transparent",
               },
           }}
         >
           {loading ? (
             <MenuItem key="loading">Loading...</MenuItem>
           ) : (
-            dropdownOptions.map((option, index) => (
+            LoginDropdownOptions.map((option, index) => (
               <MenuItem key={index} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -125,4 +121,4 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-export default Dropdown;
+export default LoginDropdown;

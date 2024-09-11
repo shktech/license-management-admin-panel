@@ -30,7 +30,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
+import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 
 const Page = () => {
   const { params } = useParsed();
@@ -96,6 +96,7 @@ const Page = () => {
           attribute2: "",
           attribute3: "",
           active: true,
+          is_new: true,
         },
       ]);
     } else {
@@ -214,6 +215,7 @@ const Page = () => {
                       variant="standard"
                       type="number"
                       value={renderedCellValue}
+                      disabled={!row.original.is_new}
                       onChange={(e) =>
                         handleEditChange(
                           row.index,
@@ -234,6 +236,7 @@ const Page = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         value={dayjs(renderedCellValue as string)}
+                        disabled={!row.original.is_new}
                         onChange={(newValue) =>
                           handleEditChange(
                             row.index,
@@ -261,6 +264,7 @@ const Page = () => {
                       <TextField
                         variant="standard"
                         type="number"
+                        disabled={!row.original.is_new}
                         value={
                           renderedCellValue === "EA"
                             ? 0
@@ -284,6 +288,7 @@ const Page = () => {
                         <Select
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
+                          disabled={!row.original.is_new}
                           value={
                             typeof renderedCellValue === "string"
                               ? renderedCellValue.match(/[A-Za-z]+/)?.[0] || ""
@@ -318,6 +323,7 @@ const Page = () => {
               <TextField
                 variant="standard"
                 value={renderedCellValue}
+                disabled={!row.original.is_new}
                 onChange={(e) =>
                   handleEditChange(
                     row.index,

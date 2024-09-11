@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { InputTransaction, Product, Transaction } from "@/types/types";
+import { Product, Transaction } from "@/types/types";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
@@ -46,6 +46,7 @@ const TransactionEdit = () => {
       setValue("transaction_source", transaction.transaction_source);
       setValue("transaction_action", transaction.transaction_action);
       setValue("license_type", transaction.asset?.license_type);
+      setValue("license_key", transaction.asset?.license_key);
       setValue("source_reference_number", transaction.source_reference_number);
       setValue("source_reference_date", transaction.source_reference_date);
       setValue("source_reference_id", transaction.source_reference_id);

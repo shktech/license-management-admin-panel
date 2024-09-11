@@ -12,7 +12,6 @@ import GeneralInput from "@components/Input/GeneralInput";
 import { User } from "../../../types/types";
 import { useNavigation } from "@refinedev/core";
 import Loader from "@components/common/Loader";
-import LoginInput from "@components/Input/LoginInput";
 
 interface FormData {
   email: string;
@@ -23,19 +22,15 @@ const SignIn: React.FC = () => {
   const { push } = useNavigation();
 
   const { data: identity, isLoading } = useGetIdentity<User>();
-
   if (identity) {
     push("/dashboard");
   }
-
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormData>();
-
   const { mutate: login, isLoading: isLoginLoading } = useLogin<FormData>();
-
   const onSubmit = (data: any) => {
     const loginForm = data as FormData;
     login({
@@ -44,19 +39,19 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#1f325c] flex justify-center items-center min-h-screen py-10">
+    <div className="bg-[#f7f9fa] flex justify-center items-center min-h-screen py-10">
       {isLoading || isLoginLoading ? (
         <Loader />
       ) : (
-        <div className="min-w-[480px] bg-[#e8f0fe] shadow-2xl border border-[#2a54ae] relative">
+        <div className="min-w-[480px] rounded-xl border border-stroke bg-white shadow-default">
           <div className="flex flex-wrap items-center">
             <div className="w-full border-stroke dark:border-strokedark">
-              <div className="w-full px-10 pt-8 pb-12">
+              <div className="w-full p-8">
                 <div className="flex justify-between items-center mb-9">
-                  <h2 className="text-2xl font-bold text-[#1f325c]">SIGN IN</h2>
+                  <h2 className="text-2xl font-bold text-black">Sign In</h2>
                   <Link
                     href={"/auth/signin-superuser"}
-                    className="text-sm text-[#416ac2] font-medium"
+                    className="text-sm text-primary font-medium"
                   >
                     Login as super user
                   </Link>
@@ -77,7 +72,7 @@ const SignIn: React.FC = () => {
                       error={errors.email?.message?.toString()}
                     >
                       {(field) => (
-                        <LoginInput
+                        <GeneralInput
                           {...field}
                           type={"text"}
                           label="Email address"
@@ -95,7 +90,7 @@ const SignIn: React.FC = () => {
                       error={errors.password?.message?.toString()}
                     >
                       {(field) => (
-                        <LoginInput
+                        <GeneralInput
                           {...field}
                           type={"password"}
                           label="Password"
@@ -108,15 +103,15 @@ const SignIn: React.FC = () => {
                     </FormControlWrapper>
                     <Link
                       href={"/auth/forgot-password"}
-                      className="text-sm text-[#416ac2] font-medium text-right"
+                      className="text-sm text-primary font-medium text-right"
                     >
                       Forgot password?
                     </Link>
                     <Button
                       type="submit"
-                      className="tracking-widest absolute translate-y-1/2 bottom-0 left-10 right-10 text-center p-4 block cursor-pointer border border-primary bg-primary text-white transition"
+                      className="text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90"
                     >
-                      LOGIN
+                      Sign in
                     </Button>
                   </div>
                 </form>
@@ -128,5 +123,4 @@ const SignIn: React.FC = () => {
     </div>
   );
 };
-
 export default SignIn;

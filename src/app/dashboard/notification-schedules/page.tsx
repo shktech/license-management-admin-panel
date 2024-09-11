@@ -8,10 +8,9 @@ import Loader from "@components/common/Loader";
 import { Box } from "@mui/material";
 import { ScheduleActiveColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
-
 
 const Page = () => {
   const {
@@ -30,9 +29,12 @@ const Page = () => {
     push(`/dashboard/notification-schedules/edit?id=${row.id}`);
   };
 
-  const formatDateTimeWithCustomFormat = (date: Date, timeZone: string): string => {
-    return moment(date).tz(timeZone).format('MM-DD-YYYY HH:mm:ss z');
-  }
+  const formatDateTimeWithCustomFormat = (
+    date: Date,
+    timeZone: string
+  ): string => {
+    return moment(date).tz(timeZone).format("MM-DD-YYYY HH:mm:ss z");
+  };
 
   const formatTime = (_date: any) => {
     const userTimezone = moment.tz.guess();

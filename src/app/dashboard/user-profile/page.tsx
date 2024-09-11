@@ -3,18 +3,12 @@ import { Permission, User } from "@/types/types";
 import ProfileForm from "@components/Forms/Profile/ProfileForm";
 import PermissionsTable from "@components/Role/PermissionsTable";
 import { RoleColors } from "@data/ColorData";
-import { modalOkBtnStyle } from "@data/MuiStyles";
-import { Button } from "@mui/material";
-import { useCreate, useCustom, useCustomMutation, useGetIdentity, useList, useUpdate } from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
-import { useEffect, useState } from "react";
+import { useGetIdentity } from "@refinedev/core";
+import { useState } from "react";
 
 const Page = () => {
   const { data: identity } = useGetIdentity<User>();
   const [page, setPage] = useState(0);
-
-
-
 
   const panels = [
     {
@@ -23,7 +17,6 @@ const Page = () => {
         <>
           <div className="text-xl font-semibold pb-4">User Information</div>
           <ProfileForm identity={identity} />
-          
         </>
       ),
     },

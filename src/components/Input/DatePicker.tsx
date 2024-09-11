@@ -59,8 +59,8 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="relative my-datepicker">
         <div className="mb-1.5 block text-[#0000009c] font-medium dark:text-white absolute z-10 text-sm left-4 top-2 flex items-center gap-1">
-          {props.required && <span className="text-red-500">*</span>}
           {label}
+          {props.required && <span className="text-red-500">*</span>}
           {!props.required && (
             <span className="text-gray-500 text-xs">(Optional)</span>
           )}

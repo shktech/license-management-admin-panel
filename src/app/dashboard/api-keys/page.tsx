@@ -2,7 +2,7 @@
 
 import { Box, Modal, SnackbarCloseReason } from "@mui/material";
 
-import { useCreate, useList, useNavigation, useUpdate } from "@refinedev/core";
+import { useCreate, useList, useUpdate } from "@refinedev/core";
 import { APIKey } from "@/types/types";
 import { useMemo, useState } from "react";
 import { MRT_ColumnDef } from "material-react-table";
@@ -47,17 +47,40 @@ const Page = () => {
   const handleOpenSuccessModal = () => setOpenSuccessModal(true);
   const handleCloseSuccessModal = () => setOpenSuccessModal(false);
   const handleOpenCreateModal = () => setOpenCreateModal(true);
-  const handleCloseCreateModal = () => setOpenCreateModal(false);
+  const handleCloseCreateModal = () => {
+    refetch();
+    setOpenCreateModal(false);
+  };
   const handleOpenRevokeModal = () => setOpenRevokeModal(true);
-  const handleCloseRevokeModal = () => setOpenRevokeModal(false);
-  const handleRevokeAPIKey = (name: string, revoke: boolean) => {
+  const handleCloseRevokeModal = () => {
+    refetch();
+    setOpenRevokeModal(false);
+  };
+  const handleRevokeAPIKey = () => {
+    revokeAPIKey(
+      {
+        resource: "orgs/key/api-keys",
+        id: selectedAPIKey?.id as string,
+        values: {
+          revoked: true,
+        },
+      },
+      {
+        onError: () => {},
+        onSuccess: (res) => {
+          refetch();
+        },
+      }
+    );
+    handleCloseRevokeModal();
+  };
+  const handleUpdateAPIKey = (name: string) => {
     revokeAPIKey(
       {
         resource: "orgs/key/api-keys",
         id: selectedAPIKey?.id as string,
         values: {
           name: name,
-          revoked: revoke,
         },
       },
       {
@@ -130,34 +153,16 @@ const Page = () => {
           <Box
             component="span"
             sx={{
-              backgroundColor: ProductActiveColor(renderedCellValue as boolean),
+              backgroundColor: ProductActiveColor(
+                !renderedCellValue as boolean
+              ),
               ...tagStyle,
             }}
           >
-            {renderedCellValue ? "Revoked" : "Closed"}
+            {renderedCellValue ? "Revoked" : "Active"}
           </Box>
         ),
       },
-      // {
-      //   accessorKey: "actions",
-      //   header: "Actions",
-      //   size: 30,
-      //   Cell: ({ row }) => (
-      //     <div className="flex gap-2">
-      //       <button
-      //         onClick={() => handleRevoke(row.original)}
-      //         disabled={!row.original.revoked}
-      //         className={`
-      //           flex items-center gap-1 text-[13px] text-[#1f325c] font-medium hover:text-[#4a6297] cursor-pointer rounded-full px-2 py-1
-      //           ${!row.original.revoked ? "opacity-50 cursor-not-allowed" : ""}
-      //         `}
-      //       >
-      //         <EditOutlinedIcon fontSize="small" />
-      //         Edit
-      //       </button>
-      //     </div>
-      //   ),
-      // },
     ],
     []
   );
@@ -184,6 +189,7 @@ const Page = () => {
                 noSearchNeed={true}
                 noSortNeed={true}
                 addText="Create API Key"
+                onRowClick={handleRevoke}
               />
             </div>
             <CreateModal
@@ -196,6 +202,7 @@ const Page = () => {
               openModal={openRevokeModal}
               handleCloseModal={handleCloseRevokeModal}
               handleRevoke={handleRevokeAPIKey}
+              handleUpdate={handleUpdateAPIKey}
             />
             <Modal
               open={openSuccessModal}

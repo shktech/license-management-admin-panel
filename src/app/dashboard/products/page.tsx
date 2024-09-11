@@ -129,21 +129,6 @@ const Page = () => {
           </Box>
         ),
       },
-      // {
-      //   accessorKey: "actions",
-      //   header: "Action",
-      //   size: 100,
-      //   enableSorting: false,
-      //   pin: 'right',
-      //   Cell: ({ row }) => (
-      //     <div className="w-full h-full">
-      //       <div className="flex gap-4">
-      //         <EditOutlinedIcon onClick={() => handleEditClick(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-      //         <DeleteIcon onClick={() => handleDeleteBtn(row.original)} fontSize="small" className="text-[#818f99] hover:text-black cursor-pointer" />
-      //       </div>
-      //     </div>
-      //   ),
-      // },
     ],
     []
   );

@@ -7,10 +7,10 @@ const GeneralInput = ({ label, ...props }: BaseInputProps) => {
     <div className="relative">
       <label
         htmlFor={props.id}
-        className="mb-1.5 block text-[#0000009c] font-medium dark:text-white absolute text-sm left-4 top-2 flex items-center gap-1"
+        className="mb-1.5 block text-[#000000cc] dark:text-white absolute text-sm left-4 top-2 flex items-center gap-1"
       >
-        {props.required && <span className="text-red-500">*</span>}
         {label}
+        {props.required && <span className="text-red-500">*</span>}
         {!props.required && (
           <span className="text-gray-500 text-xs">(Optional)</span>
         )}
@@ -20,8 +20,12 @@ const GeneralInput = ({ label, ...props }: BaseInputProps) => {
         disabled={props.disabled}
         slotProps={{
           input: {
-            className:
-              "border border-transparent  w-full rounded-md bg-[#dfe6ec] hover:bg duration-200 focus:border-black pb-2 pt-8 px-4 text-black outline-none focus-visible:shadow-none",
+            className: `
+              border border-transparent w-full rounded bg-[#dfe6ec] 
+              ${props.disabled ? '!text-[#00000061]' : 'text-black'}
+              hover:bg duration-200 focus:border-black
+              pb-2 pt-8 px-4 outline-none focus-visible:shadow-none
+            `,
           },
         }}
       />

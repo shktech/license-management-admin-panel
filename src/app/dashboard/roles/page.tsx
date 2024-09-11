@@ -4,10 +4,7 @@ import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import { Permission, Role } from "@/types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import Loader from "@components/common/Loader";
-import CommonTable from "@components/Table/CommonTable";
 import { RoleColors } from "@data/ColorData";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import RoleDrawer from "@components/Role/RoleDrawer";
 import Unauthorized from "@components/Error/Unauthorized";
 import GenericTable from "@components/Table/GenericTable";
@@ -45,25 +42,16 @@ const Page = () => {
   const [clickedRole, setClickedRole] = React.useState<any>();
 
   const handleClickItem = (role: Role) => {
-    // setClickedRole(role);
-    // setOpenDrawer(true);
     push(`/dashboard/roles/show?id=${role.role_id}`);
   };
 
   const handleCreate = () => {
-    // setClickedRole(null);
-    // setOpenDrawer(true);
     push(`/dashboard/roles/create`);
   };
 
   const handleClose = () => {
     refetch();
     setOpenDrawer(false);
-  };
-
-  const handleRowClick = (role: Role) => {
-    setClickedRole(role);
-    setOpenDrawer(true);
   };
 
   const columns = useMemo<MRT_ColumnDef<Role>[]>(
