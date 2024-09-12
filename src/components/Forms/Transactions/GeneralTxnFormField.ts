@@ -35,7 +35,7 @@ const InitialField: InitialFieldConfig[] = [
   },
   { name: "source_reference_date", type: "date" },
   { name: "source_reference_id" },
-  { name: "license_key", size: 2, disabled: true },
+  { name: "license_key", size: 2  },
 ];
 
 const getFields = (fields: any[], disabledName: string[]) => {
@@ -58,8 +58,8 @@ export const getRequiredFields = (fields: any[], requiredName: string[]) => {
 
 export const GeneralTxnFormFields = {
   New: (InitialField),
-  Renewal: (InitialField),
-  Revoke: (InitialField),
+  Renewal: (getFields(InitialField, ["license_key"])),
+  Revoke: (getFields(InitialField, ["license_key"])),
   Edit: (InitialField),
   Update: (InitialField),
 };

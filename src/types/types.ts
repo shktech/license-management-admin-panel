@@ -330,6 +330,7 @@ export interface ReferenceCode {
 export interface Partner {
   partner_id?: string;
   account_id?: string;
+  partner_number?: string;
   name?: string;
   type?: string;
   addresses?: Partial<Address[]>;

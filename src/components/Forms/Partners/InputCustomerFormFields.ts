@@ -43,7 +43,7 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
   },
   {
     name: "contact_phone",
-    required: "text",
+    required: "phone",
   },
   {
     name: "contact_email",
