@@ -58,15 +58,15 @@ const InitialField: InitialFieldConfig[] = [
   // { name: "eval_set_name" },
   // { name: "renewal_set_name" },
   // { name: "new_set_name" },
-  {
-    name: "email_template",
-    name2: "email_id",
-    type: "dropdown",
-    required: "text",
-    resource: "email-templates",
-    valueKey: "email_id",
-    labelKey: "name",
-  },
+  // {
+  //   name: "email_template",
+  //   name2: "email_id",
+  //   type: "dropdown",
+  //   required: "text",
+  //   resource: "email-templates",
+  //   valueKey: "email_id",
+  //   labelKey: "name",
+  // },
   { name: "active", type: "switch", required: "text" },
 ];
 
