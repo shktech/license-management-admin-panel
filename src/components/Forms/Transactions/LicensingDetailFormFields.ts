@@ -41,7 +41,7 @@ const InitialField: InitialFieldConfig[] = [
   },
 ];
 
-const getFields = (fields: any[], disabledName: string[]) => {
+export const getFields = (fields: any[], disabledName: string[]) => {
   return fields.map((field) => {
     if (disabledName.includes(field.name)) {
       return { ...field, disabled: true };

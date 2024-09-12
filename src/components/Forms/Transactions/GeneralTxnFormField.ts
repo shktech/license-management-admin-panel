@@ -31,7 +31,6 @@ const InitialField: InitialFieldConfig[] = [
     resource: "references/reference-codes",
     valueKey: "reference_code",
     labelKey: "reference_code",
-    required: "text",
   },
   { name: "source_reference_date", type: "date" },
   { name: "source_reference_id" },
@@ -47,9 +46,18 @@ const getFields = (fields: any[], disabledName: string[]) => {
   });
 };
 
+export const getRequiredFields = (fields: any[], requiredName: string[]) => {
+  return fields.map((field) => {
+    if (requiredName.includes(field.name)) {
+      return { ...field, required: "text" };
+    }
+    return field;
+  });
+};
+
 export const GeneralTxnFormFields = {
-  New: getRealFormFields(InitialField),
-  Renewal: getRealFormFields(InitialField),
-  Revoke: getRealFormFields(InitialField),
-  Edit: getRealFormFields(InitialField),
+  New: (InitialField),
+  Renewal: (InitialField),
+  Revoke: (InitialField),
+  Edit: (InitialField),
 };
