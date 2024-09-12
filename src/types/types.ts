@@ -312,6 +312,7 @@ export interface Reference {
 
 export interface ReferenceCode {
   id?: string;
+  status?: string;
   start_date?: string;
   end_date?: string;
   product_part_number?: string;
