@@ -50,7 +50,7 @@ const customDataProvider: DataProvider = {
       const offset = (current - 1) * pageSize;
       params = {
         ...params,
-        limit: 10,
+        limit: pageSize,
         page: current,
         offset: offset,
       };

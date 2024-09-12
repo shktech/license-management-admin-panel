@@ -3,15 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { BaseInputProps } from "./InputProps";
 import { useTable } from "@refinedev/core";
-import {
-  Autocomplete,
-  FormControl,
-  makeStyles,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 interface DropdownOption {
   value: string;
@@ -37,12 +29,11 @@ const AutoComplete: React.FC<DropdownProps> = ({
     props.options || []
   );
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState("");
-
   const {
     tableQueryResult: { data, isLoading },
     setFilters,
+    setPageSize,
+    pageSize,
   } = useTable({
     resource: resource || "",
     syncWithLocation: false,
@@ -53,35 +44,23 @@ const AutoComplete: React.FC<DropdownProps> = ({
 
   useEffect(() => {
     if (data && valueKey && labelKey) {
-      if (data?.data) {
-        const options =
-          data?.data
-            // ?.filter((item: any) => item.active)
-            .map((item: any) => ({
-              value: item[valueKey],
-              label: item[labelKey],
-            })) || [];
-        setDropdownOptions(options);
-      } else {
-        const options =
-          data?.map((item: any) => ({
-            value: item[valueKey],
-            label: item[labelKey],
-          })) || [];
-        setDropdownOptions(options);
-      }
+      const options =
+        data?.data.map((item: any) => ({
+          value: item[valueKey],
+          label: item[labelKey],
+        })) || [];
+      setDropdownOptions(options);
     }
-    setLoading(isLoading);
   }, [data, isLoading, valueKey, labelKey]);
-  // }
 
   const handleInputChange = (event: any, newInputValue: string) => {
-    setInputValue(newInputValue);
     handleSearch(newInputValue);
   };
 
-  const handleSearch = (value: string) =>
+  const handleSearch = (value: string) => {
     setFilters([{ field: "searchKey", operator: "contains", value: value }]);
+    setPageSize(10);
+  };
 
   const handleChange = (
     _event: React.SyntheticEvent,
@@ -96,6 +75,20 @@ const AutoComplete: React.FC<DropdownProps> = ({
       } as React.ChangeEvent<HTMLInputElement>);
   };
 
+  const handleLoadMore = () => {
+    if (pageSize <= (data?.total ?? 0)) {
+      setPageSize(pageSize + 10);
+    }
+  };
+
+  const handleScroll = (event: React.UIEvent<HTMLUListElement>) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+    console.log(scrollHeight - scrollTop, clientHeight);
+    if (scrollHeight - scrollTop <= clientHeight + 10) {
+      handleLoadMore();
+    }
+  };
+
   return (
     <div className="relative">
       <Autocomplete
@@ -104,6 +97,9 @@ const AutoComplete: React.FC<DropdownProps> = ({
         onChange={handleChange}
         onInputChange={handleInputChange}
         filterOptions={(options) => options}
+        ListboxProps={{
+          onScroll: handleScroll,
+        }}
         renderInput={(params) => (
           <div className="relative">
             <label
@@ -139,6 +135,7 @@ const AutoComplete: React.FC<DropdownProps> = ({
             />
           </div>
         )}
+        renderOption={(props, option) => <li {...props}>{option.label}</li>}
       />
     </div>
   );

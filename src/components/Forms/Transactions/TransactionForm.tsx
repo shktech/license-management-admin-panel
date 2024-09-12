@@ -10,14 +10,17 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
-import { GeneralTxnFormFields } from "./GeneralTxnFormField";
-import { LicensingDetailFormFields } from "./LicensingDetailFormFields";
-import { useState } from "react";
+import { GeneralTxnFormFields, getRequiredFields } from "./GeneralTxnFormField";
+import {
+  getFields,
+  LicensingDetailFormFields,
+} from "./LicensingDetailFormFields";
+import { useEffect, useState } from "react";
 import CustomerForm from "./CustomerForm";
-import { getDisabledFields } from "@utils/utilFunctions";
+import { getDisabledFields, getRealFormFields } from "@utils/utilFunctions";
 import TransactionPartnerFormFields from "../Partners/TransactionPartnerFormFields";
 
-type TransactionAction = 'New' | 'Edit' | 'Renewal' | 'Revoke';
+type TransactionAction = "New" | "Edit" | "Renewal" | "Revoke";
 
 export type TransactionFormProps = GenericFormProps & {
   transaction?: any;
@@ -40,12 +43,42 @@ const TransactionForm = (props: TransactionFormProps) => {
     }));
   };
 
+  const [getnerTxnFormFields, setGeneralTxnFormFields] = useState(
+    getRealFormFields(
+      GeneralTxnFormFields[props.transaction_action as TransactionAction]
+    )
+  );
+
+  const transaction_source = props.watch?.("transaction_source");
+  useEffect(() => {
+    if (transaction_source == "Prod Reg") {
+      setGeneralTxnFormFields(
+        getRealFormFields(
+          getRequiredFields(
+            GeneralTxnFormFields[props.transaction_action as TransactionAction],
+            ["source_reference_number"]
+          )
+        )
+      );
+    } else {
+      setGeneralTxnFormFields(
+        getRealFormFields(
+          getRequiredFields(
+            GeneralTxnFormFields[props.transaction_action as TransactionAction],
+            []
+          )
+        )
+      );
+    }
+  }, [transaction_source]);
+
   const FormGroups = [
     {
       icon: <PaidOutlinedIcon />,
       title: "Transaction",
       description: "Setup your Transaction data",
-      fields: GeneralTxnFormFields[props.transaction_action as TransactionAction],
+      fields: getnerTxnFormFields,
+      // GeneralTxnFormFields[props.transaction_action as TransactionAction],
     },
     {
       icon: <PaidOutlinedIcon />,
@@ -116,7 +149,10 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <DetailsIcon />,
       title: "Licensing Details",
       description: "Setup your Licensing Information",
-      fields: LicensingDetailFormFields[props.transaction_action as TransactionAction],
+      fields:
+        LicensingDetailFormFields[
+          props.transaction_action as TransactionAction
+        ],
     },
   ];
   return (
