@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SidebarDropdown from "@/components/Sidebar/SidebarDropdown";
 import { usePathname } from "next/navigation";
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 const SidebarItem = ({ item, pageName, setPageName }: any) => {
   const handleClick = () => {
@@ -31,26 +32,10 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
   return (
     <>
       <li>
-        <Button
+        <Link
           href={item.route}
           onClick={handleClick}
-          sx={{
-            // backgroundColor: isItemActive ? '#ebf0fa' : 'transparent',
-            color: isItemActive ? "#e3ebff" : "#7184ab",
-            borderRadius: "0.375rem", // rounded-md
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            gap: "0.625rem", // gap-2.5
-            paddingX: "1rem", // px-4
-            paddingY: "0.5rem", // py-3
-            textTransform: "none",
-            transition: "background-color 0.3s ease-in-out", // duration-300 ease-in-out
-            "&:hover": {
-              backgroundColor: "slate.100", // hover:bg-slate-100
-            },
-          }}
+          className={`flex items-center justify-start gap-2.5 px-4 py-2 rounded-md relative ${isItemActive ? "text-[#e3ebff]" : "text-[#7184ab]"} transition-colors duration-300 ease-in-out`}
         >
           {item.icon}
           <span className={`${isItemActive ? "font-medium" : "font-normal"}`}>
@@ -73,7 +58,7 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
               />
             </svg>
           )}
-        </Button>
+        </Link>
 
         {item.children && (
           <div
