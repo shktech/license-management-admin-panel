@@ -40,21 +40,21 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
           <>
             <div
               key={index}
-              className={`grid grid-cols-2 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
+              className={`grid grid-cols-5 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
             >
-              <div className="text-base font-medium text-[#666f75] col-span-1">
+              <div className="col-span-2 text-base font-medium text-[#666f75]">
                 {item.label}
               </div>
-              <div className="text-base">{item.value || ""}</div>
+              <div className="col-span-3 text-base">{item.value || ""}</div>
             </div>
             <div
               key={index + halfItems}
-              className={`grid grid-cols-2 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
+              className={`grid grid-cols-5 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
             >
-              <div className="text-base font-medium text-[#666f75] col-span-1">
+              <div className="col-span-2 text-base font-medium text-[#666f75] col-span-1">
                 {items[index + halfItems]?.label}
               </div>
-              <div className="text-base">
+              <div className="col-span-3 text-base">
                 {items[index + halfItems]?.value || ""}
               </div>
             </div>
