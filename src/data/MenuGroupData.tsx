@@ -37,7 +37,11 @@ export const menuGroups: MenuGroup[] = [
       {
         icon: <ChangeCircleIcon />,
         label: "Transaction",
-        route: "/dashboard/transactions",
+        route: "#",
+        children: [
+          { label: "Transactions", route: "/dashboard/recent-transactions" },
+          { label: "Transaction History", route: "/dashboard/transactions" },
+        ]
       },
       {
         icon: <HomeRepairServiceIcon />,

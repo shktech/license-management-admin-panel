@@ -15,6 +15,16 @@ export const dashboardResources: ResourceProps[] = [
   // },
   {
     name: "transactions",
+    list: "/dashboard/recent-transactions",
+    meta: {
+      canDelete: true,
+      label: "Transactions",
+      parent: "transaction",
+      warnWhenUnsavedChanges: true,
+    },
+  },
+  {
+    name: "transactions",
     list: "/dashboard/transactions",
     create: "/dashboard/transactions/create",
     edit: "/dashboard/transactions/edit/:id",
