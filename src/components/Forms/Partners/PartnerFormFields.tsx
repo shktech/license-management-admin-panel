@@ -37,8 +37,8 @@ const InitialCreateField: InitialFieldConfig[] = [
   { name: "country", required: "text" },
   { name: "first_name", required: "text" },
   { name: "last_name", required: "text" },
-  { name: "phone", required: "text" },
-  { name: "email", required: "text" },
+  { name: "phone", required: "phone" },
+  { name: "email", required: "email" },
 ];
 
 export const PartnerFormFields = {

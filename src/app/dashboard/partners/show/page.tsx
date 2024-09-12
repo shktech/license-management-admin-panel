@@ -57,6 +57,7 @@ const Item = () => {
     );
   };
   const summaryfields = [
+    { title: "Partner Name", key: "name" },
     { title: "Oracle Account", key: "account_id" },
     { title: "Partner Number", key: "partner_number" },
   ];
