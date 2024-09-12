@@ -13,7 +13,7 @@ export interface FieldConfig {
   label: string;
   placeholder?: string;
   rules?: any;
-  type?: "text" | "date" | "dropdown" | "number" | "switch" | "password" | "autocomplete";
+  type?: "text" | "date" | "dropdown" | "number" | "switch" | "password" | "autocomplete" | "password";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;

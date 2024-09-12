@@ -45,7 +45,7 @@ export const getRealFormFields = (
 ) => {
   return InitialCustomerFormFields.map((field) => {
     const value: FieldConfig = {
-      label: getTitleCase(field.name) as string,
+      label: field.label || (getTitleCase(field.name) as string),
       placeholder: getTitleCase(field.name),
       ...field,
     };
@@ -65,6 +65,22 @@ export const getRealFormFields = (
         value.rules.pattern = {
           value: /^(\+?[0-9]{1,4}[-.\s]?)?(\([0-9]{1,4}\)[-.\s]?)?[0-9]{1,14}$/,
           message: "Invalid phone number",
+        };
+      } else if (field.required == "password") {
+        value.rules.validate = (value: string) => {
+          if (value.length < 8) {
+            return "Password must be at least 8 characters long";
+          }
+          if (!/\d/.test(value)) {
+            return "Password must include at least 1 number";
+          }
+          if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+            return "Password must include at least 1 special character";
+          }
+          if (!/[A-Z]/.test(value)) {
+            return "Password must include at least 1 uppercase letter";
+          }
+          return true;
         };
       }
     }
@@ -109,7 +125,6 @@ export const getDurationFromString = (str: string) => {
 };
 
 export const getInputCustomer = (data: any, type: string) => {
-
   let value: { [key: string]: any } = {};
   Object.keys(data).forEach((key) => {
     value[type + key] = data[key] ? data[key] : "";
@@ -124,4 +139,28 @@ export const getDisabledFields = (fields: FieldConfig[]) => {
       disabled: true,
     };
   });
+};
+
+export const getPasswordValidationMessage = (password: string) => {
+  if (password === "") {
+    return "This field is required";
+  }
+
+  // Individual password validations
+  if (password.length < 8) {
+    return "Password must be at least 8 characters long";
+  }
+
+  if (!/\d/.test(password)) {
+    return "Password must include at least 1 number";
+  }
+
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password)) {
+    return "Password must include at least 1 special character";
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    return "Password must include at least 1 uppercase letter";
+  }
+  return "";
 };
