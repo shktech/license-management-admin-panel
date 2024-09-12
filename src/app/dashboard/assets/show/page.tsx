@@ -126,6 +126,13 @@ const Page = () => {
           <div className="flex gap-2 pr-10">
             <Button
               sx={refreshRefineBtnStyle}
+              onClick={() => handleReActionBtn("Update")}
+            >
+              <AutorenewIcon fontSize="small" />
+              Update
+            </Button>
+            <Button
+              sx={refreshRefineBtnStyle}
               onClick={() => handleReActionBtn("Renewal")}
             >
               <AutorenewIcon fontSize="small" />
@@ -184,7 +191,7 @@ const Page = () => {
                     label={
                       <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faUser} />
-                        License Status
+                        License
                       </div>
                     }
                   />

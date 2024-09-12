@@ -93,8 +93,9 @@ const AutoComplete: React.FC<DropdownProps> = ({
     <div className="relative">
       <Autocomplete
         disablePortal
+        defaultValue={value}
         options={dropdownOptions}
-        onChange={handleChange}
+        onChange={(event, value) => handleChange(event, value as DropdownOption | null)}
         onInputChange={handleInputChange}
         filterOptions={(options) => options}
         ListboxProps={{
@@ -135,7 +136,9 @@ const AutoComplete: React.FC<DropdownProps> = ({
             />
           </div>
         )}
-        renderOption={(props, option) => <li {...props}>{option.label}</li>}
+        renderOption={(props, option) => (
+          <li {...props}>{(option as DropdownOption).label}</li>
+        )}
       />
     </div>
   );

@@ -53,6 +53,7 @@ export const getFields = (fields: any[], disabledName: string[]) => {
 export const LicensingDetailFormFields = {
   New: getRealFormFields(InitialField),
   Edit: getRealFormFields(InitialField),
+  Update: getRealFormFields(InitialField),
   Renewal: getFields(getRealFormFields(InitialField), [
     "osc_part_number",
     "license_type",

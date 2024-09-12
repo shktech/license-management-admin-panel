@@ -22,6 +22,7 @@ const InitialField: InitialFieldConfig[] = [
       { value: "New", label: "New" },
       { value: "Renewal", label: "Renewal" },
       { value: "Revoke", label: "Revoke" },
+      { value: "Update", label: "Update" },
     ],
   },
   {
@@ -60,4 +61,5 @@ export const GeneralTxnFormFields = {
   Renewal: (InitialField),
   Revoke: (InitialField),
   Edit: (InitialField),
+  Update: (InitialField),
 };
