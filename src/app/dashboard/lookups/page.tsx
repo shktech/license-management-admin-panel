@@ -32,6 +32,11 @@ const HomePage: React.FC = () => {
         size: 200,
       },
       {
+        accessorKey: "lookup_code",
+        header: "Code",
+        size: 200,
+      },
+      {
         accessorKey: "description",
         header: "Description",
         size: 400,
