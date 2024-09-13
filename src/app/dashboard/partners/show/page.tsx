@@ -18,7 +18,13 @@ import ContactTable from "@components/Partners/ContactTable";
 import PartnerTransactionTable from "@components/Partners/PartnerTransactionTable";
 import PartnerLicensesTable from "@components/Partners/PartnerLicensesTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressBook, faGlassWater, faLocationDot, faRightLeft, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAddressBook,
+  faGlassWater,
+  faLocationDot,
+  faRightLeft,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const partnerColors = {
   All: "#4A90E2",
@@ -57,8 +63,31 @@ const Item = () => {
     );
   };
   const summaryfields = [
-    { title: "Oracle Account", key: "account_id" },
+    { title: "Partner Name", key: "name" },
     { title: "Partner Number", key: "partner_number" },
+    { title: "Oracle Account", key: "account_id" },
+    {
+      title: "Partner Type",
+      key: "type",
+      value: (
+        <span
+          className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}
+        >
+          {partner?.type}
+        </span>
+      ),
+    },
+    {
+      title: "Partner Status",
+      key: "active",
+      value: (
+        <span
+          className={`rounded-full ${partner?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"} text-xs font-medium px-4 py-1 text-white font-semibold`}
+        >
+          {partner?.active ? "Active" : "Inactive"}
+        </span>
+      ),
+    },
   ];
 
   return (
@@ -86,7 +115,7 @@ const Item = () => {
                 {partner?.type}
               </span>
               <div
-                className={`rounded-full ${partner?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"} text-xs font-medium px-4 py-1 text-white`}
+                className={`rounded-full ${partner?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"} text-xs font-medium px-4 py-1 text-white font-semibold`}
               >
                 {partner?.active ? "Active" : "Inactive"}
               </div>
@@ -106,7 +135,7 @@ const Item = () => {
                 <div key={field.key} className="flex flex-col gap-1">
                   <div className="text-[#778599]">{field.title}</div>
                   <div className="text-[#515f72] text-xl font-semibold">
-                    {getNestedValue(partner, field.key)}
+                    {field.value || getNestedValue(partner, field.key)}
                   </div>
                 </div>
               ))}

@@ -31,14 +31,12 @@ const InitialCreateField: InitialFieldConfig[] = [
   },
   { name: "address1", required: "text" },
   { name: "address2" },
-  { name: "city", required: "text" },
-  { name: "state", required: "text" },
+  { name: "address", required: "text", type: "address", prefix: "" },
   { name: "postal_code", required: "text" },
-  { name: "country", required: "text" },
   { name: "first_name", required: "text" },
   { name: "last_name", required: "text" },
-  { name: "phone", required: "text" },
-  { name: "email", required: "text" },
+  { name: "phone", required: "phone" },
+  { name: "email", required: "email" },
 ];
 
 export const PartnerFormFields = {

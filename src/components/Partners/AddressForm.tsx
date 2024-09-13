@@ -91,6 +91,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ address, partner_id }) => {
       <>
         <GenericForm
           {...{ control, errors, trigger }}
+          setValue={setValue}
           fields={AddressFormFields}
         />
         <div className="flex justify-end">

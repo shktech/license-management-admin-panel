@@ -7,7 +7,7 @@ import { useGetIdentity } from "@refinedev/core";
 import { useState } from "react";
 
 const Page = () => {
-  const { data: identity } = useGetIdentity<User>();
+  const { data: identity, refetch: refetchUser } = useGetIdentity<User>();
   const [page, setPage] = useState(0);
 
   const panels = [
@@ -16,7 +16,7 @@ const Page = () => {
       value: (
         <>
           <div className="text-xl font-semibold pb-4">User Information</div>
-          <ProfileForm identity={identity} />
+          <ProfileForm identity={identity} refetchUser={refetchUser} />
         </>
       ),
     },

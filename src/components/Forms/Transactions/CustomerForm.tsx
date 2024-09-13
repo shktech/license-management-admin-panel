@@ -303,7 +303,7 @@ const CustomerForm = ({
             label="Same with shipping address"
           />
         )}
-      <GenericForm {...{ ...props, fields: fields }} />
+      <GenericForm {...{ ...props, fields: fields }} setValue={setValueProps}/>
     </div>
   );
 };

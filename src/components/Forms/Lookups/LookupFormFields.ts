@@ -3,6 +3,7 @@ import { getRealFormFields } from "@utils/utilFunctions";
 
 const InitialField: InitialFieldConfig[] = [
   { name: "lookup_name", size: 2, required: "text" },
+  { name: "lookup_code", size: 2, required: "text" },
   { name: "description", size: 2 },
   {
     name: "type",
@@ -16,6 +17,7 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Date", label: "Date" },
     ],
   },
+  { name: "active", type: "switch" },
 ];
 
 export default getRealFormFields(InitialField);

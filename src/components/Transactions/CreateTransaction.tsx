@@ -39,13 +39,10 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yesterdayString = yesterday.toISOString().split("T")[0];
-      const resetTransaction: InputTransaction = {
-        // source_reference_date: nowDateString,
-        start_date: yesterdayString,
-        end_date: yesterdayString,
-        transaction_action: initialInfo.transaction_action,
-      };
-      reset({ ...resetTransaction });
+      
+      setValue("start_date", yesterdayString);
+      setValue("end_date", yesterdayString);
+      setValue("transaction_action", initialInfo.transaction_action);
     }
   }, []);
 
@@ -66,6 +63,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
 
   useEffect(() => {
     if (initialInfo.transaction_action != "New") {
+      console.log(assetData?.data.osc_product?.product_part_number);
       setValue(
         "osc_part_number",
         assetData?.data.osc_product?.product_part_number

@@ -4,12 +4,7 @@ import { Reference, ReferenceCode } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
-import {
-  useNavigation,
-  useParsed,
-  useShow,
-  useTable,
-} from "@refinedev/core";
+import { useNavigation, useParsed, useShow, useTable } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import {
   convertSortingStateToCrudSort,
@@ -45,6 +40,7 @@ const Page = () => {
   };
 
   const handleEditClick = (row: ReferenceCode) => {
+    if (row?.status == "Used") return;
     push(
       `/dashboard/references/codes/edit?reference_id=${params?.id}&code_id=${row.reference_code_id}`
     );
@@ -106,8 +102,15 @@ const Page = () => {
         header: "Transaction Line ID",
       },
       {
+        accessorKey: "transaction.transaction_id",
+        header: "Transaction Number",
+      },
+      {
         accessorKey: "transaction.transaction_date",
         header: "Transaction Date",
+        Cell: ({ renderedCellValue }) => {
+          return <div>{getFormattedDate(renderedCellValue)}</div>;
+        },
       },
       {
         accessorKey: "status",

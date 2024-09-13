@@ -312,6 +312,7 @@ export interface Reference {
 
 export interface ReferenceCode {
   id?: string;
+  status?: string;
   start_date?: string;
   end_date?: string;
   product_part_number?: string;
@@ -329,6 +330,7 @@ export interface ReferenceCode {
 export interface Partner {
   partner_id?: string;
   account_id?: string;
+  partner_number?: string;
   name?: string;
   type?: string;
   addresses?: Partial<Address[]>;

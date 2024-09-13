@@ -25,10 +25,8 @@ const AutoComplete: React.FC<DropdownProps> = ({
   labelKey,
   ...props
 }) => {
-  const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
-    props.options || []
-  );
-
+  const [dropdownOptions, setDropdownOptions] = useState<string[]>([]);
+  const [val, setVal] = useState<string>("");
   const {
     tableQueryResult: { data, isLoading },
     setFilters,
@@ -49,7 +47,8 @@ const AutoComplete: React.FC<DropdownProps> = ({
           value: item[valueKey],
           label: item[labelKey],
         })) || [];
-      setDropdownOptions(options);
+      console.log(options);
+      setDropdownOptions(options.map((option) => option.value));
     }
   }, [data, isLoading, valueKey, labelKey]);
 
@@ -62,15 +61,19 @@ const AutoComplete: React.FC<DropdownProps> = ({
     setPageSize(10);
   };
 
-  const handleChange = (
-    _event: React.SyntheticEvent,
-    newValue: DropdownOption | null
-  ) => {
+  useEffect(() => {
+    if (value) {
+      handleChange(value as string);
+    }
+  }, [value]);
+
+  const handleChange = (newValue: string) => {
+    setVal(newValue);
     onChange &&
       onChange({
         target: {
           name: props.name2 ? props.name2 : props.name,
-          value: newValue?.value || "",
+          value: newValue,
         },
       } as React.ChangeEvent<HTMLInputElement>);
   };
@@ -93,8 +96,9 @@ const AutoComplete: React.FC<DropdownProps> = ({
     <div className="relative">
       <Autocomplete
         disablePortal
+        value={val}
         options={dropdownOptions}
-        onChange={handleChange}
+        onChange={(event, value) => handleChange(value as string)}
         onInputChange={handleInputChange}
         filterOptions={(options) => options}
         ListboxProps={{
@@ -135,7 +139,6 @@ const AutoComplete: React.FC<DropdownProps> = ({
             />
           </div>
         )}
-        renderOption={(props, option) => <li {...props}>{option.label}</li>}
       />
     </div>
   );

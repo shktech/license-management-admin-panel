@@ -6,14 +6,16 @@ import { User } from "../../../types/types";
 import GenericForm from "../GenericForm";
 import PasswordsFormFields from "./PasswordsFormFields";
 import ProfileFormFields from "./ProfileFormFields";
-
+import useStore from "@hooks/globalStore";
 import { useForm } from "@refinedev/react-hook-form";
 import { useCustomMutation } from "@refinedev/core";
+import { getPasswordValidationMessage } from "@utils/utilFunctions";
 export type ProfileFormProps = {
   identity: any;
+  refetchUser: () => void;
 };
 
-const ProfileForm: React.FC<ProfileFormProps> = ({ identity }) => {
+const ProfileForm: React.FC<ProfileFormProps> = ({ identity, refetchUser }) => {
   const [changePassword, setChangePassword] = useState(false);
 
   const handleChange = () => {
@@ -41,13 +43,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ identity }) => {
       last_name: data.last_name,
     };
     if (changePassword) {
-      if (data.password1 == "") {
-        setError("password1", {
-          type: "manual",
-          message: "This field is required",
-        });
-        return;
-      }
+      setError("password1", {
+        type: "manual",
+        message: getPasswordValidationMessage(data.password1),
+      });
       if (data.password1 != data.password2) {
         setError("password2", {
           type: "manual",
@@ -55,7 +54,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ identity }) => {
         });
         return;
       }
-      updateData.password = data.password1;
+      updateData.password = data.password;
+      updateData.password1 = data.password1;
     }
     updateUser(
       {
@@ -66,7 +66,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ identity }) => {
       {
         onError: () => {},
         onSuccess: () => {
-          window.location.reload();
+          const updatedUser = {
+            ...identity,
+            first_name: updateData.first_name,
+            last_name: updateData.last_name,
+          };
+          useStore.getState().setUser(updatedUser);
+          refetchUser();
         },
       }
     );

@@ -1,9 +1,11 @@
 "use client";
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import { IconButton } from "@mui/material";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import { Authenticated } from "@refinedev/core";
+import { Authenticated, useIsAuthenticated } from "@refinedev/core";
+import { usePathname } from "next/navigation";
+
 export default function DefaultLayout({
   children,
 }: {
@@ -13,6 +15,15 @@ export default function DefaultLayout({
   const handleOpenSidebar = () => {
     setSidebarOpen(true);
   };
+
+  const pathname = usePathname();
+  const pageName = pathname.split("/")[2];
+
+  const { data, isSuccess, isLoading, isError, refetch } = useIsAuthenticated();
+
+  useEffect(() => {
+    refetch();
+  }, [pageName]);
   return (
     <Authenticated key="any" appendCurrentPathToQuery={false}>
       <div className="flex h-screen overflow-hidden">

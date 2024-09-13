@@ -10,6 +10,7 @@ import EmailIcon from "@/assets/icons/email.svg?icon";
 import PasswordIcon from "@/assets/icons/password.svg?icon";
 import { Button } from "@mui/base";
 import { useRegister } from "@refinedev/core";
+import { getPasswordValidationMessage } from "@utils/utilFunctions";
 
 interface DecodedToken {
   organization?: string;
@@ -66,6 +67,10 @@ const SignUp: React.FC = () => {
       });
   }, [router]);
   const onSubmit = (data: any) => {
+    setError("password", {
+      type: "manual",
+      message: getPasswordValidationMessage(data.password),
+    });
     if (data.password !== data.password2) {
       setError("password2", {
         type: "manual",

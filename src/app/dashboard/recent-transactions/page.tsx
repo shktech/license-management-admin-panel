@@ -30,6 +30,13 @@ const Page = () => {
         order: "desc",
       },
     ],
+    initialFilter: [
+      {
+        field: "type",
+        operator: "contains",
+        value: "recent"
+      }
+    ]
   });
 
   const { push } = useNavigation();
@@ -153,14 +160,14 @@ const Page = () => {
           title={
             <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
               <FontAwesomeIcon icon={faRightLeft} />
-              Transactions History
+              Recent Transactions
             </div>
           }
           data={data?.data}
           columns={columns}
           onRowClick={handleRowClick}
           handleCreate={handleCreate}
-          // canCreate={permissionsData?.create}
+          canCreate={permissionsData?.create}
           totalCount={data?.total}
           handlePage={handlePage}
           handleSorting={handleSorting}

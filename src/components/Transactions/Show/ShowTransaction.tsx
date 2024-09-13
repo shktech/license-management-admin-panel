@@ -11,7 +11,12 @@ import BasicInformation from "./BasicInformation";
 import AssetInformation from "./AssetInformation";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartBar, faCircleInfo, faSignal } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartBar,
+  faCircleInfo,
+  faSignal,
+} from "@fortawesome/free-solid-svg-icons";
+import CustomerInformation from "./CustomerInformation";
 
 interface ShowTransactionProps {
   transaction?: Transaction;
@@ -54,22 +59,25 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <StyledTab label={
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faCircleInfo} />
-                Basic Information
-              </div>
-            } />
-            <StyledTab label={
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faSignal} />
-                License Status
-              </div>
-            }
+            <StyledTab
+              label={
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faCircleInfo} />
+                  Basic Information
+                </div>
+              }
             />
-            {/* <StyledTab label="Bill Customer" />
-                        <StyledTab label="Ship Customer" />
-                        <StyledTab label="Reseller" /> */}
+            <StyledTab
+              label={
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faSignal} />
+                  License Status
+                </div>
+              }
+            />
+            <StyledTab label="Bill Customer" />
+            <StyledTab label="Ship Customer" />
+            <StyledTab label="Reseller" />
           </StyledTabs>
         </div>
       </div>
@@ -79,15 +87,15 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
       <CustomTabPanel value={value} index={1}>
         <AssetInformation transaction={transaction} />
       </CustomTabPanel>
-      {/* <CustomTabPanel value={value} index={2}>
-                <CustomerInformation transaction={transaction} type="bill_customer" />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
-                <CustomerInformation transaction={transaction} type="ship_customer" />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={4}>
-                <CustomerInformation transaction={transaction} type="reseller" />
-            </CustomTabPanel> */}
+      <CustomTabPanel value={value} index={2}>
+        <CustomerInformation transaction={transaction} type="bill_customer" />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <CustomerInformation transaction={transaction} type="ship_customer" />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        <CustomerInformation transaction={transaction} type="reseller" />
+      </CustomTabPanel>
     </div>
   );
 };

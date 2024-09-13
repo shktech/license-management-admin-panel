@@ -1,10 +1,10 @@
-import DashboardIcon from '@/assets/icons/dashboard.svg?icon';
-import TransactionIcon from '@/assets/icons/transaction.svg?icon';
-import MasterMngtIcon from '@/assets/icons/mastermngt.svg?icon';
-import ReportsIcon from '@/assets/icons/reports.svg?icon';
-import SettingsIcon from '@/assets/icons/settings.svg?icon';
+
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import SettingsIcon from '@mui/icons-material/Settings';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { faChartSimple, faGear, faRightLeft, faTentArrowLeftRight, faToolbox } from '@fortawesome/free-solid-svg-icons';
 // Define types for menu items and groups
 type MenuItem = {
@@ -30,17 +30,21 @@ export const menuGroups: MenuGroup[] = [
     name: "MENU",
     menuItems: [
       {
-        icon: <GridViewRoundedIcon sx={{fontSize: "16px", }}/>,
+        icon: <GridViewRoundedIcon />,
         label: "Dashboard",
         route: "/",
       },
       {
-        icon: <FontAwesomeIcon icon={faRightLeft} />,
+        icon: <ChangeCircleIcon />,
         label: "Transaction",
-        route: "/dashboard/transactions",
+        route: "#",
+        children: [
+          { label: "Transactions", route: "/dashboard/recent-transactions" },
+          { label: "Transaction History", route: "/dashboard/transactions" },
+        ]
       },
       {
-        icon: <FontAwesomeIcon icon={faToolbox} />,
+        icon: <HomeRepairServiceIcon />,
         label: "Maintenance",
         route: "#",
         children: [
@@ -51,12 +55,12 @@ export const menuGroups: MenuGroup[] = [
         ],
       },
       {
-        icon: <FontAwesomeIcon icon={faChartSimple} />,
+        icon: <BarChartIcon />,
         label: "Reports",
         route: "#",
       },
       {
-        icon: <FontAwesomeIcon icon={faGear} />,
+        icon: <SettingsIcon />,
         label: "Setups",
         route: "#",
         children: [

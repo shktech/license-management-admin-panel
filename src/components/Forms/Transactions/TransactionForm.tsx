@@ -81,6 +81,15 @@ const TransactionForm = (props: TransactionFormProps) => {
       // GeneralTxnFormFields[props.transaction_action as TransactionAction],
     },
     {
+      icon: <DetailsIcon />,
+      title: "Licensing Details",
+      description: "Setup your Licensing Information",
+      fields:
+        LicensingDetailFormFields[
+          props.transaction_action as TransactionAction
+        ],
+    },
+    {
       icon: <PaidOutlinedIcon />,
       title: "Shipping Parter Information",
       description: "Setup your Shipping Partner Information",
@@ -103,7 +112,7 @@ const TransactionForm = (props: TransactionFormProps) => {
     },
     {
       icon: <AccountBalanceWalletOutlinedIcon />,
-      title: "Billing Partner Information",
+      title: "Disty/Billing Partner Information",
       description: "Setup your Billing Partner Information",
       fields:
         props.transaction_action == "Revoke" ||
@@ -144,15 +153,6 @@ const TransactionForm = (props: TransactionFormProps) => {
         address: props.transaction?.reseller_address,
         contact: props.transaction?.reseller_contact,
       },
-    },
-    {
-      icon: <DetailsIcon />,
-      title: "Licensing Details",
-      description: "Setup your Licensing Information",
-      fields:
-        LicensingDetailFormFields[
-          props.transaction_action as TransactionAction
-        ],
     },
   ];
   return (
@@ -207,7 +207,7 @@ const TransactionForm = (props: TransactionFormProps) => {
                 }}
               />
             ) : (
-              <GenericForm {...{ ...props, fields: formGroup.fields }} />
+              <GenericForm {...{ ...props, fields: formGroup.fields }} setValue={props.setValue}/>
             )}
           </AccordionDetails>
         </Accordion>

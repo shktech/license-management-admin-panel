@@ -13,13 +13,14 @@ export interface FieldConfig {
   label: string;
   placeholder?: string;
   rules?: any;
-  type?: "text" | "date" | "dropdown" | "number" | "switch" | "password" | "autocomplete";
+  type?: "text" | "date" | "dropdown" | "number" | "switch" | "password" | "autocomplete" | "password" | "address";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;
   labelKey?: string;
   size?: number;
   disabled?: boolean;
+  prefix?: string;
 }
 
 export interface GenericFormProps {
