@@ -4,13 +4,20 @@ import { Permission, Transaction } from "@/types/types";
 import ShowTransaction from "@components/Transactions/Show/ShowTransaction";
 import Loader from "@components/common/Loader";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 import {
   editRefineBtnStyle,
   refreshRefineBtnStyle,
   tagStyle,
 } from "@data/MuiStyles";
-import { Box } from "@mui/material";
-import { useNavigation, usePermissions, useShow } from "@refinedev/core";
+import { Box, Button } from "@mui/material";
+import {
+  useCreate,
+  useNavigation,
+  usePermissions,
+  useShow,
+  useUpdate,
+} from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,7 +29,7 @@ const TransactionShow = () => {
     resource: "transactions",
     id: params?.id,
   });
-  const { data, isLoading } = queryResult;
+  const { data, isLoading, refetch } = queryResult;
   const { data: permissionsData } = usePermissions<Permission>({
     params: { codename: "transaction" },
   });
@@ -31,11 +38,29 @@ const TransactionShow = () => {
 
   const transaction = data?.data;
 
+  const { mutate } = useCreate();
+
+  const reprocessBtnClick = () => {
+    mutate(
+      {
+        resource: `transactions/${params?.id as string}/reprocess`,
+        values: {},
+      },
+      {
+        onError: () => {},
+        onSuccess: () => {
+          refetch();
+        },
+      }
+    );
+  };
+
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        {transaction?.transaction_status != "Completed" &&
-          permissionsData?.update && (
+        {transaction?.transaction_status != "Completed" && (
+          // permissionsData?.update &&
+          <>
             <EditButton
               {...editButtonProps}
               onClick={() =>
@@ -43,7 +68,12 @@ const TransactionShow = () => {
               }
               sx={editRefineBtnStyle}
             />
-          )}
+            <Button onClick={reprocessBtnClick} sx={editRefineBtnStyle}>
+              <AutorenewIcon />
+              Reprocess
+            </Button>
+          </>
+        )}
         <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
