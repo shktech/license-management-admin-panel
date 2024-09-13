@@ -288,11 +288,13 @@ export interface Lookup {
 }
 
 export interface LookupValue {
+  id?: string;
   value?: string;
   meaning?: string;
   attribute1?: string;
   attribute2?: string;
   attribute3?: string;
+  dependency?: string;
   active?: boolean;
   is_new?: boolean;
 }
