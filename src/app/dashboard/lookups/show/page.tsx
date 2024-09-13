@@ -6,6 +6,7 @@ import GenericTable from "@components/Table/GenericTable";
 import {
   editRefineBtnStyle,
   refreshRefineBtnStyle,
+  tableAddButton,
   tableCancelButton,
   tableSaveButton,
 } from "@data/MuiStyles";
@@ -22,7 +23,9 @@ import {
   useParsed,
   useShow,
   useTable,
+  useUpdate,
 } from "@refinedev/core";
+import SaveIcon from "@mui/icons-material/Save";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
@@ -31,6 +34,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Page = () => {
   const { params } = useParsed();
@@ -62,6 +66,8 @@ const Page = () => {
 
   const { push } = useNavigation();
 
+  const [selectedValue, setSelectedValue] = useState<LookupValue | null>(null);
+
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
@@ -75,49 +81,94 @@ const Page = () => {
     );
   };
   const handleCancelEdit = () => {
-    setIsEditMode(false);
+    // setIsEditMode(false);
     setCodes(codeData?.data as LookupValue[]);
+    setSelectedValue(null);
   };
   const handleEditChange = (index: number, id: string, value: any) => {
-    setCodes((prevCodes) => {
-      const newCodes = [...prevCodes];
-      newCodes[index] = { ...newCodes[index], [id]: value };
-      return newCodes;
-    });
+    // setCodes((prevCodes) => {
+    //   const newCodes = [...prevCodes];
+    //   newCodes[index] = { ...newCodes[index], [id]: value };
+    //   return newCodes;
+    // });
   };
-  const handleEditAdd = () => {
-    if (isEditMode) {
-      setCodes((prevCodes) => [
-        ...prevCodes,
-        {
-          value: "",
-          meaning: "",
-          attribute1: "",
-          attribute2: "",
-          attribute3: "",
-          active: true,
-          is_new: true,
-        },
-      ]);
-    } else {
-      setIsEditMode(true);
+  const handleAdd = () => {
+    const newCode: LookupValue = {
+      id: "new",
+      value: "",
+      meaning: "",
+      attribute1: "",
+      attribute2: "",
+      attribute3: "",
+      active: true,
+      is_new: true,
+    };
+    setCodes((prevCodes) => [...prevCodes, newCode]);
+    setSelectedValue(newCode);
+  };
+  const { mutate: createLookup } = useCreate();
+  const { mutate: updateLookup } = useUpdate();
+
+  const handleEditLookupValue = (value: LookupValue) => {
+    // console.log(codeData?.data);
+    // setCodes(codes);.
+    // console.log(codeData?.data);
+    setSelectedValue(value);
+  };
+
+  const handleSaveValue = () => {
+    if (selectedValue) {
+      console.log(selectedValue);
+      let updatedCode = [...codes];
+      const selectedIndex = updatedCode.findIndex(
+        (c) => c.id == selectedValue.id
+      );
+      updatedCode[selectedIndex] = selectedValue;
+      console.log(updatedCode);
+      // createLookup(
+      //   {
+      //     resource: `lookups/${lookup.lookup_code}/values`,
+      //     values: updatedCode,
+      //   },
+      //   {
+      //     onError: (error) => {},
+      //     onSuccess: () => {
+      //       setSelectedValue(null);
+      //       refetch();
+      //     },
+      //   }
+      // );
+      // if (selectedValue.is_new) {
+      //   createLookup(
+      //     {
+      //       resource: `lookups/${lookup.lookup_code}/values`,
+      //       values: selectedValue,
+      //     },
+      //     {
+      //       onError: (error) => {},
+      //       onSuccess: () => {
+      //         refetch();
+      //         setSelectedValue(null);
+      //       },
+      //     }
+      //   );
+      // } else {
+      //   updateLookup(
+      //     {
+      //       resource: `lookups/${lookup.lookup_code}/values`,
+      //       id: selectedValue.id as string,
+      //       values: selectedValue,
+      //     },
+      //     {
+      //       onError: (error) => {},
+      //       onSuccess: () => {
+      //         refetch();
+      //         setSelectedValue(null);
+      //       },
+      //     }
+      //   );
+      // }
     }
-  };
-  const { mutate } = useCreate();
-  const handleSave = () => {
-    mutate(
-      {
-        resource: `lookups/${lookup.lookup_code}/values`,
-        values: codes,
-      },
-      {
-        onError: (error) => {},
-        onSuccess: () => {
-          setIsEditMode(false);
-          refetch();
-        },
-      }
-    );
   };
   const baseColumns = useMemo<MRT_ColumnDef<LookupValue>[]>(
     () => [
@@ -144,9 +195,20 @@ const Page = () => {
         header: "Attribute 3",
       },
       {
+        accessorKey: "dependency",
+        header: "dependency",
+      },
+      {
         accessorKey: "active",
         header: "Active",
         size: 50,
+      },
+      {
+        accessorKey: "action",
+        header: "Action",
+        pin: "right",
+        size: 100,
+        enableSorting: false,
       },
     ],
     []
@@ -158,51 +220,58 @@ const Page = () => {
         if (column.accessorKey == "active") {
           return {
             ...column,
-            Cell: ({ renderedCellValue, cell, row, column }) =>
-              isEditMode ? (
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    value={renderedCellValue}
-                    onChange={(e) =>
-                      handleEditChange(
-                        row.index,
-                        column.id as string,
-                        e.target.value == "true"
-                      )
-                    }
-                    label="Age"
-                  >
-                    <MenuItem value={"true"}>
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`rounded-full text-white py-1 text-xs px-3 bg-[#11ba82]`}
-                        >
-                          Active
-                        </div>
+            Cell: ({ renderedCellValue, cell, row, column }) => {
+              return (
+                <>
+                  {row.original.id == selectedValue?.id ? (
+                    <FormControl
+                      variant="standard"
+                      sx={{ m: 1, minWidth: 120 }}
+                    >
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        defaultValue={renderedCellValue}
+                        onChange={(e) =>
+                          setSelectedValue({
+                            ...selectedValue,
+                            active: e.target.value == "true",
+                          })
+                        }
+                        label="Age"
+                      >
+                        <MenuItem value={"true"}>
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`rounded-full text-white py-1 text-xs px-3 bg-[#11ba82]`}
+                            >
+                              Active
+                            </div>
+                          </div>
+                        </MenuItem>
+                        <MenuItem value={"false"}>
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`rounded-full text-white py-1 text-xs px-3 bg-[#929ea8]`}
+                            >
+                              Inactive
+                            </div>
+                          </div>
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={`rounded-full text-white py-1 text-xs px-3 ${renderedCellValue ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
+                      >
+                        {renderedCellValue ? "Active" : "Inactive"}
                       </div>
-                    </MenuItem>
-                    <MenuItem value={"false"}>
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`rounded-full text-white py-1 text-xs px-3 bg-[#929ea8]`}
-                        >
-                          Inactive
-                        </div>
-                      </div>
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <div
-                    className={`rounded-full text-white py-1 text-xs px-3 ${renderedCellValue ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-                  >
-                    {renderedCellValue ? "Active" : "Inactive"}
-                  </div>
-                </div>
-              ),
+                    </div>
+                  )}
+                </>
+              );
+            },
           };
         } else if (column.accessorKey == "value") {
           switch (lookup?.type) {
@@ -210,18 +279,18 @@ const Page = () => {
               return {
                 ...column,
                 Cell: ({ renderedCellValue, cell, row, column }) =>
-                  isEditMode ? (
+                  row.original.id == selectedValue?.id ? (
                     <TextField
                       variant="standard"
                       type="number"
-                      value={renderedCellValue}
-                      disabled={!row.original.is_new}
+                      // value={renderedCellValue}
+                      defaultValue={renderedCellValue}
+                      // disabled={!row.original.is_new}
                       onChange={(e) =>
-                        handleEditChange(
-                          row.index,
-                          column.id as string,
-                          e.target.value
-                        )
+                        setSelectedValue({
+                          ...selectedValue,
+                          value: e.target.value,
+                        })
                       }
                     />
                   ) : (
@@ -232,17 +301,17 @@ const Page = () => {
               return {
                 ...column,
                 Cell: ({ renderedCellValue, cell, row, column }) =>
-                  isEditMode ? (
+                  row.original.id == selectedValue?.id ? (
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        value={dayjs(renderedCellValue as string)}
-                        disabled={!row.original.is_new}
+                        // value={dayjs(renderedCellValue as string)}
+                        defaultValue={dayjs(renderedCellValue as string)}
+                        // disabled={!row.original.is_new}
                         onChange={(newValue) =>
-                          handleEditChange(
-                            row.index,
-                            column.id as string,
-                            newValue?.format("YYYY-MM-DD")
-                          )
+                          setSelectedValue({
+                            ...selectedValue,
+                            value: newValue?.format("YYYY-MM-DD"),
+                          })
                         }
                         slotProps={{
                           textField: {
@@ -259,13 +328,13 @@ const Page = () => {
               return {
                 ...column,
                 Cell: ({ renderedCellValue, cell, row, column }) =>
-                  isEditMode ? (
+                  row.original.id == selectedValue?.id ? (
                     <div className="flex gap-2">
                       <TextField
                         variant="standard"
                         type="number"
-                        disabled={!row.original.is_new}
-                        value={
+                        // disabled={!row.original.is_new}
+                        defaultValue={
                           renderedCellValue === "EA"
                             ? 0
                             : parseInt(renderedCellValue as string, 10)
@@ -274,34 +343,34 @@ const Page = () => {
                         onChange={(e) => {
                           const numValue = e.target.value;
                           const unit =
-                            renderedCellValue
+                            selectedValue?.value
                               ?.toString()
                               .match(/[A-Za-z]+/)?.[0] || "D";
-                          handleEditChange(
-                            row.index,
-                            column.id as string,
-                            numValue === "0" ? "EA" : `${numValue}${unit}`
-                          );
+                          console.log(numValue, unit);
+                          setSelectedValue({
+                            ...selectedValue,
+                            value: `${numValue}${unit}`,
+                          });
                         }}
                       />
                       <FormControl variant="standard" sx={{ width: "50%" }}>
                         <Select
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
-                          disabled={!row.original.is_new}
-                          value={
+                          // disabled={!row.original.is_new}
+                          defaultValue={
                             typeof renderedCellValue === "string"
                               ? renderedCellValue.match(/[A-Za-z]+/)?.[0] || ""
                               : ""
                           }
                           onChange={(e) => {
                             const numValue =
-                              parseInt(renderedCellValue as string, 10) || 0;
-                            handleEditChange(
-                              row.index,
-                              column.id as string,
-                              `${numValue}${e.target.value}`
-                            );
+                              parseInt(selectedValue?.value as string, 10) || 0;
+                            console.log(numValue, e.target.value);
+                            setSelectedValue({
+                              ...selectedValue,
+                              value: `${numValue}${e.target.value}`,
+                            });
                           }}
                         >
                           <MenuItem value={"D"}>Day</MenuItem>
@@ -315,21 +384,50 @@ const Page = () => {
                   ),
               };
           }
+        } else if (column.accessorKey == "action") {
+          return {
+            ...column,
+            Cell: ({ row }) => (
+              <div className="flex gap-4">
+                {row.original.id == selectedValue?.id ? (
+                  <div className="flex gap-2">
+                    <SaveIcon
+                      onClick={() => handleSaveValue()}
+                      fontSize="small"
+                      className="text-[#818f99] hover:text-black cursor-pointer"
+                    />
+                    <CloseIcon
+                      onClick={() => handleCancelEdit()}
+                      fontSize="small"
+                      className="text-[#818f99] hover:text-black cursor-pointer"
+                    />
+                  </div>
+                ) : (
+                  selectedValue == null && (
+                    <EditOutlinedIcon
+                      onClick={() => handleEditLookupValue(row.original)}
+                      fontSize="small"
+                      className="text-[#818f99] hover:text-black cursor-pointer"
+                    />
+                  )
+                )}
+              </div>
+            ),
+          };
         }
         return {
           ...column,
           Cell: ({ renderedCellValue, cell, row, column }) =>
-            isEditMode ? (
+            row.original.id == selectedValue?.id ? (
               <TextField
                 variant="standard"
-                value={renderedCellValue}
-                disabled={!row.original.is_new}
+                defaultValue={renderedCellValue}
+                // disabled={!row.original.is_new}
                 onChange={(e) =>
-                  handleEditChange(
-                    row.index,
-                    column.id as string,
-                    e.target.value
-                  )
+                  setSelectedValue({
+                    ...selectedValue,
+                    [column.id as string]: e.target.value,
+                  })
                 }
               />
             ) : (
@@ -337,7 +435,7 @@ const Page = () => {
             ),
         };
       }),
-    [isEditMode, baseColumns]
+    [selectedValue, baseColumns]
   );
 
   return (
@@ -402,37 +500,16 @@ const Page = () => {
                 </div>
               }
               columns={columns}
-              handleCreate={handleEditAdd}
+              handleCreate={handleAdd}
               data={codes}
               addText={
                 <div className="flex gap-2">
-                  <EditOutlinedIcon fontSize="small" />{" "}
-                  {isEditMode ? "Add" : "Edit"}
+                  <EditOutlinedIcon fontSize="small" /> Add
                 </div>
               }
               noSearchNeed={true}
-              canCreate={true}
+              canCreate={!selectedValue?.is_new}
             />
-            {isEditMode && (
-              <div className="flex justify-end px-12 py-4 gap-2">
-                <Button
-                  onClick={handleSave}
-                  variant="contained"
-                  sx={tableSaveButton}
-                >
-                  {" "}
-                  Save
-                </Button>
-                <Button
-                  onClick={handleCancelEdit}
-                  variant="contained"
-                  sx={tableCancelButton}
-                >
-                  {" "}
-                  Cancel
-                </Button>
-              </div>
-            )}
           </div>
         </div>
       )}
