@@ -207,7 +207,7 @@ const TransactionForm = (props: TransactionFormProps) => {
                 }}
               />
             ) : (
-              <GenericForm {...{ ...props, fields: formGroup.fields }} />
+              <GenericForm {...{ ...props, fields: formGroup.fields }} setValue={props.setValue}/>
             )}
           </AccordionDetails>
         </Accordion>

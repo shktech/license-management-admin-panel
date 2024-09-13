@@ -18,19 +18,11 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
     name: "address2",
   },
   {
-    name: "city",
-    // required: "text",
-  },
-  {
-    name: "state",
-    // required: "text",
+    name: "address",
+    type: "address",
   },
   {
     name: "postal_code",
-    // required: "text",
-  },
-  {
-    name: "country",
     // required: "text",
   },
   {

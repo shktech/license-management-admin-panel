@@ -3,11 +3,12 @@ export interface InitialFieldConfig {
   name2?: string;
   label?: string;
   required?: "text" | "email" | "phone" | "password";
-  type?: "text" | "date" | "dropdown" | "number" | "switch" | "autocomplete" | "password";
+  type?: "text" | "date" | "dropdown" | "number" | "switch" | "autocomplete" | "password" | "address";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;
   labelKey?: string;
   size?: number;
   disabled?: boolean;
+  prefix?: string;
 }

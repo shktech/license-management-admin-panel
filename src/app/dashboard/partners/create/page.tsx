@@ -16,7 +16,9 @@ const Item = () => {
     refineCore: { formLoading, queryResult },
     control,
     reset,
+    setValue,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<Partner>();
 
@@ -52,7 +54,7 @@ const Item = () => {
             <Loader />
           ) : (
             <GenericForm
-              {...{ control, errors, trigger }}
+              {...{ control, errors, trigger, setValue }}
               fields={PartnerFormFields.create}
             />
           )}
