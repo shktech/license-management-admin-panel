@@ -82,9 +82,21 @@ const Page = () => {
         size: 50,
       },
       {
-        accessorKey: "source_reference_id",
-        header: "Source Ref #",
+        accessorKey: "source_reference_number",
+        header: "Source Ref Number",
         size: 50,
+      },
+      {
+        accessorKey: "source_reference_id",
+        header: "Source Ref ID",
+        size: 50,
+      },
+      {
+        accessorKey: "source_reference_date",
+        header: "Source Ref Date",
+        size: 50,
+        Cell: ({ renderedCellValue }) =>
+          getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "asset.license_type",

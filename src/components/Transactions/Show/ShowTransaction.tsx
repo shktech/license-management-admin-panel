@@ -88,7 +88,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
               </div>
               <div className="col-span-3 text-base">
                 {summaryfields[index + halfItems]?.value ||
-                  getNestedValue(transaction, item.key)}
+                  getNestedValue(transaction, summaryfields[index + halfItems]?.key as string)}
               </div>
             </div>
           </>
