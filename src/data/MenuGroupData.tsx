@@ -5,7 +5,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import { faChartSimple, faGear, faRightLeft, faTentArrowLeftRight, faToolbox } from '@fortawesome/free-solid-svg-icons';
+import ControlCameraIcon from '@mui/icons-material/ControlCamera';
 // Define types for menu items and groups
 type MenuItem = {
   icon: React.ReactNode;
@@ -45,33 +45,45 @@ export const menuGroups: MenuGroup[] = [
       },
       {
         icon: <HomeRepairServiceIcon />,
-        label: "Maintenance",
+        label: "Master",
         route: "#",
         children: [
           { label: "Licenses", route: "/dashboard/assets" },
           { label: "Products", route: "/dashboard/products" },
           { label: "Partners", route: "/dashboard/partners" },
-          { label: "References", route: "/dashboard/references" }
+          { label: "Reference Code", route: "/dashboard/references" }
         ],
-      },
-      {
-        icon: <BarChartIcon />,
-        label: "Reports",
-        route: "#",
       },
       {
         icon: <SettingsIcon />,
         label: "Setups",
         route: "#",
         children: [
-          { label: "User profile", route: "/dashboard/user-profile", is_commonuser: true },
-          { label: "Users", route: "/dashboard/users", is_superuser: true },
-          { label: "Organizations", route: "/dashboard/orgs", is_superuser: true },
-          { label: "Notification Templates", route: "/dashboard/email-templates" },
-          { label: "Notification Schedules", route: "/dashboard/notification-schedules",is_superuser: true },
-          { label: "Roles & Permissions", route: "/dashboard/roles", is_superuser: true },
-          { label: "API Keys", route: "/dashboard/api-keys", is_superuser: true },
           { label: "Lookups", route: "/dashboard/lookups" },
+          { label: "Notification Templates", route: "/dashboard/email-templates" },
+          { label: "Organizations", route: "/dashboard/orgs", is_superuser: true },
+          { label: "Users", route: "/dashboard/users", is_superuser: true },
+          { label: "API Keys", route: "/dashboard/api-keys", is_superuser: true },
+          { label: "Notification Schedules", route: "/dashboard/notification-schedules",is_superuser: true },
+        ],
+      },
+      {
+        icon: <ControlCameraIcon />,
+        label: "Control",
+        route: "#",
+        children: [
+          { label: "User profile", route: "/dashboard/user-profile", is_commonuser: true },
+          { label: "Roles & Permissions", route: "/dashboard/roles", is_superuser: true },
+        ],
+      },
+      {
+        icon: <BarChartIcon />,
+        label: "Reports",
+        route: "#",
+        children: [
+          { label: "Run Report", route: "/dashboard/run-report" },
+          { label: "Report History", route: "/dashboard/report-history" },
+          { label: "Log History", route: "/dashboard/log-history" },
         ],
       },
     ],
