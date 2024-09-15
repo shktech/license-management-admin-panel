@@ -5,6 +5,7 @@ import ShowTransaction from "@components/Transactions/Show/ShowTransaction";
 import Loader from "@components/common/Loader";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import AddIcon from '@mui/icons-material/Add';
 import {
   editRefineBtnStyle,
   refreshRefineBtnStyle,
@@ -58,6 +59,13 @@ const TransactionShow = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
+        <Button
+          href={`/dashboard/transactions/create`}
+          sx={editRefineBtnStyle}
+        >
+          <AddIcon />
+          Create
+        </Button>
         {transaction?.transaction_status != "Completed" && (
           // permissionsData?.update &&
           <>
@@ -67,7 +75,9 @@ const TransactionShow = () => {
                 push(`/dashboard/transactions/edit?id=${params?.id}`)
               }
               sx={editRefineBtnStyle}
-            />
+            >
+              Update
+            </EditButton>
             <Button onClick={reprocessBtnClick} sx={editRefineBtnStyle}>
               <AutorenewIcon />
               Reprocess
