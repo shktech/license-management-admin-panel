@@ -5,7 +5,7 @@ import { Asset, Permission } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
-import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlassWater } from "@fortawesome/free-solid-svg-icons";
 
@@ -41,28 +41,38 @@ const Page = () => {
     () => [
       {
         accessorKey: "license_key",
-        header: "License Number (LicKey/Srl#)",
-      },
-      {
-        accessorKey: "osc_product.product_part_number",
-        header: "Product Part Number",
-      },
-      {
-        accessorKey: "osc_product.product_type",
-        header: "License Type",
-      },
-      {
-        accessorKey: "osc_product.vendor_name",
-        header: "Vender Name",
-      },
-      {
-        accessorKey: "osc_product.product_name",
-        header: "Vendor Part",
+        header: "License Key",
       },
       {
         accessorKey: "seat_number",
-        header: "Number of Seats",
+        header: "Seat Count",
         Cell: ({ row }) => row.original?.seats?.length,
+      },
+      {
+        accessorKey: "owner.name",
+        header: "Owner",
+      },
+      {
+        accessorKey: "osc_product.product_part_number",
+        header: "Part Number",
+      },
+      {
+        accessorKey: "osc_product.product_type",
+        header: "Product Type",
+      },
+      {
+        accessorKey: "osc_product.duration",
+        header: "Duration",
+      },
+      {
+        accessorKey: "start_date",
+        header: "Start Date",
+        Cell: ({ row }) => getFormattedDate(row.original.start_date),
+      },
+      {
+        accessorKey: "end_date",
+        header: "End Date",
+        Cell: ({ row }) => getFormattedDate(row.original.end_date),
       },
     ],
     []
