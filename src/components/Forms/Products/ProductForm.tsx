@@ -8,9 +8,10 @@ import MainInformationFormFields from "./MainInformationFormFields";
 
 export type ProductFormProps = GenericFormProps & {
   product?: Product;
+  watch?: any;
 };
 
-const ProductForm = (props: GenericFormProps) => {
+const ProductForm = (props: ProductFormProps) => {
   const FormGroups = [
     {
       title: "Main Information",

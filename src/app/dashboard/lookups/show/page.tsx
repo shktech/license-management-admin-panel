@@ -125,19 +125,19 @@ const Page = () => {
       );
       updatedCode[selectedIndex] = selectedValue;
       console.log(updatedCode);
-      // createLookup(
-      //   {
-      //     resource: `lookups/${lookup.lookup_code}/values`,
-      //     values: updatedCode,
-      //   },
-      //   {
-      //     onError: (error) => {},
-      //     onSuccess: () => {
-      //       setSelectedValue(null);
-      //       refetch();
-      //     },
-      //   }
-      // );
+      createLookup(
+        {
+          resource: `lookups/${lookup.lookup_code}/values`,
+          values: updatedCode,
+        },
+        {
+          onError: (error) => {},
+          onSuccess: () => {
+            setSelectedValue(null);
+            refetch();
+          },
+        }
+      );
       // if (selectedValue.is_new) {
       //   createLookup(
       //     {

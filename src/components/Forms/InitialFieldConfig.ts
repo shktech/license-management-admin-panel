@@ -3,7 +3,16 @@ export interface InitialFieldConfig {
   name2?: string;
   label?: string;
   required?: "text" | "email" | "phone" | "password";
-  type?: "text" | "date" | "dropdown" | "number" | "switch" | "autocomplete" | "password" | "address";
+  type?:
+    | "text"
+    | "date"
+    | "dropdown"
+    | "number"
+    | "switch"
+    | "autocomplete"
+    | "password"
+    | "address"
+    | "vender";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;
@@ -11,4 +20,5 @@ export interface InitialFieldConfig {
   size?: number;
   disabled?: boolean;
   prefix?: string;
+  dependency?: string;
 }

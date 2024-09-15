@@ -36,6 +36,7 @@ const InitialField: InitialFieldConfig[] = [
     resource: "lookups/VENDOR_PARTS/values",
     valueKey: "value",
     labelKey: "value",
+    dependency: "vendor_name",
   },
   {
     name: "license_source",

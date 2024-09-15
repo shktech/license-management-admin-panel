@@ -13,13 +13,15 @@ interface GenericFormProps {
   errors: any;
   fields: FieldConfig[];
   setValue?: any;
+  watch?: any;
 }
 
 const GenericForm: React.FC<GenericFormProps> = ({
   control,
   errors,
   fields,
-  setValue
+  setValue,
+  watch,
 }) => {
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-6">
@@ -85,7 +87,9 @@ const GenericForm: React.FC<GenericFormProps> = ({
                           valueKey={field.valueKey}
                           labelKey={field.labelKey}
                           disabled={field.disabled}
+                          dependency={field.dependency}
                           required={!!field.rules}
+                          watch={watch}
                           // fetchOptions={field.fetchOptions}
                         />
                       );
