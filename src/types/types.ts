@@ -212,6 +212,9 @@ export interface Transaction {
   created_by?: number;
   updated_by?: number;
   organization?: string;
+  source_integration_status?: string;
+  source_integration_error?: string;
+  license_integration_status?: string;
 }
 
 export interface InputTransaction {

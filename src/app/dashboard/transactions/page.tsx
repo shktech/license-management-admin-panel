@@ -67,24 +67,40 @@ const Page = () => {
           getFormattedDate(renderedCellValue as string),
       },
       {
-        accessorKey: "transaction_status",
-        header: "Txn Status",
+        accessorKey: "transaction_source",
+        header: "Txn Source",
         size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={(theme) => ({
-              backgroundColor: TxtStatusColor[renderedCellValue as string],
-              ...tagStyle,
-            })}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
+      },
+      {
+        accessorKey: "bill_customer.name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "ship_customer.name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "source_reference_number",
+        header: "Source Ref Number",
+        size: 50,
+      },
+      {
+        accessorKey: "source_reference_id",
+        header: "Source Ref ID",
+        size: 50,
+      },
+      {
+        accessorKey: "source_reference_date",
+        header: "Source Ref Date",
+        size: 50,
+        Cell: ({ renderedCellValue }) =>
+          getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "asset.license_type",
-        header: "Txn Type",
+        header: "Product Type",
         size: 50,
         Cell: ({ renderedCellValue }) => (
           <Box
@@ -98,10 +114,17 @@ const Page = () => {
           </Box>
         ),
       },
+
       {
-        accessorKey: "transaction_source",
-        header: "Txn Source",
+        accessorKey: "asset.osc_product.product_part_number",
+        header: "Product Part Number",
         size: 50,
+      },
+      {
+        accessorKey: "seat_number",
+        header: "Number of Seats",
+        size: 50,
+        Cell: ({ row }) => row.original.asset?.seats?.length,
       },
       {
         accessorKey: "transaction_action",
@@ -120,25 +143,20 @@ const Page = () => {
         ),
       },
       {
-        accessorKey: "bill_customer.name",
-        header: "Bill Customer",
+        accessorKey: "transaction_status",
+        header: "Txn Status",
         size: 50,
-      },
-      {
-        accessorKey: "ship_customer.name",
-        header: "Bill Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "asset.osc_product.product_part_number",
-        header: "Product Part Number",
-        size: 50,
-      },
-      {
-        accessorKey: "seat_number",
-        header: "Number of Seats",
-        size: 50,
-        Cell: ({ row }) => row.original.asset?.seats?.length,
+        Cell: ({ renderedCellValue }) => (
+          <Box
+            component="span"
+            sx={(theme) => ({
+              backgroundColor: TxtStatusColor[renderedCellValue as string],
+              ...tagStyle,
+            })}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
       },
     ],
     []

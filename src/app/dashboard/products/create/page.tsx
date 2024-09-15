@@ -17,6 +17,7 @@ const Item = () => {
     control,
     trigger,
     formState: { errors },
+    watch,
   } = useForm<Product>({
     refineCoreProps: {
       action: "create",
@@ -56,7 +57,7 @@ const Item = () => {
           {formLoading ? (
             <Loader />
           ) : (
-            <ProductForm {...{ control, errors, trigger }} />
+            <ProductForm {...{ control, errors, trigger, watch }} />
           )}
         </Create>
       </div>

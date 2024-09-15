@@ -20,32 +20,9 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
           label: "Transaction Number",
           value: transaction?.transaction_number,
         },
-        // {
-        //     label: "Transaction ID",
-        //     value: transaction?.transaction_id,
-        // },
         {
           label: "Transaction date",
           value: getFormattedDate(transaction?.transaction_date),
-        },
-        {
-          label: "Transaction source",
-          value: transaction?.transaction_source,
-        },
-        {
-          label: "Transaction status",
-          value: (
-            <Box
-              component="span"
-              sx={{
-                backgroundColor:
-                  TxtStatusColor[transaction?.transaction_status as string],
-                ...tagStyle,
-              }}
-            >
-              {transaction?.transaction_status}
-            </Box>
-          ),
         },
         {
           label: "Transaction action",
@@ -63,6 +40,33 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
           ),
         },
         {
+          label: "Transaction status",
+          value: (
+            <Box
+              component="span"
+              sx={{
+                backgroundColor:
+                  TxtStatusColor[transaction?.transaction_status as string],
+                ...tagStyle,
+              }}
+            >
+              {transaction?.transaction_status}
+            </Box>
+          ),
+        },
+        {
+          label: "Comments",
+          value: transaction?.comments,
+        },
+        {
+          label: "Notification Date",
+          value: transaction?.notification_date,
+        },
+        {
+          label: "Transaction source",
+          value: transaction?.transaction_source,
+        },
+        {
           label: "Source ref number",
           value: transaction?.source_reference_number,
         },
@@ -75,28 +79,12 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
           value: transaction?.source_reference_id,
         },
         {
-          label: "Notification Date",
-          value: transaction?.notification_date,
+          label: "Source Integration Status",
+          value: transaction?.source_integration_status,
         },
         {
-          label: "Quantity",
-          value: transaction?.quantity,
-        },
-        {
-          label: "Start Date",
-          value: getFormattedDate(transaction?.start_date),
-        },
-        {
-          label: "End Date",
-          value: getFormattedDate(transaction?.end_date as string),
-        },
-        {
-          label: "Comments",
-          value: transaction?.comments,
-        },
-        {
-          label: "Error Message",
-          value: transaction?.error_message,
+          label: "Source Integration Error",
+          value: transaction?.source_integration_error,
         },
       ]}
     ></GeneralInformation>

@@ -24,6 +24,7 @@ type DropdownProps = BaseInputProps & {
 };
 
 const Dropdown: React.FC<DropdownProps> = ({
+  watch,
   label,
   onChange,
   value,
@@ -38,17 +39,50 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [dependency, setDependency] = useState<String>();
+
   if (resource && valueKey && labelKey) {
-    const { data, isLoading } = useList({
-      resource: resource || "",
-      hasPagination: false,
-      queryOptions: {
-        enabled: !!resource && !!valueKey && !!labelKey,
-      },
-    });
-    useEffect(() => {
-      if (data && valueKey && labelKey) {
-        if (data?.data) {
+    console.log(props);
+    if (props.dependency) {
+      if (props.dependency === "vendor_name") {
+        const { data, isLoading, refetch } = useList({
+          resource: `${resource}?dependency=${dependency}` || "",
+          hasPagination: false,
+          queryOptions: {
+            enabled: !!resource && !!valueKey && !!labelKey,
+          },
+        });
+        const vender_name = watch(props.dependency);
+        useEffect(() => {
+          if (vender_name) {
+            setDependency(vender_name);
+            refetch();
+          }
+        }, [vender_name]);
+        useEffect(() => {
+          if (data && valueKey && labelKey) {
+            const options =
+              data?.data
+                // ?.filter((item: any) => item.active)
+                ?.map((item: any) => ({
+                  value: item[valueKey],
+                  label: item[labelKey],
+                })) || [];
+            setDropdownOptions(options);
+          }
+          setLoading(isLoading);
+        }, [data, isLoading, valueKey, labelKey]);
+      }
+    } else {
+      const { data, isLoading } = useList({
+        resource: resource || "",
+        hasPagination: false,
+        queryOptions: {
+          enabled: !!resource && !!valueKey && !!labelKey,
+        },
+      });
+      useEffect(() => {
+        if (data && valueKey && labelKey) {
           const options =
             data?.data
               // ?.filter((item: any) => item.active)
@@ -57,17 +91,10 @@ const Dropdown: React.FC<DropdownProps> = ({
                 label: item[labelKey],
               })) || [];
           setDropdownOptions(options);
-        } else {
-          const options =
-            data?.map((item: any) => ({
-              value: item[valueKey],
-              label: item[labelKey],
-            })) || [];
-          setDropdownOptions(options);
         }
-      }
-      setLoading(isLoading);
-    }, [data, isLoading, valueKey, labelKey]);
+        setLoading(isLoading);
+      }, [data, isLoading, valueKey, labelKey]);
+    }
   }
 
   const handleChange = (event: SelectChangeEvent) => {

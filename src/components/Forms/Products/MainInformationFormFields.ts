@@ -36,6 +36,7 @@ const InitialField: InitialFieldConfig[] = [
     resource: "lookups/VENDOR_PARTS/values",
     valueKey: "value",
     labelKey: "value",
+    dependency: "vendor_name",
   },
   {
     name: "license_source",
@@ -52,6 +53,7 @@ const InitialField: InitialFieldConfig[] = [
     resource: "lookups/SOURCE_API_NAME/values",
     valueKey: "value",
     labelKey: "value",
+    dependency: "vendor_name",
   },
   // { name: "license_source_set" },
   // { name: "source_name" },

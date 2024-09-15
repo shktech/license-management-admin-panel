@@ -9,11 +9,21 @@ import {
 
 export interface FieldConfig {
   name: string;
+  dependency?: string;
   name2?: string;
   label: string;
   placeholder?: string;
   rules?: any;
-  type?: "text" | "date" | "dropdown" | "number" | "switch" | "password" | "autocomplete" | "password" | "address";
+  type?:
+    | "text"
+    | "date"
+    | "dropdown"
+    | "number"
+    | "switch"
+    | "password"
+    | "autocomplete"
+    | "address"
+    | "vender";
   options?: { value: string; label: string }[];
   resource?: string;
   valueKey?: string;
