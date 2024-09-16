@@ -5,9 +5,9 @@ import { Contact } from "@/types/types";
 import { useEffect } from "react";
 import Loader from "@components/common/Loader";
 import GenericForm from "@components/Forms/GenericForm";
-import ContactFormFields from "@components/Forms/Partners/ContactFormFields";
 import { Button } from "@mui/material";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
+import { ContactFormFields } from "@components/Forms/Partners/ContactFormFields";
 interface ContactFormProps {
   contact: Contact | null;
   partner_id: string;
@@ -92,7 +92,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, partner_id }) => {
       <>
         <GenericForm
           {...{ control, errors, trigger }}
-          fields={ContactFormFields}
+          fields={contact ? ContactFormFields.edit : ContactFormFields.create}
         />
         <div className="flex justify-end">
           <Button onClick={handleSubmit} sx={sendEmailBtnStyle}>

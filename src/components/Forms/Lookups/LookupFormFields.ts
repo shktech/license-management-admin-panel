@@ -17,7 +17,13 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Date", label: "Date" },
     ],
   },
-  { name: "active", type: "switch" },
 ];
 
-export default getRealFormFields(InitialField);
+export const LookupFormFields = {
+  create: getRealFormFields(InitialField),
+  edit: getRealFormFields([
+    ...InitialField,
+    { name: "active", type: "switch" },
+  ]),
+};
+// export default getRealFormFields(InitialField);

@@ -69,7 +69,14 @@ const InitialField: InitialFieldConfig[] = [
   //   valueKey: "email_id",
   //   labelKey: "name",
   // },
-  { name: "active", type: "switch", required: "text" },
+  // { name: "active", type: "switch", required: "text" },
 ];
 
-export default getRealFormFields(InitialField);
+// export default getRealFormFields(InitialField);
+export const MainInformationFormFields = {
+  create: getRealFormFields(InitialField),
+  edit: getRealFormFields([
+    ...InitialField,
+    { name: "active", type: "switch", required: "text" },
+  ]),
+};

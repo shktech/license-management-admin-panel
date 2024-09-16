@@ -4,9 +4,9 @@ import { useForm } from "@refinedev/react-hook-form";
 import { Address } from "@/types/types";
 import { useEffect } from "react";
 import GenericForm from "@components/Forms/GenericForm";
-import AddressFormFields from "@components/Forms/Partners/AddressFormFields";
 import { Button } from "@mui/material";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
+import { AddressFormFields } from "@components/Forms/Partners/AddressFormFields";
 interface AddressFormProps {
   address: Address | null;
   partner_id: string;
@@ -92,7 +92,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ address, partner_id }) => {
         <GenericForm
           {...{ control, errors, trigger }}
           setValue={setValue}
-          fields={AddressFormFields}
+          fields={address ? AddressFormFields.edit : AddressFormFields.create}
         />
         <div className="flex justify-end">
           <Button onClick={handleSubmit} sx={sendEmailBtnStyle}>

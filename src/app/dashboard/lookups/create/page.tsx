@@ -3,7 +3,7 @@
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Lookup } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import LookupFormFields from "@components/Forms/Lookups/LookupFormFields";
+import { LookupFormFields } from "@components/Forms/Lookups/LookupFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack } from "@refinedev/core";
@@ -62,7 +62,7 @@ const Item = () => {
           ) : (
             <GenericForm
               {...{ control, errors, trigger }}
-              fields={LookupFormFields}
+              fields={LookupFormFields.create}
             />
           )}
         </Create>

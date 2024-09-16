@@ -42,7 +42,6 @@ const Dropdown: React.FC<DropdownProps> = ({
   const [dependency, setDependency] = useState<String>();
 
   if (resource && valueKey && labelKey) {
-    console.log(props);
     if (props.dependency) {
       if (props.dependency === "vendor_name") {
         const { data, isLoading, refetch } = useList({
@@ -63,7 +62,9 @@ const Dropdown: React.FC<DropdownProps> = ({
           if (data && valueKey && labelKey) {
             const options =
               data?.data
-                // ?.filter((item: any) => item.active)
+                ?.filter(
+                  (item: any) => item.active == null || item.active == true
+                )
                 ?.map((item: any) => ({
                   value: item[valueKey],
                   label: item[labelKey],
@@ -85,7 +86,9 @@ const Dropdown: React.FC<DropdownProps> = ({
         if (data && valueKey && labelKey) {
           const options =
             data?.data
-              // ?.filter((item: any) => item.active)
+              ?.filter(
+                (item: any) => item.active == null || item.active == true
+              )
               ?.map((item: any) => ({
                 value: item[valueKey],
                 label: item[labelKey],

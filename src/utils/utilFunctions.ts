@@ -59,17 +59,25 @@ export const getRealFormFields = (
       value.rules = {
         required: `This field is required`,
       };
+      if (field.required == "number") {
+        value.rules.pattern = {
+          value: /^(0|[1-9]\d*)$/, // Updated regex to allow only non-negative numbers
+          message: "This must be a non-negative number",
+        };
+      }
       if (field.required == "email") {
         value.rules.pattern = {
           value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
           message: "Invalid email address",
         };
-      } else if (field.required == "phone") {
+      }
+      if (field.required == "phone") {
         value.rules.pattern = {
-          value: /^(\+?[0-9]{1,4}[-.\s]?)?(\([0-9]{1,4}\)[-.\s]?)?[0-9]{1,14}$/,
-          message: "Invalid phone number",
+          value: /^(?:\+1[-.\s]?)?(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/, // Updated regex for US/Canada phone numbers
+          message: "Invalid phone number. Please use a valid US or Canada number.",
         };
-      } else if (field.required == "password") {
+      }
+      if (field.required == "password") {
         value.rules.validate = (value: string) => {
           if (value.length < 8) {
             return "Password must be at least 8 characters long";
@@ -158,7 +166,7 @@ export const getPasswordValidationMessage = (password: string) => {
     return "Password must include at least 1 number";
   }
 
-  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password)) {
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
     return "Password must include at least 1 special character";
   }
 
