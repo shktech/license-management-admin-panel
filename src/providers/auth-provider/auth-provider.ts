@@ -65,17 +65,21 @@ const getCurrentUser = async (): Promise<User | null> => {
 };
 
 const getRamdonToken = () => {
-  return crypto.randomBytes(64).toString('hex');
-}
+  return crypto.randomBytes(64).toString("hex");
+};
 export const authProvider: AuthProvider = {
-  login: async ({ email, password }) => {
-    const response = await fetch(`${API_URL ?? realAPI_URL}/login`, {
+  login: async ({ email, password, username }) => {
+    let loginUrl = "login";
+    if (username) {
+      loginUrl = "admin-login";
+    }
+    const response = await fetch(`${API_URL ?? realAPI_URL}/${loginUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "paicalm": getRamdonToken()
+        paicalm: getRamdonToken(),
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, username }),
     });
     if (response.ok) {
       const data: LoginResponse = await response.json();
@@ -109,10 +113,6 @@ export const authProvider: AuthProvider = {
     } else {
       return Promise.reject(new Error("Invalid username or password"));
     }
-    // return {
-    //     success: true,
-    //     redirectTo: "/dashboard"
-    // }
   },
   register: async ({ token, username, password, first_name, last_name }) => {
     const response = await fetch(`${API_URL ?? realAPI_URL}/register`, {
@@ -120,7 +120,7 @@ export const authProvider: AuthProvider = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "paicalm": getRamdonToken()
+        paicalm: getRamdonToken(),
       },
       body: JSON.stringify({
         token,
@@ -147,7 +147,7 @@ export const authProvider: AuthProvider = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "paicalm": getRamdonToken()
+        paicalm: getRamdonToken(),
       },
       body: JSON.stringify({ token, new_password }),
     });
@@ -170,7 +170,7 @@ export const authProvider: AuthProvider = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "paicalm": getRamdonToken()
+        paicalm: getRamdonToken(),
       },
       body: JSON.stringify({ email }),
     });
@@ -219,7 +219,7 @@ export const authProvider: AuthProvider = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "paicalm": getRamdonToken()
+        paicalm: getRamdonToken(),
       },
       body: JSON.stringify({ refresh: localStorage.getItem("refreshToken") }),
     });
@@ -252,7 +252,7 @@ export const authProvider: AuthProvider = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "paicalm": getRamdonToken()
+          paicalm: getRamdonToken(),
         },
       });
       if (response.ok) {

@@ -3,7 +3,7 @@ import FormControlWrapper from "@components/Forms/FormControlWrapper";
 import useStore from "@hooks/globalStore";
 import { Button } from "@mui/base";
 import { useForm } from "@refinedev/react-hook-form";
-import { useGetIdentity, useNavigation } from "@refinedev/core";
+import { useGetIdentity, useLogin, useNavigation } from "@refinedev/core";
 import Dropdown from "@components/Input/Dropdown";
 import { Organization, User } from "@/types/types";
 import { useState } from "react";
@@ -12,13 +12,9 @@ import Link from "next/link";
 import EmailIcon from "@/assets/icons/email.svg?icon";
 import GeneralInput from "@components/Input/GeneralInput";
 import PasswordIcon from "@/assets/icons/password.svg?icon";
-import { LoginResponse } from "@providers/auth-provider";
 
 const Page: React.FC = () => {
   const { push } = useNavigation();
-  const realAPI_URL = "https://license-management-server.vercel.app/api";
-  const API_URL = process.env.API_URL;
-  const [loading, setLoading] = useState(false);
   const { data: identity, isLoading } = useGetIdentity<User>();
   if (identity) {
     push("/dashboard");
@@ -28,47 +24,18 @@ const Page: React.FC = () => {
     control,
     formState: { errors },
   } = useForm<FormData>();
+  const { mutate: login, isLoading: isLoginLoading } = useLogin<FormData>();
   const onSubmit = async (data: any) => {
-    setLoading(true);
     const loginForm = data as FormData;
-    const response = await fetch(`${API_URL ?? realAPI_URL}/admin-login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginForm),
+    login({
+      ...loginForm,
     });
-    if (response.ok) {
-      const data: LoginResponse = await response.json();
-      localStorage.setItem("tempToken", data.temp_access);
-      useStore.getState().setOrganizations(data.organizations);
-      if (data.organizations.length == 1) {
-        const response = await fetch(`${API_URL ?? realAPI_URL}/authenticate`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("tempToken")}`,
-          },
-          body: JSON.stringify({
-            organization: data.organizations[0].organization_code,
-          }),
-        });
-        if (response.ok) {
-          const data: any = await response.json();
-          localStorage.setItem("accessToken", data.access);
-          localStorage.setItem("refreshToken", data.refresh);
-          push("/dashboard");
-          return;
-        }
-      }
-      push("/auth/organization");
-    }
   };
 
   return (
     <>
       <div className="bg-[#f7f9fa] flex justify-center items-center min-h-screen py-10">
-        {isLoading || loading ? (
+        {isLoading || isLoginLoading ? (
           <Loader />
         ) : (
           <div className="min-w-[480px] rounded-xl border border-stroke bg-white shadow-default">
