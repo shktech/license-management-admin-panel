@@ -123,12 +123,12 @@ const Page = () => {
         size: 100,
       },
       {
-        accessorKey: "seat_number",
+        accessorKey: "asset.osc_seat_count",
         header: "Seats Count",
         size: 100,
-        Cell: ({ row }) => (
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">
-            {row.original.asset?.seats?.length}
+            {renderedCellValue || 0}
           </div>
         ),
       },

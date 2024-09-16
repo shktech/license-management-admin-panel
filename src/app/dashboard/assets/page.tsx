@@ -52,11 +52,11 @@ const Page = () => {
         size: 250,
       },
       {
-        accessorKey: "seat_number",
+        accessorKey: "osc_seat_count",
         header: "Seat Count",
         size: 150,
-        Cell: ({ row }) =>
-          <div className="text-right w-full pr-7">{row.original?.seats?.length}</div>
+        Cell: ({ renderedCellValue }) =>
+          <div className="text-right w-full pr-7">{renderedCellValue}</div>
       },
       {
         accessorKey: "owner.name",

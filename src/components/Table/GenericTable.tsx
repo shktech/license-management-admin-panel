@@ -123,14 +123,12 @@ const GenericTable = <T extends MRT_RowData>({
         padding: cell.column.getIndex() === 0 ? "1rem 1rem 1rem 3rem" : "", // Set padding for the first column
         // textAlign: 'center'
       },
-      align: 'center'
     }),
     muiTableHeadCellProps: ({ column }) => ({
       sx: {
         padding: column.getIndex() === 0 ? "1rem 1rem 1rem 3rem" : "",
         verticalAlign: "middle",
       },
-      align: 'center'
     }),
     muiPaginationProps: {
       color: "primary",
@@ -230,7 +228,9 @@ const GenericTable = <T extends MRT_RowData>({
                 <div className="p-8">
                   <Pagination
                     onChange={handlePageChange}
-                    count={Math.ceil(totalCount / table.getState().pagination.pageSize)}
+                    count={Math.ceil(
+                      totalCount / table.getState().pagination.pageSize
+                    )}
                     color="primary"
                     shape="rounded"
                   />
