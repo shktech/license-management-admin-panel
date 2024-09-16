@@ -16,12 +16,7 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
-
-const partnerColors = {
-  All: "#4A90E2",
-  Channel: "#FFCC00",
-  "Direct End User": "#34C759",
-};
+import { partnerTypes } from "@data/PartnerTypeData";
 
 const Page = () => {
   const { push } = useNavigation();
@@ -73,7 +68,12 @@ const Page = () => {
         size: 50,
         Cell: ({ renderedCellValue }) => (
           <span
-            className={`text-xs bg-[${partnerColors[renderedCellValue as keyof typeof partnerColors]}] text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
+            className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
+            style={{
+              backgroundColor: partnerTypes.find(
+                (type) => type.value === renderedCellValue
+              )?.color || "#ff3838",
+            }}
           >
             {renderedCellValue}
           </span>
@@ -124,21 +124,18 @@ const Page = () => {
                     },
                   }}
                 >
-                  <MenuItem value={""}>
-                    <span className="text-xs bg-[#4A90E2] text-white w-full px-6 py-1 rounded-full text-center font-semibold">
-                      All
-                    </span>
-                  </MenuItem>
-                  <MenuItem value={"Channel"}>
-                    <span className="text-xs bg-[#FFCC00] text-white w-full px-2 py-1 rounded-full text-center font-semibold">
-                      Channel
-                    </span>
-                  </MenuItem>
-                  <MenuItem value={"Direct End User"}>
-                    <span className="text-xs bg-[#34C759] text-white w-full px-2 py-1 rounded-full text-center font-semibold">
-                      Direct End User
-                    </span>
-                  </MenuItem>
+                  {
+                    partnerTypes.map((type) => (
+                      <MenuItem value={type.value} key={type.label}>
+                        <span
+                          className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
+                          style={{ backgroundColor: type.color }}
+                        >
+                          {type.label}
+                        </span>
+                      </MenuItem>
+                    ))
+                  }
                 </Select>
               </FormControl>
             </div>
