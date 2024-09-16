@@ -1,6 +1,12 @@
 "use client";
 
-import { Address, Contact, Customer, Partner, Transaction } from "@/types/types";
+import {
+  Address,
+  Contact,
+  Customer,
+  Partner,
+  Transaction,
+} from "@/types/types";
 import GeneralInformation from "@components/common/View/GeneralInformation";
 
 interface CustomerInformationProps {
@@ -22,7 +28,7 @@ const CustomerInformation: React.FC<CustomerInformationProps> = ({
             ?.account_id,
         },
         {
-          label: "Name",
+          label: "Customer Name",
           value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
             ?.name,
         },
@@ -37,54 +43,84 @@ const CustomerInformation: React.FC<CustomerInformationProps> = ({
             ?.type,
         },
         {
-          label: "Address1",
-          value: (transaction?.[(type + "_address") as keyof Transaction] as Partial<Address>)
-            ?.address1,
-        },
-        {
-          label: "Address2",
-          value: (transaction?.[(type + "_address") as keyof Transaction] as Partial<Address>)
-            ?.address2,
+          label: "Address",
+          value: `${
+            (
+              transaction?.[
+                (type + "_address") as keyof Transaction
+              ] as Partial<Address>
+            )?.address1
+          } ${
+            (
+              transaction?.[
+                (type + "_address") as keyof Transaction
+              ] as Partial<Address>
+            )?.address2
+          }`,
         },
         {
           label: "City",
-          value: (transaction?.[(type + "_address") as keyof Transaction] as Partial<Address>)
-            ?.city,
+          value: (
+            transaction?.[
+              (type + "_address") as keyof Transaction
+            ] as Partial<Address>
+          )?.city,
         },
         {
-          label: "State",
-          value: (transaction?.[(type + "_address") as keyof Transaction] as Partial<Address>)
-            ?.state,
+          label: "State/Province",
+          value: (
+            transaction?.[
+              (type + "_address") as keyof Transaction
+            ] as Partial<Address>
+          )?.state,
         },
         {
           label: "Postal Code",
-          value: (transaction?.[(type + "_address") as keyof Transaction] as Partial<Address>)
-            ?.postal_code,
+          value: (
+            transaction?.[
+              (type + "_address") as keyof Transaction
+            ] as Partial<Address>
+          )?.postal_code,
         },
         {
           label: "Country",
-          value: (transaction?.[(type + "_address") as keyof Transaction] as Partial<Address>)
-            ?.country,
+          value: (
+            transaction?.[
+              (type + "_address") as keyof Transaction
+            ] as Partial<Address>
+          )?.country,
         },
         {
-          label: "First Name",
-          value: (transaction?.[(type + "_contact") as keyof Transaction] as Partial<Contact>)
-            ?.first_name,
-        },
-        {
-          label: "Last Name",
-          value: (transaction?.[(type + "_contact") as keyof Transaction] as Partial<Contact>)
-            ?.last_name,
+          label: "Contact Name",
+          value: `${
+            (
+              transaction?.[
+                (type + "_contact") as keyof Transaction
+              ] as Partial<Contact>
+            )?.first_name
+          } ${
+            (
+              transaction?.[
+                (type + "_contact") as keyof Transaction
+              ] as Partial<Contact>
+            )?.last_name
+          }`,
         },
         {
           label: "Contact Phone",
-          value: (transaction?.[(type + "_contact") as keyof Transaction] as Partial<Contact>)
-            ?.phone,
+          value: (
+            transaction?.[
+              (type + "_contact") as keyof Transaction
+            ] as Partial<Contact>
+          )?.phone,
         },
         {
           label: "Contact Email",
-          value: (transaction?.[(type + "_contact") as keyof Transaction] as Partial<Contact>)
-            ?.email,
+          value: (
+            transaction?.[
+              (type + "_contact") as keyof Transaction
+            ] as Partial<Contact>
+          )?.email,
         },
       ]}
     ></GeneralInformation>

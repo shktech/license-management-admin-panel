@@ -45,7 +45,9 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
               <div className="col-span-2 text-base font-medium text-[#666f75]">
                 {item.label}
               </div>
-              <div className="col-span-3 text-base">{item.value || ""}</div>
+              <div className="col-span-3 text-base font-semibold text-[#666f75]">
+                {item.value || ""}
+              </div>
             </div>
             <div
               key={index + halfItems}
@@ -54,7 +56,7 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
               <div className="col-span-2 text-base font-medium text-[#666f75] col-span-1">
                 {items[index + halfItems]?.label}
               </div>
-              <div className="col-span-3 text-base">
+              <div className="col-span-3 text-base font-semibold text-[#666f75]">
                 {items[index + halfItems]?.value || ""}
               </div>
             </div>

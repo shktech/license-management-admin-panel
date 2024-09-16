@@ -37,11 +37,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
     {
       title: "Transaction Date",
       key: "transaction_date",
-      value: (
-        <div className="text-[#515f72] text-xl font-semibold">
-          {getFormattedDate(transaction?.transaction_date)}
-        </div>
-      ),
+      value: getFormattedDate(transaction?.transaction_date),
     },
     { title: "Bill Customer", key: "bill_customer.name" },
     { title: "Ship Customer", key: "ship_customer.name" },
@@ -75,7 +71,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
               <div className="col-span-2 text-base font-medium text-[#666f75]">
                 {item.title}
               </div>
-              <div className="col-span-3 text-base">
+              <div className="col-span-3 text-base font-semibold text-[#666f75]">
                 {item.value || getNestedValue(transaction, item.key)}
               </div>
             </div>
@@ -86,7 +82,7 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
               <div className="col-span-2 text-base font-medium text-[#666f75] col-span-1">
                 {summaryfields[index + halfItems]?.title}
               </div>
-              <div className="col-span-3 text-base">
+              <div className="col-span-3 text-base font-semibold text-[#666f75]">
                 {summaryfields[index + halfItems]?.value ||
                   getNestedValue(transaction, summaryfields[index + halfItems]?.key as string)}
               </div>
