@@ -20,7 +20,11 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Product>();
+  } = useTable<Product>({
+    pagination: {
+      pageSize: 15,
+    },
+  });
 
   const { push } = useNavigation();
   const [openDrawer, setOpenDrawer] = React.useState(false);

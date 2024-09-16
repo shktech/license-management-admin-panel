@@ -15,6 +15,7 @@ import SearchInput from "@components/Input/SearchInput";
 import { tableAddButton } from "@data/MuiStyles";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@/assets/icons/search.svg?icon";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface GenericTableProps<T extends MRT_RowData> {
   title?: React.ReactNode;
@@ -142,6 +143,10 @@ const GenericTable = <T extends MRT_RowData>({
         left: [],
         right: ["actions"],
       },
+      pagination: {
+        pageIndex: 0,
+        pageSize: DefaultPageSize,
+      },
     },
     state: {
       sorting,
@@ -224,7 +229,7 @@ const GenericTable = <T extends MRT_RowData>({
                 <div className="p-8">
                   <Pagination
                     onChange={handlePageChange}
-                    count={Math.floor(totalCount / 10) + 1}
+                    count={Math.ceil(totalCount / table.getState().pagination.pageSize)}
                     color="primary"
                     shape="rounded"
                   />

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BaseInputProps } from "./InputProps";
 import { useTable } from "@refinedev/core";
 import { Autocomplete, TextField } from "@mui/material";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface DropdownOption {
   value: string;
@@ -38,6 +39,9 @@ const AutoComplete: React.FC<DropdownProps> = ({
     filters: {
       initial: [{ field: "searchKey", operator: "contains", value: "" }],
     },
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const AutoComplete: React.FC<DropdownProps> = ({
 
   const handleSearch = (value: string) => {
     setFilters([{ field: "searchKey", operator: "contains", value: value }]);
-    setPageSize(10);
+    setPageSize(DefaultPageSize);
   };
 
   useEffect(() => {
@@ -80,7 +84,7 @@ const AutoComplete: React.FC<DropdownProps> = ({
 
   const handleLoadMore = () => {
     if (pageSize <= (data?.total ?? 0)) {
-      setPageSize(pageSize + 10);
+      setPageSize(pageSize + DefaultPageSize);
     }
   };
 

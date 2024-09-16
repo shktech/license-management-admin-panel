@@ -5,7 +5,10 @@ import { Asset, Permission } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
-import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlassWater } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,6 +25,9 @@ const Page = () => {
     //     order: "desc",
     //   },
     // ],
+    pagination: {
+      pageSize: 15,
+    },
   });
   const { push } = useNavigation();
 
@@ -42,37 +48,45 @@ const Page = () => {
       {
         accessorKey: "license_key",
         header: "License Key",
+        size: 250,
       },
       {
         accessorKey: "seat_number",
         header: "Seat Count",
+        size: 150,
         Cell: ({ row }) => row.original?.seats?.length,
       },
       {
         accessorKey: "owner.name",
         header: "Owner",
+        size: 200,
       },
       {
         accessorKey: "osc_product.product_part_number",
         header: "Part Number",
+        size: 200,
       },
       {
         accessorKey: "osc_product.product_type",
         header: "Product Type",
+        size: 200,
       },
       {
         accessorKey: "osc_product.duration",
         header: "Duration",
+        size: 150,
       },
       {
         accessorKey: "start_date",
         header: "Start Date",
         Cell: ({ row }) => getFormattedDate(row.original.start_date),
+        size: 150,
       },
       {
         accessorKey: "end_date",
         header: "End Date",
         Cell: ({ row }) => getFormattedDate(row.original.end_date),
+        size: 150,
       },
     ],
     []

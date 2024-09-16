@@ -30,6 +30,9 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
     syncWithLocation: false,
     resource: "transactions",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const router = useRouter();

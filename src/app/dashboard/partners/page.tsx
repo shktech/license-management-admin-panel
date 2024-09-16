@@ -25,7 +25,11 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<Partner>();
+  } = useTable<Partner>({
+    pagination: {
+      pageSize: 15,
+    },
+  });
 
   const handleRowClick = (row: Partner) => {
     push(`/dashboard/partners/show?id=${row.partner_id}`);

@@ -36,7 +36,10 @@ const Page = () => {
         operator: "contains",
         value: "recent"
       }
-    ]
+    ],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const { push } = useNavigation();

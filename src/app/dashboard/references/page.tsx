@@ -40,6 +40,7 @@ const Page = () => {
       {
         accessorKey: "reference_description",
         header: "Description",
+        size: 250,
       },
       {
         accessorKey: "active",
@@ -47,6 +48,7 @@ const Page = () => {
         Cell: ({ renderedCellValue }) => (
           <StateComponent active={renderedCellValue as boolean} />
         ),
+        size: 100,
       },
     ],
     []

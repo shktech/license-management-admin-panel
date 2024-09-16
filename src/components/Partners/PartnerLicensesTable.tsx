@@ -24,6 +24,9 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
     syncWithLocation: false,
     resource: "assets",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const router = useRouter();

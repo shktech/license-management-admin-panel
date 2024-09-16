@@ -30,6 +30,9 @@ const Page = () => {
     setSorters,
   } = useTable<ReferenceCode>({
     resource: `references/${params?.id}/codes`,
+    pagination: {
+      pageSize: 15,
+    },
   });
   const reference: Reference = data?.data as Reference;
 

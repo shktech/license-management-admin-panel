@@ -30,6 +30,9 @@ const Page = () => {
         order: "desc",
       },
     ],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const { push } = useNavigation();

@@ -88,6 +88,9 @@ const CustomerForm = ({
     resource: `partners`,
     // initialFilter: [{ field: "type", operator: "eq", value: customer.type }],
     syncWithLocation: false,
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const handleValueChange = (event: any, newValue: Partner | null) => {
