@@ -39,7 +39,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yesterdayString = yesterday.toISOString().split("T")[0];
-      
+
       setValue("start_date", yesterdayString);
       setValue("end_date", yesterdayString);
       setValue("transaction_action", initialInfo.transaction_action);

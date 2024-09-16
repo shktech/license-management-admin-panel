@@ -258,6 +258,14 @@ const CustomerForm = ({
                 backgroundColor: "#dfe6ec",
               },
             }}
+            renderValue={(selected) => {
+              const selectedAddress = addresses.find(
+                (ad) => ad?.address_id === selected
+              );
+              return selectedAddress
+                ? `${selectedAddress.address1} ${selectedAddress.address2}`
+                : "";
+            }} // C
           >
             {addresses.map((ad, i) => (
               <MenuItem value={ad?.address_id}>
@@ -293,6 +301,14 @@ const CustomerForm = ({
                 backgroundColor: "#dfe6ec",
               },
             }}
+            renderValue={(selected) => {
+              const selectedContact = contacts.find(
+                (c) => c?.contact_id === selected
+              );
+              return selectedContact
+                ? `${selectedContact.first_name} ${selectedContact.last_name}`
+                : "";
+            }} // Custom display for selected value
           >
             {contacts.map((c, i) => (
               <MenuItem value={c?.contact_id}>
