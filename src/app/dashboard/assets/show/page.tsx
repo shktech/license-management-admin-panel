@@ -64,8 +64,9 @@ const Page = () => {
       {
         accessorKey: "seat_id",
         header: "Seat Number",
-        Cell: ({ renderedCellValue }) =>
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-12">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "status",
@@ -96,7 +97,7 @@ const Page = () => {
     { title: "End Date", key: "end_date" },
     { title: "License Key", key: "license_key" },
     { title: "Owner Name", key: "owner.name" },
-    { title: "Product Part Name", key: "osc_product.product_name" },
+    { title: "Product Part Name", key: "osc_product.product_name", size: 2 },
     { title: "Vender Part Name", key: "osc_product.vendor_name" },
   ];
 
@@ -156,11 +157,13 @@ const Page = () => {
           <Loader />
         ) : (
           <>
-            <div className="grid grid-cols-4 px-12 mt-8 gap-y-4 gap-x-4">
+            <div className="grid grid-cols-4 items-start gap-x-8 gap-y-6 px-12 mt-8">
               {summaryfields.map((field) => (
-                <div className="flex flex-col gap-1">
-                  <div className="text-[#778599]">{field.title}</div>
-                  <div className="text-[#515f72] text-xl font-medium">
+                <div key={field.key} className="flex flex-col gap-1 text-lg">
+                  <div className="text-[#515f72] font-semibold">
+                    {field.title}
+                  </div>
+                  <div className="text-[#687991]">
                     {getNestedValue(asset, field.key)}
                   </div>
                 </div>

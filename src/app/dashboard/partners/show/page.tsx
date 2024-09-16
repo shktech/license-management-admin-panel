@@ -137,10 +137,12 @@ const Item = () => {
           <>
             <div className="flex gap-16 px-12 mt-8">
               {summaryfields.map((field) => (
-                <div key={field.key} className="flex flex-col gap-1">
-                  <div className="text-[#778599]">{field.title}</div>
-                  <div className="text-[#515f72] text-xl font-semibold">
-                    {field.value || getNestedValue(partner, field.key)}
+                <div key={field.key} className="flex flex-col gap-1 text-lg">
+                  <div className="text-[#515f72] font-semibold">
+                    {field.title}
+                  </div>
+                  <div className="text-[#687991]">
+                    {getNestedValue(partner, field.key)}
                   </div>
                 </div>
               ))}

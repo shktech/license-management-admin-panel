@@ -190,29 +190,30 @@ const Page = () => {
           }
         >
           <div>
-            <div className="px-12 flex gap-8 pt-4 pb-12">
+            
+            <div className="px-12 flex gap-10 pt-4 pb-12 text-base">
               <div className="">
-                <div className="text-[#778599]">Reference Name</div>
-                <div className="text-[#515f72] text-xl font-semibold">
+                <div className="text-[#515f72] font-semibold">Reference Name</div>
+                <div className="text-[#687991] ">
                   {reference?.reference_name}
                 </div>
               </div>
               <div className="">
-                <div className="text-[#778599]">Start Date</div>
-                <div className="text-[#515f72] text-xl font-semibold">
+                <div className="text-[#515f72] font-semibold">Start Date</div>
+                <div className="text-[#687991] ">
                   {getFormattedDate(reference?.start_date)}
                 </div>
               </div>
               <div className="">
-                <div className="text-[#778599]">End Date</div>
-                <div className="text-[#515f72] text-xl font-semibold">
+                <div className="text-[#515f72] font-semibold">End Date</div>
+                <div className="text-[#687991] ">
                   {getFormattedDate(reference?.end_date)}
                 </div>
               </div>
 
               <div className="">
-                <div className="text-[#778599]">Reference Description</div>
-                <div className="text-[#515f72] text-xl font-semibold">
+                <div className="text-[#515f72] font-semibold">Reference Description</div>
+                <div className="text-[#687991] ">
                   {reference?.reference_description}
                 </div>
               </div>

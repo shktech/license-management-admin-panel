@@ -11,7 +11,7 @@ import BasicInformation from "./BasicInformation";
 import AssetInformation from "./AssetInformation";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 import { faCubes } from "@fortawesome/free-solid-svg-icons";
 import {
   faChartBar,
@@ -33,62 +33,28 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
   };
 
   const summaryfields = [
-    { title: "Transaction Number", key: "transaction_number" },
-    {
-      title: "Transaction Date",
-      key: "transaction_date",
-      value: getFormattedDate(transaction?.transaction_date),
-    },
+    { title: "Txn Number", key: "transaction_number" },
+    { title: "Txn Date", key: "transaction_date", value: getFormattedDate(transaction?.transaction_date) },
+    { title: "Txn Source", key: "transaction_source" },
+    { title: "Txn Action", key: "transaction_action" },
     { title: "Bill Customer", key: "bill_customer.name" },
-    { title: "Ship Customer", key: "ship_customer.name" },
-    { title: "Transaction Action", key: "transaction_action" },
-    { title: "Transaction Status", key: "transaction_status" },
-    { title: "Transaction Source", key: "transaction_source" },
-    { title: "Source Ref Number", key: "source_reference_number" },
-    { title: "Source Ref Date", key: "source_reference_date" },
-    { title: "Source Ref ID", key: "source_reference_id" },
-    { title: "Product Type", key: "asset.license_type" },
-    { title: "Transaction Quantity", key: "quantity" },
-    { title: "Transaction License Key", key: "asset.license_key" },
-    {
-      title: "Product Part Number",
-      key: "asset.osc_product.product_part_number",
-    },
+    { title: "Product Part Number", key: "asset.osc_product.product_part_number" },
     { title: "Seat Count", key: "asset.osc_seat_count" },
-    { title: "License Key", key: "asset.license_key" },
+    { title: "Txn Status", key: "transaction_status" },
   ];
-  const halfItems = Math.ceil(summaryfields.length / 2);
-  const firstHalfItems = summaryfields.slice(0, halfItems);
   return (
     <div>
-      <div className="grid grid-cols-2 mt-8">
-        {firstHalfItems.map((item, index) => (
-          <>
-            <div
-              key={index}
-              className={`grid grid-cols-5 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
-            >
-              <div className="col-span-2 text-base font-medium text-[#666f75]">
-                {item.title}
-              </div>
-              <div className="col-span-3 text-base font-semibold text-[#666f75]">
-                {item.value || getNestedValue(transaction, item.key)}
+      <div>
+        <div className="grid grid-cols-4 items-start gap-x-8 gap-y-6 px-12 mt-8">
+          {summaryfields.map((field) => (
+            <div key={field.key} className="flex flex-col gap-1 text-lg">
+              <div className="text-[#515f72] font-semibold">{field.title}</div>
+              <div className="text-[#687991]">
+                {field.value || getNestedValue(transaction, field.key)}
               </div>
             </div>
-            <div
-              key={index + halfItems}
-              className={`grid grid-cols-5 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
-            >
-              <div className="col-span-2 text-base font-medium text-[#666f75] col-span-1">
-                {summaryfields[index + halfItems]?.title}
-              </div>
-              <div className="col-span-3 text-base font-semibold text-[#666f75]">
-                {summaryfields[index + halfItems]?.value ||
-                  getNestedValue(transaction, summaryfields[index + halfItems]?.key as string)}
-              </div>
-            </div>
-          </>
-        ))}
+          ))}
+        </div>
       </div>
       <div className="">
         <div className="px-12 pt-4">
