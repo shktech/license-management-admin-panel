@@ -40,7 +40,7 @@ const AutoComplete: React.FC<DropdownProps> = ({
       initial: [{ field: "searchKey", operator: "contains", value: "" }],
     },
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

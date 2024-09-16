@@ -17,6 +17,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { partnerTypes } from "@data/PartnerTypeData";
+import { DefaultPageSize } from "@data/UtilData";
 
 const Page = () => {
   const { push } = useNavigation();
@@ -27,7 +28,7 @@ const Page = () => {
     setSorters,
   } = useTable<Partner>({
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

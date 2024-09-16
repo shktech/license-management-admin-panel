@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import CommonDeleteModal from "@components/common/CommonDeleteModal";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface CustomerTableProps {
   resource: string;
@@ -25,7 +26,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
   } = useTable<Customer>({
     resource: `customers/${resource}`,
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

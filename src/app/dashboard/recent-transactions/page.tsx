@@ -17,6 +17,7 @@ import {
   faRightLeft,
   faTentArrowLeftRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { DefaultPageSize } from "@data/UtilData";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading },
@@ -38,7 +39,7 @@ const Page = () => {
       }
     ],
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

@@ -13,6 +13,7 @@ import {
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
+import { DefaultPageSize } from "@data/UtilData";
 
 const Page = () => {
   const { params } = useParsed();
@@ -31,7 +32,7 @@ const Page = () => {
   } = useTable<ReferenceCode>({
     resource: `references/${params?.id}/codes`,
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
   const reference: Reference = data?.data as Reference;

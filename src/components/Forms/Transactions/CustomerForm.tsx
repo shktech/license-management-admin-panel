@@ -18,6 +18,7 @@ import {
 import { useTable } from "@refinedev/core";
 import { getInputCustomer } from "@utils/utilFunctions";
 import { IOSSwitch } from "@components/Input/GeneralSwitch";
+import { DefaultPageSize } from "@data/UtilData";
 
 export type CustomerFormProps = GenericFormProps & {
   reset?: any;
@@ -89,7 +90,7 @@ const CustomerForm = ({
     // initialFilter: [{ field: "type", operator: "eq", value: customer.type }],
     syncWithLocation: false,
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

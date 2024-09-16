@@ -13,6 +13,7 @@ import {
 import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface PartnerTransactionTableProps {
   partner_id?: string;
@@ -31,7 +32,7 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
     resource: "transactions",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 
