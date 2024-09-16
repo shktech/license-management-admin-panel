@@ -32,7 +32,7 @@ const Page = () => {
       },
     ],
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
   });
 
@@ -60,54 +60,43 @@ const Page = () => {
     () => [
       {
         accessorKey: "transaction_number",
-        header: "Txn Number",
-        size: 50,
-        Cell: ({ renderedCellValue }) =>
+        header: "Txn Number", // Changed to string
+        size: 20,
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "transaction_date",
         header: "Txn Date",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) =>
           getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "transaction_source",
         header: "Txn Source",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "source_reference_number",
-        header: "Source Ref Number",
-        size: 50,
-      },
-      {
-        accessorKey: "source_reference_id",
-        header: "Source Ref ID",
-        size: 50,
-      },
-      {
-        accessorKey: "source_reference_date",
-        header: "Source Ref Date",
-        size: 50,
-        Cell: ({ renderedCellValue }) =>
-          getFormattedDate(renderedCellValue as string),
+        header: "Source Ref #",
+        size: 100,
       },
       {
         accessorKey: "bill_customer.name",
         header: "Bill Customer",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "ship_customer.name",
-        header: "Bill Customer",
-        size: 50,
+        header: "Ship Customer",
+        size: 100,
       },
       {
         accessorKey: "asset.license_type",
         header: "Product Type",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) => (
           <Box
             component="span"
@@ -124,19 +113,22 @@ const Page = () => {
       {
         accessorKey: "asset.osc_product.product_part_number",
         header: "Product Part Number",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "seat_number",
         header: "Seats Count",
-        size: 50,
-        Cell: ({ row }) =>
-          <div className="text-right w-full pr-7">{row.original.asset?.seats?.length}</div>
+        size: 100,
+        Cell: ({ row }) => (
+          <div className="text-right w-full pr-7">
+            {row.original.asset?.seats?.length}
+          </div>
+        ),
       },
       {
         accessorKey: "transaction_action",
         header: "Txn Action",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) => (
           <Box
             component="span"
@@ -152,7 +144,7 @@ const Page = () => {
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) => (
           <Box
             component="span"
