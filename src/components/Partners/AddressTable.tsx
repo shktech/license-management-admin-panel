@@ -5,6 +5,7 @@ import { Address, Customer } from "../../types/types";
 import React, { useMemo } from "react";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import GenericTable from "@components/Table/GenericTable";
+import StateComponent from "@components/common/StateComponent";
 interface AddressTableProps {
   data: Partial<Address[]>;
   partner_id: string;
@@ -49,9 +50,9 @@ const AddressTable: React.FC<AddressTableProps> = ({ data, partner_id }) => {
         header: "Active",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <div
-            className={`rounded-full h-4 w-4 ${renderedCellValue ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-          ></div>
+          <div className="flex items-center justify-center">
+            <StateComponent active={renderedCellValue as boolean} />
+          </div>
         ),
       },
     ],

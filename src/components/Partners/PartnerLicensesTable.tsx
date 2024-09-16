@@ -68,7 +68,9 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
       {
         accessorKey: "seat_number",
         header: "Number of Seats",
-        Cell: ({ row }) => row.original?.seats?.length,
+        Cell: ({ row }) =>
+          <div className="text-right w-full pr-12">{row.original?.seats?.length}</div>
+
       },
     ],
     []

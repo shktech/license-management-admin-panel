@@ -59,24 +59,24 @@ const Page = () => {
       {
         accessorKey: "account_id",
         header: "Account ID",
-        size: 50,
+        size: 30,
       },
       {
         accessorKey: "name",
         header: "Name",
-        size: 50,
+        size: 300,
       },
       {
         accessorKey: "type",
         header: "Type",
-        size: 50,
+        size: 300,
         Cell: ({ renderedCellValue }) => (
           <span
             className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
             style={{
-              backgroundColor: partnerTypes.find(
-                (type) => type.value === renderedCellValue
-              )?.color || "#ff3838",
+              backgroundColor:
+                partnerTypes.find((type) => type.value === renderedCellValue)
+                  ?.color || "#ff3838",
             }}
           >
             {renderedCellValue}
@@ -88,7 +88,9 @@ const Page = () => {
         header: "Active",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <div className="flex items-center justify-center">
+            <StateComponent active={renderedCellValue as boolean} />
+          </div>
         ),
       },
     ],
@@ -128,18 +130,16 @@ const Page = () => {
                     },
                   }}
                 >
-                  {
-                    partnerTypes.map((type) => (
-                      <MenuItem value={type.value} key={type.label}>
-                        <span
-                          className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
-                          style={{ backgroundColor: type.color }}
-                        >
-                          {type.label}
-                        </span>
-                      </MenuItem>
-                    ))
-                  }
+                  {partnerTypes.map((type) => (
+                    <MenuItem value={type.value} key={type.label}>
+                      <span
+                        className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
+                        style={{ backgroundColor: type.color }}
+                      >
+                        {type.label}
+                      </span>
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>

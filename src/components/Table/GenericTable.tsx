@@ -121,15 +121,16 @@ const GenericTable = <T extends MRT_RowData>({
     muiTableBodyCellProps: ({ cell }) => ({
       sx: {
         padding: cell.column.getIndex() === 0 ? "1rem 1rem 1rem 3rem" : "", // Set padding for the first column
-        // backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
+        // textAlign: 'center'
       },
+      align: 'center'
     }),
     muiTableHeadCellProps: ({ column }) => ({
       sx: {
         padding: column.getIndex() === 0 ? "1rem 1rem 1rem 3rem" : "",
-        // backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
         verticalAlign: "middle",
       },
+      align: 'center'
     }),
     muiPaginationProps: {
       color: "primary",

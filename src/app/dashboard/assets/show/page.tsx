@@ -64,6 +64,8 @@ const Page = () => {
       {
         accessorKey: "seat_id",
         header: "Seat Number",
+        Cell: ({ renderedCellValue }) =>
+          <div className="text-right w-full pr-12">{renderedCellValue}</div>
       },
       {
         accessorKey: "status",
