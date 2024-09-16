@@ -32,12 +32,15 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   const handleClose = () => {
     setOpenDrawer(false);
   };
-  const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
-    () => [
+  const columns = useMemo<MRT_ColumnDef<Transaction>[]>(() => {
+    return [
       {
         accessorKey: "transaction_number",
         header: "Txn Number",
         size: 50,
+        Cell: ({ renderedCellValue }) => (
+          <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "transaction_date",
@@ -102,10 +105,11 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         accessorKey: "quantity",
         header: "quantity",
         size: 50,
+        Cell: ({ renderedCellValue }) =>
+          <div className="text-right w-full pr-7">{renderedCellValue}</div>
       },
-    ],
-    []
-  );
+    ];
+  }, []);
 
   return (
     <>

@@ -25,6 +25,7 @@ import { Box, Modal } from "@mui/material";
 import { modalStyle, tagStyle } from "@data/MuiStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import StateComponent from "@components/common/StateComponent";
 
 const Page = () => {
   const {
@@ -123,7 +124,7 @@ const Page = () => {
         size: 150,
         Cell: ({ renderedCellValue }) => {
           return (
-            <div className="flex gap-2">
+            <div className="flex items-center justify-center">
               {(renderedCellValue as Organization[]).toString()}
             </div>
           );
@@ -134,10 +135,8 @@ const Page = () => {
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <div className="flex items-center">
-            <div
-              className={`w-4 h-4 rounded-full ${renderedCellValue ? "bg-active" : "bg-inactive"}`}
-            ></div>
+          <div className="flex items-center justify-center">
+            <StateComponent active={renderedCellValue as boolean} />
           </div>
         ),
       },
@@ -147,7 +146,7 @@ const Page = () => {
         size: 150,
         Cell: ({ renderedCellValue }) => {
           return (
-            <div className="flex gap-2">
+            <div className="flex items-center justify-center">
               {(renderedCellValue as Role[])?.map((role) => (
                 <div
                   key={role.name}

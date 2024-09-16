@@ -69,15 +69,17 @@ const UserItem = () => {
           horizontal: "left", // or 'right'
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <Link
-            href="/dashboard/user-profile"
-            className="flex gap-2 py-1 pr-2 text-sm items-center"
-          >
-            <PersonIcon />
-            My Profile
-          </Link>
-        </MenuItem>
+        {!identity?.is_superuser && (
+          <MenuItem onClick={handleClose}>
+            <Link
+              href="/dashboard/user-profile"
+              className="flex gap-2 py-1 pr-2 text-sm items-center"
+            >
+              <PersonIcon />
+              My Profile
+            </Link>
+          </MenuItem>
+        )}
         <MenuItem onClick={() => logout()}>
           <div className="flex gap-2 py-1 pr-2 text-sm items-center">
             <LogoutIcon />

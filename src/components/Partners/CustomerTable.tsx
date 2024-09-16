@@ -24,6 +24,9 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ resource }) => {
     setSorters,
   } = useTable<Customer>({
     resource: `customers/${resource}`,
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const [openDrawer, setOpenDrawer] = React.useState(false);

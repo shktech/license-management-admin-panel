@@ -24,6 +24,9 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
     syncWithLocation: false,
     resource: "assets",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const router = useRouter();
@@ -65,7 +68,9 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
       {
         accessorKey: "seat_number",
         header: "Number of Seats",
-        Cell: ({ row }) => row.original?.seats?.length,
+        Cell: ({ row }) =>
+          <div className="text-right w-full pr-12">{row.original?.seats?.length}</div>
+
       },
     ],
     []

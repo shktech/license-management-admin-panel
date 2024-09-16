@@ -11,6 +11,7 @@ import { tagStyle } from "@data/MuiStyles";
 import moment from "moment-timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import StateComponent from "@components/common/StateComponent";
 
 const Page = () => {
   const {
@@ -37,6 +38,7 @@ const Page = () => {
   };
 
   const formatTime = (_date: any) => {
+    if (_date == null) return '';
     const userTimezone = moment.tz.guess();
     return formatDateTimeWithCustomFormat(_date, userTimezone);
   };
@@ -46,17 +48,17 @@ const Page = () => {
       {
         accessorKey: "scheduled_time",
         header: "Scheduled Time",
-        size: 150,
+        size: 300,
         Cell: ({ renderedCellValue }) => <>{formatTime(renderedCellValue)}</>,
       },
       {
         accessorKey: "is_recurring",
         header: "Recurring",
-        size: 180,
+        size: 100,
         Cell: ({ renderedCellValue }) => (
-          <div
-            className={`rounded-full w-4 h-4 ${renderedCellValue ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-          ></div>
+          <div className="flex items-center justify-center">
+            <StateComponent active={renderedCellValue as boolean} />
+          </div>
         ),
       },
       {
@@ -67,7 +69,7 @@ const Page = () => {
       {
         accessorKey: "email_template",
         header: "Email Template",
-        size: 200,
+        size: 300,
       },
       {
         accessorKey: "active",

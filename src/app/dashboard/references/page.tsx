@@ -40,13 +40,17 @@ const Page = () => {
       {
         accessorKey: "reference_description",
         header: "Description",
+        size: 250,
       },
       {
         accessorKey: "active",
         header: "Active",
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <div className="flex items-center justify-center">
+            <StateComponent active={renderedCellValue as boolean} />
+          </div>
         ),
+        size: 100,
       },
     ],
     []

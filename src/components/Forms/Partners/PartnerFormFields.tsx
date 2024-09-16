@@ -10,8 +10,9 @@ const InitialField: InitialFieldConfig[] = [
     size: 2,
     required: "text",
     options: [
-      { value: "Direct End User", label: "Direct End User" },
-      { value: "Channel", label: "Channel" },
+      { value: "End User", label: "End User" },
+      { value: "Reseller", label: "Reseller" },
+      { value: "Disty", label: "Disty" },
     ],
   },
 ];
@@ -25,8 +26,9 @@ const InitialCreateField: InitialFieldConfig[] = [
     size: 2,
     required: "text",
     options: [
-      { value: "Direct End User", label: "Direct End User" },
-      { value: "Channel", label: "Channel" },
+      { value: "End User", label: "End User" },
+      { value: "Reseller", label: "Reseller" },
+      { value: "Disty", label: "Disty" },
     ],
   },
   { name: "address1", required: "text" },

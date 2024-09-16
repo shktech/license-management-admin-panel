@@ -474,20 +474,20 @@ const Page = () => {
         <div>
           <div className="px-12 grid grid-cols-4 gap-4  pt-4 pb-12">
             <div className="">
-              <div className="text-[#778599]">Lookup Name</div>
-              <div className="text-[#515f72] text-xl font-semibold">
+              <div className="text-[#515f72] font-semibold">Lookup Name</div>
+              <div className="text-[#687991]">
                 {lookup?.lookup_name}
               </div>
             </div>
             <div className="">
-              <div className="text-[#778599]">Lookup Type</div>
-              <div className="text-[#515f72] text-xl font-semibold">
+              <div className="text-[#515f72] font-semibold">Lookup Type</div>
+              <div className="text-[#687991]">
                 {lookup?.type}
               </div>
             </div>
             <div className="col-span-2">
-              <div className="text-[#778599]">Lookup Description</div>
-              <div className="text-[#515f72] text-xl font-semibold">
+              <div className="text-[#515f72] font-semibold">Lookup Description</div>
+              <div className="text-[#687991]">
                 {lookup?.description}
               </div>
             </div>

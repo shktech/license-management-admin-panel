@@ -81,9 +81,9 @@ export const menuGroups: MenuGroup[] = [
         label: "Reports",
         route: "#",
         children: [
-          { label: "Run Report", route: "/dashboard/run-report" },
-          { label: "Report History", route: "/dashboard/report-history" },
-          { label: "Log History", route: "/dashboard/log-history" },
+          { label: "Run Report", route: "#" },
+          { label: "Report History", route: "#" },
+          { label: "Log History", route: "#" },
         ],
       },
     ],

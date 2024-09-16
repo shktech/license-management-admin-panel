@@ -25,12 +25,7 @@ import {
   faRightLeft,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-
-const partnerColors = {
-  All: "#4A90E2",
-  Channel: "#FFCC00",
-  "Direct End User": "#34C759",
-};
+import { partnerTypes } from "@data/PartnerTypeData";
 
 const Item = () => {
   const { params } = useParsed();
@@ -71,7 +66,12 @@ const Item = () => {
       key: "type",
       value: (
         <span
-          className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}
+          className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
+          style={{
+            backgroundColor:
+              partnerTypes.find((type) => type.value === partner?.type)
+                ?.color || "#ff3838",
+          }}
         >
           {partner?.type}
         </span>
@@ -110,7 +110,12 @@ const Item = () => {
                 <div className="text-lg font-normal">{partner?.name}</div>
               </div>
               <span
-                className={`text-xs bg-[${partnerColors[partner?.type as keyof typeof partnerColors]}] text-white px-6 py-1 rounded-full text-center font-semibold`}
+                className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
+                style={{
+                  backgroundColor:
+                    partnerTypes.find((type) => type.value === partner?.type)
+                      ?.color || "#ff3838",
+                }}
               >
                 {partner?.type}
               </span>
@@ -132,10 +137,12 @@ const Item = () => {
           <>
             <div className="flex gap-16 px-12 mt-8">
               {summaryfields.map((field) => (
-                <div key={field.key} className="flex flex-col gap-1">
-                  <div className="text-[#778599]">{field.title}</div>
-                  <div className="text-[#515f72] text-xl font-semibold">
-                    {field.value || getNestedValue(partner, field.key)}
+                <div key={field.key} className="flex flex-col gap-1 text-lg">
+                  <div className="text-[#515f72] font-semibold">
+                    {field.title}
+                  </div>
+                  <div className="text-[#687991]">
+                    {getNestedValue(partner, field.key)}
                   </div>
                 </div>
               ))}

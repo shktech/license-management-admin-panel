@@ -32,10 +32,13 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
   return (
     <>
       <li>
-        <Link
+        <Button
           href={item.route}
           onClick={handleClick}
           className={`flex items-center justify-start gap-2.5 px-4 py-2 rounded-md relative ${isItemActive ? "text-[#e3ebff]" : "text-[#7184ab]"} transition-colors duration-300 ease-in-out`}
+          sx={{
+            textTransform: 'none',
+          }}
         >
           {item.icon}
           <span className={`${isItemActive ? "font-medium" : "font-normal"}`}>
@@ -58,7 +61,7 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
               />
             </svg>
           )}
-        </Link>
+        </Button>
 
         {item.children && (
           <div

@@ -36,7 +36,10 @@ const Page = () => {
         operator: "contains",
         value: "recent"
       }
-    ]
+    ],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const { push } = useNavigation();
@@ -65,6 +68,8 @@ const Page = () => {
         accessorKey: "transaction_number",
         header: "Txn Number",
         size: 50,
+        Cell: ({ renderedCellValue }) =>
+          <div className="text-right w-full pr-7">{renderedCellValue}</div>
       },
       {
         accessorKey: "transaction_date",
@@ -131,7 +136,8 @@ const Page = () => {
         accessorKey: "seat_number",
         header: "Number of Seats",
         size: 50,
-        Cell: ({ row }) => row.original.asset?.seats?.length,
+        Cell: ({ row }) =>
+          <div className="text-right w-full pr-7">{row.original.asset?.seats?.length}</div>
       },
       {
         accessorKey: "transaction_action",

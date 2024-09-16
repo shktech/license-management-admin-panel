@@ -88,14 +88,13 @@ const Item = () => {
         ) : (
           <>
             <div className="">
-              <div className="flex items-end gap-x-8 gap-y-6 px-12 mt-8">
+              <div className="grid grid-cols-5 items-start gap-x-8 gap-y-6 px-12 mt-8">
                 {summaryfields.map((field) => (
-                  <div
-                    key={field.key}
-                    className="flex flex-col gap-1 col-span-4"
-                  >
-                    <div className="text-[#778599]">{field.title}</div>
-                    <div className="text-[#515f72] text-xl font-semibold">
+                  <div key={field.key} className="flex flex-col gap-1 text-lg">
+                    <div className="text-[#515f72] font-semibold">
+                      {field.title}
+                    </div>
+                    <div className="text-[#687991]">
                       {getNestedValue(product, field.key)}
                     </div>
                   </div>

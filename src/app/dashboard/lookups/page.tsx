@@ -6,6 +6,7 @@ import { useNavigation, useTable } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
+import StateComponent from "@components/common/StateComponent";
 
 const HomePage: React.FC = () => {
   const {
@@ -51,9 +52,9 @@ const HomePage: React.FC = () => {
         header: "Active",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <div
-            className={`rounded-full h-4 w-4 ${renderedCellValue ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-          ></div>
+          <div className="flex items-center justify-center">
+            <StateComponent active={renderedCellValue as boolean} />
+          </div>
         ),
       },
     ],

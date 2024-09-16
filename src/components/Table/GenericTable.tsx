@@ -15,6 +15,7 @@ import SearchInput from "@components/Input/SearchInput";
 import { tableAddButton } from "@data/MuiStyles";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@/assets/icons/search.svg?icon";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface GenericTableProps<T extends MRT_RowData> {
   title?: React.ReactNode;
@@ -120,15 +121,16 @@ const GenericTable = <T extends MRT_RowData>({
     muiTableBodyCellProps: ({ cell }) => ({
       sx: {
         padding: cell.column.getIndex() === 0 ? "1rem 1rem 1rem 3rem" : "", // Set padding for the first column
-        // backgroundColor: cell.column.id == "actions" ? '#0080ff' : 'inherit'
+        // textAlign: 'center'
       },
+      align: 'center'
     }),
     muiTableHeadCellProps: ({ column }) => ({
       sx: {
         padding: column.getIndex() === 0 ? "1rem 1rem 1rem 3rem" : "",
-        // backgroundColor: column.id == "actions" ? '#0080ff' : 'inherit',
         verticalAlign: "middle",
       },
+      align: 'center'
     }),
     muiPaginationProps: {
       color: "primary",
@@ -141,6 +143,10 @@ const GenericTable = <T extends MRT_RowData>({
       columnPinning: {
         left: [],
         right: ["actions"],
+      },
+      pagination: {
+        pageIndex: 0,
+        pageSize: DefaultPageSize,
       },
     },
     state: {
@@ -224,7 +230,7 @@ const GenericTable = <T extends MRT_RowData>({
                 <div className="p-8">
                   <Pagination
                     onChange={handlePageChange}
-                    count={Math.floor(totalCount / 10) + 1}
+                    count={Math.ceil(totalCount / table.getState().pagination.pageSize)}
                     color="primary"
                     shape="rounded"
                   />

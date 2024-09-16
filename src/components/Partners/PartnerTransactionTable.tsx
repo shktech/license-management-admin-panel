@@ -30,6 +30,9 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
     syncWithLocation: false,
     resource: "transactions",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
+    pagination: {
+      pageSize: 15,
+    },
   });
 
   const router = useRouter();
@@ -48,6 +51,8 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
         accessorKey: "transaction_number",
         header: "Txn Number",
         size: 50,
+        Cell: ({ renderedCellValue }) =>
+          <div className="text-right w-full pr-7">{renderedCellValue}</div>
       },
       {
         accessorKey: "transaction_date",
@@ -150,7 +155,8 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
         accessorKey: "seat_number",
         header: "Number of Seats",
         size: 50,
-        Cell: ({ row }) => row.original.asset?.seats?.length,
+        Cell: ({ row }) =>
+          <div className="text-right w-full pr-7">{row.original.asset?.seats?.length}</div>
       },
     ],
     []
