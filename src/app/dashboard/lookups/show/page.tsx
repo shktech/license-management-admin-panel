@@ -196,7 +196,7 @@ const Page = () => {
       },
       {
         accessorKey: "dependency",
-        header: "dependency",
+        header: "Dependency",
       },
       {
         accessorKey: "active",

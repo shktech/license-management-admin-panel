@@ -4,7 +4,7 @@ import { Product } from "../../../types/types";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
 import AttributeFormFields from "./AttributeFormFields";
-import MainInformationFormFields from "./MainInformationFormFields";
+import { MainInformationFormFields } from "./MainInformationFormFields";
 
 export type ProductFormProps = GenericFormProps & {
   product?: Product;
@@ -12,10 +12,11 @@ export type ProductFormProps = GenericFormProps & {
 };
 
 const ProductForm = (props: ProductFormProps) => {
+  console.log(props.product);
   const FormGroups = [
     {
       title: "Main Information",
-      fields: MainInformationFormFields,
+      fields: props.product ? MainInformationFormFields.edit : MainInformationFormFields.create,
     },
     {
       title: "Attributes",

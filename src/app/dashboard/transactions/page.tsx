@@ -17,6 +17,7 @@ import {
   faRightLeft,
   faTentArrowLeftRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { DefaultPageSize } from "@data/UtilData";
 const Page = () => {
   const {
     tableQueryResult: { data, isLoading },
@@ -31,7 +32,7 @@ const Page = () => {
       },
     ],
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 
@@ -77,16 +78,6 @@ const Page = () => {
         size: 50,
       },
       {
-        accessorKey: "bill_customer.name",
-        header: "Bill Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "ship_customer.name",
-        header: "Bill Customer",
-        size: 50,
-      },
-      {
         accessorKey: "source_reference_number",
         header: "Source Ref Number",
         size: 50,
@@ -102,6 +93,16 @@ const Page = () => {
         size: 50,
         Cell: ({ renderedCellValue }) =>
           getFormattedDate(renderedCellValue as string),
+      },
+      {
+        accessorKey: "bill_customer.name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "ship_customer.name",
+        header: "Bill Customer",
+        size: 50,
       },
       {
         accessorKey: "asset.license_type",
@@ -127,7 +128,7 @@ const Page = () => {
       },
       {
         accessorKey: "seat_number",
-        header: "Number of Seats",
+        header: "Seats Count",
         size: 50,
         Cell: ({ row }) =>
           <div className="text-right w-full pr-7">{row.original.asset?.seats?.length}</div>

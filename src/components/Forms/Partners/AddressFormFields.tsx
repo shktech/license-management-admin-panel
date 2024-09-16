@@ -6,7 +6,12 @@ const InitialField: InitialFieldConfig[] = [
   { name: "address2" },
   { name: "address", required: "text", type: "address", prefix: "" },
   { name: "postal_code", required: "text" },
-  { name: "active", type: "switch" },
 ];
 
-export default getRealFormFields(InitialField);
+export const AddressFormFields = {
+  create: getRealFormFields(InitialField),
+  edit: getRealFormFields([
+    ...InitialField,
+    { name: "active", type: "switch" },
+  ]),
+};

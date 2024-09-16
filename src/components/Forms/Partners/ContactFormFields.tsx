@@ -8,5 +8,10 @@ const InitialField: InitialFieldConfig[] = [
   { name: "email", required: "text" },
 ];
 
-
-export default getRealFormFields(InitialField);
+export const ContactFormFields = {
+  create: getRealFormFields(InitialField),
+  edit: getRealFormFields([
+    ...InitialField,
+    { name: "active", type: "switch" },
+  ]),
+};

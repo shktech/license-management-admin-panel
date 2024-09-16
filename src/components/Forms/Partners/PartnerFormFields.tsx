@@ -3,11 +3,10 @@ import { getRealFormFields } from "@utils/utilFunctions";
 
 const InitialField: InitialFieldConfig[] = [
   { name: "account_id", size: 2, required: "text" },
-  { name: "name", size: 2, required: "text" },
+  { name: "name", required: "text" },
   {
     name: "type",
     type: "dropdown",
-    size: 2,
     required: "text",
     options: [
       { value: "End User", label: "End User" },
@@ -15,15 +14,15 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Disty", label: "Disty" },
     ],
   },
+  { name: "active", type: "switch" },
 ];
 
 const InitialCreateField: InitialFieldConfig[] = [
   { name: "account_id", size: 2, required: "text" },
-  { name: "name", size: 2, required: "text" },
+  { name: "name", required: "text" },
   {
     name: "type",
     type: "dropdown",
-    size: 2,
     required: "text",
     options: [
       { value: "End User", label: "End User" },

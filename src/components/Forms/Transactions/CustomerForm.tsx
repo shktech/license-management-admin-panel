@@ -18,6 +18,7 @@ import {
 import { useTable } from "@refinedev/core";
 import { getInputCustomer } from "@utils/utilFunctions";
 import { IOSSwitch } from "@components/Input/GeneralSwitch";
+import { DefaultPageSize } from "@data/UtilData";
 
 export type CustomerFormProps = GenericFormProps & {
   reset?: any;
@@ -89,7 +90,7 @@ const CustomerForm = ({
     // initialFilter: [{ field: "type", operator: "eq", value: customer.type }],
     syncWithLocation: false,
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize,
     },
   });
 
@@ -260,7 +261,17 @@ const CustomerForm = ({
           >
             {addresses.map((ad, i) => (
               <MenuItem value={ad?.address_id}>
-                {ad?.address1 + " " + ad?.address2}
+                <div className="flex flex-col gap-1 w-full py-1">
+                  <div className="flex gap-2">
+                    {ad?.address1 + " " + ad?.address2}
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="">{ad?.city}</div>
+                    <div className="">{ad?.country}</div>
+                    <div className="">{ad?.postal_code}</div>
+                    <div className="">{ad?.state}</div>
+                  </div>
+                </div>
               </MenuItem>
             ))}
           </Select>
@@ -285,7 +296,15 @@ const CustomerForm = ({
           >
             {contacts.map((c, i) => (
               <MenuItem value={c?.contact_id}>
-                {c?.first_name + " " + c?.last_name}
+                <div className="flex flex-col gap-1 w-full py-1">
+                  <div className="flex gap-2">
+                    {c?.first_name + " " + c?.last_name}
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="">{c?.email}</div>
+                    <div className="">{c?.phone}</div>
+                  </div>
+                </div>
               </MenuItem>
             ))}
           </Select>
@@ -306,7 +325,7 @@ const CustomerForm = ({
             label="Same with shipping address"
           />
         )}
-      <GenericForm {...{ ...props, fields: fields }} setValue={setValueProps}/>
+      <GenericForm {...{ ...props, fields: fields }} setValue={setValueProps} />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import DeleteModal from "@components/Products/DeleteModal";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCubes } from "@fortawesome/free-solid-svg-icons";
+import { DefaultPageSize } from "@data/UtilData";
 
 const Page = () => {
   const {
@@ -22,7 +23,7 @@ const Page = () => {
     setSorters,
   } = useTable<Product>({
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useTable } from "@refinedev/core";
 import GenericTable from "@components/Table/GenericTable";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface PartnerLicensesTableProps {
   partner_id?: string;
@@ -25,7 +26,7 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
     resource: "assets",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
 

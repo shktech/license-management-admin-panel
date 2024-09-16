@@ -71,7 +71,7 @@ const Item = () => {
           {formLoading ? (
             <Loader />
           ) : (
-            <ProductForm {...{ control, errors, trigger, watch }} />
+            <ProductForm {...{ control, errors, trigger, watch }} product={product} />
           )}
         </Edit>
       </div>

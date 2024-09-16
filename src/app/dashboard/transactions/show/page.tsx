@@ -60,7 +60,7 @@ const TransactionShow = () => {
     return (
       <div className="flex gap-2 px-12">
         <Button
-          href={`/dashboard/transactions/create`}
+          href={`/dashboard/transactions/create?transaction_action=New`}
           sx={editRefineBtnStyle}
         >
           <AddIcon />

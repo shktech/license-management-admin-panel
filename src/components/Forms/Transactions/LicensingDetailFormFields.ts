@@ -26,7 +26,7 @@ const InitialField: InitialFieldConfig[] = [
   {
     name: "quantity",
     type: "number",
-    required: "text",
+    required: "number",
   },
   {
     name: "start_date",

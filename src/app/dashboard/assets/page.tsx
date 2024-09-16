@@ -11,6 +11,7 @@ import {
 } from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlassWater } from "@fortawesome/free-solid-svg-icons";
+import { DefaultPageSize } from "@data/UtilData";
 
 const Page = () => {
   const {
@@ -26,7 +27,7 @@ const Page = () => {
     //   },
     // ],
     pagination: {
-      pageSize: 15,
+      pageSize: DefaultPageSize
     },
   });
   const { push } = useNavigation();

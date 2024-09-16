@@ -15,6 +15,7 @@ const InitialField: InitialFieldConfig[] = [
   {
     name: "product_part_id",
     required: "text",
+    size: 2
   },
   {
     name: "osc_part_number",
@@ -28,7 +29,6 @@ const InitialField: InitialFieldConfig[] = [
   {
     name: "transaction_line_id",
     size: 2,
-    required: "text",
   },
 ];
 
