@@ -60,13 +60,13 @@ const Page = () => {
         accessorKey: "name",
         header: "Name",
         size: 100,
-        Cell: ({ renderedCellValue, row }) => (
-          <span
-            className={`${RoleColors[row.original.name as string] || RoleColors["default"]} text-white px-4 py-1 text-xs font-bold rounded-full`}
-          >
-            {renderedCellValue}
-          </span>
-        ),
+        // Cell: ({ renderedCellValue, row }) => (
+        //   <span
+        //     className={`${RoleColors[row.original.name as string] || RoleColors["default"]} text-white px-4 py-1 text-xs font-bold rounded-full`}
+        //   >
+        //     {renderedCellValue}
+        //   </span>
+        // ),
       },
 
       {

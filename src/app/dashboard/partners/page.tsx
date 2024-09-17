@@ -71,18 +71,18 @@ const Page = () => {
         accessorKey: "type",
         header: "Partner Type",
         size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <span
-            className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
-            style={{
-              backgroundColor:
-                partnerTypes.find((type) => type.value === renderedCellValue)
-                  ?.color || "#ff3838",
-            }}
-          >
-            {renderedCellValue}
-          </span>
-        ),
+        // Cell: ({ renderedCellValue }) => (
+        //   <span
+        //     className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
+        //     style={{
+        //       backgroundColor:
+        //         partnerTypes.find((type) => type.value === renderedCellValue)
+        //           ?.color || "#ff3838",
+        //     }}
+        //   >
+        //     {renderedCellValue}
+        //   </span>
+        // ),
       },
       {
         accessorKey: "partner_id",
@@ -136,12 +136,13 @@ const Page = () => {
                 >
                   {partnerTypes.map((type) => (
                     <MenuItem value={type.value} key={type.label}>
-                      <span
+                      {/* <span
                         className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
                         style={{ backgroundColor: type.color }}
                       >
                         {type.label}
-                      </span>
+                      </span> */}
+                      {type.label}
                     </MenuItem>
                   ))}
                 </Select>

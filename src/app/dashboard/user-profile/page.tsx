@@ -27,7 +27,7 @@ const Page = () => {
           <div className="text-xl font-semibold pb-8">
             Role
             <span
-              className={`${RoleColors[identity?.roles?.[0].name as string] || RoleColors["default"]} text-white mx-4 px-4 py-1 text-xs font-bold rounded-full`}
+              className={`bg-[#1f325c] text-white mx-4 px-4 py-1 text-xs font-bold rounded-full`}
             >
               {identity?.roles?.[0].name}
             </span>

@@ -64,18 +64,18 @@ const Item = () => {
     {
       title: "Partner Type",
       key: "type",
-      value: (
-        <span
-          className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
-          style={{
-            backgroundColor:
-              partnerTypes.find((type) => type.value === partner?.type)
-                ?.color || "#ff3838",
-          }}
-        >
-          {partner?.type}
-        </span>
-      ),
+      // value: (
+      //   <span
+      //     className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
+      //     style={{
+      //       backgroundColor:
+      //         partnerTypes.find((type) => type.value === partner?.type)
+      //           ?.color || "#ff3838",
+      //     }}
+      //   >
+      //     {partner?.type}
+      //   </span>
+      // ),
     },
     {
       title: "Active",
@@ -109,7 +109,7 @@ const Item = () => {
                 </div>
                 <div className="text-lg font-normal">{partner?.name}</div>
               </div>
-              <span
+              {/* <span
                 className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
                 style={{
                   backgroundColor:
@@ -123,7 +123,7 @@ const Item = () => {
                 className={`rounded-full ${partner?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"} text-xs font-medium px-4 py-1 text-white font-semibold`}
               >
                 {partner?.active ? "Active" : "Inactive"}
-              </div>
+              </div> */}
             </div>
           </div>
         }
@@ -214,19 +214,20 @@ const Item = () => {
                     },
                     {
                       label: "Partner Type",
-                      value: (
-                        <span
-                          className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
-                          style={{
-                            backgroundColor:
-                              partnerTypes.find(
-                                (type) => type.value === partner?.type
-                              )?.color || "#ff3838",
-                          }}
-                        >
-                          {partner?.type}
-                        </span>
-                      ),
+                      value: partner?.type
+                      // value: (
+                      //   <span
+                      //     className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
+                      //     style={{
+                      //       backgroundColor:
+                      //         partnerTypes.find(
+                      //           (type) => type.value === partner?.type
+                      //         )?.color || "#ff3838",
+                      //     }}
+                      //   >
+                      //     {partner?.type}
+                      //   </span>
+                      // ),
                     },
                     {
                       label: "Active",
