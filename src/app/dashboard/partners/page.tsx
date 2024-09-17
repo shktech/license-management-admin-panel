@@ -59,18 +59,18 @@ const Page = () => {
     () => [
       {
         accessorKey: "account_id",
-        header: "Account ID",
+        header: "Partner ID",
         size: 30,
       },
       {
         accessorKey: "name",
-        header: "Name",
-        size: 300,
+        header: "Partner Name",
+        size: 50,
       },
       {
         accessorKey: "type",
-        header: "Type",
-        size: 300,
+        header: "Partner Type",
+        size: 50,
         Cell: ({ renderedCellValue }) => (
           <span
             className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
@@ -85,13 +85,16 @@ const Page = () => {
         ),
       },
       {
+        accessorKey: "partner_id",
+        header: "Partner Source ID",
+        size: 30,
+      },
+      {
         accessorKey: "active",
-        header: "Active",
+        header: "Status",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <div className="flex items-center justify-center">
-            <StateComponent active={renderedCellValue as boolean} />
-          </div>
+          <StateComponent active={renderedCellValue as boolean} />
         ),
       },
     ],
