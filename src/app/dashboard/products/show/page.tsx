@@ -16,6 +16,7 @@ import GeneralInformation from "@components/common/View/GeneralInformation";
 import { getNestedValue } from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faCubes } from "@fortawesome/free-solid-svg-icons";
+import StateComponent from "@components/common/StateComponent";
 
 const Item = () => {
   const { params } = useParsed();
@@ -49,10 +50,15 @@ const Item = () => {
   };
 
   const summaryfields = [
+    { title: "Part Number", key: "product_part_number", size: 3 },
     { title: "Product Type", key: "product_type", size: 3 },
-    { title: "Vendor Name", key: "vendor_name", size: 3 },
-    { title: "Vender Part Number", key: "vendor_part_number", size: 3 },
     { title: "Duration", key: "duration", size: 3 },
+    {
+      title: "Status",
+      key: "active",
+      value: <StateComponent active={product?.active as boolean} />,
+      size: 3,
+    },
   ];
 
   return (
@@ -95,7 +101,7 @@ const Item = () => {
                       {field.title}
                     </div>
                     <div className="text-[#687991]">
-                      {getNestedValue(product, field.key)}
+                      {field.value || getNestedValue(product, field.key)}
                     </div>
                   </div>
                 ))}
@@ -110,7 +116,7 @@ const Item = () => {
                     label={
                       <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faCircleInfo} />
-                        General Information
+                        Product Detail
                       </div>
                     }
                   />
@@ -118,7 +124,7 @@ const Item = () => {
                     label={
                       <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faCubes} />
-                        Attribute
+                        Transaction History
                       </div>
                     }
                   />
@@ -131,6 +137,10 @@ const Item = () => {
                     {
                       label: "Product Part Number",
                       value: product?.product_part_number,
+                    },
+                    {
+                      label: "Part Description",
+                      value: product?.product_description,
                     },
                     {
                       label: "Product Type",
@@ -148,21 +158,6 @@ const Item = () => {
                       label: "Duration",
                       value: product?.duration,
                     },
-                    {
-                      label: "Active",
-                      value: (
-                        <div
-                          className={`rounded-full h-4 w-4 ${product?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-                        ></div>
-                      ),
-                    },
-                  ]}
-                />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={1}>
-                <GeneralInformation
-                  singleColumn={true}
-                  items={[
                     {
                       label: "Attribute1",
                       value: product?.attribute1,
@@ -186,6 +181,7 @@ const Item = () => {
                   ]}
                 />
               </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}></CustomTabPanel>
             </div>
           </>
         )}
