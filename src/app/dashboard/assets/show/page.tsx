@@ -19,6 +19,7 @@ import { useMemo, useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import EmailHistoryTable from "@components/Assets/EmailHistoryTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import {
   faCircleInfo,
   faCube,
@@ -28,6 +29,9 @@ import {
   faTentArrowLeftRight,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import StateComponent from "@components/common/StateComponent";
+import { getFormattedDate } from "@utils/utilFunctions";
+import AssetCustomersInformation from "@components/Assets/AssetCustomersInformation";
 
 const Page = () => {
   const { params } = useParsed();
@@ -93,12 +97,20 @@ const Page = () => {
   );
 
   const summaryfields = [
+    { title: "License Key", key: "license_key" },
+    { title: "Product Part Name", key: "osc_product.product_name", size: 2 },
+    { title: "Duration", key: "osc_product.duration" },
+    { title: "Product Type", key: "osc_product.product_type" },
+    { title: "Seat Count", key: "osc_seat_count" },
+    { title: "Owner", key: "owner.name" },
+    { title: "Vender Part", key: "osc_product.vendor_name" },
     { title: "Start Date", key: "start_date" },
     { title: "End Date", key: "end_date" },
-    { title: "License Key", key: "license_key" },
-    { title: "Owner Name", key: "owner.name" },
-    { title: "Product Part Name", key: "osc_product.product_name", size: 2 },
-    { title: "Vender Part Name", key: "osc_product.vendor_name" },
+    {
+      title: "Status",
+      key: "active",
+      value: <StateComponent active={asset && (asset.active as boolean)} />,
+    },
   ];
 
   const getNestedValue = (obj: any, key: string) => {
@@ -157,14 +169,14 @@ const Page = () => {
           <Loader />
         ) : (
           <>
-            <div className="grid grid-cols-4 items-start gap-x-8 gap-y-6 px-12 mt-8">
+            <div className="grid grid-cols-5 items-start gap-x-8 gap-y-6 px-12 mt-8">
               {summaryfields.map((field) => (
                 <div key={field.key} className="flex flex-col gap-1 text-lg">
                   <div className="text-[#515f72] font-semibold">
                     {field.title}
                   </div>
                   <div className="text-[#687991]">
-                    {getNestedValue(asset, field.key)}
+                    {field.value || getNestedValue(asset, field.key)}
                   </div>
                 </div>
               ))}
@@ -180,23 +192,7 @@ const Page = () => {
                     label={
                       <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faCircleInfo} />
-                        General Information
-                      </div>
-                    }
-                  />
-                  <StyledTab
-                    label={
-                      <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faCubes} />
-                        Products
-                      </div>
-                    }
-                  />
-                  <StyledTab
-                    label={
-                      <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faUser} />
-                        License
+                        License Detail
                       </div>
                     }
                   />
@@ -211,19 +207,43 @@ const Page = () => {
                   <StyledTab
                     label={
                       <div className="flex items-center gap-2">
+                        <PeopleAltIcon />
+                        Customer Details
+                      </div>
+                    }
+                  />
+                  {/* <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCubes} />
+                        Products
+                      </div>
+                    }
+                  /> */}
+                  {/* <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faUser} />
+                        License
+                      </div>
+                    }
+                  /> */}
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faEnvelope} />
                         Email History
                       </div>
                     }
                   />
-                  <StyledTab
+                  {/* <StyledTab
                     label={
                       <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faCube} />
                         Seats
                       </div>
-                    }
-                  />
+                    } 
+                  />*/}
                 </StyledTabs>
               </div>
 
@@ -232,24 +252,40 @@ const Page = () => {
                   singleColumn={true}
                   items={[
                     {
-                      label: "Active",
-                      value: (
-                        <div
-                          className={`rounded-full h-4 w-4 ${asset?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-                        ></div>
-                      ),
-                    },
-                    {
                       label: "License Key",
                       value: asset?.license_key,
                     },
                     {
-                      label: "Bill Customer",
-                      value: asset?.bill_customer?.name,
+                      label: "Part Number",
+                      value: asset?.osc_product?.product_part_number,
                     },
                     {
-                      label: "Reseller",
-                      value: asset?.reseller?.name,
+                      label: "Duration",
+                      value: asset?.osc_product?.duration,
+                    },
+                    {
+                      label: "Product Type",
+                      value: asset?.osc_product?.product_type,
+                    },
+                    {
+                      label: "Owner",
+                      value: asset?.owner?.name,
+                    },
+                    {
+                      label: "Seat Count",
+                      value: asset?.osc_seat_count,
+                    },
+                    {
+                      label: "Status",
+                      value: <StateComponent active={asset && (asset?.active as boolean)} />,
+                    },
+                    {
+                      label: "Vendor Name",
+                      value: asset?.osc_product?.vendor_name,
+                    },
+                    {
+                      label: "Vendor Part",
+                      value: asset?.osc_product?.vendor_part_number,
                     },
                     {
                       label: "Start Date",
@@ -260,41 +296,31 @@ const Page = () => {
                       value: asset?.end_date,
                     },
                     {
-                      label: "OSC Seat Count",
-                      value: asset?.osc_seat_count?.toString(),
+                      label: "Reseller",
+                      value: asset?.reseller?.name,
                     },
                     {
-                      label: "License Server Seat Count",
-                      value: asset?.license_server_seat_count?.toString(),
+                      label: "Creation Date",
+                      value: getFormattedDate(asset?.created_at),
                     },
                     {
-                      label: "Active Seats",
-                      value: asset?.active_seats?.toString(),
-                    },
-                    {
-                      label: "Renewal Seats",
-                      value: asset?.renewal_seats?.toString(),
-                    },
-                    {
-                      label: "Revoked Seats",
-                      value: asset?.revoked_seats?.toString(),
-                    },
-                    {
-                      label: "Suspended Seats",
-                      value: asset?.suspended_seats?.toString(),
-                    },
-                    {
-                      label: "Terminated Seats",
-                      value: asset?.terminated_seats?.toString(),
-                    },
-                    {
-                      label: "Expired Seats",
-                      value: asset?.expired_seats?.toString(),
+                      label: "Last Update Date",
+                      value: getFormattedDate(asset?.updated_at),
                     },
                   ]}
                 />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
+                <div className="max-w-full overflow-x-auto">
+                  <TransactionHistoryTable transactions={transactions} />
+                </div>
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                <div className="max-w-full overflow-x-auto">
+                  <AssetCustomersInformation asset={asset} />
+                </div>
+              </CustomTabPanel>
+              {/* <CustomTabPanel value={value} index={1}>
                 <GeneralInformation
                   singleColumn={true}
                   items={[
@@ -415,18 +441,13 @@ const Page = () => {
                     },
                   ]}
                 />
-              </CustomTabPanel>
+              </CustomTabPanel> */}
               <CustomTabPanel value={value} index={3}>
-                <div className="max-w-full overflow-x-auto">
-                  <TransactionHistoryTable transactions={transactions} />
-                </div>
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={4}>
                 <div className="max-w-full overflow-x-auto">
                   <EmailHistoryTable assetId={asset.asset_id as string} />
                 </div>
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={5}>
+              {/* <CustomTabPanel value={value} index={5}>
                 <div className="max-w-full overflow-x-auto">
                   <GenericTable
                     data={seats}
@@ -439,7 +460,7 @@ const Page = () => {
                     columns={SeatsColumns}
                   />
                 </div>
-              </CustomTabPanel>
+              </CustomTabPanel> */}
             </div>
           </>
         )}

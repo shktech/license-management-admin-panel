@@ -23,40 +23,70 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
   });
   const columns = useMemo<MRT_ColumnDef<EmailHistory>[]>(
     () => [
+      // {
+      //   accessorKey: "sent_at",
+      //   header: "Sent Data",
+      //   size: 50,
+      //   Cell: ({ renderedCellValue }) => {
+      //     return <div className="text-sm">{getFormattedDate(renderedCellValue as string)}</div>;
+      //   }
+      // },
+      {
+        accessorKey: "email_template.name",
+        header: "Template Name",
+        size: 50,
+      },
       {
         accessorKey: "sent_at",
-        header: "Sent Data",
-        size: 50,
-        Cell: ({ renderedCellValue }) => {
-          return <div className="text-sm">{getFormattedDate(renderedCellValue as string)}</div>;
-        }
-      },
-      {
-        accessorKey: "email_template.type",
-        header: "Template Type",
+        header: "Notification Date",
         size: 50,
       },
       {
-        accessorKey: "email_template.event_type",
-        header: "Event Type",
+        accessorKey: "email_template.subject",
+        header: "Subject",
         size: 50,
       },
       {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "email_template.subject",
+        header: "Subject",
         size: 50,
-        Cell: ({ renderedCellValue }) => {
-          return (
-            <div>
-              <span
-                className={`rounded-full text-xs py-2 px-4 ${renderedCellValue == "success" ? "bg-[#11ba82] text-white" : "bg-[#929ea8] text-white"}`}
-              >
-                {renderedCellValue == "success" ? "Sent" : "Failed"}
-              </span>
-            </div>
-          );
-        },
       },
+      {
+        accessorKey: "email_template.to",
+        header: "To",
+        size: 50,
+      },
+      {
+        accessorKey: "email_template.cc",
+        header: "Cc",
+        size: 50,
+      },
+      // {
+      //   accessorKey: "email_template.type",
+      //   header: "Template Type",
+      //   size: 50,
+      // },
+      // {
+      //   accessorKey: "email_template.event_type",
+      //   header: "Event Type",
+      //   size: 50,
+      // },
+      // {
+      //   accessorKey: "status",
+      //   header: "Status",
+      //   size: 50,
+      //   Cell: ({ renderedCellValue }) => {
+      //     return (
+      //       <div>
+      //         <span
+      //           className={`rounded-full text-xs py-2 px-4 ${renderedCellValue == "success" ? "bg-[#11ba82] text-white" : "bg-[#929ea8] text-white"}`}
+      //         >
+      //           {renderedCellValue == "success" ? "Sent" : "Failed"}
+      //         </span>
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );

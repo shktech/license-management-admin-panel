@@ -50,41 +50,14 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
           getFormattedDate(renderedCellValue as string),
       },
       {
-        accessorKey: "transaction_status",
-        header: "Txn Status",
-        size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={(theme) => ({
-              backgroundColor: TxtStatusColor[renderedCellValue as string],
-              ...tagStyle,
-            })}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
-      },
-      {
         accessorKey: "transaction_source",
         header: "Txn Source",
         size: 50,
       },
       {
-        accessorKey: "transaction_action",
-        header: "Txn Action",
+        accessorKey: "source_reference_number",
+        header: "Source Ref #",
         size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={{
-              backgroundColor: TxtActionColor[renderedCellValue as string],
-              ...tagStyle,
-            }}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
       },
       {
         accessorKey: "bill_customer_name",
@@ -107,6 +80,38 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         size: 50,
         Cell: ({ renderedCellValue }) =>
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
+      },
+      {
+        accessorKey: "transaction_action",
+        header: "Txn Action",
+        size: 50,
+        Cell: ({ renderedCellValue }) => (
+          <Box
+            component="span"
+            sx={{
+              backgroundColor: TxtActionColor[renderedCellValue as string],
+              ...tagStyle,
+            }}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
+      },
+      {
+        accessorKey: "transaction_status",
+        header: "Txn Status",
+        size: 50,
+        Cell: ({ renderedCellValue }) => (
+          <Box
+            component="span"
+            sx={(theme) => ({
+              backgroundColor: TxtStatusColor[renderedCellValue as string],
+              ...tagStyle,
+            })}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
       },
     ];
   }, []);
