@@ -29,19 +29,19 @@ const Page = () => {
     () => [
       {
         accessorKey: "reference_name",
-        header: "Name",
+        header: "Program Name",
         size: 200,
       },
       {
         accessorKey: "reference_type",
-        header: "Type",
+        header: "Program Type",
         size: 200,
       },
-      {
-        accessorKey: "reference_description",
-        header: "Description",
-        size: 250,
-      },
+      // {
+      //   accessorKey: "reference_description",
+      //   header: "Description",
+      //   size: 250,
+      // },
       {
         accessorKey: "active",
         header: "Active",
