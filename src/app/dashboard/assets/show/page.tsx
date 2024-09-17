@@ -109,7 +109,7 @@ const Page = () => {
     {
       title: "Status",
       key: "active",
-      value: <StateComponent active={asset && (asset.active as boolean)} />,
+      value: <StateComponent active={asset && (asset.active as boolean)} withLabel/>,
     },
   ];
 
@@ -289,11 +289,11 @@ const Page = () => {
                     },
                     {
                       label: "Start Date",
-                      value: asset?.start_date,
+                      value: getFormattedDate(asset?.start_date),
                     },
                     {
                       label: "End Date",
-                      value: asset?.end_date,
+                      value: getFormattedDate(asset?.end_date),
                     },
                     {
                       label: "Reseller",

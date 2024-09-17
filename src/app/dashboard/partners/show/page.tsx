@@ -230,6 +230,10 @@ const Item = () => {
                       // ),
                     },
                     {
+                      label: "Partner Website",
+                      value: '',
+                    },
+                    {
                       label: "Active",
                       value: <StateComponent active={partner?.active as boolean}/>,
                     },

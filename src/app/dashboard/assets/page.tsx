@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlassWater } from "@fortawesome/free-solid-svg-icons";
 import { DefaultPageSize } from "@data/UtilData";
+import StateComponent from "@components/common/StateComponent";
 
 const Page = () => {
   const {
@@ -27,7 +28,7 @@ const Page = () => {
     //   },
     // ],
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
   });
   const { push } = useNavigation();
@@ -55,8 +56,9 @@ const Page = () => {
         accessorKey: "osc_seat_count",
         header: "Seat Count",
         size: 150,
-        Cell: ({ renderedCellValue }) =>
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "owner.name",
@@ -89,6 +91,14 @@ const Page = () => {
         header: "End Date",
         Cell: ({ row }) => getFormattedDate(row.original.end_date),
         size: 150,
+      },
+      {
+        accessorKey: "active",
+        header: "Status",
+        size: 150,
+        Cell: ({ renderedCellValue }) => (
+          <StateComponent active={renderedCellValue as boolean} withLabel />
+        ),
       },
     ],
     []

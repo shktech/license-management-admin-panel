@@ -99,13 +99,13 @@ const Page = () => {
         size: 150,
       },
       {
-        accessorKey: "license_source",
+        accessorKey: "source_name",
         header: "Product source",
         size: 200,
       },
       {
         accessorKey: "duration",
-        header: "UOM",
+        header: "Duration",
         size: 150,
       },
       {

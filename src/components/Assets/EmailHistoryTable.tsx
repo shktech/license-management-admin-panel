@@ -40,11 +40,7 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
         accessorKey: "sent_at",
         header: "Notification Date",
         size: 50,
-      },
-      {
-        accessorKey: "email_template.subject",
-        header: "Subject",
-        size: 50,
+        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
       },
       {
         accessorKey: "email_template.subject",

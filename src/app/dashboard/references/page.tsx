@@ -7,6 +7,7 @@ import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
 import StateComponent from "@components/common/StateComponent";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
+import { getFormattedDate } from "@utils/utilFunctions";
 
 const Page = () => {
   const {
@@ -42,6 +43,18 @@ const Page = () => {
       //   header: "Description",
       //   size: 250,
       // },
+      {
+        accessorKey: "start_date",
+        header: "Start Date",
+        size: 200,
+        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
+      },
+      {
+        accessorKey: "end_date",
+        header: "End Date",
+        size: 200,
+        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
+      },
       {
         accessorKey: "active",
         header: "Active",

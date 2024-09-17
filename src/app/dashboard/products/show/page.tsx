@@ -56,7 +56,7 @@ const Item = () => {
     {
       title: "Status",
       key: "active",
-      value: <StateComponent active={product?.active as boolean} />,
+      value: <StateComponent active={product?.active as boolean} withLabel/>,
       size: 3,
     },
   ];
@@ -159,6 +159,10 @@ const Item = () => {
                       value: product?.duration,
                     },
                     {
+                      label: "Product Source ID",
+                      value: product?.source_name,
+                    },
+                    {
                       label: "Attribute1",
                       value: product?.attribute1,
                     },
@@ -177,6 +181,14 @@ const Item = () => {
                     {
                       label: "Attribute5",
                       value: product?.attribute5,
+                    },
+                    {
+                      label: "License Set",
+                      value: '',
+                    },
+                    {
+                      label: "Notifications Set",
+                      value: '',
                     },
                   ]}
                 />

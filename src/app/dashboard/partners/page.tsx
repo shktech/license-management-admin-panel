@@ -85,7 +85,7 @@ const Page = () => {
         // ),
       },
       {
-        accessorKey: "partner_id",
+        accessorKey: "account_id",
         header: "Partner Source ID",
         size: 30,
       },
