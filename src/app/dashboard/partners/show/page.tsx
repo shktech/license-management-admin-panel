@@ -26,6 +26,8 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { partnerTypes } from "@data/PartnerTypeData";
+import GeneralInformation from "@components/common/View/GeneralInformation";
+import StateComponent from "@components/common/StateComponent";
 
 const Item = () => {
   const { params } = useParsed();
@@ -59,26 +61,24 @@ const Item = () => {
   };
   const summaryfields = [
     { title: "Partner Name", key: "name" },
-    { title: "Partner Number", key: "partner_number" },
-    { title: "Oracle Account", key: "account_id" },
     {
       title: "Partner Type",
       key: "type",
-      value: (
-        <span
-          className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
-          style={{
-            backgroundColor:
-              partnerTypes.find((type) => type.value === partner?.type)
-                ?.color || "#ff3838",
-          }}
-        >
-          {partner?.type}
-        </span>
-      ),
+      // value: (
+      //   <span
+      //     className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
+      //     style={{
+      //       backgroundColor:
+      //         partnerTypes.find((type) => type.value === partner?.type)
+      //           ?.color || "#ff3838",
+      //     }}
+      //   >
+      //     {partner?.type}
+      //   </span>
+      // ),
     },
     {
-      title: "Partner Status",
+      title: "Active",
       key: "active",
       value: (
         <span
@@ -109,7 +109,7 @@ const Item = () => {
                 </div>
                 <div className="text-lg font-normal">{partner?.name}</div>
               </div>
-              <span
+              {/* <span
                 className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
                 style={{
                   backgroundColor:
@@ -123,7 +123,7 @@ const Item = () => {
                 className={`rounded-full ${partner?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"} text-xs font-medium px-4 py-1 text-white font-semibold`}
               >
                 {partner?.active ? "Active" : "Inactive"}
-              </div>
+              </div> */}
             </div>
           </div>
         }
@@ -142,7 +142,7 @@ const Item = () => {
                     {field.title}
                   </div>
                   <div className="text-[#687991]">
-                    {getNestedValue(partner, field.key)}
+                    {field.value || getNestedValue(partner, field.key)}
                   </div>
                 </div>
               ))}
@@ -158,7 +158,7 @@ const Item = () => {
                     label={
                       <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faLocationDot} />
-                        Address
+                        Partner Detail
                       </div>
                     }
                   />
@@ -173,8 +173,16 @@ const Item = () => {
                   <StyledTab
                     label={
                       <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faLocationDot} />
+                        Location
+                      </div>
+                    }
+                  />
+                  <StyledTab
+                    label={
+                      <div className="flex items-center gap-2">
                         <FontAwesomeIcon icon={faGlassWater} />
-                        License Status
+                        Licenses
                       </div>
                     }
                   />
@@ -189,10 +197,48 @@ const Item = () => {
                 </StyledTabs>
               </div>
               <CustomTabPanel value={value} index={0}>
-                <AddressTable
-                  data={partner?.addresses ?? []}
-                  partner_id={params?.id}
-                />
+                <GeneralInformation
+                  singleColumn
+                  items={[
+                    {
+                      label: "Partner Name",
+                      value: partner?.name,
+                    },
+                    {
+                      label: "Partner ID",
+                      value: partner?.partner_number,
+                    },
+                    {
+                      label: "Partner Source ID",
+                      value: partner?.account_id,
+                    },
+                    {
+                      label: "Partner Type",
+                      value: partner?.type
+                      // value: (
+                      //   <span
+                      //     className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
+                      //     style={{
+                      //       backgroundColor:
+                      //         partnerTypes.find(
+                      //           (type) => type.value === partner?.type
+                      //         )?.color || "#ff3838",
+                      //     }}
+                      //   >
+                      //     {partner?.type}
+                      //   </span>
+                      // ),
+                    },
+                    {
+                      label: "Partner Website",
+                      value: '',
+                    },
+                    {
+                      label: "Active",
+                      value: <StateComponent active={partner?.active as boolean}/>,
+                    },
+                  ]}
+                ></GeneralInformation>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <ContactTable
@@ -201,9 +247,15 @@ const Item = () => {
                 />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
-                <PartnerLicensesTable partner_id={params?.id} />
+                <AddressTable
+                  data={partner?.addresses ?? []}
+                  partner_id={params?.id}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
+                <PartnerLicensesTable partner_id={params?.id} />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={4}>
                 <PartnerTransactionTable partner_id={params?.id} />
               </CustomTabPanel>
             </div>

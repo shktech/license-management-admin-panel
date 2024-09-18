@@ -1,7 +1,7 @@
 "use client";
 
 import { useNavigation, useTable } from "@refinedev/core";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import GenericTable from "@components/Table/GenericTable";
 import Loader from "@components/common/Loader";
@@ -28,8 +28,14 @@ const Page = () => {
     setSorters,
   } = useTable<Partner>({
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
 
   const handleRowClick = (row: Partner) => {
@@ -59,39 +65,30 @@ const Page = () => {
     () => [
       {
         accessorKey: "account_id",
-        header: "Account ID",
-        size: 30,
+        header: "Partner ID",
+        size: 100,
       },
       {
         accessorKey: "name",
-        header: "Name",
-        size: 300,
+        header: "Partner Name",
+        size: 100,
       },
       {
         accessorKey: "type",
-        header: "Type",
-        size: 300,
-        Cell: ({ renderedCellValue }) => (
-          <span
-            className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
-            style={{
-              backgroundColor:
-                partnerTypes.find((type) => type.value === renderedCellValue)
-                  ?.color || "#ff3838",
-            }}
-          >
-            {renderedCellValue}
-          </span>
-        ),
+        header: "Partner Type",
+        size: 100,
+      },
+      {
+        accessorKey: "account_id",
+        header: "Partner Source ID",
+        size: 30,
       },
       {
         accessorKey: "active",
-        header: "Active",
-        size: 50,
+        header: "Status",
+        size: 100,
         Cell: ({ renderedCellValue }) => (
-          <div className="flex items-center justify-center">
-            <StateComponent active={renderedCellValue as boolean} />
-          </div>
+          <StateComponent active={renderedCellValue as boolean} />
         ),
       },
     ],
@@ -133,12 +130,13 @@ const Page = () => {
                 >
                   {partnerTypes.map((type) => (
                     <MenuItem value={type.value} key={type.label}>
-                      <span
+                      {/* <span
                         className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
                         style={{ backgroundColor: type.color }}
                       >
                         {type.label}
-                      </span>
+                      </span> */}
+                      {type.label}
                     </MenuItem>
                   ))}
                 </Select>

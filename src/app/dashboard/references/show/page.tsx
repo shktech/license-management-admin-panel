@@ -9,11 +9,21 @@ import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import {
   convertSortingStateToCrudSort,
   getFormattedDate,
+  getNestedValue,
 } from "@utils/utilFunctions";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { useMemo, useState } from "react";
 import FindInPageRoundedIcon from "@mui/icons-material/FindInPageRounded";
 import { DefaultPageSize } from "@data/UtilData";
+import StateComponent from "@components/common/StateComponent";
+import {
+  CustomTabPanel,
+  StyledTab,
+  StyledTabs,
+} from "@components/Tab/CustomizedTab";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo, faCubes } from "@fortawesome/free-solid-svg-icons";
+import GeneralInformation from "@components/common/View/GeneralInformation";
 
 const Page = () => {
   const { params } = useParsed();
@@ -32,10 +42,23 @@ const Page = () => {
   } = useTable<ReferenceCode>({
     resource: `references/${params?.id}/codes`,
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
+    syncWithLocation: false,
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
   const reference: Reference = data?.data as Reference;
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   const handleCreate = () => {
     push(
@@ -77,17 +100,7 @@ const Page = () => {
     () => [
       {
         accessorKey: "reference_code",
-        header: "Code",
-        size: 200,
-      },
-      {
-        accessorKey: "product_part_number",
-        header: "Product Part Number",
-        size: 200,
-      },
-      {
-        accessorKey: "product_part_id",
-        header: "Product Part ID",
+        header: "Reference Code",
       },
       {
         accessorKey: "osc_product.product_part_number",
@@ -102,12 +115,12 @@ const Page = () => {
         header: "Vender Name",
       },
       {
-        accessorKey: "transaction_line_id",
-        header: "Transaction Line ID",
+        accessorKey: "product_part_number",
+        header: "Product Part",
       },
       {
-        accessorKey: "transaction.transaction_id",
-        header: "Transaction Number",
+        accessorKey: "transaction.transaction_number",
+        header: "Transaction #",
       },
       {
         accessorKey: "transaction.transaction_date",
@@ -118,35 +131,54 @@ const Page = () => {
       },
       {
         accessorKey: "status",
-        header: "Status",
-        size: 50,
+        header: "Enabled Flag",
         Cell: ({ renderedCellValue }) => {
           return (
-            <div
+            <span
               className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue == "Active" ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
             >
               {renderedCellValue}
-            </div>
+            </span>
           );
         },
       },
       {
         accessorKey: "active",
-        header: "Active",
-        size: 50,
+        header: "Status",
         Cell: ({ renderedCellValue }) => {
           return (
-            <div
+            <span
               className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
             >
               {renderedCellValue ? "Active" : "Inactive"}
-            </div>
+            </span>
           );
         },
       },
     ],
     []
   );
+
+  const summaryfields = [
+    {
+      title: "Program Name",
+      key: "reference_name",
+    },
+    {
+      title: "Reference Type",
+      key: "reference_type",
+    },
+    {
+      title: "Active",
+      key: "active",
+      value: (
+        <div className="flex items-center justify-center">
+          <StateComponent active={reference?.active as boolean} withLabel />
+        </div>
+      ),
+    },
+  ];
+
   return (
     <>
       {isLoading || codeIsLoading ? (
@@ -169,20 +201,6 @@ const Page = () => {
                   <FindInPageRoundedIcon />
                   Reference{" "}
                 </div>
-                <div className="text-lg font-normal">
-                  {reference?.reference_name}
-                </div>
-
-                <span
-                  className={`mx-2 px-4 py-1 rounded-full text-xs text-white ${reference?.reference_type == "Unique" ? "bg-[#fac107]" : "bg-[#11ba82]"}`}
-                >
-                  {reference?.reference_type}
-                </span>
-                <span
-                  className={`mx-2 px-4 py-1 rounded-full text-xs ${reference?.active ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
-                >
-                  {reference?.active ? "Active" : "Inactive"}
-                </span>
               </div>
             </div>
           }
@@ -191,35 +209,87 @@ const Page = () => {
           }
         >
           <div>
-            
-            <div className="px-12 flex gap-10 pt-4 pb-12 text-base">
-              <div className="">
-                <div className="text-[#515f72] font-semibold">Reference Name</div>
-                <div className="text-[#687991] ">
-                  {reference?.reference_name}
+            <div className="flex items-start gap-x-8 gap-y-6 px-12 mt-4">
+              {summaryfields.map((field) => (
+                <div key={field.key} className="flex flex-col gap-1 text-lg">
+                  <div className="text-[#515f72] font-semibold">
+                    {field.title}
+                  </div>
+                  <div className="text-[#687991]">
+                    {field.value || getNestedValue(reference, field.key)}
+                  </div>
                 </div>
-              </div>
-              <div className="">
-                <div className="text-[#515f72] font-semibold">Start Date</div>
-                <div className="text-[#687991] ">
-                  {getFormattedDate(reference?.start_date)}
-                </div>
-              </div>
-              <div className="">
-                <div className="text-[#515f72] font-semibold">End Date</div>
-                <div className="text-[#687991] ">
-                  {getFormattedDate(reference?.end_date)}
-                </div>
-              </div>
-
-              <div className="">
-                <div className="text-[#515f72] font-semibold">Reference Description</div>
-                <div className="text-[#687991] ">
-                  {reference?.reference_description}
-                </div>
-              </div>
+              ))}
             </div>
-            <div className="bg-white">
+            <div className="px-12 pt-4">
+              <StyledTabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <StyledTab
+                  label={
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faCircleInfo} />
+                      Product Detail
+                    </div>
+                  }
+                />
+                <StyledTab
+                  label={
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faCubes} />
+                      Reference Codes
+                    </div>
+                  }
+                />
+              </StyledTabs>
+            </div>
+            <CustomTabPanel value={value} index={0}>
+              <GeneralInformation
+                singleColumn={true}
+                items={[
+                  {
+                    label: "Program Name",
+                    value: reference?.reference_name,
+                  },
+                  {
+                    label: "Program Description",
+                    value: reference?.reference_description,
+                  },
+                  {
+                    label: "Reference Type",
+                    value: reference?.reference_type,
+                  },
+                  {
+                    label: "Active",
+                    value: (
+                      <StateComponent
+                        active={reference.active as boolean}
+                        withLabel
+                      />
+                    ),
+                  },
+                  {
+                    label: "Data Source",
+                    value: reference?.data_source,
+                  },
+                  {
+                    label: "Transaction Source",
+                    value: reference?.transaction_source,
+                  },
+                  {
+                    label: "Start Date",
+                    value: getFormattedDate(reference?.start_date),
+                  },
+                  {
+                    label: "End Date",
+                    value: getFormattedDate(reference?.end_date),
+                  },
+                ]}
+              />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
               <GenericTable
                 title={
                   <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
@@ -236,7 +306,7 @@ const Page = () => {
                 handleSearch={handleSearch}
                 canCreate={true}
               />
-            </div>
+            </CustomTabPanel>
           </div>
         </Show>
       )}

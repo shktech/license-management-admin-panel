@@ -104,17 +104,17 @@ const Page = () => {
         accessorKey: "asset.license_type",
         header: "Product Type",
         size: 100,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={{
-              backgroundColor: TxtTypeColor[renderedCellValue as string],
-              ...tagStyle,
-            }}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
+      //   Cell: ({ renderedCellValue }) => (
+      //     <Box
+      //       component="span"
+      //       sx={{
+      //         backgroundColor: TxtTypeColor[renderedCellValue as string],
+      //         ...tagStyle,
+      //       }}
+      //     >
+      //       {renderedCellValue}
+      //     </Box>
+      //   ),
       },
 
       {
@@ -136,33 +136,33 @@ const Page = () => {
         accessorKey: "transaction_action",
         header: "Txn Action",
         size: 100,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={{
-              backgroundColor: TxtActionColor[renderedCellValue as string],
-              ...tagStyle,
-            }}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
+        // Cell: ({ renderedCellValue }) => (
+        //   <Box
+        //     component="span"
+        //     sx={{
+        //       backgroundColor: TxtActionColor[renderedCellValue as string],
+        //       ...tagStyle,
+        //     }}
+        //   >
+        //     {renderedCellValue}
+        //   </Box>
+        // ),
       },
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
         size: 100,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={(theme) => ({
-              backgroundColor: TxtStatusColor[renderedCellValue as string],
-              ...tagStyle,
-            })}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
+        // Cell: ({ renderedCellValue }) => (
+        //   <Box
+        //     component="span"
+        //     sx={(theme) => ({
+        //       backgroundColor: TxtStatusColor[renderedCellValue as string],
+        //       ...tagStyle,
+        //     })}
+        //   >
+        //     {renderedCellValue}
+        //   </Box>
+        // ),
       },
     ],
     []

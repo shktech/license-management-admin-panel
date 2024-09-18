@@ -11,6 +11,7 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Oracle ERP", label: "Oracle ERP" },
       { value: "Prod Reg", label: "Prod Reg" },
       { value: "Manual", label: "Manual" },
+      { value: "Salesforce", label: "Salesforce" },
     ],
   },
   {

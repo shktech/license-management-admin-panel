@@ -26,33 +26,35 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
         },
         {
           label: "Transaction action",
-          value: (
-            <Box
-              component="span"
-              sx={{
-                backgroundColor:
-                  TxtActionColor[transaction?.transaction_action as string],
-                ...tagStyle,
-              }}
-            >
-              {transaction?.transaction_action}
-            </Box>
-          ),
+          value: transaction?.transaction_action
+          // value: (
+          //   <Box
+          //     component="span"
+          //     sx={{
+          //       backgroundColor:
+          //         TxtActionColor[transaction?.transaction_action as string],
+          //       ...tagStyle,
+          //     }}
+          //   >
+          //     {transaction?.transaction_action}
+          //   </Box>
+          // ),
         },
         {
           label: "Transaction status",
-          value: (
-            <Box
-              component="span"
-              sx={{
-                backgroundColor:
-                  TxtStatusColor[transaction?.transaction_status as string],
-                ...tagStyle,
-              }}
-            >
-              {transaction?.transaction_status}
-            </Box>
-          ),
+          value: transaction?.transaction_status
+          // value: (
+          //   <Box
+          //     component="span"
+          //     sx={{
+          //       backgroundColor:
+          //         TxtStatusColor[transaction?.transaction_status as string],
+          //       ...tagStyle,
+          //     }}
+          //   >
+          //     {transaction?.transaction_status}
+          //   </Box>
+          // ),
         },
         {
           label: "Comments",

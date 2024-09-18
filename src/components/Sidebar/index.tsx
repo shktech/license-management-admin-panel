@@ -30,19 +30,32 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
-        <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+        <div className="flex flex-col gap-2 pt-5.5">
           <Link
             href="/"
-            className="text-[#e3ebff] font-bold flex justify-center items-center"
+            className="text-[#ffffff] font-bold flex justify-start items-center pl-6 py-2"
           >
-            <div className="font-bold pl-4 text-3xl">CALM</div>
+            <div className="font-bold text-4xl ">CALM
+              {/* <span className="text-[#4285f4]">C</span>
+              <span className="text-[#ea4335]">A</span>
+              <span className="text-[#fbbc05]">L</span>
+              <span className="text-[#34a853]">M</span> */}
+            </div>
           </Link>
+          <div className="font-medium pl-6 text-sm text-[#c8d8ff]">
+            <span className="text-white font-bold text-base leading-5">C</span>ustomer
+            <span className="text-white font-bold text-base leading-5"> A</span>ccount
+          </div>
+          <div className="font-medium pl-6 text-sm text-[#c8d8ff]">
+            <span className="text-white font-bold text-base leading-5">L</span>icense{" "}
+            <span className="text-white font-bold text-base leading-5">M</span>anagement System
+          </div>
         </div>
         {/* <!-- SIDEBAR HEADER --> */}
 
         <div className="no-scrollbar flex-1 flex flex-col overflow-y-auto duration-300 ease-linear font-base">
           {/* <!-- Sidebar Menu --> */}
-          <nav className="px-4 py-4 lg:px-4">
+          <nav className="py-4 lg:px-2">
             {menus.map((group: any, groupIndex: any) => (
               <div key={groupIndex}>
                 {/* <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">

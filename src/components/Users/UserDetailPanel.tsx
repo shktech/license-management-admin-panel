@@ -195,7 +195,7 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
                 (selectedRole) => selectedRole.name === role.name
               );
               const className = isSelected
-                ? `${RoleColors[role.name as string] || RoleColors.default} border border-transparent text-white`
+                ? `bg-[#1f325c] border border-transparent text-white`
                 : "bg-white text-[#818f99] border border-[#818f99]";
               return (
                 <button

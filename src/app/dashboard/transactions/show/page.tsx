@@ -108,7 +108,7 @@ const TransactionShow = () => {
                   {transaction?.transaction_number}
                 </div>
               </div>
-              <Box
+              {/* <Box
                 component="span"
                 sx={{
                   backgroundColor:
@@ -137,7 +137,7 @@ const TransactionShow = () => {
                 }}
               >
                 {transaction?.transaction_status}
-              </Box>
+              </Box> */}
             </div>
           </div>
         }

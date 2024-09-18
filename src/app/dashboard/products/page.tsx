@@ -23,8 +23,14 @@ const Page = () => {
     setSorters,
   } = useTable<Product>({
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
 
   const { push } = useNavigation();
@@ -90,7 +96,7 @@ const Page = () => {
     () => [
       {
         accessorKey: "product_part_number",
-        header: "Product Part Number",
+        header: "Part Number",
         size: 200,
       },
       {
@@ -99,14 +105,19 @@ const Page = () => {
         size: 150,
       },
       {
+        accessorKey: "source_name",
+        header: "Product source ID",
+        size: 200,
+      },
+      {
         accessorKey: "duration",
-        header: "UOM",
+        header: "Duration",
         size: 150,
       },
       {
         accessorKey: "vendor_name",
-        header: "Vender name",
-        size: 180,
+        header: "Vendor Name",
+        size: 220,
       },
       {
         accessorKey: "vendor_part_number",
@@ -114,13 +125,8 @@ const Page = () => {
         size: 220,
       },
       {
-        accessorKey: "license_source",
-        header: "License source",
-        size: 200,
-      },
-      {
         accessorKey: "active",
-        header: "Active",
+        header: "Status",
         size: 100,
         Cell: ({ renderedCellValue }) => (
           <Box

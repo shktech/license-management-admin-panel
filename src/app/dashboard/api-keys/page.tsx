@@ -4,7 +4,7 @@ import { Box, Modal, SnackbarCloseReason } from "@mui/material";
 
 import { useCreate, useList, useUpdate } from "@refinedev/core";
 import { APIKey } from "@/types/types";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MRT_ColumnDef } from "material-react-table";
 import { ProductActiveColor } from "@data/ColorData";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
@@ -36,6 +36,12 @@ const Page = () => {
   const [selectedAPIKey, setSelectedAPIKey] = useState<APIKey | null>(null);
   const { mutate: createAPIKey } = useCreate();
   const { mutate: revokeAPIKey } = useUpdate();
+  const [apiKeys, setApiKeys] = useState<APIKey[]>([]);
+  useEffect(() => {
+    if (apiKeysData && !isLoading) {
+      setApiKeys(apiKeysData?.data.sort((a, b) => new Date(b.created as string).getTime() - new Date(a.created as string).getTime()));
+    }
+  }, [apiKeysData, isLoading])
   const handleRevoke = (row: APIKey) => {
     setSelectedAPIKey(row);
     handleOpenRevokeModal();
@@ -182,7 +188,7 @@ const Page = () => {
                     API Keys
                   </div>
                 }
-                data={apiKeysData?.data}
+                data={apiKeys}
                 columns={columns}
                 canCreate={true}
                 handleCreate={handleCreate}

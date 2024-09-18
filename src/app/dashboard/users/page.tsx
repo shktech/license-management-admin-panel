@@ -33,7 +33,9 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<User>();
+  } = useTable<User>({
+
+  });
   const { push } = useNavigation();
   const {
     data: rolesData,
@@ -135,9 +137,7 @@ const Page = () => {
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <div className="flex items-center justify-center">
-            <StateComponent active={renderedCellValue as boolean} />
-          </div>
+          <StateComponent active={renderedCellValue as boolean} />
         ),
       },
       {
@@ -147,14 +147,18 @@ const Page = () => {
         Cell: ({ renderedCellValue }) => {
           return (
             <div className="flex items-center justify-center">
-              {(renderedCellValue as Role[])?.map((role) => (
-                <div
-                  key={role.name}
-                  className={`${RoleColors[role.name as string] || RoleColors["default"]} text-white  text-xs rounded-full px-2 py-1`}
-                >
-                  {role.name}
-                </div>
-              ))}
+              {(renderedCellValue as Role[])
+                ?.map(
+                  (role) =>
+                    // <div
+                    //   key={role.name}
+                    //   className={`${RoleColors[role.name as string] || RoleColors["default"]} text-white  text-xs rounded-full px-2 py-1`}
+                    // >
+                    //   {role.name}
+                    // </div>
+                    role.name
+                )
+                .join(",")}
             </div>
           );
         },
