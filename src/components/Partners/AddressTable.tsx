@@ -51,7 +51,7 @@ const AddressTable: React.FC<AddressTableProps> = ({ data, partner_id }) => {
         size: 50,
         Cell: ({ renderedCellValue }) => (
           <div className="flex items-center justify-center">
-            <StateComponent active={renderedCellValue as boolean} />
+            <StateComponent active={renderedCellValue as boolean} withLabel/>
           </div>
         ),
       },

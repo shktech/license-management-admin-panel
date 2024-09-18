@@ -19,7 +19,7 @@ interface TransactionHistoryTableProps {
 
 const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   transactions,
-  asset
+  asset,
 }) => {
   const { push } = useNavigation();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -80,20 +80,21 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         accessorKey: "product_part",
         header: "Product Type",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_type}</div>
+        Cell: ({}) => <div>{asset?.osc_product?.product_type}</div>,
       },
       {
         accessorKey: "product_type",
         header: "Product Part Number",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_part_number}</div>
+        Cell: ({}) => <div>{asset?.osc_product?.product_part_number}</div>,
       },
       {
         accessorKey: "quantity",
         header: "Seat Count",
         size: 50,
-        Cell: ({ renderedCellValue }) =>
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "transaction_action",

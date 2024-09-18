@@ -20,6 +20,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CustomerInformation from "./CustomerInformation";
 import CustomersInformation from "./CustomersInformation";
+import { Box } from "@mui/material";
+import { TxtStatusColor } from "@data/ColorData";
+import { tagStyle } from "@data/MuiStyles";
 
 interface ShowTransactionProps {
   transaction?: Transaction;
@@ -34,13 +37,35 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
 
   const summaryfields = [
     { title: "Txn Number", key: "transaction_number" },
-    { title: "Txn Date", key: "transaction_date", value: getFormattedDate(transaction?.transaction_date) },
+    {
+      title: "Txn Date",
+      key: "transaction_date",
+      value: getFormattedDate(transaction?.transaction_date),
+    },
     { title: "Txn Source", key: "transaction_source" },
     { title: "Txn Action", key: "transaction_action" },
     { title: "Bill Customer", key: "bill_customer.name" },
-    { title: "Product Part Number", key: "asset.osc_product.product_part_number" },
+    {
+      title: "Product Part Number",
+      key: "asset.osc_product.product_part_number",
+    },
     { title: "Seat Count", key: "asset.osc_seat_count" },
-    { title: "Txn Status", key: "transaction_status" },
+    {
+      title: "Txn Status",
+      key: "transaction_status",
+      value: (
+        <Box
+          component="span"
+          sx={{
+            backgroundColor:
+              TxtStatusColor[transaction?.transaction_status as string],
+            ...tagStyle,
+          }}
+        >
+          {transaction?.transaction_status}
+        </Box>
+      ),
+    },
   ];
   return (
     <div>

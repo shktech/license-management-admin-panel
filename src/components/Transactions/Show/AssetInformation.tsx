@@ -48,7 +48,7 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
           value: transaction?.asset?.end_date,
         },
         {
-          label: "License Server Seat Count",
+          label: "License Integration Status",
           value: transaction?.license_integration_status,
         },
       ]}

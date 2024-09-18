@@ -107,7 +107,7 @@ const Item = () => {
                   <FontAwesomeIcon icon={faUser} />
                   Partner
                 </div>
-                <div className="text-lg font-normal">{partner?.name}</div>
+                {/* <div className="text-lg font-normal">{partner?.name}</div> */}
               </div>
               {/* <span
                 className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
@@ -235,7 +235,7 @@ const Item = () => {
                     },
                     {
                       label: "Active",
-                      value: <StateComponent active={partner?.active as boolean}/>,
+                      value: <StateComponent active={partner?.active as boolean} withLabel/>,
                     },
                   ]}
                 ></GeneralInformation>

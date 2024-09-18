@@ -63,9 +63,7 @@ const Page = () => {
         header: "Recurring",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <div className="flex items-center justify-center">
-            <StateComponent active={renderedCellValue as boolean} />
-          </div>
+          <StateComponent active={renderedCellValue as boolean} withLabel />
         ),
       },
       {

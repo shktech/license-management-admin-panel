@@ -88,7 +88,7 @@ const Page = () => {
         header: "Status",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel/>
         ),
       },
     ],
@@ -130,12 +130,12 @@ const Page = () => {
                 >
                   {partnerTypes.map((type) => (
                     <MenuItem value={type.value} key={type.label}>
-                      {/* <span
+                      <span
                         className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
                         style={{ backgroundColor: type.color }}
                       >
                         {type.label}
-                      </span> */}
+                      </span>
                       {type.label}
                     </MenuItem>
                   ))}

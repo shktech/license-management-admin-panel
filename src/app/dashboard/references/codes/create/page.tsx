@@ -6,7 +6,7 @@ import GenericForm from "@components/Forms/GenericForm";
 import { ReferenceCodeFormFields } from "@components/Forms/References/ReferenceCodeFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useList, useParsed } from "@refinedev/core";
+import { useBack, useCreate, useList, useNavigation, useParsed } from "@refinedev/core";
 import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { getDurationFromString } from "@utils/utilFunctions";
@@ -14,14 +14,13 @@ import { useEffect } from "react";
 
 const Item = () => {
   const { params } = useParsed();
+  const { push } = useNavigation();
   const {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
     control,
-    reset,
     trigger,
-    watch,
-    setValue,
+    getValues,
     formState: { errors },
   } = useForm<ReferenceCode>({
     refineCoreProps: {
@@ -30,43 +29,23 @@ const Item = () => {
     },
   });
 
-  const { data: productData, isLoading: productLoading } = useList<Product>({
-    resource: "products",
-    hasPagination: false,
-  });
-
-  useEffect(() => {
-    const nowDate = new Date();
-    const nowDateString = nowDate.toISOString().split("T")[0];
-    const tomorrow = new Date(nowDate.setDate(nowDate.getDate() + 1));
-    const tomorrowString = tomorrow.toISOString().split("T")[0];
-    const initialInfo = {
-      start_date: nowDateString,
-      end_date: tomorrowString,
-    };
-    reset({ ...initialInfo });
-  }, []);
-
-  const start_date = watch("start_date");
-  const osc_part_number = watch("osc_part_number");
-
-  useEffect(() => {
-    let duration;
-    if (productData?.data) {
-      duration = productData.data.find(
-        (p) => p.product_part_number == osc_part_number
-      )?.duration;
-    }
-    if (start_date) {
-      const originalDate = new Date(start_date);
-      originalDate.setFullYear(
-        originalDate.getFullYear() + getDurationFromString(duration as string)
+  const { mutate: createCode } = useCreate();
+  const handleSubmit = async () => {
+    const isValid = await trigger(); // Triggers validation for all fields
+    if (isValid) {
+      const payload = getValues();
+      createCode(
+        {
+          resource: `references/${params?.id}/codes`,
+          values: payload,
+        },
+        {
+          onError: (error) => console.log("error", error),
+          onSuccess: () => push(`/dashboard/references/show?id=${params?.id}`),
+        }
       );
-      const end_date = originalDate.toISOString().split("T")[0];
-      setValue("end_date", end_date);
     }
-  }, [start_date, osc_part_number]);
-
+  };
   return (
     <div className="flex justify-center py-6">
       <div className="w-2/3">
@@ -95,7 +74,7 @@ const Item = () => {
           }}
           saveButtonProps={{ ...saveButtonProps, hidden: false }}
           footerButtons={({ saveButtonProps }) => (
-            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+            <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
           )}
         >
           {formLoading ? (

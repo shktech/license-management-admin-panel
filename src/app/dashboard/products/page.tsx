@@ -101,12 +101,12 @@ const Page = () => {
       },
       {
         accessorKey: "product_type",
-        header: "Part type",
+        header: "Part Type",
         size: 150,
       },
       {
         accessorKey: "source_name",
-        header: "Product source ID",
+        header: "Product Source ID",
         size: 200,
       },
       {
@@ -121,7 +121,7 @@ const Page = () => {
       },
       {
         accessorKey: "vendor_part_number",
-        header: "Vendor part number",
+        header: "Vendor Part Number",
         size: 220,
       },
       {

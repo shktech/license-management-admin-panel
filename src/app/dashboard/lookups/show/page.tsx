@@ -284,14 +284,24 @@ const Page = () => {
                       variant="standard"
                       type="number"
                       // value={renderedCellValue}
-                      defaultValue={renderedCellValue}
+                      // defaultValue={renderedCellValue}
                       // disabled={!row.original.is_new}
+                      value={selectedValue?.value}
                       onChange={(e) =>
                         setSelectedValue({
                           ...selectedValue,
                           value: e.target.value,
                         })
                       }
+                      onBlur={(e) => {
+                        let numValue = parseInt(e.target.value);
+                        if (numValue < 1) numValue = 1;
+                        if (numValue > 99) numValue = 100;
+                        setSelectedValue({
+                          ...selectedValue,
+                          value: `${numValue}`,
+                        });
+                      }}
                     />
                   ) : (
                     renderedCellValue
@@ -333,11 +343,10 @@ const Page = () => {
                       <TextField
                         variant="standard"
                         type="number"
-                        // disabled={!row.original.is_new}
-                        defaultValue={
-                          renderedCellValue === "EA"
+                        value={
+                          selectedValue?.value === "EA"
                             ? 0
-                            : parseInt(renderedCellValue as string, 10)
+                            : parseInt(selectedValue?.value as string, 10)
                         }
                         sx={{ width: "50%" }}
                         onChange={(e) => {
@@ -346,7 +355,19 @@ const Page = () => {
                             selectedValue?.value
                               ?.toString()
                               .match(/[A-Za-z]+/)?.[0] || "D";
-                          console.log(numValue, unit);
+                          setSelectedValue({
+                            ...selectedValue,
+                            value: `${numValue}${unit}`,
+                          });
+                        }}
+                        onBlur={(e) => {
+                          let numValue = parseInt(e.target.value);
+                          if (numValue < 1) numValue = 1;
+                          if (numValue > 99) numValue = 100;
+                          const unit =
+                            selectedValue?.value
+                              ?.toString()
+                              .match(/[A-Za-z]+/)?.[0] || "D";
                           setSelectedValue({
                             ...selectedValue,
                             value: `${numValue}${unit}`,
@@ -475,21 +496,17 @@ const Page = () => {
           <div className="px-12 grid grid-cols-4 gap-4  pt-4 pb-12">
             <div className="">
               <div className="text-[#515f72] font-semibold">Lookup Name</div>
-              <div className="text-[#687991]">
-                {lookup?.lookup_name}
-              </div>
+              <div className="text-[#687991]">{lookup?.lookup_name}</div>
             </div>
             <div className="">
               <div className="text-[#515f72] font-semibold">Lookup Type</div>
-              <div className="text-[#687991]">
-                {lookup?.type}
-              </div>
+              <div className="text-[#687991]">{lookup?.type}</div>
             </div>
             <div className="col-span-2">
-              <div className="text-[#515f72] font-semibold">Lookup Description</div>
-              <div className="text-[#687991]">
-                {lookup?.description}
+              <div className="text-[#515f72] font-semibold">
+                Lookup Description
               </div>
+              <div className="text-[#687991]">{lookup?.description}</div>
             </div>
           </div>
           <div className="bg-white">

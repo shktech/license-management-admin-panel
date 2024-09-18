@@ -6,19 +6,21 @@ import GenericForm from "@components/Forms/GenericForm";
 import { ReferenceCodeFormFields } from "@components/Forms/References/ReferenceCodeFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useNavigation, useParsed, useUpdate } from "@refinedev/core";
 import { Create, Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
 
 const Item = () => {
   const { params } = useParsed();
+  const { push } = useNavigation();
   const {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
     control,
     reset,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<ReferenceCode>({
     refineCoreProps: {
@@ -38,6 +40,25 @@ const Item = () => {
       });
     }
   }, [formLoading, referenceCode]);
+
+  const { mutate: updateCode } = useUpdate();
+  const handleSubmit = async () => {
+    const isValid = await trigger(); // Triggers validation for all fields
+    if (isValid) {
+      const payload = getValues();
+      updateCode(
+        {
+          resource: `references/${params?.reference_id}/codes`,
+          values: payload,
+          id: params?.code_id
+        },
+        {
+          onError: (error) => console.log("error", error),
+          onSuccess: () => push(`/dashboard/references/show?id=${params?.reference_id}`),
+        }
+      );
+    }
+  };
 
   return (
     <div className="flex justify-center py-6">
@@ -67,7 +88,7 @@ const Item = () => {
           }}
           saveButtonProps={{ ...saveButtonProps, hidden: false }}
           footerButtons={({ saveButtonProps }) => (
-            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+            <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
           )}
         >
           {formLoading ? (
