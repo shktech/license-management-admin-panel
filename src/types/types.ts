@@ -25,6 +25,7 @@ export interface Product {
   updated_by?: number;
   organization?: Partial<Organization>;
   email_template?: Partial<EmailTemplate>;
+  product_source_id?: string
 }
 
 export interface Email_Schedule{
