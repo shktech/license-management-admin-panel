@@ -101,17 +101,17 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         accessorKey: "transaction_status",
         header: "Txn Status",
         size: 50,
-        // Cell: ({ renderedCellValue }) => (
-        //   <Box
-        //     component="span"
-        //     sx={(theme) => ({
-        //       backgroundColor: TxtStatusColor[renderedCellValue as string],
-        //       ...tagStyle,
-        //     })}
-        //   >
-        //     {renderedCellValue}
-        //   </Box>
-        // ),
+        Cell: ({ renderedCellValue }) => (
+          <Box
+            component="span"
+            sx={(theme) => ({
+              backgroundColor: TxtStatusColor[renderedCellValue as string],
+              ...tagStyle,
+            })}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
       },
       {
         accessorKey: "bill_customer_name",
@@ -142,6 +142,8 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         }
         columns={columns}
         onRowClick={handleShowClick}
+        noSearchNeed
+        noSortNeed
       />
       {clickedTransaction && (
         <TransactionDetailDrawer
