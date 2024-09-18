@@ -105,7 +105,7 @@ const Page = () => {
         size: 150,
       },
       {
-        accessorKey: "source_name",
+        accessorKey: "product_source_id",
         header: "Product Source ID",
         size: 200,
       },

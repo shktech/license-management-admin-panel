@@ -101,9 +101,10 @@ const Page = () => {
       },
 
       {
-        accessorKey: "asset.osc_product.product_part_number",
+        accessorKey: "product_part_number",
         header: "Product Part Number",
         size: 100,
+        Cell: ({row}) => row.original.product_part_number || row.original.asset?.osc_product?.product_part_number
       },
       {
         accessorKey: "asset.osc_seat_count",

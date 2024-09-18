@@ -19,8 +19,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
 const Page = () => {
-  const { data: identity, isLoading: isIdentityLoading } =
-    useGetIdentity<User>();
   const {
     data: orgs,
     isLoading,
@@ -33,28 +31,18 @@ const Page = () => {
   const [orgsData, setOrgsData] = useState<Organization[]>([]);
   useEffect(() => {
     if (orgs && !isLoading) {
-      setOrgsData(orgs?.data.sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime()));
-    }
-  }, [orgs, isLoading])
-
-  useEffect(() => {
-    setLoading(isIdentityLoading || isLoading);
-  }, [isIdentityLoading, isLoading]);
-
-  const { push } = useNavigation();
-  const [orgData, setOrgData] = useState<any[]>();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (identity && orgs) {
-      setOrgData(
-        orgs?.data.map((org: Organization) => ({
-          ...org,
-          isCurrent: org.organization_code === identity.organization,
-        }))
+      console.log(orgs, isLoading);
+      setOrgsData(
+        orgs?.data.sort(
+          (a, b) =>
+            new Date(b.created_at as string).getTime() -
+            new Date(a.created_at as string).getTime()
+        )
       );
     }
-  }, [identity, orgs]);
+  }, [isLoading]);
+
+  const { push } = useNavigation();
 
   const handleEditClick = (row: Organization) => {
     push(`/dashboard/orgs/edit?organization_code=${row.organization_code}`);
@@ -107,7 +95,7 @@ const Page = () => {
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto min-h-screen flex flex-col">
       <div className="flex-1">
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <GenericTable

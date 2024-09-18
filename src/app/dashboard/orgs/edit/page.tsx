@@ -32,7 +32,13 @@ const Item = () => {
 
   useEffect(() => {
     if (!formLoading && org) {
-      reset({ ...org });
+      reset({
+        organization_code: org.organization_code,
+        organization_name: org.organization_name,
+        address: org.address,
+        country: org.country,
+        active: org.active
+      });
     }
   }, [formLoading, org]);
 

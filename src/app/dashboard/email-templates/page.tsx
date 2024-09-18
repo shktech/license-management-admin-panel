@@ -9,6 +9,18 @@ import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
+const EventTypes = [
+  { value: "user_invited", label: "User Invited" },
+  { value: "license_created", label: "License Created" },
+  { value: "license_revoked", label: "License Revoked" },
+  { value: "license_renewed", label: "License Renewed" },
+];
+
+const Types = [
+  { value: "event", label: "Event" },
+  { value: "scheduled", label: "Scheduled" },
+];
+
 const Page = () => {
   const { data: emailTemplateData, isLoading } = useList<EmailTemplate>({
     hasPagination: false,
@@ -30,11 +42,15 @@ const Page = () => {
         accessorKey: "type",
         header: "Type",
         size: 100,
+        Cell: ({ renderedCellValue }) => 
+          Types.find((t) => t.value == renderedCellValue)?.label,
       },
       {
         accessorKey: "event_type",
         header: "Event Type",
         size: 150,
+        Cell: ({ renderedCellValue }) =>
+          EventTypes.find((t) => t.value == renderedCellValue)?.label,
       },
       {
         accessorKey: "subject",

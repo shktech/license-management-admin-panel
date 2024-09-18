@@ -55,6 +55,8 @@ const InitialField: InitialFieldConfig[] = [
     labelKey: "value",
     dependency: "vendor_name",
   },
+  { name: "product_source_id", required: "text", size: 2  },
+  
   // { name: "license_source_set" },
   // { name: "source_name" },
   // { name: "eval_set_name" },
