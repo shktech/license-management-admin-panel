@@ -14,7 +14,13 @@ import {
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { useBack, useList, useOne } from "@refinedev/core";
+import {
+  useBack,
+  useCreate,
+  useList,
+  useNavigation,
+  useOne,
+} from "@refinedev/core";
 import { getDurationFromString, getInputCustomer } from "@utils/utilFunctions";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 
@@ -32,6 +38,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     watch,
     setValue,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<InputTransaction>();
   useEffect(() => {
@@ -100,6 +107,33 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     }
   }, [start_date, osc_part_number]);
 
+  const { mutate: createCode } = useCreate();
+  const { push } = useNavigation();
+  const handleSubmit = async () => {
+    const payload = getValues();
+    const isValid = await trigger(); // Triggers validation for all fields
+    if (payload.transaction_source == "Prod Reg") {
+      if (!payload.source_reference_number) {
+        setError("source_reference_number", {
+          type: "manual",
+          message: "This field is required",
+        });
+        return;
+      }
+    }
+    if (isValid) {
+      createCode(
+        {
+          resource: `transactions`,
+          values: payload,
+        },
+        {
+          onError: (error) => console.log("error", error),
+          onSuccess: () => push(`/dashboard/transactions`),
+        }
+      );
+    }
+  };
   return (
     <Create
       goBack={
@@ -123,7 +157,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       }}
       saveButtonProps={{ ...saveButtonProps, hidden: false }}
       footerButtons={({ saveButtonProps }) => (
-        <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+        <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
       )}
     >
       {formLoading ||

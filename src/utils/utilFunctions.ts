@@ -56,12 +56,18 @@ export const getRealFormFields = (
       value.type = "text";
     }
     if (field.required) {
-      value.rules = {
-        required: `This field is required`,
-      };
+      if (field.name == "source_reference_number") {
+        value.rules = {}
+      } else {
+        value.rules = {
+          required: `This field is required`,
+        };
+      }
+
       if (field.required == "website") {
         value.rules.pattern = {
-          value: /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex for website URL validation
+          value:
+            /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex for website URL validation
           message: "Invalid website URL",
         };
       }

@@ -51,25 +51,14 @@ const TransactionForm = (props: TransactionFormProps) => {
 
   const transaction_source = props.watch?.("transaction_source");
   useEffect(() => {
-    if (transaction_source == "Prod Reg") {
-      setGeneralTxnFormFields(
-        getRealFormFields(
-          getRequiredFields(
-            GeneralTxnFormFields[props.transaction_action as TransactionAction],
-            ["source_reference_number"]
-          )
+    setGeneralTxnFormFields(
+      getRealFormFields(
+        getRequiredFields(
+          GeneralTxnFormFields[props.transaction_action as TransactionAction],
+          transaction_source == "Prod Reg" ? ["source_reference_number"] : []
         )
-      );
-    } else {
-      setGeneralTxnFormFields(
-        getRealFormFields(
-          getRequiredFields(
-            GeneralTxnFormFields[props.transaction_action as TransactionAction],
-            []
-          )
-        )
-      );
-    }
+      )
+    );
   }, [transaction_source]);
 
   const FormGroups = [
@@ -207,7 +196,10 @@ const TransactionForm = (props: TransactionFormProps) => {
                 }}
               />
             ) : (
-              <GenericForm {...{ ...props, fields: formGroup.fields }} setValue={props.setValue}/>
+              <GenericForm
+                {...{ ...props, fields: formGroup.fields }}
+                setValue={props.setValue}
+              />
             )}
           </AccordionDetails>
         </Accordion>

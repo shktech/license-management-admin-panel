@@ -5,7 +5,13 @@ import { Product, Transaction } from "@/types/types";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useList, useParsed } from "@refinedev/core";
+import {
+  useBack,
+  useList,
+  useNavigation,
+  useParsed,
+  useUpdate,
+} from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { getDurationFromString } from "@utils/utilFunctions";
@@ -21,6 +27,8 @@ const TransactionEdit = () => {
     trigger,
     watch,
     setValue,
+    getValues,
+    setError,
     formState: { errors },
   } = useForm<Transaction>({
     refineCoreProps: {
@@ -40,6 +48,36 @@ const TransactionEdit = () => {
   });
 
   const transaction: Transaction = queryResult?.data?.data as Transaction;
+
+  const { mutate: updateCode } = useUpdate();
+  const { push } = useNavigation();
+  const handleSubmit = async () => {
+    const payload = getValues();
+    const isValid = await trigger(); // Triggers validation for all fields
+    if (payload.transaction_source == "Prod Reg") {
+      if (!payload.source_reference_number) {
+        setError("source_reference_number", {
+          type: "manual",
+          message: "This field is required",
+        });
+        return;
+      }
+    }
+    if (isValid) {
+      updateCode(
+        {
+          resource: `transactions`,
+          values: payload,
+          id: params?.id,
+        },
+        {
+          onError: (error) => console.log("error", error),
+          onSuccess: () =>
+            push(`/dashboard/transactions/show?id=${params?.id}`),
+        }
+      );
+    }
+  };
 
   useEffect(() => {
     if (!formLoading && transaction) {
@@ -108,7 +146,7 @@ const TransactionEdit = () => {
           }}
           saveButtonProps={{ ...saveButtonProps, hidden: false }}
           footerButtons={({ saveButtonProps }) => (
-            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+            <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
           )}
         >
           {formLoading || productLoading ? (
