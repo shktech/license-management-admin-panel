@@ -1,7 +1,7 @@
 import { Reference } from "../../../types/types";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
-import ReferenceFormFields from "./ReferenceFormFields";
+// import ReferenceFormFields from "./ReferenceFormFields";
 
 export type ReferenceFormProps = GenericFormProps & {
   reference?: Reference;
@@ -10,7 +10,7 @@ export type ReferenceFormProps = GenericFormProps & {
 const ReferenceForm = (props: GenericFormProps) => {
   return (
     <div className="px-4">
-      <GenericForm {...{ ...props, fields: ReferenceFormFields }} />
+      {/* <GenericForm {...{ ...props, fields: ReferenceFormFields }} /> */}
     </div>
   );
 };
