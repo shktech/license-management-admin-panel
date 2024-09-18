@@ -15,13 +15,17 @@ const OrganizationEditFormInitialFields: InitialFieldConfig[] = [
   },
   {
     name: "address",
-
     size: 2,
   },
   {
     name: "country",
-
     size: 2,
+    type: "dropdown",
+    options: [
+      { value: "United States", label: "United States" },
+      { value: "Canada", label: "Canada" },
+      { value: "Japan", label: "Japan" },
+    ],
   },
   {
     name: "active",
@@ -47,6 +51,12 @@ const OrganizationCreateInitialFields: InitialFieldConfig[] = [
   {
     name: "country",
     size: 2,
+    type: "dropdown",
+    options: [
+      { value: "United States", label: "United States" },
+      { value: "Canada", label: "Canada" },
+      { value: "Japan", label: "Japan" },
+    ],
   },
 ];
 

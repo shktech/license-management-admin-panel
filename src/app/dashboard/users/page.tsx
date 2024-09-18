@@ -33,9 +33,7 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<User>({
-
-  });
+  } = useTable<User>({});
   const { push } = useNavigation();
   const {
     data: rolesData,
@@ -124,21 +122,8 @@ const Page = () => {
         accessorKey: "organizations",
         header: "Organizations",
         size: 150,
-        Cell: ({ renderedCellValue }) => {
-          return (
-            <div className="flex items-center justify-center">
-              {(renderedCellValue as Organization[]).toString()}
-            </div>
-          );
-        },
-      },
-      {
-        accessorKey: "is_active",
-        header: "Active",
-        size: 100,
-        Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} withLabel />
-        ),
+        Cell: ({ renderedCellValue }) =>
+          (renderedCellValue as Organization[]).toString(),
       },
       {
         accessorKey: "roles",
@@ -162,6 +147,14 @@ const Page = () => {
             </div>
           );
         },
+      },
+      {
+        accessorKey: "is_active",
+        header: "Active",
+        size: 100,
+        Cell: ({ renderedCellValue }) => (
+          <StateComponent active={renderedCellValue as boolean} withLabel />
+        ),
       },
       // {
       //   accessorKey: "action",

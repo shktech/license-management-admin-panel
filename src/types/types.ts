@@ -200,6 +200,7 @@ export interface Transaction {
   updated_at?: string;
   transaction_id: string;
   transaction_date?: string;
+  product_part_number?: string;
   transaction_source?: string;
   transaction_status?: string;
   transaction_action?: string;

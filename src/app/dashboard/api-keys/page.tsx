@@ -39,9 +39,15 @@ const Page = () => {
   const [apiKeys, setApiKeys] = useState<APIKey[]>([]);
   useEffect(() => {
     if (apiKeysData && !isLoading) {
-      setApiKeys(apiKeysData?.data.sort((a, b) => new Date(b.created as string).getTime() - new Date(a.created as string).getTime()));
+      setApiKeys(
+        apiKeysData?.data.sort(
+          (a, b) =>
+            new Date(b.created as string).getTime() -
+            new Date(a.created as string).getTime()
+        )
+      );
     }
-  }, [apiKeysData, isLoading])
+  }, [isLoading]);
   const handleRevoke = (row: APIKey) => {
     setSelectedAPIKey(row);
     handleOpenRevokeModal();
@@ -59,7 +65,6 @@ const Page = () => {
   };
   const handleOpenRevokeModal = () => setOpenRevokeModal(true);
   const handleCloseRevokeModal = () => {
-    refetch();
     setOpenRevokeModal(false);
   };
   const handleRevokeAPIKey = () => {
@@ -74,11 +79,15 @@ const Page = () => {
       {
         onError: () => {},
         onSuccess: (res) => {
-          refetch();
+          setApiKeys((prevKeys) =>
+            prevKeys.map((key) =>
+              key.id === selectedAPIKey?.id ? { ...key, revoked: true } : key
+            )
+          );
+          handleCloseRevokeModal();
         },
       }
     );
-    handleCloseRevokeModal();
   };
   const handleUpdateAPIKey = (name: string) => {
     revokeAPIKey(
@@ -92,11 +101,16 @@ const Page = () => {
       {
         onError: () => {},
         onSuccess: (res) => {
-          refetch();
+          // Update the local apiKeys state
+          setApiKeys((prevKeys) =>
+            prevKeys.map((key) =>
+              key.id === selectedAPIKey?.id ? { ...key, name: name } : key
+            )
+          );
+          handleCloseRevokeModal();
         },
       }
     );
-    handleCloseRevokeModal();
   };
   const handleCreateAPIKey = (name: string, orgId: string) => {
     createAPIKey(
