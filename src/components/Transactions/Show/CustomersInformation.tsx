@@ -38,13 +38,13 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           transaction?.[
             (type + "_address") as keyof Transaction
           ] as Partial<Address>
-        )?.address1
+        )?.address1 || ''
       } ${
         (
           transaction?.[
             (type + "_address") as keyof Transaction
           ] as Partial<Address>
-        )?.address2
+        )?.address2 || ''
       }`,
     },
     {
@@ -86,13 +86,13 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           transaction?.[
             (type + "_contact") as keyof Transaction
           ] as Partial<Contact>
-        )?.first_name
+        )?.first_name || ''
       } ${
         (
           transaction?.[
             (type + "_contact") as keyof Transaction
           ] as Partial<Contact>
-        )?.last_name
+        )?.last_name || ''
       }`,
     },
     {
