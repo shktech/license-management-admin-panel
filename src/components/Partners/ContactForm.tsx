@@ -27,7 +27,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, partner_id }) => {
   useEffect(() => {
     const previousContact = getValues();
     if (contact != null) {
-      reset(contact);
+      reset({
+        first_name: contact.first_name,
+        last_name: contact.last_name,
+        phone: contact.phone,
+        email: contact.email,
+        job_title: contact.job_title,
+        renewal_notification: contact.renewal_notification,
+        primary: contact.primary,
+        active: contact.active,
+      });
     } else {
       Object.keys(previousContact).forEach((key) => setValue(key, null));
     }

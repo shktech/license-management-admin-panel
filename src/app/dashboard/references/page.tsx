@@ -66,7 +66,7 @@ const Page = () => {
         accessorKey: "active",
         header: "Active",
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel/>
         ),
         size: 100,
       },

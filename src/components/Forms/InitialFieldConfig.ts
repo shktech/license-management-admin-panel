@@ -2,7 +2,7 @@ export interface InitialFieldConfig {
   name: string;
   name2?: string;
   label?: string;
-  required?: "text" | "email" | "phone" | "password" | "number";
+  required?: "text" | "email" | "phone" | "password" | "number" | "website";
   type?:
     | "text"
     | "date"

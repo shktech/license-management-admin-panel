@@ -50,6 +50,7 @@
     "react-apexcharts": "^1.4.1",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.0.0",
+    "react-router-dom": "^6.26.2",
     "react-select": "^5.8.0",
     "react-select-country-list": "^2.2.3",
     "react-toastify": "^10.0.5",

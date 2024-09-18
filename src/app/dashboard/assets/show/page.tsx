@@ -277,7 +277,7 @@ const Page = () => {
                     },
                     {
                       label: "Status",
-                      value: <StateComponent active={asset && (asset?.active as boolean)} />,
+                      value: <StateComponent active={asset && (asset?.active as boolean)} withLabel/>,
                     },
                     {
                       label: "Vendor Name",

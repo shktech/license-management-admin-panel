@@ -19,7 +19,7 @@ interface TransactionHistoryTableProps {
 
 const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   transactions,
-  asset
+  asset,
 }) => {
   const { push } = useNavigation();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -62,38 +62,24 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         size: 50,
       },
       {
-        accessorKey: "bill_customer_name",
-        header: "Bill Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "ship_customer_name",
-        header: "Ship Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "reseller_name",
-        header: "Reseller",
-        size: 50,
-      },
-      {
         accessorKey: "product_part",
         header: "Product Type",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_type}</div>
+        Cell: ({}) => <div>{asset?.osc_product?.product_type}</div>,
       },
       {
         accessorKey: "product_type",
         header: "Product Part Number",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_part_number}</div>
+        Cell: ({}) => <div>{asset?.osc_product?.product_part_number}</div>,
       },
       {
         accessorKey: "quantity",
         header: "Seat Count",
         size: 50,
-        Cell: ({ renderedCellValue }) =>
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "transaction_action",
@@ -126,6 +112,21 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         //     {renderedCellValue}
         //   </Box>
         // ),
+      },
+      {
+        accessorKey: "bill_customer_name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "ship_customer_name",
+        header: "Ship Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "reseller_name",
+        header: "Reseller",
+        size: 50,
       },
     ];
   }, []);

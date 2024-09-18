@@ -137,7 +137,7 @@ const Page = () => {
         header: "Active",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel />
         ),
       },
       {

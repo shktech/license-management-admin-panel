@@ -79,9 +79,6 @@ const Item = () => {
                   <FontAwesomeIcon icon={faCubes} />
                   Product
                 </div>
-                <div className="text-lg font-normal">
-                  {product?.product_name}
-                </div>
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@ import {
 import { partnerTypes } from "@data/PartnerTypeData";
 import GeneralInformation from "@components/common/View/GeneralInformation";
 import StateComponent from "@components/common/StateComponent";
+import Link from "next/link";
 
 const Item = () => {
   const { params } = useParsed();
@@ -107,7 +108,7 @@ const Item = () => {
                   <FontAwesomeIcon icon={faUser} />
                   Partner
                 </div>
-                <div className="text-lg font-normal">{partner?.name}</div>
+                {/* <div className="text-lg font-normal">{partner?.name}</div> */}
               </div>
               {/* <span
                 className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
@@ -231,11 +232,11 @@ const Item = () => {
                     },
                     {
                       label: "Partner Website",
-                      value: '',
+                      value: <Link href={partner?.website as string} className="text-[#4580ff] underline" target="_blank" rel="noopener noreferrer">{partner?.website}</Link>,
                     },
                     {
                       label: "Active",
-                      value: <StateComponent active={partner?.active as boolean}/>,
+                      value: <StateComponent active={partner?.active as boolean} withLabel/>,
                     },
                   ]}
                 ></GeneralInformation>

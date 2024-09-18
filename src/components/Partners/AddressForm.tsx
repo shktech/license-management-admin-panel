@@ -26,7 +26,15 @@ const AddressForm: React.FC<AddressFormProps> = ({ address, partner_id }) => {
   useEffect(() => {
     const previousAddress = getValues();
     if (address != null) {
-      reset(address);
+      reset({
+        address1: address.address1,
+        address2: address.address2,
+        country: address.country,
+        state: address.state,
+        city: address.city,
+        postal_code: address.postal_code,
+        active: address.active
+      });
     } else {
       Object.keys(previousAddress).forEach((key) => setValue(key, null));
     }

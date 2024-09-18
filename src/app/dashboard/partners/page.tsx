@@ -88,7 +88,7 @@ const Page = () => {
         header: "Status",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel/>
         ),
       },
     ],
@@ -108,7 +108,7 @@ const Page = () => {
                 Partners
               </div>
 
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
+              {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <Select
                   value={partnerType}
                   onChange={handleChangePartnerType}
@@ -130,17 +130,17 @@ const Page = () => {
                 >
                   {partnerTypes.map((type) => (
                     <MenuItem value={type.value} key={type.label}>
-                      {/* <span
+                      <span
                         className={`text-xs text-white w-full px-2 py-1 rounded-full text-center font-semibold`}
                         style={{ backgroundColor: type.color }}
                       >
                         {type.label}
-                      </span> */}
+                      </span>
                       {type.label}
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </FormControl> */}
             </div>
           }
           data={data?.data}

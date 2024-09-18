@@ -21,11 +21,11 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
           value: transaction?.transaction_number,
         },
         {
-          label: "Transaction date",
+          label: "Transaction Date",
           value: getFormattedDate(transaction?.transaction_date),
         },
         {
-          label: "Transaction action",
+          label: "Transaction Action",
           value: transaction?.transaction_action
           // value: (
           //   <Box
@@ -41,56 +41,52 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
           // ),
         },
         {
-          label: "Transaction status",
-          value: transaction?.transaction_status
-          // value: (
-          //   <Box
-          //     component="span"
-          //     sx={{
-          //       backgroundColor:
-          //         TxtStatusColor[transaction?.transaction_status as string],
-          //       ...tagStyle,
-          //     }}
-          //   >
-          //     {transaction?.transaction_status}
-          //   </Box>
-          // ),
+          label: "Transaction Status",
+          // value: transaction?.transaction_status
+          value: (
+            <Box
+              component="span"
+              sx={{
+                backgroundColor:
+                  TxtStatusColor[transaction?.transaction_status as string],
+                ...tagStyle,
+              }}
+            >
+              {transaction?.transaction_status}
+            </Box>
+          ),
         },
         {
           label: "Comments",
-          value: transaction?.comments,
+          value: transaction?.comments || "No Comments",
         },
         {
           label: "Notification Date",
           value: transaction?.notification_date,
         },
         {
-          label: "Transaction source",
+          label: "Transaction Source",
           value: transaction?.transaction_source,
         },
         {
-          label: "Source ref number",
+          label: "Source Ref Number",
           value: transaction?.source_reference_number,
         },
         {
-          label: "Source ref date",
+          label: "Source Ref Date",
           value: getFormattedDate(transaction?.source_reference_date),
         },
         {
-          label: "Source ref ID",
+          label: "Source Ref ID",
           value: transaction?.source_reference_id,
         },
         {
           label: "Source Integration Status",
-          value: transaction?.source_integration_status,
+          value: transaction?.source_integration_status || "No Error",
         },
         {
           label: "Source Integration Error",
-          value: transaction?.source_integration_error,
-        },
-        {
-          label: "Error Message",
-          value: transaction?.error_message,
+          value: transaction?.source_integration_error || "No Error",
         },
       ]}
     ></GeneralInformation>

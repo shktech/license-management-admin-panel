@@ -5,7 +5,7 @@ import ShowTransaction from "@components/Transactions/Show/ShowTransaction";
 import Loader from "@components/common/Loader";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import {
   editRefineBtnStyle,
   refreshRefineBtnStyle,
@@ -104,9 +104,6 @@ const TransactionShow = () => {
               <div className="text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
                 <FontAwesomeIcon icon={faRightLeft} />
                 Transaction
-                <div className="text-lg font-normal">
-                  {transaction?.transaction_number}
-                </div>
               </div>
               {/* <Box
                 component="span"

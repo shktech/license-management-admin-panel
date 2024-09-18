@@ -79,7 +79,7 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
         accessorKey: "active",
         header: "Status",
         Cell: ({ renderedCellValue }) =>
-          <StateComponent active={renderedCellValue as boolean}/>
+          <StateComponent active={renderedCellValue as boolean} withLabel/>
       },
     ],
     []

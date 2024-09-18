@@ -28,6 +28,11 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
         size: 50,
       },
       {
+        accessorKey: "job_title",
+        header: "Job Title",
+        size: 50,
+      },
+      {
         accessorKey: "email",
         header: "Email",
         size: 50,
@@ -38,16 +43,11 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
         size: 50,
       },
       {
-        accessorKey: "job_title",
-        header: "Job Title",
-        size: 50,
-      },
-      {
         accessorKey: "renewal_notification",
         header: "Renewal Notification",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel type="YES"/>
         ),
       },
       {
@@ -55,7 +55,7 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
         header: "Primary",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel type="YES"/>
         ),
       },
       {
@@ -63,7 +63,7 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
         header: "Active",
         size: 50,
         Cell: ({ renderedCellValue }) => (
-          <StateComponent active={renderedCellValue as boolean} />
+          <StateComponent active={renderedCellValue as boolean} withLabel/>
         ),
       },
     ],
