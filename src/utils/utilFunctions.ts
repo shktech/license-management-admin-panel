@@ -56,12 +56,12 @@ export const getRealFormFields = (
       value.type = "text";
     }
     if (field.required) {
-      if (field.name == "source_reference_number") {
-        value.rules = {}
-      } else {
-        value.rules = {
-          required: `This field is required`,
-        };
+      value.rules = {
+        required: `This field is required`,
+      };
+      
+      if (field.required == "special") {
+        value.rules = {};
       }
 
       if (field.required == "website") {

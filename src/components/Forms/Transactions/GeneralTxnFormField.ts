@@ -29,6 +29,7 @@ const InitialField: InitialFieldConfig[] = [
   {
     name: "source_reference_number",
     type: "autocomplete",
+    required: 'special',
     size: 1,
     resource: "references/reference-codes",
     valueKey: "reference_code",
