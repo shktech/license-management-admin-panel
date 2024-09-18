@@ -54,8 +54,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ identity, refetchUser }) => {
         });
         return;
       }
-      updateData.password = data.password;
-      updateData.password1 = data.password1;
+      updateData.old_password = data.password;
+      updateData.new_password = data.password1;
     }
     updateUser(
       {
