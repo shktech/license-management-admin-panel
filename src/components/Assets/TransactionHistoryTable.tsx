@@ -62,21 +62,6 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         size: 50,
       },
       {
-        accessorKey: "bill_customer_name",
-        header: "Bill Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "ship_customer_name",
-        header: "Ship Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "reseller_name",
-        header: "Reseller",
-        size: 50,
-      },
-      {
         accessorKey: "product_part",
         header: "Product Type",
         size: 50,
@@ -127,6 +112,21 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         //     {renderedCellValue}
         //   </Box>
         // ),
+      },
+      {
+        accessorKey: "bill_customer_name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "ship_customer_name",
+        header: "Ship Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "reseller_name",
+        header: "Reseller",
+        size: 50,
       },
     ];
   }, []);

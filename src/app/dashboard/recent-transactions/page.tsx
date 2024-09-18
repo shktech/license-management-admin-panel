@@ -91,16 +91,6 @@ const Page = () => {
         size: 100,
       },
       {
-        accessorKey: "bill_customer.name",
-        header: "Bill Customer",
-        size: 100,
-      },
-      {
-        accessorKey: "ship_customer.name",
-        header: "Ship Customer",
-        size: 100,
-      },
-      {
         accessorKey: "asset.license_type",
         header: "Product Type",
         size: 100,
@@ -163,6 +153,20 @@ const Page = () => {
             {renderedCellValue}
           </Box>
         ),
+      },
+      {
+        accessorKey: "bill_customer.name",
+        header: "Bill Customer",
+        size: 100,
+      },
+      {
+        accessorKey: "ship_customer.name",
+        header: "Ship Customer",
+        size: 100,
+      },{
+        accessorKey: "reseller.name",
+        header: "Reseller",
+        size: 100,
       },
     ],
     []

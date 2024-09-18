@@ -28,7 +28,7 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
           value: transaction?.asset?.osc_product?.vendor_name,
         },
         {
-          label: "Vendor Name",
+          label: "Vendor Part Name",
           value: transaction?.asset?.osc_product?.vendor_part_number,
         },
         {

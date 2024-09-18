@@ -11,26 +11,26 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
   transaction,
 }) => {
   const items = (type: string) => [
-    {
-      label: "Account",
-      value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
-        ?.account_id,
-    },
+    // {
+    //   label: "Account",
+    //   value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
+    //     ?.account_id,
+    // },
     {
       label: "Customer Name",
       value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
         ?.name,
     },
-    {
-      label: "Partner Number",
-      value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
-        ?.partner_number,
-    },
-    {
-      label: "Type",
-      value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
-        ?.type,
-    },
+    // {
+    //   label: "Partner Number",
+    //   value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
+    //     ?.partner_number,
+    // },
+    // {
+    //   label: "Type",
+    //   value: (transaction?.[type as keyof Transaction] as Partial<Partner>)
+    //     ?.type,
+    // },
     {
       label: "Address",
       value: `${

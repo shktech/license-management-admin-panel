@@ -58,21 +58,6 @@ const ProductTransactionHistoryTable: React.FC<
         size: 50,
       },
       {
-        accessorKey: "bill_customer.name",
-        header: "Bill Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "ship_customer.name",
-        header: "Ship Customer",
-        size: 50,
-      },
-      {
-        accessorKey: "reseller.name",
-        header: "Reseller",
-        size: 50,
-      },
-      {
         accessorKey: "asset.osc_product.product_type",
         header: "Product Type",
         size: 50,
@@ -98,6 +83,21 @@ const ProductTransactionHistoryTable: React.FC<
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
+        size: 50,
+      },
+      {
+        accessorKey: "bill_customer.name",
+        header: "Bill Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "ship_customer.name",
+        header: "Ship Customer",
+        size: 50,
+      },
+      {
+        accessorKey: "reseller.name",
+        header: "Reseller",
         size: 50,
       },
     ];
