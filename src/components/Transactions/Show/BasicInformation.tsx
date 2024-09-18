@@ -62,7 +62,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
         },
         {
           label: "Notification Date",
-          value: transaction?.notification_date,
+          value: getFormattedDate(transaction?.notification_date),
         },
         {
           label: "Transaction Source",

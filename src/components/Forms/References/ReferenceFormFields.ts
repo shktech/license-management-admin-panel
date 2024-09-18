@@ -45,7 +45,7 @@ export const ReferenceFormFields = {
   create: getRealFormFields(InitialField),
   edit: getRealFormFields([
     ...InitialField,
-    { name: "active", type: "switch", required: "text" },
+    { name: "active", type: "switch" },
   ]),
 };
 
