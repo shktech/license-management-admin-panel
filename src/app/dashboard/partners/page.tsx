@@ -108,7 +108,7 @@ const Page = () => {
                 Partners
               </div>
 
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
+              {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <Select
                   value={partnerType}
                   onChange={handleChangePartnerType}
@@ -140,7 +140,7 @@ const Page = () => {
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </FormControl> */}
             </div>
           }
           data={data?.data}

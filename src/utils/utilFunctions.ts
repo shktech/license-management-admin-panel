@@ -59,6 +59,12 @@ export const getRealFormFields = (
       value.rules = {
         required: `This field is required`,
       };
+      if (field.required == "website") {
+        value.rules.pattern = {
+          value: /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex for website URL validation
+          message: "Invalid website URL",
+        };
+      }
       if (field.required == "number") {
         value.rules.pattern = {
           value: /^(0|[1-9]\d*)$/, // Updated regex to allow only non-negative numbers

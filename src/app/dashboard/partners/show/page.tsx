@@ -28,6 +28,7 @@ import {
 import { partnerTypes } from "@data/PartnerTypeData";
 import GeneralInformation from "@components/common/View/GeneralInformation";
 import StateComponent from "@components/common/StateComponent";
+import Link from "next/link";
 
 const Item = () => {
   const { params } = useParsed();
@@ -231,7 +232,7 @@ const Item = () => {
                     },
                     {
                       label: "Partner Website",
-                      value: '',
+                      value: <Link href={partner?.website as string} className="text-[#4580ff] underline" target="_blank" rel="noopener noreferrer">{partner?.website}</Link>,
                     },
                     {
                       label: "Active",

@@ -14,6 +14,7 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Disty", label: "Disty" },
     ],
   },
+  { name: "website", required: "website", size: 2 },
   { name: "active", type: "switch" },
 ];
 
@@ -30,6 +31,7 @@ const InitialCreateField: InitialFieldConfig[] = [
       { value: "Disty", label: "Disty" },
     ],
   },
+  { name: "website", required: "website", size: 2 },
   { name: "address1", required: "text" },
   { name: "address2" },
   { name: "address", required: "text", type: "address", prefix: "" },
