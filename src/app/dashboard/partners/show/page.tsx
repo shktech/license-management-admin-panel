@@ -232,7 +232,7 @@ const Item = () => {
                     },
                     {
                       label: "Partner Website",
-                      value: <Link href={partner?.website as string} className="text-[#4580ff] underline" target="_blank" rel="noopener noreferrer">{partner?.website}</Link>,
+                      value: partner?.website,
                     },
                     {
                       label: "Active",

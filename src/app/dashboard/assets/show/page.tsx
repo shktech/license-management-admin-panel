@@ -133,7 +133,7 @@ const Page = () => {
                 <FontAwesomeIcon icon={faGlassWater} />
                 License{" "}
               </div>
-              <div className="text-lg font-normal">{asset?.license_key}</div>
+              {/* <div className="text-lg font-normal">{asset?.license_key}</div> */}
             </div>
           </div>
         }
