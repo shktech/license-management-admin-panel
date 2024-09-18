@@ -18,6 +18,13 @@ const Page = () => {
     tableQueryResult: { data, isLoading, refetch },
   } = useTable<Email_Schedule>({
     hasPagination: false,
+    syncWithLocation: false,
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
 
   const { push } = useNavigation();
@@ -38,7 +45,7 @@ const Page = () => {
   };
 
   const formatTime = (_date: any) => {
-    if (_date == null) return '';
+    if (_date == null) return "";
     const userTimezone = moment.tz.guess();
     return formatDateTimeWithCustomFormat(_date, userTimezone);
   };

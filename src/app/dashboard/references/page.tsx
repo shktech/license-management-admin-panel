@@ -14,6 +14,13 @@ const Page = () => {
     tableQueryResult: { data, isLoading, refetch },
   } = useTable<Reference>({
     hasPagination: false,
+    syncWithLocation: false,
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
 
   const { push } = useNavigation();
@@ -38,30 +45,28 @@ const Page = () => {
         header: "Program Type",
         size: 200,
       },
-      // {
-      //   accessorKey: "reference_description",
-      //   header: "Description",
-      //   size: 250,
-      // },
+      {
+        accessorKey: "data_source",
+        header: "Data Source",
+        size: 250,
+      },
       {
         accessorKey: "start_date",
         header: "Start Date",
         size: 200,
-        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
+        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue),
       },
       {
         accessorKey: "end_date",
         header: "End Date",
         size: 200,
-        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
+        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue),
       },
       {
         accessorKey: "active",
         header: "Active",
         Cell: ({ renderedCellValue }) => (
-          <div className="flex items-center justify-center">
-            <StateComponent active={renderedCellValue as boolean} />
-          </div>
+          <StateComponent active={renderedCellValue as boolean} />
         ),
         size: 100,
       },

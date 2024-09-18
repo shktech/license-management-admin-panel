@@ -44,6 +44,13 @@ const Page = () => {
     pagination: {
       pageSize: DefaultPageSize,
     },
+    syncWithLocation: false,
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
   const reference: Reference = data?.data as Reference;
 
@@ -112,7 +119,7 @@ const Page = () => {
         header: "Product Part",
       },
       {
-        accessorKey: "transaction.transaction_id",
+        accessorKey: "transaction.transaction_number",
         header: "Transaction #",
       },
       {
@@ -166,7 +173,7 @@ const Page = () => {
       key: "active",
       value: (
         <div className="flex items-center justify-center">
-          <StateComponent active={reference?.active as boolean} />
+          <StateComponent active={reference?.active as boolean} withLabel />
         </div>
       ),
     },
@@ -257,16 +264,19 @@ const Page = () => {
                   {
                     label: "Active",
                     value: (
-                      <StateComponent active={reference.active as boolean} />
+                      <StateComponent
+                        active={reference.active as boolean}
+                        withLabel
+                      />
                     ),
                   },
                   {
                     label: "Data Source",
-                    value: "Data Source",
+                    value: reference?.data_source,
                   },
                   {
                     label: "Transaction Source",
-                    value: "Transaction Source",
+                    value: reference?.transaction_source,
                   },
                   {
                     label: "Start Date",

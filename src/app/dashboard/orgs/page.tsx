@@ -30,6 +30,13 @@ const Page = () => {
     hasPagination: false,
   });
 
+  const [orgsData, setOrgsData] = useState<Organization[]>([]);
+  useEffect(() => {
+    if (orgs && !isLoading) {
+      setOrgsData(orgs?.data.sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime()));
+    }
+  }, [orgs, isLoading])
+
   useEffect(() => {
     setLoading(isIdentityLoading || isLoading);
   }, [isIdentityLoading, isLoading]);
@@ -113,7 +120,7 @@ const Page = () => {
                 </div>
               </div>
             }
-            data={orgData}
+            data={orgsData}
             columns={columns}
             canCreate={true}
             handleCreate={handleCreate}

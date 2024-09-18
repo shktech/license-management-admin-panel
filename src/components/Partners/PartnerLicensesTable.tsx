@@ -6,7 +6,7 @@ import { Asset, Transaction } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useTable } from "@refinedev/core";
 import GenericTable from "@components/Table/GenericTable";
-import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
+import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
 import { DefaultPageSize } from "@data/UtilData";
 import StateComponent from "@components/common/StateComponent";
 
@@ -68,10 +68,12 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
       {
         accessorKey: "start_date",
         header: "Start Date",
+        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
       },
       {
         accessorKey: "end_date",
         header: "End Date",
+        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
       },
       {
         accessorKey: "active",

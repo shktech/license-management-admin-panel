@@ -24,6 +24,28 @@ const InitialField: InitialFieldConfig[] = [
     type: "date",
     required: "text",
   },
+  {
+    name: "data_source",
+    size: 2,
+  },
+  {
+    name: "transaction_source",
+    type: "dropdown",
+    size: 2,
+    options: [
+      { value: "Oracle ERP", label: "Oracle ERP" },
+      { value: "Prod Reg", label: "Prod Reg" },
+      { value: "Manual", label: "Manual" },
+      { value: "Salesforce", label: "Salesforce" },
+    ],
+  },
 ];
 
-export default getRealFormFields(InitialField);
+export const ReferenceFormFields = {
+  create: getRealFormFields(InitialField),
+  edit: getRealFormFields([
+    ...InitialField,
+    { name: "active", type: "switch", required: "text" },
+  ]),
+};
+

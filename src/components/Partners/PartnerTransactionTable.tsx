@@ -84,6 +84,11 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
         size: 100,
       },
       {
+        accessorKey: "reseller.name",
+        header: "Reseller",
+        size: 100,
+      },
+      {
         accessorKey: "asset.license_type",
         header: "Product Type",
         size: 100,

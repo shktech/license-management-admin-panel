@@ -23,8 +23,14 @@ const Page = () => {
     setSorters,
   } = useTable<Product>({
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
 
   const { push } = useNavigation();
@@ -100,7 +106,7 @@ const Page = () => {
       },
       {
         accessorKey: "source_name",
-        header: "Product source",
+        header: "Product source ID",
         size: 200,
       },
       {

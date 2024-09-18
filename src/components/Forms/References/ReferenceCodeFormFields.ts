@@ -15,7 +15,7 @@ const InitialField: InitialFieldConfig[] = [
   {
     name: "product_part_id",
     required: "text",
-    size: 2
+    size: 2,
   },
   {
     name: "osc_part_number",
@@ -32,4 +32,10 @@ const InitialField: InitialFieldConfig[] = [
   },
 ];
 
-export default getRealFormFields(InitialField);
+export const ReferenceCodeFormFields = {
+  create: getRealFormFields(InitialField),
+  edit: getRealFormFields([
+    ...InitialField,
+    { name: "active", type: "switch", required: "text" },
+  ]),
+};

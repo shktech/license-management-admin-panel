@@ -48,7 +48,7 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
         size: 50,
       },
       {
-        accessorKey: "email_template.to",
+        accessorKey: "to",
         header: "To",
         size: 50,
       },

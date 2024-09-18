@@ -1,7 +1,7 @@
 "use client";
 
 import { useNavigation, useTable } from "@refinedev/core";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import GenericTable from "@components/Table/GenericTable";
 import Loader from "@components/common/Loader";
@@ -28,8 +28,14 @@ const Page = () => {
     setSorters,
   } = useTable<Partner>({
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
   });
 
   const handleRowClick = (row: Partner) => {
@@ -60,29 +66,17 @@ const Page = () => {
       {
         accessorKey: "account_id",
         header: "Partner ID",
-        size: 30,
+        size: 100,
       },
       {
         accessorKey: "name",
         header: "Partner Name",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "type",
         header: "Partner Type",
-        size: 50,
-        // Cell: ({ renderedCellValue }) => (
-        //   <span
-        //     className={`text-xs text-white w-full px-6 py-1 rounded-full text-center font-semibold`}
-        //     style={{
-        //       backgroundColor:
-        //         partnerTypes.find((type) => type.value === renderedCellValue)
-        //           ?.color || "#ff3838",
-        //     }}
-        //   >
-        //     {renderedCellValue}
-        //   </span>
-        // ),
+        size: 100,
       },
       {
         accessorKey: "account_id",
@@ -92,7 +86,7 @@ const Page = () => {
       {
         accessorKey: "active",
         header: "Status",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) => (
           <StateComponent active={renderedCellValue as boolean} />
         ),

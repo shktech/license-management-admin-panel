@@ -73,7 +73,7 @@ export const getRealFormFields = (
       }
       if (field.required == "phone") {
         value.rules.pattern = {
-          value: /^(?:\+1[-.\s]?)?(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/, // Updated regex for US/Canada phone numbers
+          value: /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g, // Updated regex to allow 10-digit and 11-digit numbers
           message:
             "Invalid phone number. Please use a valid US or Canada number.",
         };

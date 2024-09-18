@@ -3,7 +3,7 @@
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Reference, ReferenceCode } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import ReferenceCodeFormFields from "@components/Forms/References/ReferenceCodeFormFields";
+import { ReferenceCodeFormFields } from "@components/Forms/References/ReferenceCodeFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useParsed } from "@refinedev/core";
@@ -75,7 +75,7 @@ const Item = () => {
           ) : (
             <GenericForm
               {...{ control, errors, trigger }}
-              fields={ReferenceCodeFormFields}
+              fields={ReferenceCodeFormFields.edit}
             />
           )}
         </Edit>

@@ -17,6 +17,7 @@ import { getNestedValue } from "@utils/utilFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faCubes } from "@fortawesome/free-solid-svg-icons";
 import StateComponent from "@components/common/StateComponent";
+import ProductTransactionHistoryTable from "@components/Products/ProductTransactionHistoryTable";
 
 const Item = () => {
   const { params } = useParsed();
@@ -193,7 +194,9 @@ const Item = () => {
                   ]}
                 />
               </CustomTabPanel>
-              <CustomTabPanel value={value} index={1}></CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                <ProductTransactionHistoryTable product={product?.product_id as string}/>
+              </CustomTabPanel>
             </div>
           </>
         )}

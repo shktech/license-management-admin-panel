@@ -8,32 +8,27 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Box } from "@mui/material";
 import { type MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
-import TransactionDetailDrawer from "./TransactionDetailDrawer";
 import { getFormattedDate } from "@utils/utilFunctions";
-import { useNavigation } from "@refinedev/core";
+import { useNavigation, useTable } from "@refinedev/core";
 
-interface TransactionHistoryTableProps {
-  transactions?: Transaction[];
-  asset?: Asset;
+interface ProductTransactionHistoryTableProps {
+  product: string;
 }
 
-const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
-  transactions,
-  asset
-}) => {
+const ProductTransactionHistoryTable: React.FC<
+  ProductTransactionHistoryTableProps
+> = ({ product: product_id }) => {
+  const {
+    tableQueryResult: { data: transactionData, isLoading, refetch },
+  } = useTable<Transaction>({
+    resource: `transactions?product=${product_id}`,
+  });
   const { push } = useNavigation();
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [clickedTransaction, setClickedTransaction] = useState<string | null>(
-    null
-  );
+
   const handleShowClick = (row: Transaction) => {
-    // setClickedTransaction(row.transaction_id);
-    // setOpenDrawer(true);
     push(`/dashboard/transactions/show?id=${row.transaction_id}`);
   };
-  const handleClose = () => {
-    setOpenDrawer(false);
-  };
+
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(() => {
     return [
       {
@@ -62,70 +57,47 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         size: 50,
       },
       {
-        accessorKey: "bill_customer_name",
+        accessorKey: "bill_customer.name",
         header: "Bill Customer",
         size: 50,
       },
       {
-        accessorKey: "ship_customer_name",
+        accessorKey: "ship_customer.name",
         header: "Ship Customer",
         size: 50,
       },
       {
-        accessorKey: "reseller_name",
+        accessorKey: "reseller.name",
         header: "Reseller",
         size: 50,
       },
       {
-        accessorKey: "product_part",
+        accessorKey: "asset.osc_product.product_type",
         header: "Product Type",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_type}</div>
       },
       {
-        accessorKey: "product_type",
+        accessorKey: "asset.osc_product.product_part_number",
         header: "Product Part Number",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_part_number}</div>
       },
       {
         accessorKey: "quantity",
         header: "Seat Count",
         size: 50,
-        Cell: ({ renderedCellValue }) =>
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "transaction_action",
         header: "Txn Action",
         size: 50,
-        // Cell: ({ renderedCellValue }) => (
-        //   <Box
-        //     component="span"
-        //     sx={{
-        //       backgroundColor: TxtActionColor[renderedCellValue as string],
-        //       ...tagStyle,
-        //     }}
-        //   >
-        //     {renderedCellValue}
-        //   </Box>
-        // ),
       },
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
         size: 50,
-        // Cell: ({ renderedCellValue }) => (
-        //   <Box
-        //     component="span"
-        //     sx={(theme) => ({
-        //       backgroundColor: TxtStatusColor[renderedCellValue as string],
-        //       ...tagStyle,
-        //     })}
-        //   >
-        //     {renderedCellValue}
-        //   </Box>
-        // ),
       },
     ];
   }, []);
@@ -133,7 +105,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   return (
     <>
       <GenericTable
-        data={transactions}
+        data={transactionData?.data}
         title={
           <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
             Transaction History
@@ -142,15 +114,8 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         columns={columns}
         onRowClick={handleShowClick}
       />
-      {clickedTransaction && (
-        <TransactionDetailDrawer
-          open={openDrawer}
-          onClose={() => handleClose()}
-          transaction_id={clickedTransaction}
-        />
-      )}
     </>
   );
 };
 
-export default TransactionHistoryTable;
+export default ProductTransactionHistoryTable;

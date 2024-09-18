@@ -22,13 +22,13 @@ const AssetCustomersInformation: React.FC<CustomersInformationProps> = ({
           asset?.[
             (type + "_contact") as keyof Asset
           ] as Partial<Contact>
-        )?.first_name
+        )?.first_name || ''
       } ${
         (
           asset?.[
             (type + "_contact") as keyof Asset
           ] as Partial<Contact>
-        )?.last_name
+        )?.last_name || ''
       }`,
     },
     {

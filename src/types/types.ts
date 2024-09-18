@@ -142,6 +142,8 @@ export interface Organization {
   country?: string;
   address?: string;
   active?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface User {
@@ -309,6 +311,8 @@ export interface Reference {
   reference_name?: string;
   reference_description?: string;
   reference_type?: string;
+  data_source?: string;
+  transaction_source?: string;
   organization?: string;
   active?: boolean;
   start_date?: string;
@@ -361,6 +365,9 @@ export interface Contact {
   email?: string;
   phone?: string;
   active?: boolean;
+  job_title?: string;
+  renewal_notification?: boolean;
+  primary?: boolean
 }
 
 export interface EmailHistory {

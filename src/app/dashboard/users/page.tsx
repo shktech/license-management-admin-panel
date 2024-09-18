@@ -33,7 +33,9 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<User>();
+  } = useTable<User>({
+
+  });
   const { push } = useNavigation();
   const {
     data: rolesData,

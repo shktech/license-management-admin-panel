@@ -312,7 +312,7 @@ const Page = () => {
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <div className="max-w-full overflow-x-auto">
-                  <TransactionHistoryTable transactions={transactions} />
+                  <TransactionHistoryTable transactions={transactions} asset={asset}/>
                 </div>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
