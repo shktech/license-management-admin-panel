@@ -17,7 +17,7 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
         },
         {
           label: "Product Part Number",
-          value: transaction?.asset?.osc_product?.product_part_number,
+          value: transaction?.asset?.osc_product?.product_part_number || transaction?.product_part_number,
         },
         {
           label: "Product Duration",

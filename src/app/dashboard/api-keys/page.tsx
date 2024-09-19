@@ -41,7 +41,10 @@ const Page = () => {
     (a, b) =>
       new Date(b.created as string).getTime() -
       new Date(a.created as string).getTime()
-  )
+  ).map(datum => ({
+    ...datum,
+    created: getFormattedDate(datum.created)
+  }))
   const handleRevoke = (row: APIKey) => {
     setSelectedAPIKey(row);
     handleOpenRevokeModal();
@@ -143,9 +146,6 @@ const Page = () => {
         accessorKey: "created",
         header: "Created At",
         size: 300,
-        Cell: ({ renderedCellValue }) => {
-          return <div>{getFormattedDate(renderedCellValue)}</div>;
-        },
       },
       {
         accessorKey: "organization",

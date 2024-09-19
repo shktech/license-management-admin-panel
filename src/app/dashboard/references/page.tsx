@@ -23,6 +23,11 @@ const Page = () => {
     ],
   });
 
+  const refData = data?.data.map(d => ({
+    ...d,
+    start_date: getFormattedDate(d?.start_date),
+    end_date: getFormattedDate(d?.end_date),
+  }))
   const { push } = useNavigation();
 
   const handleCreate = () => {
@@ -54,13 +59,11 @@ const Page = () => {
         accessorKey: "start_date",
         header: "Start Date",
         size: 200,
-        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue),
       },
       {
         accessorKey: "end_date",
         header: "End Date",
         size: 200,
-        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue),
       },
       {
         accessorKey: "active",
@@ -86,10 +89,9 @@ const Page = () => {
               References
             </div>
           }
-          data={data?.data}
+          data={refData}
           columns={columns}
           canCreate={true}
-          totalCount={data?.total}
           onRowClick={handleRowClick}
           handleCreate={handleCreate}
           noSearchNeed={true}
