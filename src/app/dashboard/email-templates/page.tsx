@@ -26,6 +26,12 @@ const Page = () => {
     hasPagination: false,
   });
 
+  const emails = emailTemplateData?.data.map(datum => ({
+    ...datum,
+    event_type: EventTypes.find((t) => t.value == datum.event_type)?.label,
+    type: Types.find((t) => t.value == datum.type)?.label,
+  }))
+
   const { push } = useNavigation();
 
   const handleRowClick = (row: EmailTemplate) => {
@@ -42,15 +48,11 @@ const Page = () => {
         accessorKey: "type",
         header: "Type",
         size: 100,
-        Cell: ({ renderedCellValue }) => 
-          Types.find((t) => t.value == renderedCellValue)?.label,
       },
       {
         accessorKey: "event_type",
         header: "Event Type",
         size: 150,
-        Cell: ({ renderedCellValue }) =>
-          EventTypes.find((t) => t.value == renderedCellValue)?.label,
       },
       {
         accessorKey: "subject",
@@ -78,7 +80,7 @@ const Page = () => {
               Notification Templates
             </div>
           }
-          data={emailTemplateData?.data}
+          data={emails}
           columns={columns}
           canCreate={true}
           onRowClick={handleRowClick}

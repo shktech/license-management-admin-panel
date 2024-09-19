@@ -34,22 +34,24 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   const handleClose = () => {
     setOpenDrawer(false);
   };
+  const tableData = transactions?.map(txn => ({
+    ...txn,
+    transaction_date: getFormattedDate(txn.transaction_date),
+    product_type: asset?.osc_product?.product_type,
+    product_part_number: asset?.osc_product?.product_part_number,
+  }))
+
   const columns = useMemo<MRT_ColumnDef<Transaction>[]>(() => {
     return [
       {
         accessorKey: "transaction_number",
         header: "Txn Number",
         size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <div className="text-right w-full pr-7">{renderedCellValue}</div>
-        ),
       },
       {
         accessorKey: "transaction_date",
         header: "Txn Date",
         size: 50,
-        Cell: ({ renderedCellValue }) =>
-          getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "transaction_source",
@@ -62,16 +64,14 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
         size: 50,
       },
       {
-        accessorKey: "product_part",
+        accessorKey: "product_type",
         header: "Product Type",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_type}</div>,
       },
       {
-        accessorKey: "product_type",
+        accessorKey: "product_part_number",
         header: "Product Part Number",
         size: 50,
-        Cell: ({}) => <div>{asset?.osc_product?.product_part_number}</div>,
       },
       {
         accessorKey: "quantity",
@@ -134,7 +134,7 @@ const TransactionHistoryTable: React.FC<TransactionHistoryTableProps> = ({
   return (
     <>
       <GenericTable
-        data={transactions}
+        data={tableData}
         title={
           <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
             Transaction History

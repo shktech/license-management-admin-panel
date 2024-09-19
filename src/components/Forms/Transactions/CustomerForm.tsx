@@ -68,7 +68,9 @@ const CustomerForm = ({
     setIsSameBillShipping((prev) => !prev);
   };
   const [value, setValue] = useState<Partner>(
-    (customer.customer as Partner) || { account_id: ADDLABEL }
+    customer.customer.account_id
+      ? (customer.customer as Partner)
+      : { account_id: ADDLABEL }
   );
 
   const [inputValue, setInputValue] = useState("");

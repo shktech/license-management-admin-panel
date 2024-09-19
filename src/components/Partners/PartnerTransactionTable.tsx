@@ -14,6 +14,7 @@ import { Box } from "@mui/material";
 import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
 import { DefaultPageSize } from "@data/UtilData";
+import Loader from "@components/common/Loader";
 
 interface PartnerTransactionTableProps {
   partner_id?: string;
@@ -23,7 +24,7 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
   partner_id,
 }) => {
   const {
-    tableQueryResult: { data: transactions, isLoading: codeIsLoading, refetch },
+    tableQueryResult: { data: transactions, isLoading, refetch },
     setCurrent,
     setFilters,
     setSorters,
@@ -32,7 +33,7 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
     resource: "transactions",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
   });
 
@@ -115,9 +116,7 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
         header: "Seats Count",
         size: 100,
         Cell: ({ renderedCellValue }) => (
-          <div className="text-right w-full pr-7">
-            {renderedCellValue || 0}
-          </div>
+          <div className="text-right w-full pr-7">{renderedCellValue || 0}</div>
         ),
       },
       {
@@ -161,20 +160,26 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
   };
 
   return (
-    <GenericTable
-      title={
-        <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-          Transactions
-        </div>
-      }
-      data={transactions?.data}
-      totalCount={transactions?.total}
-      columns={columns}
-      onRowClick={handleRowClick}
-      handlePage={handlePage}
-      handleSorting={handleSorting}
-      handleSearch={handleSearch}
-    />
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <GenericTable
+          title={
+            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              Transactions
+            </div>
+          }
+          data={transactions?.data}
+          totalCount={transactions?.total}
+          columns={columns}
+          onRowClick={handleRowClick}
+          handlePage={handlePage}
+          handleSorting={handleSorting}
+          handleSearch={handleSearch}
+        />
+      )}
+    </>
   );
 };
 

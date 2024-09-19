@@ -232,7 +232,7 @@ const Item = () => {
                     },
                     {
                       label: "Partner Website",
-                      value: partner?.website,
+                      value: <Link href={partner?.website as string} className="underline text-[#4580ff]">{partner?.website}</Link>,
                     },
                     {
                       label: "Active",
