@@ -35,7 +35,7 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
   },
   {
     name: "contact_phone",
-    required: "phone",
+    validation: 'phone'
   },
   {
     name: "contact_email",
