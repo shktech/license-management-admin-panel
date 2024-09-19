@@ -6,9 +6,13 @@ import { Asset, Transaction } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useTable } from "@refinedev/core";
 import GenericTable from "@components/Table/GenericTable";
-import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
 import { DefaultPageSize } from "@data/UtilData";
 import StateComponent from "@components/common/StateComponent";
+import Loader from "@components/common/Loader";
 
 interface PartnerLicensesTableProps {
   partner_id?: string;
@@ -18,7 +22,7 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
   partner_id,
 }) => {
   const {
-    tableQueryResult: { data: assets, isLoading: codeIsLoading, refetch },
+    tableQueryResult: { data: assets, isLoading, refetch },
     setCurrent,
     setFilters,
     setSorters,
@@ -27,7 +31,7 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
     resource: "assets",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
   });
 
@@ -50,8 +54,9 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
       {
         accessorKey: "osc_seat_count",
         header: "Seat Count",
-        Cell: ({ renderedCellValue }) =>
+        Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-12">{renderedCellValue}</div>
+        ),
       },
       {
         accessorKey: "osc_product.product_part_number",
@@ -68,18 +73,19 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
       {
         accessorKey: "start_date",
         header: "Start Date",
-        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
+        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue),
       },
       {
         accessorKey: "end_date",
         header: "End Date",
-        Cell: ({renderedCellValue}) => getFormattedDate(renderedCellValue)
+        Cell: ({ renderedCellValue }) => getFormattedDate(renderedCellValue),
       },
       {
         accessorKey: "active",
         header: "Status",
-        Cell: ({ renderedCellValue }) =>
-          <StateComponent active={renderedCellValue as boolean} withLabel/>
+        Cell: ({ renderedCellValue }) => (
+          <StateComponent active={renderedCellValue as boolean} withLabel />
+        ),
       },
     ],
     []
@@ -90,20 +96,26 @@ const PartnerLicensesTable: React.FC<PartnerLicensesTableProps> = ({
   };
 
   return (
-    <GenericTable
-      title={
-        <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-          Licenses
-        </div>
-      }
-      data={assets?.data}
-      totalCount={assets?.total}
-      columns={columns}
-      onRowClick={handleRowClick}
-      handlePage={handlePage}
-      handleSorting={handleSorting}
-      handleSearch={handleSearch}
-    />
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <GenericTable
+          title={
+            <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
+              Licenses
+            </div>
+          }
+          data={assets?.data}
+          totalCount={assets?.total}
+          columns={columns}
+          onRowClick={handleRowClick}
+          handlePage={handlePage}
+          handleSorting={handleSorting}
+          handleSearch={handleSearch}
+        />
+      )}
+    </>
   );
 };
 
