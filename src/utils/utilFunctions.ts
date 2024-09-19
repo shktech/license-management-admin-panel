@@ -67,7 +67,7 @@ export const getRealFormFields = (
       if (field.required == "website") {
         value.rules.pattern = {
           value:
-            /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex for website URL validation
+            /^(http:\/\/|https:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex to require http or https
           message: "Invalid website URL",
         };
       }
@@ -85,9 +85,13 @@ export const getRealFormFields = (
       }
       if (field.required == "phone") {
         value.rules.pattern = {
-          value: /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g, // Updated regex to allow 10-digit and 11-digit numbers
+          value: /^(?:\+?1[-. ]?)?(?!(\d{1,2}[-. ]?){2})\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$/, // Updated regex to enforce valid US phone number format
           message:
             "Invalid phone number. Please use a valid US or Canada number.",
+        };
+        value.rules.validate = (inputValue: string) => { // Changed parameter name to inputValue
+          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+          return value.rules.pattern.value.test(inputValue); // Validate against the regex
         };
       }
       if (field.required == "password") {
@@ -105,6 +109,33 @@ export const getRealFormFields = (
             return "Password must include at least 1 uppercase letter";
           }
           return true;
+        };
+      }
+    } else {
+      if (field.validation == "phone") {
+        // Ensure value.rules is initialized
+        value.rules = value.rules || {}; // Initialize if undefined
+        value.rules.pattern = {
+          value: /^(?:\+?1[-. ]?)?(?!(\d{1,2}[-. ]?){2})\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$/, // Updated regex to enforce valid US phone number format
+          message:
+            "Invalid phone number. Please use a valid US or Canada number.",
+        };
+        value.rules.validate = (inputValue: string) => { // Changed parameter name to inputValue
+          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+          return value.rules.pattern.value.test(inputValue); // Validate against the regex
+        };
+      }
+      if (field.validation == "website") {
+        // Ensure value.rules is initialized
+        value.rules = value.rules || {}; // Initialize if undefined
+        value.rules.pattern = {
+          value:
+            /^(http:\/\/|https:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex to require http or https
+          message: "Invalid website URL",
+        };
+        value.rules.validate = (inputValue: string) => { // Changed parameter name to inputValue
+          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+          return value.rules.pattern.value.test(inputValue); // Validate against the regex
         };
       }
     }

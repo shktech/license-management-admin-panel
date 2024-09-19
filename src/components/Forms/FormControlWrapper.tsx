@@ -30,6 +30,7 @@ export interface FieldConfig {
   labelKey?: string;
   size?: number;
   disabled?: boolean;
+  required?: string;
   prefix?: string;
 }
 

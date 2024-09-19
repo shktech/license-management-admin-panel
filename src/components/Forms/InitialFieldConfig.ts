@@ -21,4 +21,5 @@ export interface InitialFieldConfig {
   disabled?: boolean;
   prefix?: string;
   dependency?: string;
+  validation?: string;
 }

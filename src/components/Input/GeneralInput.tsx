@@ -4,9 +4,7 @@ import { BaseInputProps } from "./InputProps";
 import { NumberInput } from "@mui/base/Unstable_NumberInput/NumberInput";
 
 const GeneralInput = ({ label, ...props }: BaseInputProps) => {
-  if (props.type == "number") {
-    console.log(props);
-  }
+  console.log(props);
   return (
     <div className="relative">
       <label
