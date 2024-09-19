@@ -22,4 +22,5 @@ export interface InitialFieldConfig {
   prefix?: string;
   dependency?: string;
   validation?: string;
+  manualValidation?: true;
 }

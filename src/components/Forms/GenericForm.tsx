@@ -88,7 +88,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
                           labelKey={field.labelKey}
                           disabled={field.disabled}
                           dependency={field.dependency}
-                          required={!!field.rules}
+                          required={field.required}
                           watch={watch}
                           // fetchOptions={field.fetchOptions}
                         />
@@ -105,7 +105,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
                           valueKey={field.valueKey}
                           labelKey={field.labelKey}
                           disabled={field.disabled}
-                          required={!!field.rules}
+                          required={field.required}
                           // fetchOptions={field.fetchOptions}
                         />
                       );

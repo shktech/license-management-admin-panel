@@ -60,7 +60,7 @@ export const getRealFormFields = (
         required: `This field is required`,
       };
       
-      if (field.required == "special") {
+      if (field.manualValidation) {
         value.rules = {};
       }
 
