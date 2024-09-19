@@ -20,7 +20,10 @@ const Item = () => {
     trigger,
     getValues,
     formState: { errors },
-  } = useForm<Partner>();
+  } = useForm<Partner>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   return (
     <div className="flex justify-center py-6">

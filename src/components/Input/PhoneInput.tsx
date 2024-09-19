@@ -10,9 +10,9 @@ interface CustomizedInputProps {
 
 type BaseInputProps = CustomizedInputProps & InputProps;
 
-const PhoneInput = ({ label, onChange, value, ...props }: BaseInputProps) => {
+const PhoneInput = ({ label, onChange, value, error, name, trigger, ...props }: BaseInputProps) => {
   const handleChange = (newValue: string) => {
-    const isValid = matchIsValidTel(newValue); // true | false
+    const isValid = matchIsValidTel(newValue);
     if (onChange) {
       onChange({
         target: {
@@ -43,6 +43,7 @@ const PhoneInput = ({ label, onChange, value, ...props }: BaseInputProps) => {
           defaultCountry="US"
           onlyCountries={["US", "CA", "JP"]}
           size="small"
+          error={error}
           sx={{
             pt: "26px",
             backgroundColor: "#dfe6ec",
@@ -53,7 +54,7 @@ const PhoneInput = ({ label, onChange, value, ...props }: BaseInputProps) => {
             "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
               {
                 border: 1,
-                color: "black", // Adjust this color as needed
+                color: "black",
               },
           }}
         />
