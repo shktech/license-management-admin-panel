@@ -8,6 +8,7 @@ const BillFields: FieldConfig[] = InputCustomerFormFields.map((field) => ({
   placeholder: field.placeholder,
   rules: field.rules,
   type: field.type,
+  required: field.required
 }));
 
 const ShippingFields: FieldConfig[] = InputCustomerFormFields.map((field) => ({
@@ -17,6 +18,7 @@ const ShippingFields: FieldConfig[] = InputCustomerFormFields.map((field) => ({
   placeholder: field.placeholder,
   rules: field.rules,
   type: field.type,
+  required: field.required
 }));
 const ResellerFields: FieldConfig[] = InputCustomerFormFields.map((field) => ({
   name: "reseller_" + field.name,
