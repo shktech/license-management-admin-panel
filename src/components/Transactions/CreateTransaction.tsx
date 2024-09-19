@@ -40,7 +40,10 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     getValues,
     setError,
     formState: { errors },
-  } = useForm<InputTransaction>();
+  } = useForm<InputTransaction>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
   useEffect(() => {
     if (initialInfo.transaction_action == "New") {
       const yesterday = new Date();

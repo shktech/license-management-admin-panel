@@ -26,7 +26,10 @@ const NotificationSchedulesComponent: React.FC<
     getValues,
     setValue,
     setError,
-  } = useForm<Email_Schedule>();
+  } = useForm<Email_Schedule>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   const {
     data: emailTemplatesData,
@@ -92,7 +95,7 @@ const NotificationSchedulesComponent: React.FC<
       isValid = false;
     }
     if (!isValid) {
-      return
+      return;
     }
     const payload = {
       email_template: data.email_template,
@@ -105,7 +108,6 @@ const NotificationSchedulesComponent: React.FC<
       ...(recurring && { recurring_task: data.recurring_task }),
     };
 
-
     console.log(payload);
     if (emailSchedule) {
       update(
@@ -117,7 +119,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: () => {},
           onSuccess: () => {
-            push("/dashboard/notification-schedules")
+            push("/dashboard/notification-schedules");
           },
         }
       );
@@ -130,7 +132,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: (error) => {},
           onSuccess: () => {
-            push("/dashboard/notification-schedules")
+            push("/dashboard/notification-schedules");
           },
         }
       );

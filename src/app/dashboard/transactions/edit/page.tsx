@@ -31,6 +31,8 @@ const TransactionEdit = () => {
     setError,
     formState: { errors },
   } = useForm<Transaction>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: "transactions",

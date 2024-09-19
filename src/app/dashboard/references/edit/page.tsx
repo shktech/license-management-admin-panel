@@ -21,6 +21,8 @@ const Item = () => {
     trigger,
     formState: { errors },
   } = useForm<Reference>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: "references",

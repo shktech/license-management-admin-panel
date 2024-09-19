@@ -24,7 +24,10 @@ const ReferenceDetailDrawer: React.FC<ReferenceDetailDrawerProps> = ({
     formState: { errors },
     setValue,
     getValues,
-  } = useForm<Reference>();
+  } = useForm<Reference>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     const previousReference = getValues();

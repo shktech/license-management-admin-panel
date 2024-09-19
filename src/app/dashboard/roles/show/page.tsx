@@ -14,6 +14,8 @@ const Item = () => {
     reset,
     formState: { errors },
   } = useForm<Role>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: "roles",

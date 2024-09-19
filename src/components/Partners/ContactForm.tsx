@@ -22,7 +22,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, partner_id }) => {
     formState: { errors },
     setValue,
     getValues,
-  } = useForm<Contact>();
+  } = useForm<Contact>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     const previousContact = getValues();

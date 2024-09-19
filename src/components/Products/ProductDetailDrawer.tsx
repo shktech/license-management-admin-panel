@@ -24,7 +24,10 @@ const ProductDetailDrawer: React.FC<ProductDetailDrawerProps> = ({
     formState: { errors },
     setValue,
     getValues,
-  } = useForm<Product>();
+  } = useForm<Product>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     const previousProduct = getValues();

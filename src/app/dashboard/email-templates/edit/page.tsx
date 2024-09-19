@@ -20,6 +20,8 @@ const Item = () => {
     watch,
     formState: { errors },
   } = useForm<EmailTemplate>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: "email-templates",

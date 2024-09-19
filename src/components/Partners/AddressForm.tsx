@@ -21,7 +21,10 @@ const AddressForm: React.FC<AddressFormProps> = ({ address, partner_id }) => {
     formState: { errors },
     setValue,
     getValues,
-  } = useForm<Address>();
+  } = useForm<Address>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     const previousAddress = getValues();

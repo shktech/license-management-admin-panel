@@ -23,6 +23,8 @@ const Item = () => {
     getValues,
     formState: { errors },
   } = useForm<ReferenceCode>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: `references/${params?.reference_id}/codes`,

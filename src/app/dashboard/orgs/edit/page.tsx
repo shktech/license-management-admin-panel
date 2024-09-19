@@ -21,6 +21,8 @@ const Item = () => {
     reset,
     formState: { errors },
   } = useForm<Organization>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: "orgs",
@@ -37,7 +39,7 @@ const Item = () => {
         organization_name: org.organization_name,
         address: org.address,
         country: org.country,
-        active: org.active
+        active: org.active,
       });
     }
   }, [formLoading, org]);
