@@ -4,7 +4,7 @@ import { Email_Schedule, EmailTemplate } from "@/types/types";
 import DatePicker from "@components/Input/DatePicker";
 import Dropdown from "@components/Input/Dropdown";
 import FormControlWrapper from "../FormControlWrapper";
-import { useCreate, useList, useUpdate } from "@refinedev/core";
+import { useCreate, useList, useNavigation, useUpdate } from "@refinedev/core";
 import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { modalOkBtnStyle } from "@data/MuiStyles";
 import GeneralSwitch, { IOSSwitch } from "@components/Input/GeneralSwitch";
@@ -18,12 +18,14 @@ interface NotificationSchedulesComponentProps {
 const NotificationSchedulesComponent: React.FC<
   NotificationSchedulesComponentProps
 > = ({ emailSchedule, onSave }) => {
+  const { push } = useNavigation();
   const {
     control,
     reset,
     formState: { errors },
     getValues,
     setValue,
+    setError,
   } = useForm<Email_Schedule>();
 
   const {
@@ -42,15 +44,11 @@ const NotificationSchedulesComponent: React.FC<
   useEffect(() => {
     if (!emailTemplatesLoading && emailSchedule && emailTemplatesData?.data) {
       reset({ ...emailSchedule });
-      console.log(emailTemplatesData, emailTemplatesLoading);
-      if (emailTemplatesData?.data) {
-        console.log(emailSchedule?.email_template);
-        const email_id = emailTemplatesData.data.find(
-          (item) => item.name === emailSchedule?.email_template
-        )?.email_id;
-        console.log(email_id);
-        setValue("email-template", email_id);
-      }
+      console.log(emailSchedule?.email_template);
+      const email_id = emailTemplatesData.data.find(
+        (item) => item.name === emailSchedule?.email_template
+      )?.email_id;
+      setValue("email_template", email_id);
     }
   }, [emailSchedule, emailTemplatesLoading, emailTemplatesData]);
 
@@ -71,6 +69,31 @@ const NotificationSchedulesComponent: React.FC<
 
   const onSubmit = () => {
     const data = getValues();
+    let isValid = true;
+    if (!sendNow && !data.scheduled_time) {
+      setError("scheduled_time", {
+        type: "manual",
+        message: "This field is required",
+      });
+      isValid = false;
+    }
+    if (!data.email_template) {
+      setError("email_template", {
+        type: "manual",
+        message: "This field is required",
+      });
+      isValid = false;
+    }
+    if (recurring && (!data.recurring_task || data.recurring_task == "no")) {
+      setError("recurring_task", {
+        type: "manual",
+        message: "This field is required",
+      });
+      isValid = false;
+    }
+    if (!isValid) {
+      return
+    }
     const payload = {
       email_template: data.email_template,
       user_timezone: browserTimezone,
@@ -81,6 +104,7 @@ const NotificationSchedulesComponent: React.FC<
         : data.scheduled_time,
       ...(recurring && { recurring_task: data.recurring_task }),
     };
+
 
     console.log(payload);
     if (emailSchedule) {
@@ -93,7 +117,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: () => {},
           onSuccess: () => {
-            onSave?.();
+            push("/dashboard/notification-schedules")
           },
         }
       );
@@ -106,7 +130,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: (error) => {},
           onSuccess: () => {
-            onSave?.();
+            push("/dashboard/notification-schedules")
           },
         }
       );
@@ -145,7 +169,7 @@ const NotificationSchedulesComponent: React.FC<
       {emailTemplatesLoading ? (
         <Loader />
       ) : (
-        <div className="flex flex-col gap-4 bg-white p-5 rounded-lg">
+        <div className="flex flex-col gap-4 bg-white p-5 shadow-card">
           <div className="flex items-center text-base px-2 gap-4 font-medium">
             <div className="">Do you want to send Now?</div>
             <FormControlLabel

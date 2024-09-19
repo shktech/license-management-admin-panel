@@ -50,7 +50,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
                           {...fieldProps}
                           type={field.type}
                           label={field.label}
-                          required={!!field.rules}
+                          required={field.required}
                           disabled={field.disabled}
                           // placeholder={field.placeholder}
                         />

@@ -119,7 +119,7 @@ const Page = () => {
         header: "Product Part",
       },
       {
-        accessorKey: "transaction.transaction_number",
+        accessorKey: "transaction.id",
         header: "Transaction #",
       },
       {

@@ -6,9 +6,9 @@ import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Box } from "@mui/material";
-import { type MRT_ColumnDef } from "material-react-table";
+import { MRT_SortingState, type MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
-import { getFormattedDate } from "@utils/utilFunctions";
+import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
 import { useNavigation, useTable } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 
@@ -21,10 +21,22 @@ const ProductTransactionHistoryTable: React.FC<
 > = ({ product: product_id }) => {
   const {
     tableQueryResult: { data: transactionData, isLoading, refetch },
+    setCurrent,
+    setFilters,
+    setSorters,
   } = useTable<Transaction>({
     resource: `transactions?product=${product_id}`,
   });
   const { push } = useNavigation();
+
+  const handleSearch = (value: string) =>
+    setFilters([{ field: "searchKey", operator: "contains", value: value }]);
+
+  const handleSorting = (sorting: MRT_SortingState) =>
+    setSorters(convertSortingStateToCrudSort(sorting));
+
+  const handlePage = (value: number) => setCurrent(value);
+
 
   const handleShowClick = (row: Transaction) => {
     push(`/dashboard/transactions/show?id=${row.transaction_id}`);
@@ -84,6 +96,17 @@ const ProductTransactionHistoryTable: React.FC<
         accessorKey: "transaction_status",
         header: "Txn Status",
         size: 50,
+        Cell: ({ renderedCellValue }) => (
+          <Box
+            component="span"
+            sx={(theme) => ({
+              backgroundColor: TxtStatusColor[renderedCellValue as string],
+              ...tagStyle,
+            })}
+          >
+            {renderedCellValue}
+          </Box>
+        ),
       },
       {
         accessorKey: "bill_customer.name",
@@ -115,6 +138,9 @@ const ProductTransactionHistoryTable: React.FC<
               Transaction History
             </div>
           }
+          handlePage={handlePage}
+          handleSorting={handleSorting}
+          handleSearch={handleSearch}
           columns={columns}
           onRowClick={handleShowClick}
         />

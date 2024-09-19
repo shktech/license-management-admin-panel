@@ -158,7 +158,7 @@ const Item = () => {
                     },
                     {
                       label: "Product Source ID",
-                      value: product?.source_name,
+                      value: product?.product_source_id,
                     },
                     {
                       label: "Attribute1",

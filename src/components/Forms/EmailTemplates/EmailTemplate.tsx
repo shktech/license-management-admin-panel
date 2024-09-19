@@ -26,7 +26,7 @@ const handleEditorDidMount = (editor: any, monaco: any) => {
     base: "vs",
     inherit: true,
     rules: [],
-    colors: { "editor.background": "#e6eaed" },
+    colors: { "editor.background": "#dfe6ec" },
   });
   monaco.editor.setTheme("custom-theme");
 };
@@ -64,9 +64,12 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
       disableGutters
       expanded={true}
       sx={{
-        border: "1px solid #d7dde4",
+        // border: "1px solid #d7dde4",
         borderBottom: "1",
+        pt: "6px",
         "&::before": { display: "none" },
+        boxShadow:
+          "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);",
       }}
     >
       <AccordionDetails>
@@ -176,7 +179,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
             </FormControlWrapper>
           </div>
           <div className="">
-            <div className="bg-[#e6eaed] rounded-t-lg border-r-ful font-medium text-sm p-4 text-[#0000009c]">
+            <div className="bg-[#dfe6ec] rounded-t-lg border-r-ful font-medium text-sm p-4 text-[#0000009c]">
               Body(HTML)
             </div>
             <Editor

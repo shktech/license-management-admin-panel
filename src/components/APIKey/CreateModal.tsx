@@ -89,7 +89,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
               label="Organization"
               onChange={handleChange}
             >
-              {orgs?.data?.map((org) => (
+              {orgs?.data?.filter(org => org.active).map((org) => (
                 <MenuItem value={org.organization_code}>
                   {org.organization_code}
                 </MenuItem>
