@@ -24,7 +24,10 @@ const SignIn: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    mode: "onChange",
+    reValidateMode: "onSubmit"
+  });
   const { mutate: forgotPassword, isLoading: isLoadingForgotPasswordEmail } =
     useForgotPassword<any>();
 

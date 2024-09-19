@@ -35,7 +35,7 @@ const InitialCustomerFormFields: InitialFieldConfig[] = [
   },
   {
     name: "contact_phone",
-    validation: 'phone'
+    type: 'phone'
   },
   {
     name: "contact_email",

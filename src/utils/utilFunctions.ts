@@ -84,14 +84,13 @@ export const getRealFormFields = (
           message: "Invalid email address",
         };
       }
-      // if (field.required == "phone") {
-      //   value.rules.validate = (inputValue: string) => {
-      //     // Changed parameter name to inputValue
-      //     if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
-      //     const isValid = matchIsValidTel(inputValue); // Use isValid for phone validation
-      //     return isValid || "Invalid phone number format"; // Validate using isValid and return message if invalid
-      //   };
-      // }
+      if (field.required == "phone") {
+        value.rules.validate = (inputValue: string) => {
+          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+          const isValid = matchIsValidTel(inputValue); // Use isValid for phone validation
+          return isValid || "Invalid phone number"; // Validate using isValid and return message if invalid
+        };
+      }
       if (field.required == "password") {
         value.rules.validate = (value: string) => {
           if (value.length < 8) {
@@ -111,7 +110,13 @@ export const getRealFormFields = (
       }
     } else {
       if (field.type == "phone") {
-        // Ensure value.rules is initialized
+        value.rules = {
+          validate: (inputValue: string) => {
+            if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+            const isValid = matchIsValidTel(inputValue); // Use isValid for phone validation
+            return isValid || "Invalid phone number"; // Validate using isValid and return message if invalid
+          }
+        }
       }
       if (field.validation == "website") {
         // Ensure value.rules is initialized
