@@ -3,7 +3,7 @@ import { Button, Divider, FormControl } from "@mui/material";
 import GeneralInput from "@components/Input/GeneralInput";
 import { Permission, Role } from "@/types/types";
 import { modalOkBtnStyle } from "@data/MuiStyles";
-import { useCreate, useUpdate } from "@refinedev/core";
+import { useCreate, useNavigation, useUpdate } from "@refinedev/core";
 import PermissionsTable from "./PermissionsTable";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Link from "next/link";
@@ -14,6 +14,7 @@ interface RoleDetailPanelProps {
 }
 
 const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
+  const { push } = useNavigation();
   const checkboxGroupInfo = [
     { title: "Users", key: "user" },
     { title: "Role", key: "role" },
@@ -69,7 +70,9 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
         },
         {
           onError: (error) => console.log(error),
-          onSuccess: () => console.log("success"),
+          onSuccess: () => {
+            push(`/dashboard/roles/show?id=${role?.role_id}`)
+          },
         }
       );
       return;
@@ -81,7 +84,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
         },
         {
           onError: (error) => console.log(error),
-          onSuccess: () => console.log("success"),
+          onSuccess: () => push(`/dashboard/roles`),
         }
       );
     }

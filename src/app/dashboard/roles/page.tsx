@@ -97,7 +97,6 @@ const Page = () => {
             handleCreate={handleCreate}
             // canCreate={permissionsData?.create}
             canCreate={true}
-            // onRowClick={handleRowClick}
             onRowClick={handleClickItem}
             noSearchNeed
             noSortNeed

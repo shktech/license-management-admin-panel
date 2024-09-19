@@ -25,6 +25,7 @@ const NotificationSchedulesComponent: React.FC<
     formState: { errors },
     getValues,
     setValue,
+    setError,
   } = useForm<Email_Schedule>();
 
   const {
@@ -68,6 +69,31 @@ const NotificationSchedulesComponent: React.FC<
 
   const onSubmit = () => {
     const data = getValues();
+    let isValid = true;
+    if (!sendNow && !data.scheduled_time) {
+      setError("scheduled_time", {
+        type: "manual",
+        message: "This field is required",
+      });
+      isValid = false;
+    }
+    if (!data.email_template) {
+      setError("email_template", {
+        type: "manual",
+        message: "This field is required",
+      });
+      isValid = false;
+    }
+    if (recurring && (!data.recurring_task || data.recurring_task == "no")) {
+      setError("recurring_task", {
+        type: "manual",
+        message: "This field is required",
+      });
+      isValid = false;
+    }
+    if (!isValid) {
+      return
+    }
     const payload = {
       email_template: data.email_template,
       user_timezone: browserTimezone,
@@ -78,6 +104,7 @@ const NotificationSchedulesComponent: React.FC<
         : data.scheduled_time,
       ...(recurring && { recurring_task: data.recurring_task }),
     };
+
 
     console.log(payload);
     if (emailSchedule) {
@@ -142,7 +169,7 @@ const NotificationSchedulesComponent: React.FC<
       {emailTemplatesLoading ? (
         <Loader />
       ) : (
-        <div className="flex flex-col gap-4 bg-white p-5 rounded-lg">
+        <div className="flex flex-col gap-4 bg-white p-5 shadow-card">
           <div className="flex items-center text-base px-2 gap-4 font-medium">
             <div className="">Do you want to send Now?</div>
             <FormControlLabel
