@@ -4,7 +4,7 @@ import { Email_Schedule, EmailTemplate } from "@/types/types";
 import DatePicker from "@components/Input/DatePicker";
 import Dropdown from "@components/Input/Dropdown";
 import FormControlWrapper from "../FormControlWrapper";
-import { useCreate, useList, useUpdate } from "@refinedev/core";
+import { useCreate, useList, useNavigation, useUpdate } from "@refinedev/core";
 import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { modalOkBtnStyle } from "@data/MuiStyles";
 import GeneralSwitch, { IOSSwitch } from "@components/Input/GeneralSwitch";
@@ -18,6 +18,7 @@ interface NotificationSchedulesComponentProps {
 const NotificationSchedulesComponent: React.FC<
   NotificationSchedulesComponentProps
 > = ({ emailSchedule, onSave }) => {
+  const { push } = useNavigation();
   const {
     control,
     reset,
@@ -42,15 +43,11 @@ const NotificationSchedulesComponent: React.FC<
   useEffect(() => {
     if (!emailTemplatesLoading && emailSchedule && emailTemplatesData?.data) {
       reset({ ...emailSchedule });
-      console.log(emailTemplatesData, emailTemplatesLoading);
-      if (emailTemplatesData?.data) {
-        console.log(emailSchedule?.email_template);
-        const email_id = emailTemplatesData.data.find(
-          (item) => item.name === emailSchedule?.email_template
-        )?.email_id;
-        console.log(email_id);
-        setValue("email-template", email_id);
-      }
+      console.log(emailSchedule?.email_template);
+      const email_id = emailTemplatesData.data.find(
+        (item) => item.name === emailSchedule?.email_template
+      )?.email_id;
+      setValue("email_template", email_id);
     }
   }, [emailSchedule, emailTemplatesLoading, emailTemplatesData]);
 
@@ -93,7 +90,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: () => {},
           onSuccess: () => {
-            onSave?.();
+            push("/dashboard/notification-schedules")
           },
         }
       );
@@ -106,7 +103,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: (error) => {},
           onSuccess: () => {
-            onSave?.();
+            push("/dashboard/notification-schedules")
           },
         }
       );

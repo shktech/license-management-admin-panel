@@ -227,7 +227,7 @@ const Page = () => {
         />
       )} */}
       <MemeberInvitePanel
-        orgs={orgs?.data ?? []}
+        orgs={orgs?.data.filter(org => org.active) ?? []}
         openSuccessModal={openSuccessModal}
         handleCloseSuccessModal={handleCloseSuccessModal}
       />

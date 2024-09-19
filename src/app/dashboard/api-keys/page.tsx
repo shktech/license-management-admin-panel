@@ -36,18 +36,12 @@ const Page = () => {
   const [selectedAPIKey, setSelectedAPIKey] = useState<APIKey | null>(null);
   const { mutate: createAPIKey } = useCreate();
   const { mutate: revokeAPIKey } = useUpdate();
-  const [apiKeys, setApiKeys] = useState<APIKey[]>([]);
-  useEffect(() => {
-    if (apiKeysData && !isLoading) {
-      setApiKeys(
-        apiKeysData?.data.sort(
-          (a, b) =>
-            new Date(b.created as string).getTime() -
-            new Date(a.created as string).getTime()
-        )
-      );
-    }
-  }, [isLoading]);
+
+  const apiKeys = apiKeysData?.data.sort(
+    (a, b) =>
+      new Date(b.created as string).getTime() -
+      new Date(a.created as string).getTime()
+  )
   const handleRevoke = (row: APIKey) => {
     setSelectedAPIKey(row);
     handleOpenRevokeModal();
@@ -79,11 +73,7 @@ const Page = () => {
       {
         onError: () => {},
         onSuccess: (res) => {
-          setApiKeys((prevKeys) =>
-            prevKeys.map((key) =>
-              key.id === selectedAPIKey?.id ? { ...key, revoked: true } : key
-            )
-          );
+          refetch();
           handleCloseRevokeModal();
         },
       }
@@ -102,11 +92,7 @@ const Page = () => {
         onError: () => {},
         onSuccess: (res) => {
           // Update the local apiKeys state
-          setApiKeys((prevKeys) =>
-            prevKeys.map((key) =>
-              key.id === selectedAPIKey?.id ? { ...key, name: name } : key
-            )
-          );
+          refetch();
           handleCloseRevokeModal();
         },
       }
@@ -129,6 +115,7 @@ const Page = () => {
         onSuccess: (res) => {
           handleCloseCreateModal();
           handleSuccessGenerated(res);
+          refetch();
         },
       }
     );
@@ -202,6 +189,7 @@ const Page = () => {
                     API Keys
                   </div>
                 }
+                // totalCount={apiKeys?.length}
                 data={apiKeys}
                 columns={columns}
                 canCreate={true}

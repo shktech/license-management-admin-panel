@@ -20,7 +20,8 @@ const Item = () => {
     <div className="flex justify-center py-6">
       <div className="w-2/3">
         <NotificationSchedulesComponent
-          emailSchedule={notificationSchedule}
+          emailSchedule={notificationSchedule} 
+          onSave={useBack}
         />
       </div>
     </div>

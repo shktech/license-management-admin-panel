@@ -28,19 +28,11 @@ const Page = () => {
     hasPagination: false,
   });
 
-  const [orgsData, setOrgsData] = useState<Organization[]>([]);
-  useEffect(() => {
-    if (orgs && !isLoading) {
-      console.log(orgs, isLoading);
-      setOrgsData(
-        orgs?.data.sort(
-          (a, b) =>
-            new Date(b.created_at as string).getTime() -
-            new Date(a.created_at as string).getTime()
-        )
-      );
-    }
-  }, [isLoading]);
+  const orgsData = orgs?.data.sort(
+    (a, b) =>
+      new Date(b.created_at as string).getTime() -
+      new Date(a.created_at as string).getTime()
+  );
 
   const { push } = useNavigation();
 

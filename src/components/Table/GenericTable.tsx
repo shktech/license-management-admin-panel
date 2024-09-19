@@ -5,6 +5,7 @@ import {
   MRT_ShowHideColumnsButton,
   MRT_SortingState,
   MRT_TableContainer,
+  MRT_TablePagination,
   MRT_ToolbarAlertBanner,
   useMaterialReactTable,
   type MRT_ColumnDef,
@@ -134,7 +135,7 @@ const GenericTable = <T extends MRT_RowData>({
       color: "primary",
       shape: "rounded",
       showRowsPerPage: false,
-      variant: "outlined",
+      // variant: "outlined",
     },
     paginationDisplayMode: "pages",
     initialState: {
@@ -235,8 +236,9 @@ const GenericTable = <T extends MRT_RowData>({
                     shape="rounded"
                   />
                 </div>
-              ) : // <MRT_TablePagination table={table} />
-              null}
+              ) : (
+                <MRT_TablePagination table={table} />
+              )}
             </Box>
             <Box sx={{ display: "grid", width: "100%" }}>
               <MRT_ToolbarAlertBanner stackAlertBanner table={table} />

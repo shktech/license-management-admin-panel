@@ -69,7 +69,7 @@ const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
           <DateTimePicker
             onChange={(newValue) => handleChange(newValue as Dayjs)}
             value={props.value ? dayjs(props.value as string) : null}
-            disabled={props.disabled}
+            // disabled={props.disabled}
             slots={{
               textField: (textFieldProps) => (
                 <CustomTextField {...textFieldProps} />

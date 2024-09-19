@@ -21,12 +21,12 @@ const Page = () => {
     setFilters,
     setSorters,
   } = useTable<Asset>({
-    // initialSorter: [
-    //   {
-    //     field: "created_at",
-    //     order: "desc",
-    //   },
-    // ],
+    initialSorter: [
+      {
+        field: "created_at",
+        order: "desc",
+      },
+    ],
     pagination: {
       pageSize: DefaultPageSize,
     },
