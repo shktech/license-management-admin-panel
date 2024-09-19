@@ -23,6 +23,7 @@ export interface FieldConfig {
     | "password"
     | "autocomplete"
     | "address"
+    | "phone"
     | "vender";
   options?: { value: string; label: string }[];
   resource?: string;

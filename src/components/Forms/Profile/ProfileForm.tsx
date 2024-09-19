@@ -29,7 +29,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ identity, refetchUser }) => {
     getValues,
     setError,
     formState: { errors },
-  } = useForm<User>();
+  } = useForm<User>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     reset(identity);

@@ -4,6 +4,7 @@ import { CrudSort } from "@refinedev/core";
 import { Customer } from "../types/types";
 import { format } from "date-fns";
 import { MRT_SortingState } from "material-react-table";
+import { matchIsValidTel } from "mui-tel-input";
 
 export const getFormattedDate = (timestamp: any) => {
   if (timestamp === null || timestamp === undefined) {
@@ -59,7 +60,7 @@ export const getRealFormFields = (
       value.rules = {
         required: `This field is required`,
       };
-      
+
       if (field.manualValidation) {
         value.rules = {};
       }
@@ -83,17 +84,14 @@ export const getRealFormFields = (
           message: "Invalid email address",
         };
       }
-      if (field.required == "phone") {
-        value.rules.pattern = {
-          value: /^(?:\+?1[-. ]?)?(?!(\d{1,2}[-. ]?){2})\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$/, // Updated regex to enforce valid US phone number format
-          message:
-            "Invalid phone number. Please use a valid US or Canada number.",
-        };
-        value.rules.validate = (inputValue: string) => { // Changed parameter name to inputValue
-          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
-          return value.rules.pattern.value.test(inputValue); // Validate against the regex
-        };
-      }
+      // if (field.required == "phone") {
+      //   value.rules.validate = (inputValue: string) => {
+      //     // Changed parameter name to inputValue
+      //     if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+      //     const isValid = matchIsValidTel(inputValue); // Use isValid for phone validation
+      //     return isValid || "Invalid phone number format"; // Validate using isValid and return message if invalid
+      //   };
+      // }
       if (field.required == "password") {
         value.rules.validate = (value: string) => {
           if (value.length < 8) {
@@ -112,18 +110,8 @@ export const getRealFormFields = (
         };
       }
     } else {
-      if (field.validation == "phone") {
+      if (field.type == "phone") {
         // Ensure value.rules is initialized
-        value.rules = value.rules || {}; // Initialize if undefined
-        value.rules.pattern = {
-          value: /^(?:\+?1[-. ]?)?(?!(\d{1,2}[-. ]?){2})\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$/, // Updated regex to enforce valid US phone number format
-          message:
-            "Invalid phone number. Please use a valid US or Canada number.",
-        };
-        value.rules.validate = (inputValue: string) => { // Changed parameter name to inputValue
-          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
-          return value.rules.pattern.value.test(inputValue); // Validate against the regex
-        };
       }
       if (field.validation == "website") {
         // Ensure value.rules is initialized
@@ -133,8 +121,14 @@ export const getRealFormFields = (
             /^(http:\/\/|https:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/, // Updated regex to require http or https
           message: "Invalid website URL",
         };
-        value.rules.validate = (inputValue: string) => { // Changed parameter name to inputValue
-          if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+        value.rules.validate = (inputValue: string) => {
+          // Changed parameter name to inputValue
+          if (
+            inputValue === null ||
+            inputValue === "" ||
+            inputValue === undefined
+          )
+            return true; // Skip validation if value is null or empty
           return value.rules.pattern.value.test(inputValue); // Validate against the regex
         };
       }
