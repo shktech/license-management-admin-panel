@@ -2,7 +2,7 @@ export interface InitialFieldConfig {
   name: string;
   name2?: string;
   label?: string;
-  required?: "text" | "email" | "phone" | "password" | "number" | "website" | "special";
+  required?: "text" | "email" | "phone" | "password" | "number" | "website" | "special" | "type";
   type?:
     | "text"
     | "date"
@@ -12,6 +12,7 @@ export interface InitialFieldConfig {
     | "autocomplete"
     | "password"
     | "address"
+    | "phone"
     | "vender";
   options?: { value: string; label: string }[];
   resource?: string;

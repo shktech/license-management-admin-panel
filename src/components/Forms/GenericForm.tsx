@@ -7,6 +7,7 @@ import { FieldConfig } from "./FormControlWrapper";
 import GeneralSwitch from "@components/Input/GeneralSwitch";
 import AutoComplete from "@components/Input/AutoComplete";
 import AddressSelect from "@components/Input/AddressSelect";
+import PhoneInput from "@components/Input/PhoneInput";
 
 interface GenericFormProps {
   control: any;
@@ -28,7 +29,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
       {fields?.map((field) => (
         <>
           {field.type === "address" ? (
-            <AddressSelect {...{control, field, errors, setValue}}/>
+            <AddressSelect {...{ control, field, errors, setValue }} />
           ) : (
             <div
               key={field.name}
@@ -42,6 +43,15 @@ const GenericForm: React.FC<GenericFormProps> = ({
               >
                 {(fieldProps) => {
                   switch (field.type) {
+                    case "phone":
+                      return (
+                        <PhoneInput
+                          {...fieldProps}
+                          label={field.label}
+                          required={field.required}
+                          disabled={field.disabled}
+                        />
+                      );
                     case "text":
                     case "number":
                     case "password":

@@ -31,14 +31,14 @@ const InitialCreateField: InitialFieldConfig[] = [
       { value: "Disty", label: "Disty" },
     ],
   },
-  { name: "website", validation: 'website', size: 2 },
+  { name: "website", validation: "website", size: 2 },
   { name: "address1", required: "text" },
   { name: "address2" },
   { name: "address", required: "text", type: "address", prefix: "" },
   { name: "postal_code", required: "text" },
   { name: "first_name", required: "text" },
   { name: "last_name", required: "text" },
-  { name: "phone", validation: "phone" },
+  { name: "phone", type: "phone" },
   { name: "email", required: "email" },
 ];
 
