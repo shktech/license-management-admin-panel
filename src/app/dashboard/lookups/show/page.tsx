@@ -28,7 +28,7 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
@@ -62,11 +62,13 @@ const Page = () => {
 
   const lookup: Lookup = data?.data as Lookup;
 
-  const [isEditMode, setIsEditMode] = useState(false);
-
   const { push } = useNavigation();
 
+  const [valueError, setValueError] = useState(false);
+  const [meaningError, setMeaningError] = useState(false);
   const [selectedValue, setSelectedValue] = useState<LookupValue | null>(null);
+  const valueTextFieldRef = useRef<HTMLInputElement | null>(null);
+  const meaningTextFieldRef = useRef<HTMLInputElement | null>(null);
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
@@ -81,16 +83,10 @@ const Page = () => {
     );
   };
   const handleCancelEdit = () => {
-    // setIsEditMode(false);
     setCodes(codeData?.data as LookupValue[]);
     setSelectedValue(null);
-  };
-  const handleEditChange = (index: number, id: string, value: any) => {
-    // setCodes((prevCodes) => {
-    //   const newCodes = [...prevCodes];
-    //   newCodes[index] = { ...newCodes[index], [id]: value };
-    //   return newCodes;
-    // });
+    setMeaningError(false);
+    setValueError(false);
   };
   const handleAdd = () => {
     const newCode: LookupValue = {
@@ -107,22 +103,44 @@ const Page = () => {
     setSelectedValue(newCode);
   };
   const { mutate: createLookup } = useCreate();
-  const { mutate: updateLookup } = useUpdate();
 
   const handleEditLookupValue = (value: LookupValue) => {
-    // console.log(codeData?.data);
-    // setCodes(codes);.
-    // console.log(codeData?.data);
     setSelectedValue(value);
   };
 
   const handleSaveValue = () => {
     if (selectedValue) {
+      let isValid = true;
+
+      if (!selectedValue.value || selectedValue.value == "NaN") {
+        setValueError(true);
+        isValid = false;
+        setSelectedValue({
+          ...selectedValue,
+          value: "",
+        });
+      } else {
+        setValueError(false);
+        setSelectedValue({
+          ...selectedValue,
+          value: selectedValue.value,
+        });
+      }
+      if (!selectedValue.meaning) {
+        setMeaningError(true);
+        isValid = false;
+      } else {
+        setMeaningError(false);
+      }
+
       console.log(selectedValue);
+      if (!isValid) return;
+
       let updatedCode = [...codes];
       const selectedIndex = updatedCode.findIndex(
         (c) => c.id == selectedValue.id
       );
+
       updatedCode[selectedIndex] = selectedValue;
       console.log(updatedCode);
       createLookup(
@@ -138,36 +156,6 @@ const Page = () => {
           },
         }
       );
-      // if (selectedValue.is_new) {
-      //   createLookup(
-      //     {
-      //       resource: `lookups/${lookup.lookup_code}/values`,
-      //       values: selectedValue,
-      //     },
-      //     {
-      //       onError: (error) => {},
-      //       onSuccess: () => {
-      //         refetch();
-      //         setSelectedValue(null);
-      //       },
-      //     }
-      //   );
-      // } else {
-      //   updateLookup(
-      //     {
-      //       resource: `lookups/${lookup.lookup_code}/values`,
-      //       id: selectedValue.id as string,
-      //       values: selectedValue,
-      //     },
-      //     {
-      //       onError: (error) => {},
-      //       onSuccess: () => {
-      //         refetch();
-      //         setSelectedValue(null);
-      //       },
-      //     }
-      //   );
-      // }
     }
   };
   const baseColumns = useMemo<MRT_ColumnDef<LookupValue>[]>(
@@ -275,34 +263,68 @@ const Page = () => {
           };
         } else if (column.accessorKey == "value") {
           switch (lookup?.type) {
+            case "Text":
+              return {
+                ...column,
+                Cell: ({ renderedCellValue, cell, row, column }) =>
+                  row.original.id == selectedValue?.id ? (
+                    <>
+                      <TextField
+                        inputRef={valueTextFieldRef}
+                        variant="standard"
+                        value={selectedValue?.value}
+                        onChange={(e) =>
+                          setSelectedValue({
+                            ...selectedValue,
+                            [column.id as string]: e.target.value,
+                          })
+                        }
+                        error={valueError}
+                      />
+                      {valueError && (
+                        <div className="text-[#db3545] text-xs pt-1">
+                          This field is required
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    renderedCellValue
+                  ),
+              };
             case "Number":
               return {
                 ...column,
                 Cell: ({ renderedCellValue, cell, row, column }) =>
                   row.original.id == selectedValue?.id ? (
-                    <TextField
-                      variant="standard"
-                      type="number"
-                      // value={renderedCellValue}
-                      // defaultValue={renderedCellValue}
-                      // disabled={!row.original.is_new}
-                      value={selectedValue?.value}
-                      onChange={(e) =>
-                        setSelectedValue({
-                          ...selectedValue,
-                          value: e.target.value,
-                        })
-                      }
-                      onBlur={(e) => {
-                        let numValue = parseInt(e.target.value);
-                        if (numValue < 1) numValue = 1;
-                        if (numValue > 99) numValue = 100;
-                        setSelectedValue({
-                          ...selectedValue,
-                          value: `${numValue}`,
-                        });
-                      }}
-                    />
+                    <>
+                      <TextField
+                        inputRef={valueTextFieldRef}
+                        variant="standard"
+                        type="number"
+                        value={selectedValue?.value}
+                        onChange={(e) =>
+                          setSelectedValue({
+                            ...selectedValue,
+                            value: e.target.value,
+                          })
+                        }
+                        onBlur={(e) => {
+                          let numValue = parseInt(e.target.value);
+                          if (numValue < 0) numValue = 0;
+                          if (numValue > 99) numValue = 100;
+                          setSelectedValue({
+                            ...selectedValue,
+                            value: `${numValue}`,
+                          });
+                        }}
+                        error={valueError}
+                      />
+                      {valueError && (
+                        <div className="text-[#db3545] text-xs pt-1">
+                          This field is required
+                        </div>
+                      )}
+                    </>
                   ) : (
                     renderedCellValue
                   ),
@@ -314,9 +336,7 @@ const Page = () => {
                   row.original.id == selectedValue?.id ? (
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        // value={dayjs(renderedCellValue as string)}
                         defaultValue={dayjs(renderedCellValue as string)}
-                        // disabled={!row.original.is_new}
                         onChange={(newValue) =>
                           setSelectedValue({
                             ...selectedValue,
@@ -329,6 +349,11 @@ const Page = () => {
                           },
                         }}
                       />
+                      {valueError && (
+                        <div className="text-[#db3545] text-xs pt-1">
+                          This field is required
+                        </div>
+                      )}
                     </LocalizationProvider>
                   ) : (
                     renderedCellValue
@@ -339,66 +364,76 @@ const Page = () => {
                 ...column,
                 Cell: ({ renderedCellValue, cell, row, column }) =>
                   row.original.id == selectedValue?.id ? (
-                    <div className="flex gap-2">
-                      <TextField
-                        variant="standard"
-                        type="number"
-                        value={
-                          selectedValue?.value === "EA"
-                            ? 0
-                            : parseInt(selectedValue?.value as string, 10)
-                        }
-                        sx={{ width: "50%" }}
-                        onChange={(e) => {
-                          const numValue = e.target.value;
-                          const unit =
-                            selectedValue?.value
-                              ?.toString()
-                              .match(/[A-Za-z]+/)?.[0] || "D";
-                          setSelectedValue({
-                            ...selectedValue,
-                            value: `${numValue}${unit}`,
-                          });
-                        }}
-                        onBlur={(e) => {
-                          let numValue = parseInt(e.target.value);
-                          if (numValue < 1) numValue = 1;
-                          if (numValue > 99) numValue = 100;
-                          const unit =
-                            selectedValue?.value
-                              ?.toString()
-                              .match(/[A-Za-z]+/)?.[0] || "D";
-                          setSelectedValue({
-                            ...selectedValue,
-                            value: `${numValue}${unit}`,
-                          });
-                        }}
-                      />
-                      <FormControl variant="standard" sx={{ width: "50%" }}>
-                        <Select
-                          labelId="demo-simple-select-standard-label"
-                          id="demo-simple-select-standard"
-                          // disabled={!row.original.is_new}
-                          defaultValue={
-                            typeof renderedCellValue === "string"
-                              ? renderedCellValue.match(/[A-Za-z]+/)?.[0] || ""
-                              : ""
+                    <div className="">
+                      <div className="flex gap-2">
+                        <TextField
+                          variant="standard"
+                          type="number"
+                          value={
+                            selectedValue?.value === "EA"
+                              ? 0
+                              : parseInt(selectedValue?.value as string, 10)
                           }
+                          sx={{ width: "50%" }}
                           onChange={(e) => {
-                            const numValue =
-                              parseInt(selectedValue?.value as string, 10) || 0;
-                            console.log(numValue, e.target.value);
+                            const numValue = e.target.value;
+                            const unit =
+                              selectedValue?.value
+                                ?.toString()
+                                .match(/[A-Za-z]+/)?.[0] || "D";
                             setSelectedValue({
                               ...selectedValue,
-                              value: `${numValue}${e.target.value}`,
+                              value:
+                                numValue == "0" ? `EA` : `${numValue}${unit}`,
                             });
                           }}
-                        >
-                          <MenuItem value={"D"}>Day</MenuItem>
-                          <MenuItem value={"MO"}>Month</MenuItem>
-                          <MenuItem value={"YR"}>Year</MenuItem>
-                        </Select>
-                      </FormControl>
+                          onBlur={(e) => {
+                            let numValue = parseInt(e.target.value);
+                            if (numValue < 0) numValue = 0;
+                            if (numValue > 99) numValue = 100;
+                            const unit =
+                              selectedValue?.value
+                                ?.toString()
+                                .match(/[A-Za-z]+/)?.[0] || "D";
+                            setSelectedValue({
+                              ...selectedValue,
+                              value:
+                                numValue == 0 ? `EA` : `${numValue}${unit}`,
+                            });
+                          }}
+                        />
+                        <FormControl variant="standard" sx={{ width: "50%" }}>
+                          <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            defaultValue={
+                              typeof renderedCellValue === "string"
+                                ? renderedCellValue.match(/[A-Za-z]+/)?.[0] ||
+                                  ""
+                                : ""
+                            }
+                            onChange={(e) => {
+                              const numValue =
+                                parseInt(selectedValue?.value as string, 10) ||
+                                0;
+                              console.log(numValue, e.target.value);
+                              setSelectedValue({
+                                ...selectedValue,
+                                value: `${numValue}${e.target.value}`,
+                              });
+                            }}
+                          >
+                            <MenuItem value={"D"}>Day</MenuItem>
+                            <MenuItem value={"MO"}>Month</MenuItem>
+                            <MenuItem value={"YR"}>Year</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                      {valueError && (
+                        <div className="text-[#db3545] text-xs pt-1">
+                          This field is required
+                        </div>
+                      )}
                     </div>
                   ) : (
                     renderedCellValue
@@ -440,17 +475,39 @@ const Page = () => {
           ...column,
           Cell: ({ renderedCellValue, cell, row, column }) =>
             row.original.id == selectedValue?.id ? (
-              <TextField
-                variant="standard"
-                defaultValue={renderedCellValue}
-                // disabled={!row.original.is_new}
-                onChange={(e) =>
-                  setSelectedValue({
-                    ...selectedValue,
-                    [column.id as string]: e.target.value,
-                  })
-                }
-              />
+              column.id == "meaning" ? (
+                <div>
+                  <TextField
+                    inputRef={meaningTextFieldRef}
+                    variant="standard"
+                    defaultValue={renderedCellValue}
+                    autoComplete="off"
+                    onChange={(e) =>
+                      setSelectedValue({
+                        ...selectedValue,
+                        [column.id as string]: e.target.value,
+                      })
+                    }
+                    error={meaningError}
+                  />
+                  {meaningError && (
+                    <div className="text-[#db3545] text-xs pt-1">
+                      This field is required
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <TextField
+                  variant="standard"
+                  defaultValue={renderedCellValue}
+                  onChange={(e) =>
+                    setSelectedValue({
+                      ...selectedValue,
+                      [column.id as string]: e.target.value,
+                    })
+                  }
+                />
+              )
             ) : (
               renderedCellValue
             ),
