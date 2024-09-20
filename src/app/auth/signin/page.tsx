@@ -29,7 +29,10 @@ const SignIn: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    mode: "onChange",
+    reValidateMode: "onSubmit"
+  });
   const { mutate: login, isLoading: isLoginLoading } = useLogin<FormData>();
   const onSubmit = (data: any) => {
     const loginForm = data as FormData;

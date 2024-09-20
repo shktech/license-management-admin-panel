@@ -26,7 +26,10 @@ const CustomerDetailDrawer: React.FC<CustomerDetailDrawerProps> = ({
     formState: { errors },
     setValue,
     getValues,
-  } = useForm<Customer>();
+  } = useForm<Customer>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     if (customer != null) {

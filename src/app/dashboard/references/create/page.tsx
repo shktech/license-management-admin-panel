@@ -19,7 +19,10 @@ const Item = () => {
     reset,
     trigger,
     formState: { errors },
-  } = useForm<Reference>();
+  } = useForm<Reference>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   const reference: Reference = queryResult?.data?.data as Reference;
 

@@ -21,6 +21,8 @@ const Item = () => {
     trigger,
     formState: { errors },
   } = useForm<Partner>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "edit",
       resource: "partners",

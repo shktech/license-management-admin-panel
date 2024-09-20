@@ -19,6 +19,8 @@ const Item = () => {
     formState: { errors },
     watch,
   } = useForm<Product>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
     refineCoreProps: {
       action: "create",
       resource: "products",

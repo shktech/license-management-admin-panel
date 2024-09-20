@@ -14,7 +14,10 @@ const Page: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    mode: "onChange",
+    reValidateMode: "onSubmit"
+  });
   const realAPI_URL = "https://license-management-server.vercel.app/api";
   const API_URL = process.env.API_URL;
   const [loading, setLoading] = useState(false);

@@ -28,7 +28,10 @@ const OrganizationDetailDrawer: React.FC<OrganizationDetailDrawerProps> = ({
     getValues,
     setValue,
     reset,
-  } = useForm<Organization>();
+  } = useForm<Organization>({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
 
   useEffect(() => {
     if (org != null) {

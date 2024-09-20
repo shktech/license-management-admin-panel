@@ -26,7 +26,10 @@ const SignUp: React.FC = () => {
     control,
     setError,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    mode: "onChange",
+    reValidateMode: "onSubmit"
+  });
   const { mutate: updatePassword } = useUpdatePassword<any>();
   const [token, setToken] = useState<string>("");
   const [userData, setUserData] = useState<DecodedToken>();

@@ -20,7 +20,10 @@ const Item = () => {
     reset,
     setValue,
     formState: { errors },
-  } = useForm<EmailTemplate>();
+  } = useForm<EmailTemplate>({
+    mode: "onChange",
+    reValidateMode: "onSubmit"
+  });
 
   const [emailBody, setEmailBody] = useState<string>("");
 

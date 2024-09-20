@@ -19,7 +19,10 @@ const Item = () => {
     reset,
     trigger,
     formState: { errors },
-  } = useForm<Lookup>();
+  } = useForm<Lookup>({
+    mode: "onChange",
+    reValidateMode: "onSubmit"
+  });
 
   const lookup: Lookup = queryResult?.data?.data as Lookup;
 
