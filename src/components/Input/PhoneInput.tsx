@@ -10,7 +10,15 @@ interface CustomizedInputProps {
 
 type BaseInputProps = CustomizedInputProps & InputProps;
 
-const PhoneInput = ({ label, onChange, value, error, name, trigger, ...props }: BaseInputProps) => {
+const PhoneInput = ({
+  label,
+  onChange,
+  value,
+  error,
+  name,
+  trigger,
+  ...props
+}: BaseInputProps) => {
   const handleChange = (newValue: string) => {
     const isValid = matchIsValidTel(newValue);
     if (onChange) {
@@ -21,7 +29,6 @@ const PhoneInput = ({ label, onChange, value, error, name, trigger, ...props }: 
         },
       } as React.ChangeEvent<HTMLInputElement>);
     }
-    console.log(isValid);
   };
 
   return (

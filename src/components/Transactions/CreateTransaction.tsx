@@ -73,7 +73,6 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
 
   useEffect(() => {
     if (initialInfo.transaction_action != "New") {
-      console.log(assetData?.data.osc_product?.product_part_number);
       setValue(
         "osc_part_number",
         assetData?.data.osc_product?.product_part_number

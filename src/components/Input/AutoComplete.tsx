@@ -40,7 +40,7 @@ const AutoComplete: React.FC<DropdownProps> = ({
       initial: [{ field: "searchKey", operator: "contains", value: "" }],
     },
     pagination: {
-      pageSize: DefaultPageSize
+      pageSize: DefaultPageSize,
     },
   });
 
@@ -51,7 +51,6 @@ const AutoComplete: React.FC<DropdownProps> = ({
           value: item[valueKey],
           label: item[labelKey],
         })) || [];
-      console.log(options);
       setDropdownOptions(options.map((option) => option.value));
     }
   }, [data, isLoading, valueKey, labelKey]);
@@ -90,7 +89,6 @@ const AutoComplete: React.FC<DropdownProps> = ({
 
   const handleScroll = (event: React.UIEvent<HTMLUListElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
-    console.log(scrollHeight - scrollTop, clientHeight);
     if (scrollHeight - scrollTop <= clientHeight + 10) {
       handleLoadMore();
     }

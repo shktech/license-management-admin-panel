@@ -133,7 +133,6 @@ const Page = () => {
         setMeaningError(false);
       }
 
-      console.log(selectedValue);
       if (!isValid) return;
 
       let updatedCode = [...codes];
@@ -142,7 +141,6 @@ const Page = () => {
       );
 
       updatedCode[selectedIndex] = selectedValue;
-      console.log(updatedCode);
       createLookup(
         {
           resource: `lookups/${lookup.lookup_code}/values`,
@@ -192,11 +190,12 @@ const Page = () => {
         size: 50,
       },
       {
-        accessorKey: "action",
-        header: "Action",
+        accessorKey: "actions",
+        header: "Actions",
         pin: "right",
         size: 100,
         enableSorting: false,
+        enablePinning: true,
       },
     ],
     []
@@ -416,7 +415,6 @@ const Page = () => {
                               const numValue =
                                 parseInt(selectedValue?.value as string, 10) ||
                                 0;
-                              console.log(numValue, e.target.value);
                               setSelectedValue({
                                 ...selectedValue,
                                 value: `${numValue}${e.target.value}`,
@@ -440,7 +438,7 @@ const Page = () => {
                   ),
               };
           }
-        } else if (column.accessorKey == "action") {
+        } else if (column.accessorKey == "actions") {
           return {
             ...column,
             Cell: ({ row }) => (
