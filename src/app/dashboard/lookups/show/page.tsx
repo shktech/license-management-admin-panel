@@ -133,7 +133,6 @@ const Page = () => {
         setMeaningError(false);
       }
 
-      console.log(selectedValue);
       if (!isValid) return;
 
       let updatedCode = [...codes];
@@ -142,7 +141,6 @@ const Page = () => {
       );
 
       updatedCode[selectedIndex] = selectedValue;
-      console.log(updatedCode);
       createLookup(
         {
           resource: `lookups/${lookup.lookup_code}/values`,
@@ -416,7 +414,6 @@ const Page = () => {
                               const numValue =
                                 parseInt(selectedValue?.value as string, 10) ||
                                 0;
-                              console.log(numValue, e.target.value);
                               setSelectedValue({
                                 ...selectedValue,
                                 value: `${numValue}${e.target.value}`,

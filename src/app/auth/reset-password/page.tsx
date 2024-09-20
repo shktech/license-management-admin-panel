@@ -37,7 +37,6 @@ const SignUp: React.FC = () => {
   const validateInviteToken = async (token: string): Promise<DecodedToken> => {
     try {
       const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
-      console.log(decodedToken);
       if (
         !decodedToken.token_type ||
         !decodedToken.uid ||

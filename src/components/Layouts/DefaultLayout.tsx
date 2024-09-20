@@ -21,10 +21,6 @@ export default function DefaultLayout({
 
   const { data, isSuccess, isLoading, isError, refetch } = useIsAuthenticated();
 
-  // useEffect(() => {
-  //   console.log(pageName);
-  //   refetch();
-  // }, [pageName]);
   return (
     <Authenticated key="any" appendCurrentPathToQuery={false}>
       <div className="flex h-screen overflow-hidden">

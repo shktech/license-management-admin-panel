@@ -12,11 +12,12 @@ export type ProductFormProps = GenericFormProps & {
 };
 
 const ProductForm = (props: ProductFormProps) => {
-  console.log(props.product);
   const FormGroups = [
     {
       title: "Main Information",
-      fields: props.product ? MainInformationFormFields.edit : MainInformationFormFields.create,
+      fields: props.product
+        ? MainInformationFormFields.edit
+        : MainInformationFormFields.create,
     },
     {
       title: "Attributes",

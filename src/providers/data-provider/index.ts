@@ -48,7 +48,6 @@ const customDataProvider: DataProvider = {
     if (pagination?.mode != "off") {
       const { current = 1, pageSize = 12 } = pagination ?? {};
       const offset = (current - 1) * pageSize;
-      console.log(pagination);
       params = {
         ...params,
         limit: pageSize,

@@ -47,7 +47,6 @@ const NotificationSchedulesComponent: React.FC<
   useEffect(() => {
     if (!emailTemplatesLoading && emailSchedule && emailTemplatesData?.data) {
       reset({ ...emailSchedule });
-      console.log(emailSchedule?.email_template);
       const email_id = emailTemplatesData.data.find(
         (item) => item.name === emailSchedule?.email_template
       )?.email_id;
@@ -108,7 +107,6 @@ const NotificationSchedulesComponent: React.FC<
       ...(recurring && { recurring_task: data.recurring_task }),
     };
 
-    console.log(payload);
     if (emailSchedule) {
       update(
         {
