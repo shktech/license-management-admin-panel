@@ -4,7 +4,7 @@ import { getRealFormFields } from "@utils/utilFunctions";
 const InitialField: InitialFieldConfig[] = [
   { name: "first_name", required: "text" },
   { name: "last_name", required: "text" },
-  { name: "phone", validation: "phone" },
+  { name: "phone", type: "phone" },
   { name: "email", required: "email" },
   { name: "job_title", size: 2 },
   { name: "renewal_notification", type: "switch" },

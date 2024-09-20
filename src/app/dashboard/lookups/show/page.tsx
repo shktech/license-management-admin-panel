@@ -190,11 +190,12 @@ const Page = () => {
         size: 50,
       },
       {
-        accessorKey: "action",
-        header: "Action",
+        accessorKey: "actions",
+        header: "Actions",
         pin: "right",
         size: 100,
         enableSorting: false,
+        enablePinning: true,
       },
     ],
     []
@@ -437,7 +438,7 @@ const Page = () => {
                   ),
               };
           }
-        } else if (column.accessorKey == "action") {
+        } else if (column.accessorKey == "actions") {
           return {
             ...column,
             Cell: ({ row }) => (

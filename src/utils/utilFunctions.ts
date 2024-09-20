@@ -112,7 +112,7 @@ export const getRealFormFields = (
       if (field.type == "phone") {
         value.rules = {
           validate: (inputValue: string) => {
-            if (inputValue === null || inputValue === "") return true; // Skip validation if value is null or empty
+            if (inputValue === null || inputValue === "" || inputValue === undefined) return true; // Skip validation if value is null or empty
             const isValid = matchIsValidTel(inputValue); // Use isValid for phone validation
             return isValid || "Invalid phone number"; // Validate using isValid and return message if invalid
           }
