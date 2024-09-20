@@ -184,6 +184,7 @@ export interface Permission {
 }
 
 export interface Transaction {
+  license_type: string;
   id?: string;
   transaction_number?: number;
   asset?: Partial<Asset>;

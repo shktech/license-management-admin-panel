@@ -94,23 +94,21 @@ const Page = () => {
         accessorKey: "asset.license_type",
         header: "Product Type",
         size: 100,
-      //   Cell: ({ renderedCellValue }) => (
-      //     <Box
-      //       component="span"
-      //       sx={{
-      //         backgroundColor: TxtTypeColor[renderedCellValue as string],
-      //         ...tagStyle,
-      //       }}
-      //     >
-      //       {renderedCellValue}
-      //     </Box>
-      //   ),
+        Cell: ({ row }) => (
+          <div className="text-left w-full pr-7">
+            {row.original.license_type || row.original.asset?.license_type || row.original.asset?.osc_product?.product_type}
+          </div>
+        ),
       },
-
       {
-        accessorKey: "asset.osc_product.product_part_number",
+        accessorKey: "product_part_number",
         header: "Product Part Number",
         size: 100,
+        Cell: ({row}) => (
+          <div className="text-left w-full pr-7">
+            {row.original.product_part_number || row.original.asset?.osc_product?.product_part_number}
+          </div>
+        ),
       },
       {
         accessorKey: "asset.osc_seat_count",
