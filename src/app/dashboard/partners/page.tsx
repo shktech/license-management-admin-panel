@@ -64,7 +64,7 @@ const Page = () => {
   const columns = useMemo<MRT_ColumnDef<Partner>[]>(
     () => [
       {
-        accessorKey: "partner_id",
+        accessorKey: "partner_number",
         header: "Partner ID",
         size: 200,
       },

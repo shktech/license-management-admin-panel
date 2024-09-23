@@ -85,10 +85,6 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
           value: transaction?.source_integration_status || "No Error",
         },
         {
-          label: "Source Integration Error",
-          value: transaction?.source_integration_error || "No Error",
-        },
-        {
           label: "Error Message",
           value: transaction?.error_message || "No Error",
         },

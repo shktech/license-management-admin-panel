@@ -68,9 +68,9 @@ const CustomerForm = ({
     setIsSameBillShipping((prev) => !prev);
   };
   const [value, setValue] = useState<Partner>(
-    customer.customer?.account_id
+    customer.customer?.name
       ? (customer.customer as Partner)
-      : { account_id: ADDLABEL }
+      : { name: ADDLABEL }
   );
 
   const [inputValue, setInputValue] = useState("");
@@ -106,7 +106,7 @@ const CustomerForm = ({
     Object.keys(getInputCustomer(value, customer.prefix)).forEach((key) => {
       setValueProps?.(
         key,
-        value?.account_id == ADDLABEL
+        value?.name == ADDLABEL
           ? ""
           : getInputCustomer(value, customer.prefix)[key]
       );
@@ -139,7 +139,7 @@ const CustomerForm = ({
   };
 
   useEffect(() => {
-    if (value?.account_id && value?.account_id != ADDLABEL) {
+    if (value?.account_id && value?.name != ADDLABEL) {
       const data = {
         customer_account: value?.account_id,
         customer_name: value?.name,
@@ -185,20 +185,20 @@ const CustomerForm = ({
           onInputChange={handleInputChange}
           options={[
             {
-              account_id: ADDLABEL,
+              name: ADDLABEL,
             },
             ...partners,
           ]}
           loading={isLoading}
           filterOptions={(options) => options}
-          getOptionLabel={(option) => option.account_id as string}
+          getOptionLabel={(option) => option.name as string}
           renderOption={(props, option) => {
             const { key, ...optionProps } = props;
             return (
               <Box key={key} component="li" {...optionProps}>
-                {option.account_id == ADDLABEL ? (
+                {option.name == ADDLABEL ? (
                   <div className="border px-4 py-2 w-full text-center bg-[#1f325c] text-white">
-                    {option.account_id}
+                    {option.name}
                   </div>
                 ) : (
                   <div className="text-sm flex flex-col gap-2 py-2">

@@ -18,6 +18,7 @@ export interface InitialFieldConfig {
   resource?: string;
   valueKey?: string;
   labelKey?: string;
+  elseKey?: string;
   size?: number;
   disabled?: boolean;
   prefix?: string;

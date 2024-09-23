@@ -9,6 +9,7 @@ const InitialField: InitialFieldConfig[] = [
     resource: "products",
     valueKey: "product_part_number",
     labelKey: "product_part_number",
+    elseKey: "product_name",
     required: "text",
   },
   {

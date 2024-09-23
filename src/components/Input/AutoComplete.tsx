@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { BaseInputProps } from "./InputProps";
 import { useTable } from "@refinedev/core";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Box, TextField } from "@mui/material";
 import { DefaultPageSize } from "@data/UtilData";
 
 interface DropdownOption {
   value: string;
   label: string;
+  elseKey?: string;
 }
 
 type DropdownProps = BaseInputProps & {
@@ -19,8 +20,13 @@ type DropdownProps = BaseInputProps & {
 };
 
 const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
-  ({ label, onChange, value, resource, valueKey, labelKey, ...props }, ref) => {
-    const [dropdownOptions, setDropdownOptions] = useState<string[]>([]);
+  (
+    { label, onChange, value, resource, valueKey, labelKey, elseKey, ...props },
+    ref
+  ) => {
+    const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
+      []
+    );
     const [val, setVal] = useState<string>("");
     const {
       tableQueryResult: { data, isLoading },
@@ -44,8 +50,9 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
           data?.data.map((item: any) => ({
             value: item[valueKey],
             label: item[labelKey],
+            elseKey: item[elseKey],
           })) || [];
-        setDropdownOptions(options.map((option) => option.value));
+        setDropdownOptions(options);
       }
     }, [data, isLoading, valueKey, labelKey]);
 
@@ -93,12 +100,25 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
         <Autocomplete
           disablePortal
           value={val}
-          options={dropdownOptions}
+          options={dropdownOptions.map((option) => option.value)}
           onChange={(event, value) => handleChange(value as string)}
           onInputChange={handleInputChange}
           filterOptions={(options) => options}
           ListboxProps={{
             onScroll: handleScroll,
+          }}
+          renderOption={(props, option) => {
+            const { key, ...optionProps } = props;
+            return (
+              <Box key={key} component="li" {...optionProps}>
+                <div className="flex flex-col">
+                  <div className="">{option}</div>
+                  <div className="text-sm">
+                    {dropdownOptions.find((op) => op.value == option)?.elseKey}
+                  </div>
+                </div>
+              </Box>
+            );
           }}
           renderInput={(params) => (
             <div className="relative">

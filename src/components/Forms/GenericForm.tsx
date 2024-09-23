@@ -114,6 +114,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
                           resource={field.resource}
                           valueKey={field.valueKey}
                           labelKey={field.labelKey}
+                          elseKey={field?.elseKey}
                           disabled={field.disabled}
                           required={field.required}
                           // fetchOptions={field.fetchOptions}
