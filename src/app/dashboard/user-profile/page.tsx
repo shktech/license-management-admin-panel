@@ -63,6 +63,7 @@ const Page = () => {
           <div className="bg-white rounded-md px-3 gap-3 flex flex-col py-3 shadow-card">
             {panels.map((panel, i) => (
               <div
+                key={i}
                 onClick={() => setPage(i)}
                 className={`px-2 py-2 cursor-pointer transition duration-500 ${
                   page === i ? "font-bold bg-slate-100" : "hover:bg-slate-100"

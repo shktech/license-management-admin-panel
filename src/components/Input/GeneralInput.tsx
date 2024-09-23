@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { forwardRef } from "react";
 import { Input } from "@mui/base/Input";
 import { BaseInputProps } from "./InputProps";
 import { NumberInput } from "@mui/base/Unstable_NumberInput/NumberInput";
 
-const GeneralInput = ({ label, ...props }: BaseInputProps) => {
+const GeneralInput = forwardRef<HTMLInputElement, BaseInputProps>(({ label, ...props }, ref) => {
   return (
     <div className="relative">
       <label
@@ -18,7 +18,8 @@ const GeneralInput = ({ label, ...props }: BaseInputProps) => {
       </label>
       {props.type == "number" ? (
         <NumberInput
-          component="input" // Add this line
+          component="input"
+          ref={ref} // Add this line
           required={props.required}
           disabled={props.disabled}
           value={props.value as number | null} // Cast to number | null
@@ -43,6 +44,8 @@ const GeneralInput = ({ label, ...props }: BaseInputProps) => {
       ) : (
         <Input
           {...props}
+          value={props.value || ''}
+          ref={ref} // Add this line
           disabled={props.disabled}
           slotProps={{
             input: {
@@ -61,6 +64,6 @@ const GeneralInput = ({ label, ...props }: BaseInputProps) => {
       )}
     </div>
   );
-};
+});
 
 export default GeneralInput;

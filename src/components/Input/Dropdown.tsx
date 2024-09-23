@@ -23,7 +23,7 @@ type DropdownProps = BaseInputProps & {
   options?: DropdownOption[];
 };
 
-const Dropdown: React.FC<DropdownProps> = ({
+const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(({
   watch,
   label,
   onChange,
@@ -32,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   valueKey,
   labelKey,
   ...props
-}) => {
+}, ref) => {
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
     props.options || []
   );
@@ -111,7 +111,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <FormControl className="w-full relative">
         <label
           htmlFor={props.id}
@@ -156,6 +156,6 @@ const Dropdown: React.FC<DropdownProps> = ({
       </FormControl>
     </div>
   );
-};
+});
 
 export default Dropdown;

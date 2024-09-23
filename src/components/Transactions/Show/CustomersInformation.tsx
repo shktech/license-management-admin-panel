@@ -38,13 +38,13 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           transaction?.[
             (type + "_address") as keyof Transaction
           ] as Partial<Address>
-        )?.address1 || ''
+        )?.address1 || ""
       } ${
         (
           transaction?.[
             (type + "_address") as keyof Transaction
           ] as Partial<Address>
-        )?.address2 || ''
+        )?.address2 || ""
       }`,
     },
     {
@@ -86,13 +86,13 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           transaction?.[
             (type + "_contact") as keyof Transaction
           ] as Partial<Contact>
-        )?.first_name || ''
+        )?.first_name || ""
       } ${
         (
           transaction?.[
             (type + "_contact") as keyof Transaction
           ] as Partial<Contact>
-        )?.last_name || ''
+        )?.last_name || ""
       }`,
     },
     {
@@ -123,7 +123,10 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
       <div className="">
         <div className="h-12 flex items-center py-3 border-b border-[#d5dce3] text-[#666f75] pl-12"></div>
         {items("").map((item) => (
-          <div className="h-12 flex items-center text-base py-3 border-b border-[#d5dce3] text-[#666f75] pl-12 font-semibold">
+          <div
+            className="h-12 flex items-center text-base py-3 border-b border-[#d5dce3] text-[#666f75] pl-12 font-semibold"
+            key={item.label}
+          >
             {item.label}
           </div>
         ))}
@@ -133,7 +136,10 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           Billing
         </div>
         {items("bill_customer").map((item) => (
-          <div className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75] ">
+          <div
+            className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75] "
+            key={item.label}
+          >
             {item.value}
           </div>
         ))}
@@ -143,7 +149,10 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           Shipping
         </div>
         {items("ship_customer").map((item) => (
-          <div className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75]">
+          <div
+            className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75]"
+            key={item.label}
+          >
             {item.value}
           </div>
         ))}
@@ -153,7 +162,10 @@ const CustomersInformation: React.FC<CustomersInformationProps> = ({
           Reseller
         </div>
         {items("reseller").map((item) => (
-          <div className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75]">
+          <div
+            className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75]"
+            key={item.label}
+          >
             {item.value}
           </div>
         ))}

@@ -40,57 +40,59 @@ const CustomTextField = React.forwardRef<
   />
 ));
 
-const DatePicker = ({ label, onChange, ...props }: BaseInputProps) => {
-  const handleChange = (newValue: Dayjs) => {
-    if (onChange) {
-      onChange({
-        target: {
-          name: props.name,
-          value:
-            props.type === "time"
-              ? newValue.format("YYYY-MM-DD hh:mm:ss")
-              : newValue.format("YYYY-MM-DD"),
-        },
-      } as React.ChangeEvent<HTMLInputElement>);
-    }
-  };
+const DatePicker = React.forwardRef<HTMLDivElement, BaseInputProps>(
+  ({ label, onChange, ...props }, ref) => {
+    const handleChange = (newValue: Dayjs) => {
+      if (onChange) {
+        onChange({
+          target: {
+            name: props.name,
+            value:
+              props.type === "time"
+                ? newValue.format("YYYY-MM-DD hh:mm:ss")
+                : newValue.format("YYYY-MM-DD"),
+          },
+        } as React.ChangeEvent<HTMLInputElement>);
+      }
+    };
 
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="relative my-datepicker">
-        <div className="mb-1.5 block text-[#0000009c] font-medium dark:text-white absolute z-10 text-sm left-4 top-2 flex items-center gap-1">
-          {label}
-          {props.required && <span className="text-red-500">*</span>}
-          {!props.required && (
-            <span className="text-gray-500 text-xs">(Optional)</span>
+    return (
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <div ref={ref} className="relative my-datepicker">
+          <div className="mb-1.5 block text-[#0000009c] font-medium dark:text-white absolute z-10 text-sm left-4 top-2 flex items-center gap-1">
+            {label}
+            {props.required && <span className="text-red-500">*</span>}
+            {!props.required && (
+              <span className="text-gray-500 text-xs">(Optional)</span>
+            )}
+          </div>
+          {props.type === "time" ? (
+            <DateTimePicker
+              onChange={(newValue) => handleChange(newValue as Dayjs)}
+              value={props.value ? dayjs(props.value as string) : null}
+              // disabled={props.disabled}
+              slots={{
+                textField: (textFieldProps) => (
+                  <CustomTextField {...textFieldProps} />
+                ),
+              }}
+            />
+          ) : (
+            <DesktopDatePicker
+              onChange={(newValue) => handleChange(newValue as Dayjs)}
+              value={props.value ? dayjs(props.value as string) : null}
+              disabled={props.disabled}
+              slots={{
+                textField: (textFieldProps) => (
+                  <CustomTextField {...textFieldProps} />
+                ),
+              }}
+            />
           )}
         </div>
-        {props.type === "time" ? (
-          <DateTimePicker
-            onChange={(newValue) => handleChange(newValue as Dayjs)}
-            value={props.value ? dayjs(props.value as string) : null}
-            // disabled={props.disabled}
-            slots={{
-              textField: (textFieldProps) => (
-                <CustomTextField {...textFieldProps} />
-              ),
-            }}
-          />
-        ) : (
-          <DesktopDatePicker
-            onChange={(newValue) => handleChange(newValue as Dayjs)}
-            value={props.value ? dayjs(props.value as string) : null}
-            disabled={props.disabled}
-            slots={{
-              textField: (textFieldProps) => (
-                <CustomTextField {...textFieldProps} />
-              ),
-            }}
-          />
-        )}
-      </div>
-    </LocalizationProvider>
-  );
-};
+      </LocalizationProvider>
+    );
+  }
+);
 
 export default DatePicker;
