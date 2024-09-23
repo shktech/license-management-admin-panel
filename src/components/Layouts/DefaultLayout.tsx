@@ -3,7 +3,11 @@ import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import { IconButton } from "@mui/material";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-import { Authenticated, useIsAuthenticated } from "@refinedev/core";
+import {
+  Authenticated,
+  useGetIdentity,
+  useIsAuthenticated,
+} from "@refinedev/core";
 import { usePathname } from "next/navigation";
 
 export default function DefaultLayout({
@@ -17,28 +21,30 @@ export default function DefaultLayout({
   };
 
   const pathname = usePathname();
-  const pageName = pathname.split("/")[2];
+  const pageTitle = pathname.split("/")[2];
 
-  const { data, isSuccess, isLoading, isError, refetch } = useIsAuthenticated();
-
+  const { refetch } = useIsAuthenticated();
+  useEffect(() => {
+    console.log(pathname, pageTitle);
+    if (pageTitle) {
+      refetch();
+    }
+  }, [pageTitle]);
   return (
-    <Authenticated key="any" appendCurrentPathToQuery={false}>
-      <div className="flex h-screen overflow-hidden">
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div
-          className={`flex flex-1 flex-col lg:ml-72 overflow-y-auto overflow-x-hidden`}
-        >
-          <main>
-            <div className="absolute top-0.5 left-0.5">
-              <IconButton sx={{ color: "#1f325c" }} onClick={handleOpenSidebar}>
-                <DoubleArrowIcon />
-              </IconButton>
-            </div>
-
-            <div className="mx-auto pt-4">{children}</div>
-          </main>
-        </div>
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div
+        className={`flex flex-1 flex-col lg:ml-72 overflow-y-auto overflow-x-hidden`}
+      >
+        <main>
+          <div className="absolute top-0.5 left-0.5">
+            <IconButton sx={{ color: "#1f325c" }} onClick={handleOpenSidebar}>
+              <DoubleArrowIcon />
+            </IconButton>
+          </div>
+          <div className="mx-auto pt-4">{children}</div>
+        </main>
       </div>
-    </Authenticated>
+    </div>
   );
 }
