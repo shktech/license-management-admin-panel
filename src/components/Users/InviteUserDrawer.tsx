@@ -60,7 +60,7 @@ const InviteUserDrawer: React.FC<UserDrawerProps> = ({
                   label="Email"
                   type="text"
                   defaultValue={inactiveUser?.email}
-                  onChange={(e) => setInvitationEmail(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInvitationEmail(e.target.value)}
                   disabled={!!inactiveUser}
                 />
               </FormControl>

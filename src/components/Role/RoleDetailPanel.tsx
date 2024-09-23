@@ -134,7 +134,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
             type="text"
             disabled={isShow}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
           />
         </FormControl>
         <FormControl className="w-full">
@@ -145,7 +145,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
             type="text"
             disabled={isShow}
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
           />
         </FormControl>
         <Divider
