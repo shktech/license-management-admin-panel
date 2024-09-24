@@ -27,10 +27,12 @@ const AddressSelect: React.FC<DropdownProps> = ({
   setValue,
 }) => {
   const countries = Country.getAllCountries();
-  const updatedCountries = countries.filter(country => country.isoCode == "US" || country.isoCode == "CA").map((country) => ({
-    label: country.name,
-    value: country.isoCode, // Change this to use isoCode instead of name
-  }));
+  const updatedCountries = countries
+    .filter((country) => country.isoCode == "US" || country.isoCode == "CA")
+    .map((country) => ({
+      label: country.name,
+      value: country.isoCode, // Change this to use isoCode instead of name
+    }));
   const updatedStates = (countryCode: string) =>
     State.getStatesOfCountry(countryCode).map((state) => ({
       label: state.name,

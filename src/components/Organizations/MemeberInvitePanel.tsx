@@ -140,6 +140,7 @@ const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
             <div className="flex flex-1 flex-col gap-6">
               {sentValues.map((value, index) => (
                 <TextField
+                  key={index}
                   id="standard-basic"
                   variant="outlined"
                   placeholder="Enter email address"
@@ -152,7 +153,7 @@ const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
             </div>
             <div className="flex flex-1 flex-col gap-6">
               {sentValues.map((value, index) => (
-                <FormControl fullWidth>
+                <FormControl fullWidth key={index}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -172,7 +173,7 @@ const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
             </div>
             <div className="flex flex-1 flex-col gap-6">
               {sentValues.map((value, index) => (
-                <FormControl fullWidth>
+                <FormControl fullWidth key={index}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -195,7 +196,7 @@ const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
             </div>
             <div className="flex flex-col gap-6">
               {sentValues.map((value, index) => (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" key={index}>
                   <IconButton
                     onClick={() => handleRemove(index)}
                     disabled={sentValues.length === 1}

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { BaseInputProps } from "./InputProps";
 import { FormControlLabel, styled, Switch, SwitchProps } from "@mui/material";
 
-export const IOSSwitch = styled((props: SwitchProps) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
+export const IOSSwitch = styled(
+  forwardRef((props: SwitchProps, ref: React.Ref<HTMLDivElement>) => (
+    <div ref={ref}>
+      <Switch
+        focusVisibleClassName=".Mui-focusVisible"
+        disableRipple
+        {...props}
+      />
+    </div>
+  ))
+)(({ theme }) => ({
   width: 46,
   height: 25,
   padding: 0,
@@ -53,34 +61,32 @@ export const IOSSwitch = styled((props: SwitchProps) => (
   },
 }));
 
-const GeneralSwitch = ({
-  label,
-  onChange,
-  value,
-  ...props
-}: BaseInputProps) => {
-  const handleChange = (e: any) => {
-    onChange?.({
-      target: {
-        name: props.name,
-        value: e.target.checked,
-      },
-    } as React.ChangeEvent<HTMLInputElement>);
-  };
+const GeneralSwitch = forwardRef<HTMLInputElement, BaseInputProps>(
+  ({ label, onChange, value, ...props }, ref) => {
+    const handleChange = (e: any) => {
+      onChange?.({
+        target: {
+          name: props.name,
+          value: e.target.checked,
+        },
+      } as React.ChangeEvent<HTMLInputElement>);
+    };
 
-  return (
-    <FormControlLabel
-      control={
-        <IOSSwitch
-          onChange={handleChange}
-          checked={value as boolean}
-          sx={{ mx: 1 }}
-          disabled={props.disabled}
-        />
-      }
-      label={label}
-    />
-  );
-};
+    return (
+      <FormControlLabel
+        control={
+          <IOSSwitch
+            ref={ref} // Added ref here
+            onChange={handleChange}
+            checked={value as boolean || false}
+            sx={{ mx: 1 }}
+            disabled={props.disabled}
+          />
+        }
+        label={label}
+      />
+    );
+  }
+);
 
 export default GeneralSwitch;

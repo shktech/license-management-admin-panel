@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { forwardRef } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { InputProps } from "react-select";
@@ -10,7 +10,7 @@ interface CustomizedInputProps {
 
 type BaseInputProps = CustomizedInputProps & InputProps;
 
-const PhoneInput = ({
+const PhoneInput = forwardRef<HTMLInputElement, BaseInputProps>(({
   label,
   onChange,
   value,
@@ -18,7 +18,7 @@ const PhoneInput = ({
   name,
   trigger,
   ...props
-}: BaseInputProps) => {
+}: BaseInputProps, ref) => {
   const handleChange = (newValue: string) => {
     const isValid = matchIsValidTel(newValue);
     if (onChange) {
@@ -45,6 +45,7 @@ const PhoneInput = ({
           )}
         </label>
         <MuiTelInput
+          ref={ref}
           value={value ? (value as string) : ""}
           onChange={handleChange}
           defaultCountry="US"
@@ -68,6 +69,6 @@ const PhoneInput = ({
       </FormControl>
     </div>
   );
-};
+});
 
 export default PhoneInput;

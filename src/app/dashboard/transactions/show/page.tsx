@@ -59,13 +59,6 @@ const TransactionShow = () => {
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
-        <Button
-          href={`/dashboard/transactions/create?transaction_action=New`}
-          sx={editRefineBtnStyle}
-        >
-          <AddIcon />
-          Create
-        </Button>
         {transaction?.transaction_status != "Completed" && (
           // permissionsData?.update &&
           <>
@@ -84,7 +77,6 @@ const TransactionShow = () => {
             </Button>
           </>
         )}
-        <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
       </div>
     );
   };

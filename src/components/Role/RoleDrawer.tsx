@@ -119,7 +119,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
                 label="Role Name"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
               />
             </FormControl>
             <FormControl className="w-full">
@@ -129,7 +129,7 @@ const RoleDrawer: React.FC<RoleDrawerProps> = ({ onClose, role, create }) => {
                 label="Role Description"
                 type="text"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
               />
             </FormControl>
             <Divider

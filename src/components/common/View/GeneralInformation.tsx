@@ -35,11 +35,10 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
           </div>
         </Divider>
       ) : null}
-      <div className="grid grid-cols-2">
+      <div>
         {firstHalfItems.map((item, index) => (
-          <>
+          <div className="grid grid-cols-2" key={index}>
             <div
-              key={index}
               className={`grid grid-cols-5 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
             >
               <div className="col-span-2 text-base font-semibold text-[#666f75]">
@@ -50,7 +49,6 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
               </div>
             </div>
             <div
-              key={index + halfItems}
               className={`grid grid-cols-5 gap-2 px-12 py-3 items-center border-b border-[#d5dce3]`}
             >
               <div className="col-span-2 text-base font-semibold text-[#666f75] col-span-1">
@@ -60,7 +58,7 @@ const GeneralInformation: React.FC<GeneralInformationCardProps> = ({
                 {items[index + halfItems]?.value || ""}
               </div>
             </div>
-          </>
+          </div>
         ))}
       </div>
     </div>

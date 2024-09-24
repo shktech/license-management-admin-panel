@@ -29,6 +29,7 @@ export interface FieldConfig {
   resource?: string;
   valueKey?: string;
   labelKey?: string;
+  elseKey?: string;
   size?: number;
   disabled?: boolean;
   required?: string;
