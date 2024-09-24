@@ -270,7 +270,7 @@ const CustomerForm = ({
             }} // C
           >
             {addresses.map((ad, i) => (
-              <MenuItem value={ad?.address_id}>
+              <MenuItem value={ad?.address_id} key={i}>
                 <div className="flex flex-col gap-1 w-full py-1">
                   <div className="flex gap-2">
                     {ad?.address1 + " " + ad?.address2}
@@ -313,7 +313,7 @@ const CustomerForm = ({
             }} // Custom display for selected value
           >
             {contacts.map((c, i) => (
-              <MenuItem value={c?.contact_id}>
+              <MenuItem value={c?.contact_id} key={i}>
                 <div className="flex flex-col gap-1 w-full py-1">
                   <div className="flex gap-2">
                     {c?.first_name + " " + c?.last_name}
