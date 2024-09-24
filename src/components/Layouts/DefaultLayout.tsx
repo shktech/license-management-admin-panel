@@ -8,7 +8,8 @@ import {
   useGetIdentity,
   useIsAuthenticated,
 } from "@refinedev/core";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import Loader from "@components/common/Loader";
 
 export default function DefaultLayout({
   children,
@@ -23,28 +24,45 @@ export default function DefaultLayout({
   const pathname = usePathname();
   const pageTitle = pathname.split("/")[2];
 
-  const { refetch } = useIsAuthenticated();
+  const { data, isSuccess, isLoading, isError, refetch } = useIsAuthenticated();
   useEffect(() => {
-    console.log(pathname, pageTitle);
     if (pageTitle) {
       refetch();
     }
   }, [pageTitle]);
+
+  useEffect(() => {
+    if (data) {
+      if (!data.authenticated) {
+        redirect("/auth/signin");
+      }
+    }
+  }, [data]);
+
   return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div
-        className={`flex flex-1 flex-col lg:ml-72 overflow-y-auto overflow-x-hidden`}
-      >
-        <main>
-          <div className="absolute top-0.5 left-0.5">
-            <IconButton sx={{ color: "#1f325c" }} onClick={handleOpenSidebar}>
-              <DoubleArrowIcon />
-            </IconButton>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="flex h-screen overflow-hidden">
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <div
+            className={`flex flex-1 flex-col lg:ml-72 overflow-y-auto overflow-x-hidden`}
+          >
+            <main>
+              <div className="absolute top-0.5 left-0.5">
+                <IconButton
+                  sx={{ color: "#1f325c" }}
+                  onClick={handleOpenSidebar}
+                >
+                  <DoubleArrowIcon />
+                </IconButton>
+              </div>
+              <div className="mx-auto pt-4">{children}</div>
+            </main>
           </div>
-          <div className="mx-auto pt-4">{children}</div>
-        </main>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
