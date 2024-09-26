@@ -70,7 +70,7 @@ const AssetCustomersInformation: React.FC<CustomersInformationProps> = ({
             className="flex items-center text-base h-12 border-b border-[#d5dce3] text-[#666f75]"
             key={item.label}
           >
-            {item.value}
+            {item.label == "Customer Name" ? asset?.owner?.name : item.value}
           </div>
         ))}
       </div>

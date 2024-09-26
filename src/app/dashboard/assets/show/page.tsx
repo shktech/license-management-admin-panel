@@ -145,7 +145,8 @@ const Page = () => {
           <div className="flex gap-2 pr-10">
             <Button
               sx={refreshRefineBtnStyle}
-              onClick={() => updateCustomerDetail()}
+              href={`/dashboard/assets/customer?asset_id=${params?.id}`}
+              // onClick={() => updateCustomerDetail()}
             >
               <AutorenewIcon fontSize="small" />
               Update Customer
