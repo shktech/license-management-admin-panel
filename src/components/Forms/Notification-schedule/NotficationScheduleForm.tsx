@@ -12,6 +12,7 @@ import Loader from "@components/common/Loader";
 import MuiDatePicker from "@components/Input/MuiDatePicker";
 import MuiTimePicker from "@components/Input/MuiTimePicker";
 import MuiDropdown from "@components/Input/MuiDropdown";
+import MuiSwitch from "@components/Input/MuiSwitch";
 
 interface NotificationSchedulesComponentProps {
   emailSchedule?: Email_Schedule;
@@ -69,7 +70,8 @@ const NotificationSchedulesComponent: React.FC<
   const { mutate } = useCreate();
   const { mutate: update } = useUpdate();
   const [sendNow, setSendNow] = useState(
-    emailSchedule?.send_now ? true : false
+    // emailSchedule?.send_now ? true : false
+    false
   );
   const [recurring, setRecurring] = useState(
     emailSchedule?.is_recurring ? true : false
@@ -98,18 +100,12 @@ const NotificationSchedulesComponent: React.FC<
       });
       isValid = false;
     }
-    // if (recurring && (!data.recurring_task || data.recurring_task == "no")) {
-    //   setError("recurring_task", {
-    //     type: "manual",
-    //     message: "This field is required",
-    //   });
-    //   isValid = false;
-    // }
     if (!isValid) {
       return;
     }
     const payload = {
       email_template: data.email_template,
+      active: data.active,
       user_timezone: browserTimezone,
       is_recurring: data.recurring_task != "None",
       send_now: sendNow,
@@ -120,7 +116,6 @@ const NotificationSchedulesComponent: React.FC<
         recurring_task: data.recurring_task,
       }),
     };
-
 
     if (emailSchedule) {
       update(
@@ -194,7 +189,7 @@ const NotificationSchedulesComponent: React.FC<
       ) : (
         <div className="flex flex-col gap-8 bg-white p-10 shadow-card">
           <div className="flex flex-col">
-            <div className="flex items-center text-base gap-4 font-medium">
+            {/* <div className="flex items-center text-base gap-4 font-medium">
               <div className="w-36">Send Now?</div>
               <FormControlLabel
                 control={
@@ -206,45 +201,45 @@ const NotificationSchedulesComponent: React.FC<
                 }
                 label=""
               />
-            </div>
-            <Collapse in={!sendNow}>
-              <div className="flex gap-4 pt-8">
-                <div className="flex items-center gap-4">
-                  <FormControlWrapper
-                    name="scheduled_date"
-                    control={control}
-                    rules={{ required: "Time is required" }}
-                    error={errors.scheduled_date?.message?.toString()}
-                  >
-                    {(field) => (
-                      <MuiDatePicker
-                        {...field}
-                        id="scheduled_date"
-                        label="Send Date"
-                        required={true}
-                      />
-                    )}
-                  </FormControlWrapper>
-                </div>
-                <div className="flex items-center gap-4">
-                  <FormControlWrapper
-                    name="scheduled_time"
-                    control={control}
-                    rules={{ required: "Time is required" }}
-                    error={errors.scheduled_time?.message?.toString()}
-                  >
-                    {(field) => (
-                      <MuiTimePicker
-                        {...field}
-                        id="scheduled_time"
-                        label="Send Time"
-                        required={true}
-                      />
-                    )}
-                  </FormControlWrapper>
-                </div>
+            </div> */}
+            {/* <Collapse in={!sendNow}> */}
+            <div className="flex gap-4">
+              <div className="flex items-center gap-4">
+                <FormControlWrapper
+                  name="scheduled_date"
+                  control={control}
+                  rules={{ required: "Time is required" }}
+                  error={errors.scheduled_date?.message?.toString()}
+                >
+                  {(field) => (
+                    <MuiDatePicker
+                      {...field}
+                      id="scheduled_date"
+                      label="Send Date"
+                      required={true}
+                    />
+                  )}
+                </FormControlWrapper>
               </div>
-            </Collapse>
+              <div className="flex items-center gap-4">
+                <FormControlWrapper
+                  name="scheduled_time"
+                  control={control}
+                  rules={{ required: "Time is required" }}
+                  error={errors.scheduled_time?.message?.toString()}
+                >
+                  {(field) => (
+                    <MuiTimePicker
+                      {...field}
+                      id="scheduled_time"
+                      label="Send Time"
+                      required={true}
+                    />
+                  )}
+                </FormControlWrapper>
+              </div>
+            </div>
+            {/* </Collapse> */}
           </div>
           {/* <div className="flex items-center text-base px-2 gap-4 font-medium">
             <div className="">Is this recurring?</div>
@@ -295,6 +290,23 @@ const NotificationSchedulesComponent: React.FC<
               />
             )}
           </FormControlWrapper>
+          <div className="flex">
+            <div className="w-48">Active</div>
+            <FormControlWrapper
+              name="active"
+              control={control}
+              error={errors.active?.message?.toString()}
+            >
+              {(field) => (
+                <MuiSwitch
+                  {...field}
+                  id="active"
+                  label="Active"
+                  required={true}
+                />
+              )}
+            </FormControlWrapper>
+          </div>
           <div className="flex justify-end gap-2">
             <Button onClick={onSubmit} variant="contained" sx={modalOkBtnStyle}>
               {emailSchedule ? "Save" : "Create"}
