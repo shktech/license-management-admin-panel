@@ -136,6 +136,8 @@ export interface EmailTemplate {
   body?: string;
   from_email?: string;
   name?: string;
+  product_family?: string;
+  product_type?: string;
 }
 
 export interface Organization {
