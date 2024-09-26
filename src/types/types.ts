@@ -138,6 +138,8 @@ export interface EmailTemplate {
   name?: string;
   product_family?: string;
   product_type?: string;
+  created_by?: any,
+  updated_by?: any,
 }
 
 export interface Organization {

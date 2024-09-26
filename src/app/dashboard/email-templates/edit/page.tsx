@@ -36,7 +36,8 @@ const Item = () => {
 
   useEffect(() => {
     if (!formLoading && emailTemplate) {
-      reset({ ...emailTemplate });
+      const { created_by, updated_by, ...templateWithoutMeta } = emailTemplate; // Exclude fields
+      reset({ ...templateWithoutMeta }); // Reset without created_by and updated_by
     }
   }, [formLoading, emailTemplate]);
 
