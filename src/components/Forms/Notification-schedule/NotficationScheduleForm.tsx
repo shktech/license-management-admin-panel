@@ -9,6 +9,9 @@ import { Button, Collapse, FormControlLabel } from "@mui/material";
 import { modalOkBtnStyle } from "@data/MuiStyles";
 import GeneralSwitch, { IOSSwitch } from "@components/Input/GeneralSwitch";
 import Loader from "@components/common/Loader";
+import MuiDatePicker from "@components/Input/MuiDatePicker";
+import MuiTimePicker from "@components/Input/MuiTimePicker";
+import MuiDropdown from "@components/Input/MuiDropdown";
 
 interface NotificationSchedulesComponentProps {
   emailSchedule?: Email_Schedule;
@@ -51,6 +54,15 @@ const NotificationSchedulesComponent: React.FC<
         (item) => item.name === emailSchedule?.email_template
       )?.email_id;
       setValue("email_template", email_id);
+      if (emailSchedule.scheduled_time) {
+        setValue("scheduled_date", emailSchedule?.scheduled_time.split("T")[0]); // Extracting only the date part
+        setValue(
+          "scheduled_time",
+          emailSchedule.scheduled_time.split("T")[1].split("Z")[0]
+        ); // Extracting only the date part
+      }
+    } else {
+      setValue("recurring_task", "None");
     }
   }, [emailSchedule, emailTemplatesLoading, emailTemplatesData]);
 
@@ -86,26 +98,29 @@ const NotificationSchedulesComponent: React.FC<
       });
       isValid = false;
     }
-    if (recurring && (!data.recurring_task || data.recurring_task == "no")) {
-      setError("recurring_task", {
-        type: "manual",
-        message: "This field is required",
-      });
-      isValid = false;
-    }
+    // if (recurring && (!data.recurring_task || data.recurring_task == "no")) {
+    //   setError("recurring_task", {
+    //     type: "manual",
+    //     message: "This field is required",
+    //   });
+    //   isValid = false;
+    // }
     if (!isValid) {
       return;
     }
     const payload = {
       email_template: data.email_template,
       user_timezone: browserTimezone,
-      is_recurring: recurring,
+      is_recurring: data.recurring_task != "None",
       send_now: sendNow,
       scheduled_time: sendNow
         ? new Date().toISOString().replace("T", " ").slice(0, 19)
-        : data.scheduled_time,
-      ...(recurring && { recurring_task: data.recurring_task }),
+        : data.scheduled_date + " " + data.scheduled_time,
+      ...(data.recurring_task != "None" && {
+        recurring_task: data.recurring_task,
+      }),
     };
+
 
     if (emailSchedule) {
       update(
@@ -144,12 +159,20 @@ const NotificationSchedulesComponent: React.FC<
 
   const options = [
     {
+      value: "None",
+      label: "None",
+    },
+    {
       value: "daily",
       label: "Daily",
     },
     {
       value: "weekly",
       label: "Weekly",
+    },
+    {
+      value: "monthly",
+      label: "Monthly",
     },
     {
       value: "yearly",
@@ -169,39 +192,61 @@ const NotificationSchedulesComponent: React.FC<
       {emailTemplatesLoading ? (
         <Loader />
       ) : (
-        <div className="flex flex-col gap-4 bg-white p-5 shadow-card">
-          <div className="flex items-center text-base px-2 gap-4 font-medium">
-            <div className="">Do you want to send Now?</div>
-            <FormControlLabel
-              control={
-                <IOSSwitch
-                  sx={{ mx: 1 }}
-                  checked={sendNow}
-                  onChange={() => setSendNow(!sendNow)}
-                />
-              }
-              label=""
-            />
+        <div className="flex flex-col gap-8 bg-white p-10 shadow-card">
+          <div className="flex flex-col">
+            <div className="flex items-center text-base gap-4 font-medium">
+              <div className="w-36">Send Now?</div>
+              <FormControlLabel
+                control={
+                  <IOSSwitch
+                    sx={{ mx: 1 }}
+                    checked={sendNow}
+                    onChange={() => setSendNow(!sendNow)}
+                  />
+                }
+                label=""
+              />
+            </div>
+            <Collapse in={!sendNow}>
+              <div className="flex gap-4 pt-8">
+                <div className="flex items-center gap-4">
+                  <FormControlWrapper
+                    name="scheduled_date"
+                    control={control}
+                    rules={{ required: "Time is required" }}
+                    error={errors.scheduled_date?.message?.toString()}
+                  >
+                    {(field) => (
+                      <MuiDatePicker
+                        {...field}
+                        id="scheduled_date"
+                        label="Send Date"
+                        required={true}
+                      />
+                    )}
+                  </FormControlWrapper>
+                </div>
+                <div className="flex items-center gap-4">
+                  <FormControlWrapper
+                    name="scheduled_time"
+                    control={control}
+                    rules={{ required: "Time is required" }}
+                    error={errors.scheduled_time?.message?.toString()}
+                  >
+                    {(field) => (
+                      <MuiTimePicker
+                        {...field}
+                        id="scheduled_time"
+                        label="Send Time"
+                        required={true}
+                      />
+                    )}
+                  </FormControlWrapper>
+                </div>
+              </div>
+            </Collapse>
           </div>
-          <Collapse in={!sendNow}>
-            <FormControlWrapper
-              name="scheduled_time"
-              control={control}
-              rules={{ required: "Time is required" }}
-              error={errors.scheduled_time?.message?.toString()}
-            >
-              {(field) => (
-                <DatePicker
-                  {...field}
-                  id="scheduled_time"
-                  label="Select Time"
-                  required={true}
-                  type="time"
-                />
-              )}
-            </FormControlWrapper>
-          </Collapse>
-          <div className="flex items-center text-base px-2 gap-4 font-medium">
+          {/* <div className="flex items-center text-base px-2 gap-4 font-medium">
             <div className="">Is this recurring?</div>
             <FormControlLabel
               control={
@@ -213,26 +258,26 @@ const NotificationSchedulesComponent: React.FC<
               }
               label=""
             />
-          </div>
-          <Collapse in={recurring}>
-            <FormControlWrapper
-              name="recurring_task"
-              control={control}
-              rules={{ required: "Select an option" }}
-              error={errors.recurring_task?.message?.toString()}
-            >
-              {(field) => (
-                <Dropdown
-                  {...field}
-                  id="recurring_task"
-                  label="Select Recurring Option"
-                  required={true}
-                  type="dropdown"
-                  options={options}
-                />
-              )}
-            </FormControlWrapper>
-          </Collapse>
+          </div> */}
+          {/* <Collapse in={recurring}> */}
+          <FormControlWrapper
+            name="recurring_task"
+            control={control}
+            rules={{ required: "Select an option" }}
+            error={errors.recurring_task?.message?.toString()}
+          >
+            {(field) => (
+              <MuiDropdown
+                {...field}
+                id="recurring_task"
+                label="Recurring"
+                required={true}
+                type="dropdown"
+                options={options}
+              />
+            )}
+          </FormControlWrapper>
+          {/* </Collapse> */}
           <FormControlWrapper
             name="email_template"
             control={control}
@@ -240,10 +285,10 @@ const NotificationSchedulesComponent: React.FC<
             error={errors.email_template?.message?.toString()}
           >
             {(field) => (
-              <Dropdown
+              <MuiDropdown
                 {...field}
                 id="email_template"
-                label="Select Email emailSchedule"
+                label="Email Template"
                 required={true}
                 type="dropdown"
                 options={emailOptions}

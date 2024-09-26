@@ -33,6 +33,7 @@ export interface Email_Schedule{
     email_template?: string;
     send_now?: boolean;
     schedule_time?: string;
+    scheduled_time?: string;
     is_sent?: boolean;
     schedule_server?: string;
     periodic_task?: string;
