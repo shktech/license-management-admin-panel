@@ -63,6 +63,10 @@ const Page = () => {
     push(path + new URLSearchParams(queryParams).toString());
   };
 
+  const updateCustomerDetail = () => {
+
+  }
+
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
       {
@@ -141,10 +145,10 @@ const Page = () => {
           <div className="flex gap-2 pr-10">
             <Button
               sx={refreshRefineBtnStyle}
-              onClick={() => handleReActionBtn("Update")}
+              onClick={() => updateCustomerDetail()}
             >
               <AutorenewIcon fontSize="small" />
-              Update
+              Update Customer
             </Button>
             <Button
               sx={refreshRefineBtnStyle}

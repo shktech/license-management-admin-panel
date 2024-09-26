@@ -48,6 +48,11 @@ const HomePage: React.FC = () => {
         size: 50,
       },
       {
+        accessorKey: "parent_lookup.lookup_name",
+        header: "Parent Lookup",
+        size: 50,
+      },
+      {
         accessorKey: "active",
         header: "Active",
         size: 50,

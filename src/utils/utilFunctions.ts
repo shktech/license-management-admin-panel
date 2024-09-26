@@ -195,6 +195,16 @@ export const getDisabledFields = (fields: FieldConfig[]) => {
   });
 };
 
+export const setDisabledFields = (fields: any[], disabledName: string[]) => {
+  return fields.map((field) => {
+    if (disabledName.includes(field.name)) {
+      return { ...field, disabled: true };
+    }
+    return field;
+  });
+};
+
+
 export const getPasswordValidationMessage = (password: string) => {
   if (password === "") {
     return "This field is required";

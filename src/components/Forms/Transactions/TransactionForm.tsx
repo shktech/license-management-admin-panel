@@ -17,7 +17,11 @@ import {
 } from "./LicensingDetailFormFields";
 import { useEffect, useState } from "react";
 import CustomerForm from "./CustomerForm";
-import { getDisabledFields, getRealFormFields } from "@utils/utilFunctions";
+import {
+  getDisabledFields,
+  getRealFormFields,
+  setDisabledFields,
+} from "@utils/utilFunctions";
 import TransactionPartnerFormFields from "../Partners/TransactionPartnerFormFields";
 
 type TransactionAction = "New" | "Edit" | "Renewal" | "Revoke";
@@ -49,7 +53,27 @@ const TransactionForm = (props: TransactionFormProps) => {
     )
   );
 
+  const [licensingDetailField, setLicensingDetailField] = useState(
+    getRealFormFields(
+      LicensingDetailFormFields[props.transaction_action as TransactionAction]
+    )
+  );
+
   const transaction_source = props.watch?.("transaction_source");
+  useEffect(() => {
+    props.setValue("quantity", 1);
+    setLicensingDetailField(
+      getRealFormFields(
+        setDisabledFields(
+          LicensingDetailFormFields[
+            props.transaction_action as TransactionAction
+          ],
+          transaction_source == "Prod Reg" ? ["quantity"] : []
+        )
+      )
+    );
+  }, [transaction_source]);
+
   useEffect(() => {
     setGeneralTxnFormFields(
       getRealFormFields(
@@ -73,10 +97,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <DetailsIcon />,
       title: "Licensing Details",
       description: "Setup your Licensing Information",
-      fields:
-        LicensingDetailFormFields[
-          props.transaction_action as TransactionAction
-        ],
+      fields: licensingDetailField,
     },
     {
       icon: <PaidOutlinedIcon />,

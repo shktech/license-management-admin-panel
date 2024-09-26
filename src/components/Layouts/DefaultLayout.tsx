@@ -47,7 +47,7 @@ export default function DefaultLayout({
         <div className="flex h-screen overflow-hidden">
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div
-            className={`flex flex-1 flex-col lg:ml-72 overflow-y-auto overflow-x-hidden`}
+            className={`flex flex-1 flex-col lg:ml-64 overflow-y-auto overflow-x-hidden`}
           >
             <main>
               <div className="absolute top-0.5 left-0.5">

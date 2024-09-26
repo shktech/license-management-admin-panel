@@ -290,8 +290,10 @@ export interface Lookup {
   lookup_code?: string;
   lookup_name?: string;
   description?: string;
+  lookup_id?: string;
   type?: string;
   active?: boolean;
+  parent_lookup?: Lookup;
 }
 
 export interface LookupValue {
@@ -304,6 +306,7 @@ export interface LookupValue {
   dependency?: string;
   active?: boolean;
   is_new?: boolean;
+  parent_value?: string;
 }
 
 export interface Reference {

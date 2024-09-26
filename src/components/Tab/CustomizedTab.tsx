@@ -42,12 +42,12 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
     display: "flex",
     justifyContent: "center",
     // borderBottom: "2px solid #1f325c", // Add border bottom
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   "& .MuiTabs-indicatorSpan": {
     width: "100%",
     // backgroundColor: '#635ee7',
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
 });
 
@@ -56,9 +56,13 @@ interface StyledTabProps {
 }
 
 export const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} sx={{
-    mt: '1rem',
-  }}/>
+  <Tab
+    disableRipple
+    {...props}
+    sx={{
+      mt: "1rem",
+    }}
+  />
 ))(({ theme }) => ({
   textTransform: "none",
   fontWeight: theme.typography.fontWeightMedium,
@@ -71,9 +75,9 @@ export const StyledTab = styled((props: StyledTabProps) => (
   "&.Mui-selected": {
     color: "#1f325c",
     backgroundColor: "#ffffff",
-    borderTop: "1px solid #1f325c", // Add border top
-    borderLeft: "1px solid #1f325c", // Add border left
-    borderRight: "1px solid #1f325c", // Add border right
+    // borderTop: "1px solid #1f325c", // Add border top
+    // borderLeft: "1px solid #1f325c", // Add border left
+    // borderRight: "1px solid #1f325c", // Add border right
   },
   "&.Mui-focusVisible": {
     backgroundColor: "rgba(100, 95, 228, 0.32)",

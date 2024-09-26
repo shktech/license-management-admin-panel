@@ -3,27 +3,21 @@
 import { Lookup, LookupValue } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
+import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
 import {
-  editRefineBtnStyle,
-  refreshRefineBtnStyle,
-  tableAddButton,
-  tableCancelButton,
-  tableSaveButton,
-} from "@data/MuiStyles";
-import {
-  Button,
   FormControl,
   MenuItem,
   Select,
+  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import {
   useCreate,
+  useList,
   useNavigation,
   useParsed,
   useShow,
   useTable,
-  useUpdate,
 } from "@refinedev/core";
 import SaveIcon from "@mui/icons-material/Save";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
@@ -38,16 +32,18 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const Page = () => {
   const { params } = useParsed();
+  const { push } = useNavigation();
 
   const { queryResult } = useShow<Lookup>({
     resource: "lookups",
     id: params?.id,
   });
 
-  const { data, isLoading } = queryResult;
+  const { data: lookupData, isLoading: isLookupLoading } = queryResult;
+  const lookup: Lookup = lookupData?.data as Lookup;
 
   const {
-    tableQueryResult: { data: codeData, isLoading: codeIsLoading, refetch },
+    tableQueryResult: { data: codeData, isLoading: isCodeLoading, refetch },
   } = useTable<LookupValue>({
     resource: `lookups/${params?.id}/values`,
     hasPagination: false,
@@ -55,20 +51,72 @@ const Page = () => {
 
   const [codes, setCodes] = useState<LookupValue[]>([]);
   useEffect(() => {
-    if (codeData) {
-      setCodes(codeData.data);
+    if (codeData && !isCodeLoading) {
+      setCodes(
+        codeData.data.map(
+          ({
+            id,
+            value,
+            meaning,
+            attribute1,
+            attribute2,
+            attribute3,
+            active,
+            is_new,
+            parent_value,
+          }) => ({
+            id,
+            value,
+            meaning,
+            attribute1,
+            attribute2,
+            attribute3,
+            active,
+            is_new,
+            parent_value,
+          })
+        )
+      );
     }
-  }, [codeData, codeIsLoading]);
-
-  const lookup: Lookup = data?.data as Lookup;
-
-  const { push } = useNavigation();
+  }, [codeData, isCodeLoading]);
 
   const [valueError, setValueError] = useState(false);
   const [meaningError, setMeaningError] = useState(false);
   const [selectedValue, setSelectedValue] = useState<LookupValue | null>(null);
   const valueTextFieldRef = useRef<HTMLInputElement | null>(null);
   const meaningTextFieldRef = useRef<HTMLInputElement | null>(null);
+
+  const {
+    data: masterData,
+    isLoading: masterLoading,
+    refetch: masterRefetch,
+  } = useList<LookupValue>(
+    lookup?.parent_lookup?.lookup_code
+      ? {
+          resource: `lookups/${lookup.parent_lookup.lookup_code}/values`,
+          hasPagination: false,
+        }
+      : { resource: "", hasPagination: false }
+  );
+
+  const [masterOptions, setMasterOptions] = useState<LookupValue[]>([]);
+  const [parentValue, setParentValue] = useState("");
+  useEffect(() => {
+    masterRefetch();
+  }, [lookup]);
+
+  useEffect(() => {
+    const options = masterData?.data as LookupValue[];
+
+    if (options && Array.isArray(options) && options.length > 0) {
+      setMasterOptions(options);
+      setParentValue(options[0].id as string);
+    }
+  }, [masterLoading, masterData]);
+
+  const handleParentValue = (event: SelectChangeEvent) => {
+    setParentValue(event.target.value);
+  };
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
@@ -82,12 +130,14 @@ const Page = () => {
       </div>
     );
   };
+
   const handleCancelEdit = () => {
     setCodes(codeData?.data as LookupValue[]);
     setSelectedValue(null);
     setMeaningError(false);
     setValueError(false);
   };
+
   const handleAdd = () => {
     const newCode: LookupValue = {
       id: "new",
@@ -98,6 +148,7 @@ const Page = () => {
       attribute3: "",
       active: true,
       is_new: true,
+      parent_value: parentValue,
     };
     setCodes((prevCodes) => [...prevCodes, newCode]);
     setSelectedValue(newCode);
@@ -134,13 +185,27 @@ const Page = () => {
       }
 
       if (!isValid) return;
-
-      let updatedCode = [...codes];
+      let updatedCode: LookupValue[] = [];
+      if (codeData?.data) {
+        updatedCode = [...codes];
+      }
       const selectedIndex = updatedCode.findIndex(
         (c) => c.id == selectedValue.id
       );
 
-      updatedCode[selectedIndex] = selectedValue;
+      updatedCode[selectedIndex] = {
+        ...selectedValue,
+      };
+
+      updatedCode = [
+        ...updatedCode.map((code) => ({
+          ...code,
+          parent_value: masterOptions.find(
+            (option) => option.id == code.parent_value
+          )?.value,
+        })),
+      ];
+
       createLookup(
         {
           resource: `lookups/${lookup.lookup_code}/values`,
@@ -156,6 +221,7 @@ const Page = () => {
       );
     }
   };
+
   const baseColumns = useMemo<MRT_ColumnDef<LookupValue>[]>(
     () => [
       {
@@ -179,10 +245,6 @@ const Page = () => {
       {
         accessorKey: "attribute3",
         header: "Attribute 3",
-      },
-      {
-        accessorKey: "dependency",
-        header: "Dependency",
       },
       {
         accessorKey: "active",
@@ -517,7 +579,7 @@ const Page = () => {
   return (
     <Show
       goBack={null}
-      isLoading={isLoading}
+      isLoading={isLookupLoading}
       breadcrumb={false}
       wrapperProps={{
         className: "rounded-none bg-[#f2f6fa] shadow-none p-0",
@@ -544,25 +606,59 @@ const Page = () => {
         getButtonProps(editButtonProps, refreshButtonProps)
       }
     >
-      {isLoading ? (
+      {isLookupLoading ? (
         <Loader />
       ) : (
         <div>
-          <div className="px-12 grid grid-cols-4 gap-4  pt-4 pb-12">
+          <div className="px-12 flex gap-12 pt-4 pb-12">
             <div className="">
               <div className="text-[#515f72] font-semibold">Lookup Name</div>
-              <div className="text-[#687991]">{lookup?.lookup_name}</div>
+              <div className="text-[#687991] mt-2">{lookup?.lookup_name}</div>
             </div>
             <div className="">
               <div className="text-[#515f72] font-semibold">Lookup Type</div>
-              <div className="text-[#687991]">{lookup?.type}</div>
+              <div className="text-[#687991] mt-2">{lookup?.type}</div>
             </div>
             <div className="col-span-2">
               <div className="text-[#515f72] font-semibold">
                 Lookup Description
               </div>
-              <div className="text-[#687991]">{lookup?.description}</div>
+              <div className="text-[#687991] mt-2">{lookup?.description}</div>
             </div>
+            <div className="col-span-2">
+              <div className="text-[#515f72] font-semibold">Master Lookup</div>
+              <div className="text-[#687991] mt-2">
+                {lookup?.parent_lookup?.lookup_name || "Null"}
+              </div>
+            </div>
+
+            {lookup?.parent_lookup && (
+              <div className="col-span-2">
+                <div className="text-[#515f72] font-semibold">
+                  Master Lookup Value
+                </div>
+                <FormControl variant="standard" sx={{ minWidth: 120, mt: 1 }}>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={parentValue}
+                    onChange={handleParentValue}
+                  >
+                    {masterLoading ? (
+                      <MenuItem value="">
+                        <em>Loading</em>
+                      </MenuItem>
+                    ) : (
+                      masterOptions?.map((option) => (
+                        <MenuItem key={option.value} value={option.id}>
+                          {option.value}
+                        </MenuItem>
+                      ))
+                    )}
+                  </Select>
+                </FormControl>
+              </div>
+            )}
           </div>
           <div className="bg-white">
             <GenericTable
@@ -573,7 +669,9 @@ const Page = () => {
               }
               columns={columns}
               handleCreate={handleAdd}
-              data={codes}
+              data={codes.filter(
+                (code) => !parentValue || code.parent_value == parentValue || code.is_new
+              )}
               addText={
                 <div className="flex gap-2">
                   <EditOutlinedIcon fontSize="small" /> Add
