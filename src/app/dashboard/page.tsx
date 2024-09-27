@@ -4,7 +4,7 @@ import TransactionDashboard from "@components/Dashboard/Transaction/TransactionD
 import React, { useMemo } from "react";
 const HomePage: React.FC = () => {
   return (
-    <div>
+    <div className="">
       <AssetDashboard />
       <TransactionDashboard />
     </div>
