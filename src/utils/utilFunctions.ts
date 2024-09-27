@@ -112,11 +112,16 @@ export const getRealFormFields = (
       if (field.type == "phone") {
         value.rules = {
           validate: (inputValue: string) => {
-            if (inputValue === null || inputValue === "" || inputValue === undefined) return true; // Skip validation if value is null or empty
+            if (
+              inputValue === null ||
+              inputValue === "" ||
+              inputValue === undefined
+            )
+              return true; // Skip validation if value is null or empty
             const isValid = matchIsValidTel(inputValue); // Use isValid for phone validation
             return isValid || "Invalid phone number"; // Validate using isValid and return message if invalid
-          }
-        }
+          },
+        };
       }
       if (field.validation == "website") {
         // Ensure value.rules is initialized
@@ -204,7 +209,6 @@ export const setDisabledFields = (fields: any[], disabledName: string[]) => {
   });
 };
 
-
 export const getPasswordValidationMessage = (password: string) => {
   if (password === "") {
     return "This field is required";
@@ -228,3 +232,66 @@ export const getPasswordValidationMessage = (password: string) => {
   }
   return "";
 };
+
+export function getWeekStrings(startDate: Date, endDate: Date): string[] {
+  const weekStrings: string[] = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    const month = currentDate.toLocaleString("default", { month: "short" });
+    const weekNumber = Math.ceil(currentDate.getDate() / 7);
+
+    const weekString = `${month} ${getOrdinal(weekNumber)}`;
+    weekStrings.push(weekString);
+
+    // Move to the next week
+    currentDate.setDate(currentDate.getDate() + 7);
+  }
+
+  return weekStrings;
+}
+
+export function getMonthStrings(startDate: Date, endDate: Date): string[] {
+  const monthStrings: string[] = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    const month = currentDate.toLocaleString("default", { month: "short" });
+    if (!monthStrings.includes(month)) {
+      monthStrings.push(month);
+    }
+
+    // Move to the next month
+    currentDate.setMonth(currentDate.getMonth() + 1);
+  }
+
+  return monthStrings;
+}
+
+export function getDayStrings(startDate: Date, endDate: Date): string[] {
+  const dayStrings: string[] = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    const month = currentDate.getMonth() + 1; // getMonth() is 0-indexed
+    const day = currentDate.getDate();
+    const dayString = `${month}.${day}`;
+    dayStrings.push(dayString);
+
+    // Move to the next day
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dayStrings;
+}
+
+export function getOrdinal(n: number): string {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const remainder = n % 10;
+  return (
+    n +
+    (remainder <= 3 && (n % 100 < 11 || n % 100 > 13)
+      ? suffixes[remainder]
+      : suffixes[0])
+  );
+}
