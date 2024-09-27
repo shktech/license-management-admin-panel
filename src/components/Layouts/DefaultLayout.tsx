@@ -47,7 +47,7 @@ export default function DefaultLayout({
         <div className="flex h-screen overflow-hidden">
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div
-            className={`flex flex-1 flex-col lg:ml-64 overflow-y-auto overflow-x-hidden`}
+            className={`flex flex-1 flex-col lg:ml-64 overflow-y-auto overflow-x-hidden bg-[#f2f6fa]`}
           >
             <main>
               <div className="absolute top-0.5 left-0.5">
@@ -58,7 +58,7 @@ export default function DefaultLayout({
                   <DoubleArrowIcon />
                 </IconButton>
               </div>
-              <div className="mx-auto pt-4">{children}</div>
+              <div className="mx-auto pt-4 pb-4">{children}</div>
             </main>
           </div>
         </div>

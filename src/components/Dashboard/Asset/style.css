@@ -1,0 +1,5 @@
+@import "rsuite/dist/rsuite.css";
+
+.rs-picker-clean {
+  display: none !important; /* Hide the default close icon */
+}

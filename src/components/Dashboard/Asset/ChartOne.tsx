@@ -1,7 +1,7 @@
 "use client";
 import { ApexOptions } from "apexcharts";
+import "./style.css";
 
-import "./styles.css";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { DateRangePicker, Stack } from "rsuite";
@@ -16,6 +16,13 @@ import {
 } from "@utils/utilFunctions";
 // import DateRangePicker from "./DateRangePicker";
 
+interface ChatOneProps {
+  categories: string;
+  dateRange: [Date, Date];
+  setCategories: React.Dispatch<React.SetStateAction<string>>;
+  setDateRange: React.Dispatch<React.SetStateAction<[Date, Date]>>;
+}
+
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
@@ -26,7 +33,7 @@ const options: ApexOptions = {
     position: "top",
     horizontalAlign: "left",
   },
-  colors: ["#28a745", "#6c757d", "#dc3545"],
+  colors: ["#3c50e0", "#6c757d", "#e5537b"],
   chart: {
     fontFamily: "Satoshi, sans-serif",
     height: 335,
@@ -88,7 +95,7 @@ const options: ApexOptions = {
   markers: {
     size: 4,
     colors: "#fff",
-    strokeColors: ["#28a745", "#6c757d", "#dc3545"],
+    strokeColors: ["#3c50e0", "#6c757d", "#dc3545"],
     strokeWidth: 3,
     strokeOpacity: 0.9,
     strokeDashArray: 0,
@@ -107,15 +114,15 @@ interface ChartOneState {
     data: number[];
   }[];
 }
-
-const ChartOne: React.FC = () => {
+const ChartOne: React.FC<ChatOneProps> = ({
+  categories,
+  dateRange,
+  setCategories,
+  setDateRange,
+}) => {
   const [series, setSeries] = useState<any[]>([]);
-  const [categories, setCategories] = React.useState<string>("week");
   const [maxNumber, setMaxNumber] = React.useState<number>(200);
-  const [dateRange, setDateRange] = React.useState<[Date, Date]>([
-    subDays(new Date(), 30), // Date 30 days ago
-    new Date(), // Current date
-  ]);
+
   const [yAxis, setYAxis] = useState<string[]>();
   const handleDateRangeChange = (value: any) => {
     setDateRange(value);
@@ -178,70 +185,36 @@ const ChartOne: React.FC = () => {
     },
   ];
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
-      <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap pb-6">
-        <div className="text-2xl font-semibold text-[#1f325c]">License</div>
-        <div className="">
-          <DateRangePicker
-            value={dateRange}
-            onChange={handleDateRangeChange}
-            ranges={predefinedRanges}
-            placeholder="Select the Date Range"
-            style={{ width: 300 }}
-          />
-        </div>
-        <div className="flex w-full max-w-45 justify-end">
-          <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-            {categoryOptions.map((item, index) => (
-              <button
-                key={index}
-                className={`rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark ${
-                  categories == item.value
-                    ? "bg-white shadow-card dark:bg-meta-4"
-                    : ""
-                }`}
-                onClick={() => {
-                  setCategories(item.value);
-                }}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div id="chartOne" className="-ml-5">
-          <ReactApexChart
-            options={{
-              ...options,
-              xaxis: {
-                type: "category",
-                categories: yAxis,
-                axisBorder: {
-                  show: false,
-                },
-                axisTicks: {
-                  show: false,
+    <div className="col-span-12 rounded-sm bg-white px-5 pb-5 pt-7.5 sm:px-7.5 xl:col-span-8">
+      <div id="chartOne" className="-ml-5">
+        <ReactApexChart
+          options={{
+            ...options,
+            xaxis: {
+              type: "category",
+              categories: yAxis,
+              axisBorder: {
+                show: false,
+              },
+              axisTicks: {
+                show: false,
+              },
+            },
+            yaxis: {
+              title: {
+                style: {
+                  fontSize: "0px",
                 },
               },
-              yaxis: {
-                title: {
-                  style: {
-                    fontSize: "0px",
-                  },
-                },
-                min: 0,
-                max: maxNumber,
-              },
-            }}
-            series={series}
-            type="area"
-            height={350}
-            width={"100%"}
-          />
-        </div>
+              min: 0,
+              max: maxNumber,
+            },
+          }}
+          series={series}
+          type="area"
+          height={350}
+          width={"100%"}
+        />
       </div>
     </div>
   );

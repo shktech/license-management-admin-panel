@@ -10,13 +10,19 @@ import { DateRangePicker, Stack } from "rsuite";
 interface ChartThreeState {
   series: number[];
 }
+interface ChatOneProps {
+  categories: string;
+  dateRange: [Date, Date];
+  setCategories: React.Dispatch<React.SetStateAction<string>>;
+  setDateRange: React.Dispatch<React.SetStateAction<[Date, Date]>>;
+}
 
 const options: ApexOptions = {
   chart: {
     fontFamily: "Satoshi, sans-serif",
     type: "donut",
   },
-  colors: ["#28a745", "#6c757d", "#dc3545"],
+  colors: ["#3c50e0", "#6c757d", "#f9597c"],
   labels: ["Active", "Expired", "Revoked"],
   legend: {
     show: true,
@@ -38,7 +44,7 @@ const options: ApexOptions = {
     },
   },
   dataLabels: {
-    enabled: true,
+    enabled: false,
   },
   responsive: [
     {
@@ -60,12 +66,14 @@ const options: ApexOptions = {
   ],
 };
 
-const ChartThree: React.FC = () => {
+const ChartThree: React.FC<ChatOneProps> = ({
+  categories,
+  dateRange,
+  setCategories,
+  setDateRange,
+}) => {
   const [series, setSeries] = useState<number[]>([]);
-  const [dateRange, setDateRange] = React.useState<[Date, Date]>([
-    subDays(new Date(), 30), // Date 30 days ago
-    new Date(), // Current date
-  ]);
+
   const handleDateRangeChange = (value: any) => {
     setDateRange(value);
   };
@@ -91,28 +99,9 @@ const ChartThree: React.FC = () => {
   }, [dateRange]);
 
   return (
-    <div className="flex flex-col col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-4">
-      <div className="mb-3 justify-between gap-4 sm:flex">
-        <div>
-          <h5 className="text-xl font-semibold text-black dark:text-white">
-            Analytics
-          </h5>
-        </div>
-        <div>
-          <div className="relative z-20 inline-block">
-            <DateRangePicker
-              value={dateRange}
-              onChange={handleDateRangeChange}
-              ranges={predefinedRanges}
-              placeholder="Select the Date Range"
-              style={{ width: 300 }}
-            />
-          </div>
-        </div>
-      </div>
-
+    <div className="flex flex-col col-span-12 rounded-sm bg-white px-5 pb-5 pt-7.5 sm:px-7.5 xl:col-span-4">
       <div className="mb-2 flex-1 flex items-center justify-center">
-        <div id="chartThree" className="mx-auto flex justify-center">
+        <div id="chartThree" className="mx-auto flex justify-center mt-8">
           <ReactApexChart options={options} series={series} type="donut" />
         </div>
       </div>
