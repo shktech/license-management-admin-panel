@@ -56,7 +56,7 @@ const Item = () => {
           onClick={() => push(`/dashboard/partners/edit?id=${params?.id}`)}
           sx={editRefineBtnStyle}
         />
-        <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+        {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
       </div>
     );
   };

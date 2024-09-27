@@ -45,12 +45,13 @@ const Item = () => {
           onClick={() => push(`/dashboard/products/edit?id=${params?.id}`)}
           sx={editRefineBtnStyle}
         />
-        <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+        {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
       </div>
     );
   };
 
   const summaryfields = [
+    { title: "Product Name", key: "product_name", size: 3 },
     { title: "Part Number", key: "product_part_number", size: 3 },
     { title: "Product Type", key: "product_type", size: 3 },
     { title: "Duration", key: "duration", size: 3 },

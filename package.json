@@ -59,6 +59,7 @@
     "react-shadow": "^20.5.0",
     "react-toastify": "^10.0.5",
     "rsuite": "^5.71.0",
+    "sass": "^1.79.3",
     "styled-components": "^6.1.11",
     "tailwind-datepicker-react": "^1.4.3",
     "uuid": "^10.0.0",

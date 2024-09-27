@@ -166,7 +166,7 @@ const Page = () => {
               Revoke
             </Button>
 
-            <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+            {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
           </div>
         )}
       >

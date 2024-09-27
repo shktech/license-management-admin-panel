@@ -8,7 +8,10 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Box } from "@mui/material";
 import { MRT_SortingState, type MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
-import { convertSortingStateToCrudSort, getFormattedDate } from "@utils/utilFunctions";
+import {
+  convertSortingStateToCrudSort,
+  getFormattedDate,
+} from "@utils/utilFunctions";
 import { useNavigation, useTable } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 
@@ -37,17 +40,16 @@ const ProductTransactionHistoryTable: React.FC<
 
   const handlePage = (value: number) => setCurrent(value);
 
-
   const handleShowClick = (row: Transaction) => {
     push(`/dashboard/transactions/show?id=${row.transaction_id}`);
   };
 
-  const columns = useMemo<MRT_ColumnDef<Transaction>[]>(() => {
-    return [
+  const columns = useMemo<MRT_ColumnDef<Transaction>[]>(
+    () => [
       {
         accessorKey: "transaction_number",
-        header: "Txn Number",
-        size: 50,
+        header: "Txn Number", // Changed to string
+        size: 20,
         Cell: ({ renderedCellValue }) => (
           <div className="text-right w-full pr-7">{renderedCellValue}</div>
         ),
@@ -55,47 +57,70 @@ const ProductTransactionHistoryTable: React.FC<
       {
         accessorKey: "transaction_date",
         header: "Txn Date",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) =>
           getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "transaction_source",
         header: "Txn Source",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "source_reference_number",
         header: "Source Ref #",
-        size: 50,
+        size: 100,
       },
       {
-        accessorKey: "asset.osc_product.product_type",
+        accessorKey: "product_type",
         header: "Product Type",
-        size: 50,
+        size: 100,
+        Cell: ({ row }) => row.original.asset?.osc_product?.product_type,
       },
       {
-        accessorKey: "asset.osc_product.product_part_number",
+        accessorKey: "license_type",
+        header: "License Type",
+        size: 100,
+        Cell: ({ row }) => row.original.license_type,
+      },
+      {
+        accessorKey: "product_part_number",
         header: "Product Part Number",
-        size: 50,
+        size: 100,
+        Cell: ({ row }) =>
+          row.original.product_part_number ||
+          row.original.asset?.osc_product?.product_part_number,
       },
       {
-        accessorKey: "quantity",
-        header: "Seat Count",
-        size: 50,
-        Cell: ({ renderedCellValue }) => (
-          <div className="text-right w-full pr-7">{renderedCellValue}</div>
+        accessorKey: "osc_seat_count",
+        header: "Seats Count",
+        size: 100,
+        Cell: ({ row }) => (
+          <div className="text-right w-full pr-7">
+            {row.original.quantity || row.original.asset?.osc_seat_count || 0}
+          </div>
         ),
       },
       {
         accessorKey: "transaction_action",
         header: "Txn Action",
-        size: 50,
+        size: 100,
+        // Cell: ({ renderedCellValue }) => (
+        //   <Box
+        //     component="span"
+        //     sx={{
+        //       backgroundColor: TxtActionColor[renderedCellValue as string],
+        //       ...tagStyle,
+        //     }}
+        //   >
+        //     {renderedCellValue}
+        //   </Box>
+        // ),
       },
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
-        size: 50,
+        size: 100,
         Cell: ({ renderedCellValue }) => (
           <Box
             component="span"
@@ -111,20 +136,21 @@ const ProductTransactionHistoryTable: React.FC<
       {
         accessorKey: "bill_customer.name",
         header: "Bill Customer",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "ship_customer.name",
         header: "Ship Customer",
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: "reseller.name",
         header: "Reseller",
-        size: 50,
+        size: 100,
       },
-    ];
-  }, []);
+    ],
+    []
+  );
 
   return (
     <>
