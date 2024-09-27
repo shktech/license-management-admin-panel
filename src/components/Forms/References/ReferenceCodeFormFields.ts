@@ -19,11 +19,13 @@ const InitialField: InitialFieldConfig[] = [
   },
   {
     name: "osc_part_number",
-    type: "dropdown",
+    label: "Software Part Nubmer",
+    type: "autocomplete",
     resource: "products",
     required: "text",
     valueKey: "product_part_number",
     labelKey: "product_part_number",
+    elseKey: "product_name",
     size: 2,
   },
   {

@@ -91,7 +91,7 @@ const Page = () => {
           onClick={() => push(`/dashboard/references/edit?id=${params?.id}`)}
           sx={editRefineBtnStyle}
         />
-        <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+        {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
       </div>
     );
   };
@@ -131,26 +131,26 @@ const Page = () => {
       },
       {
         accessorKey: "status",
-        header: "Enabled Flag",
+        header: "Status",
         Cell: ({ renderedCellValue }) => {
           return (
             <span
-              className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue == "Used" ? "bg-[#c2c2c2] text-black" : "bg-[#11ba82] text-white"}`}
+              className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue != "Used" ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
             >
-              {renderedCellValue == "Used" ? "No" : "Yes"}
+              {renderedCellValue == "Used" ? "Used" : "Active"}
             </span>
           );
         },
       },
       {
         accessorKey: "active",
-        header: "Status",
+        header: "Enabled Flag",
         Cell: ({ renderedCellValue }) => {
           return (
             <span
               className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
             >
-              {renderedCellValue ? "Active" : "Used"}
+              {renderedCellValue ? "Yes" : "No"}
             </span>
           );
         },

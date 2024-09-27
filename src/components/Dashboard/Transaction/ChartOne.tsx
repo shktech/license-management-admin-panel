@@ -183,34 +183,38 @@ const ChartOne: React.FC<ChatOneProps> = ({
   return (
     <div className="col-span-12 rounded-sm bg-white px-5 pb-5 pt-7.5 sm:px-7.5 xl:col-span-8">
       <div id="chartOne" className="-ml-5">
-        <ReactApexChart
-          options={{
-            ...options,
-            xaxis: {
-              type: "category",
-              categories: yAxis,
-              axisBorder: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
-            },
-            yaxis: {
-              title: {
-                style: {
-                  fontSize: "0px",
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <ReactApexChart
+            options={{
+              ...options,
+              xaxis: {
+                type: "category",
+                categories: yAxis,
+                axisBorder: {
+                  show: false,
+                },
+                axisTicks: {
+                  show: false,
                 },
               },
-              min: 0,
-              max: maxNumber,
-            },
-          }}
-          series={series}
-          type="area"
-          height={350}
-          width={"100%"}
-        />
+              yaxis: {
+                title: {
+                  style: {
+                    fontSize: "0px",
+                  },
+                },
+                min: 0,
+                max: maxNumber,
+              },
+            }}
+            series={series}
+            type="area"
+            height={350}
+            width={"100%"}
+          />
+        )}
       </div>
     </div>
   );

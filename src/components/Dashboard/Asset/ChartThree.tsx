@@ -1,3 +1,4 @@
+import Loader from "@components/common/Loader";
 import { predefinedRanges } from "@data/UtilData";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useList } from "@refinedev/core";
@@ -102,7 +103,11 @@ const ChartThree: React.FC<ChatOneProps> = ({
     <div className="flex flex-col col-span-12 rounded-sm bg-white px-5 pb-5 pt-7.5 sm:px-7.5 xl:col-span-4">
       <div className="mb-2 flex-1 flex items-center justify-center">
         <div id="chartThree" className="mx-auto flex justify-center mt-8">
-          <ReactApexChart options={options} series={series} type="donut" />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <ReactApexChart options={options} series={series} type="donut" />
+          )}
         </div>
       </div>
     </div>

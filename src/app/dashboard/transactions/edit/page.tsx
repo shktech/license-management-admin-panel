@@ -85,14 +85,18 @@ const TransactionEdit = () => {
     if (!formLoading && transaction) {
       setValue("transaction_source", transaction.transaction_source);
       setValue("transaction_action", transaction.transaction_action);
-      setValue("license_type", transaction.asset?.license_type);
+      setValue(
+        "license_type",
+        transaction.license_type || transaction.asset?.license_type
+      );
       setValue("license_key", transaction.asset?.license_key);
       setValue("source_reference_number", transaction.source_reference_number);
       setValue("source_reference_date", transaction.source_reference_date);
       setValue("source_reference_id", transaction.source_reference_id);
       setValue(
         "osc_part_number",
-        transaction.asset?.osc_product?.product_part_number
+        transaction.product_part_number ||
+          transaction.asset?.osc_product?.product_part_number
       );
       setValue("quantity", transaction.quantity);
       setValue("start_date", transaction.start_date);

@@ -126,7 +126,7 @@ const Page = () => {
           onClick={() => push(`/dashboard/lookups/edit?id=${params?.id}`)}
           sx={editRefineBtnStyle}
         />
-        <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} />
+        {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
       </div>
     );
   };

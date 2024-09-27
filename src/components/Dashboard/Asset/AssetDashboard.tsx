@@ -1,10 +1,13 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import ChartOne from "./ChartOne";
 import dynamic from "next/dynamic";
 const ChartThree = dynamic(() => import("./ChartThree"), {
   ssr: false,
 });
+// import "./style.css"
+import "./style.scss";
+// import { ShadowDom } from "react-shadow";
 
 import { DateRangePicker, Stack } from "rsuite";
 import { subDays } from "date-fns";
@@ -40,6 +43,9 @@ const AssetDashboard: React.FC = () => {
       value: "month",
     },
   ];
+  const handleKeyDown = (e: any) => {
+    e.preventDefault(); // Prevent keyboard input
+  };
   return (
     <div className="mt-4 md:mt-6 2xl:mt-7.5 px-8 py-8 border border-stroke mx-12 shadow-default bg-white">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
@@ -47,7 +53,8 @@ const AssetDashboard: React.FC = () => {
           <div className="text-2xl font-semibold text-[#1f325c] ">License</div>
         </div>
         <div className="flex w-full justify-end gap-6">
-          <div className="relative inline-block">
+          <div className="relative inline-block my-date-picker-container">
+            {/* <ShadowDom> */}
             <DateRangePicker
               value={dateRange}
               onChange={handleDateRangeChange}
@@ -55,6 +62,8 @@ const AssetDashboard: React.FC = () => {
               placeholder="Select the Date Range"
               style={{ width: 220 }}
               placement="bottomEnd"
+              editable={false}
+              onKeyDown={handleKeyDown} // Add this line to disable keyboard input
             />
             {dateRange && (
               <FaCalendar
@@ -68,6 +77,7 @@ const AssetDashboard: React.FC = () => {
                 }}
               />
             )}
+            {/* </ShadowDom> */}
           </div>
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
             {categoryOptions.map((item, index) => (

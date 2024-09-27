@@ -91,34 +91,32 @@ const Page = () => {
         size: 100,
       },
       {
-        accessorKey: "asset.license_type",
+        accessorKey: "product_type",
         header: "Product Type",
         size: 100,
-      //   Cell: ({ renderedCellValue }) => (
-      //     <Box
-      //       component="span"
-      //       sx={{
-      //         backgroundColor: TxtTypeColor[renderedCellValue as string],
-      //         ...tagStyle,
-      //       }}
-      //     >
-      //       {renderedCellValue}
-      //     </Box>
-      //   ),
+        Cell: ({ row }) => row.original.asset?.osc_product?.product_type,
       },
-
       {
-        accessorKey: "asset.osc_product.product_part_number",
+        accessorKey: "license_type",
+        header: "License Type",
+        size: 100,
+        Cell: ({ row }) => row.original.license_type,
+      },
+      {
+        accessorKey: "product_part_number",
         header: "Product Part Number",
         size: 100,
+        Cell: ({ row }) =>
+          row.original.product_part_number ||
+          row.original.asset?.osc_product?.product_part_number,
       },
       {
-        accessorKey: "asset.osc_seat_count",
+        accessorKey: "osc_seat_count",
         header: "Seats Count",
         size: 100,
-        Cell: ({ renderedCellValue }) => (
+        Cell: ({ row }) => (
           <div className="text-right w-full pr-7">
-            {renderedCellValue || 0}
+            {row.original.quantity || row.original.asset?.osc_seat_count || 0}
           </div>
         ),
       },
@@ -163,7 +161,8 @@ const Page = () => {
         accessorKey: "ship_customer.name",
         header: "Ship Customer",
         size: 100,
-      },{
+      },
+      {
         accessorKey: "reseller.name",
         header: "Reseller",
         size: 100,

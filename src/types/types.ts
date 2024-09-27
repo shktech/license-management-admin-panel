@@ -224,6 +224,7 @@ export interface Transaction {
   source_integration_status?: string;
   source_integration_error?: string;
   license_integration_status?: string;
+  license_type?: string;
 }
 
 export interface InputTransaction {

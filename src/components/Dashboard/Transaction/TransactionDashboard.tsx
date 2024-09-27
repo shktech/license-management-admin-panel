@@ -52,6 +52,7 @@ const TransactionDashboard: React.FC = () => {
               style={{ width: 220 }}
               caretAs={FaCalendar}
               placement="bottomEnd"
+              editable={false}
             />
             {dateRange && (
               <FaCalendar

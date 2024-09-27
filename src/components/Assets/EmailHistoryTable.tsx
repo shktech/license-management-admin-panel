@@ -5,7 +5,7 @@ import GenericTable from "@components/Table/GenericTable";
 import { type MRT_ColumnDef } from "material-react-table";
 import { useMemo } from "react";
 import { getFormattedDate } from "@utils/utilFunctions";
-import { useList } from "@refinedev/core";
+import { useList, useNavigation } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 
 interface EmailHistoryTableProps {
@@ -89,6 +89,12 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
     ],
     []
   );
+  
+  const { push } = useNavigation();
+  const handleRowClick = (row: any) => {
+    // console.log(row?.email_template?.email_id);
+    push(`/dashboard/email-templates/edit?id=${row?.email_template?.email_id}`);
+  };
 
   return (
     <>
@@ -105,6 +111,7 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
           noSearchNeed={true}
           noSortNeed={true}
           columns={columns}
+          onRowClick={handleRowClick}
         />
       )}
     </>
