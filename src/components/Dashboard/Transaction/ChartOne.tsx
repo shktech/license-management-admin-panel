@@ -156,8 +156,8 @@ const ChartOne: React.FC<ChatOneProps> = ({
       setSeries(dateArray);
       setMaxNumber(
         Math.ceil(
-          Math.max(...dateArray.map((item: any) => item.data).flat()) / 100
-        ) * 100
+          Math.max(...dateArray.map((item: any) => item.data).flat()) / 10
+        ) * 10
       );
     }
   }, [data, isLoading]);
