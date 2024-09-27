@@ -8,7 +8,7 @@ const InitialField: InitialFieldConfig[] = [
   {
     name: "type",
     type: "dropdown",
-    size: 2,
+    size: 1,
     required: "text",
     options: [
       { value: "Text", label: "Text" },
@@ -16,6 +16,13 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Number", label: "Number" },
       { value: "Date", label: "Date" },
     ],
+  },
+  {
+    name: "parent_lookup",
+    type: 'dropdown',
+    resource: "lookups",
+    valueKey: "lookup_id",
+    labelKey: "lookup_name",
   },
 ];
 

@@ -104,7 +104,7 @@ const Page = () => {
       },
       {
         accessorKey: "osc_product.product_part_number",
-        header: "Software Part",
+        header: "Show Product Name",
       },
       {
         accessorKey: "osc_product.vendor_part_number",
@@ -135,9 +135,9 @@ const Page = () => {
         Cell: ({ renderedCellValue }) => {
           return (
             <span
-              className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue == "Active" ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
+              className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue == "Used" ? "bg-[#c2c2c2] text-black" : "bg-[#11ba82] text-white"}`}
             >
-              {renderedCellValue}
+              {renderedCellValue == "Used" ? "No" : "Yes"}
             </span>
           );
         },
@@ -150,7 +150,7 @@ const Page = () => {
             <span
               className={`mx-2 px-4 py-1 rounded-full text-xs ${renderedCellValue ? "bg-[#11ba82] text-white" : "bg-[#c2c2c2] text-black"}`}
             >
-              {renderedCellValue ? "Active" : "Inactive"}
+              {renderedCellValue ? "Active" : "Used"}
             </span>
           );
         },
@@ -231,7 +231,7 @@ const Page = () => {
                   label={
                     <div className="flex items-center gap-2">
                       <FontAwesomeIcon icon={faCircleInfo} />
-                      Product Detail
+                      Program Detail
                     </div>
                   }
                 />

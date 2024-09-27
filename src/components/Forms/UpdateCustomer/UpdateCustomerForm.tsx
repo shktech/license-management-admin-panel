@@ -10,32 +10,20 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { GenericFormProps } from "../FormControlWrapper";
 import GenericForm from "../GenericForm";
-import { GeneralTxnFormFields, getRequiredFields } from "./GeneralTxnFormField";
-import {
-  getFields,
-  LicensingDetailFormFields,
-} from "./LicensingDetailFormFields";
+
 import { useEffect, useState } from "react";
-import CustomerForm from "./CustomerForm";
-import {
-  getDisabledFields,
-  getRealFormFields,
-  setDisabledFields,
-} from "@utils/utilFunctions";
 import TransactionPartnerFormFields from "../Partners/TransactionPartnerFormFields";
+import CustomerForm from "../Transactions/CustomerForm";
 
-type TransactionAction = "New" | "Edit" | "Renewal" | "Revoke";
-
-export type TransactionFormProps = GenericFormProps & {
+export type UpdateCustomerFormProps = GenericFormProps & {
   transaction?: any;
-  transaction_action: TransactionAction;
   setValue?: any;
   reset?: any;
   customers?: any;
   watch?: any;
 };
 
-const TransactionForm = (props: TransactionFormProps) => {
+const UpdateCustomerForm = (props: UpdateCustomerFormProps) => {
   const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>(
     { Transaction: true }
   );
@@ -47,71 +35,12 @@ const TransactionForm = (props: TransactionFormProps) => {
     }));
   };
 
-  const [getnerTxnFormFields, setGeneralTxnFormFields] = useState(
-    getRealFormFields(
-      GeneralTxnFormFields[props.transaction_action as TransactionAction]
-    )
-  );
-
-  const [licensingDetailField, setLicensingDetailField] = useState(
-    getRealFormFields(
-      LicensingDetailFormFields[props.transaction_action as TransactionAction]
-    )
-  );
-
-  const transaction_source = props.watch?.("transaction_source");
-  useEffect(() => {
-    props.setValue("quantity", 1);
-    setLicensingDetailField(
-      getRealFormFields(
-        setDisabledFields(
-          LicensingDetailFormFields[
-            props.transaction_action as TransactionAction
-          ],
-          transaction_source == "Prod Reg" ? ["quantity"] : []
-        )
-      )
-    );
-  }, [transaction_source]);
-
-  useEffect(() => {
-    setGeneralTxnFormFields(
-      getRealFormFields(
-        getRequiredFields(
-          GeneralTxnFormFields[props.transaction_action as TransactionAction],
-          transaction_source == "Prod Reg" ? ["source_reference_number"] : []
-        )
-      )
-    );
-  }, [transaction_source]);
-
   const FormGroups = [
-    {
-      icon: <PaidOutlinedIcon />,
-      title: "Transaction",
-      description: "Setup your Transaction data",
-      fields: getnerTxnFormFields,
-      // GeneralTxnFormFields[props.transaction_action as TransactionAction],
-    },
-    {
-      icon: <DetailsIcon />,
-      title: "Licensing Details",
-      description: "Setup your Licensing Information",
-      fields: licensingDetailField,
-    },
     {
       icon: <PaidOutlinedIcon />,
       title: "Shipping Parter Information",
       description: "Setup your Shipping Partner Information",
-      fields:
-        props.transaction_action == "Revoke" ||
-        props.transaction_action == "Renewal"
-          ? getDisabledFields(TransactionPartnerFormFields.ShippingFields)
-          : TransactionPartnerFormFields.ShippingFields,
-      isCustomer: true,
-      disabledSearch:
-        props.transaction_action == "Revoke" ||
-        props.transaction_action == "Renewal",
+      fields: TransactionPartnerFormFields.ShippingFields,
       customer: {
         type: "shipping",
         prefix: "ship_",
@@ -124,15 +53,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <AccountBalanceWalletOutlinedIcon />,
       title: "Disty/Billing Partner Information",
       description: "Setup your Billing Partner Information",
-      fields:
-        props.transaction_action == "Revoke" ||
-        props.transaction_action == "Renewal"
-          ? getDisabledFields(TransactionPartnerFormFields.BillFields)
-          : TransactionPartnerFormFields.BillFields,
-      isCustomer: true,
-      disabledSearch:
-        props.transaction_action == "Revoke" ||
-        props.transaction_action == "Renewal",
+      fields: TransactionPartnerFormFields.BillFields,
       customer: {
         type: "billing",
         prefix: "bill_",
@@ -146,15 +67,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       icon: <ProductionQuantityLimitsOutlinedIcon />,
       title: "Reseller Information",
       description: "Setup your Reseller Information",
-      fields:
-        props.transaction_action == "Revoke" ||
-        props.transaction_action == "Renewal"
-          ? getDisabledFields(TransactionPartnerFormFields.ResellerFields)
-          : TransactionPartnerFormFields.ResellerFields,
-      isCustomer: true,
-      disabledSearch:
-        props.transaction_action == "Revoke" ||
-        props.transaction_action == "Renewal",
+      fields: TransactionPartnerFormFields.ResellerFields,
       customer: {
         type: "reseller",
         prefix: "reseller_",
@@ -207,21 +120,13 @@ const TransactionForm = (props: TransactionFormProps) => {
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            {formGroup.isCustomer ? (
-              <CustomerForm
-                {...{
-                  ...props,
-                  fields: formGroup.fields,
-                  customer: formGroup.customer,
-                  disabledSearch: formGroup.disabledSearch,
-                }}
-              />
-            ) : (
-              <GenericForm
-                {...{ ...props, fields: formGroup.fields }}
-                setValue={props.setValue}
-              />
-            )}
+            <CustomerForm
+              {...{
+                ...props,
+                fields: formGroup.fields,
+                customer: formGroup.customer,
+              }}
+            />
           </AccordionDetails>
         </Accordion>
       ))}
@@ -229,4 +134,4 @@ const TransactionForm = (props: TransactionFormProps) => {
   );
 };
 
-export default TransactionForm;
+export default UpdateCustomerForm;

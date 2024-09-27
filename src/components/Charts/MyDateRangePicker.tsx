@@ -1,13 +1,12 @@
+import { DateRangePicker, Stack } from "rsuite";
 import subDays from "date-fns/subDays";
 import { subMonths, subYears } from "date-fns";
 
-export const DefaultPageSize = 12;
-
-export const predefinedStyle = {
+const predefinedStyle = {
   width: "100px",
   margin: "1px 5px",
 };
-export const predefinedRanges: any = [
+const predefinedRanges: any = [
   {
     label: "Past month",
     value: [
@@ -43,3 +42,13 @@ export const predefinedRanges: any = [
     style: predefinedStyle, // Custom styles
   },
 ];
+
+const MyDateRangePicker = () => (
+  <DateRangePicker
+    ranges={predefinedRanges}
+    placeholder="Placement left"
+    style={{ width: 300 }}
+  />
+);
+
+export default MyDateRangePicker;

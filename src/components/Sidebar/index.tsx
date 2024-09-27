@@ -25,7 +25,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`bg-[#1f325c] fixed left-0 top-0 z-999 flex h-screen w-72 flex-col overflow-y-hidden duration-300 ease-linear lg:translate-x-0 ${
+        className={`bg-[#1f325c] fixed left-0 top-0 z-999 flex h-screen w-64 flex-col overflow-y-hidden duration-300 ease-linear lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -33,18 +33,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <div className="flex flex-col gap-2 pt-5.5">
           <Link
             href="/"
-            className="text-[#ffffff] font-bold flex justify-start items-center pl-4 py-2"
+            className="text-[#ffffff] font-bold flex justify-start items-center pl-6 py-2"
           >
             <div className="font-bold text-4xl ">CALM
             </div>
           </Link>
-          <div className="font-medium pl-4 text-sm text-[#c8d8ff]">
+          <div className="font-medium pl-6 text-sm text-[#c8d8ff]">
             <span className="text-white font-bold text-base leading-5">C</span>ustomer
             <span className="text-white font-bold text-base leading-5"> A</span>ccount
           </div>
-          <div className="font-medium pl-4 text-sm text-[#c8d8ff]">
+          <div className="font-medium pl-6 text-sm text-[#c8d8ff]">
             <span className="text-white font-bold text-base leading-5">L</span>icense{" "}
-            <span className="text-white font-bold text-base leading-5">M</span>anagement (Take out System)
+            <span className="text-white font-bold text-base leading-5">M</span>anagement
           </div>
         </div>
         {/* <!-- SIDEBAR HEADER --> */}

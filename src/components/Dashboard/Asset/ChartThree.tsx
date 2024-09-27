@@ -1,4 +1,5 @@
 import { predefinedRanges } from "@data/UtilData";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useList } from "@refinedev/core";
 import { ApexOptions } from "apexcharts";
 import { subDays } from "date-fns";
@@ -18,8 +19,14 @@ const options: ApexOptions = {
   colors: ["#28a745", "#6c757d", "#dc3545"],
   labels: ["Active", "Expired", "Revoked"],
   legend: {
-    show: false,
+    show: true,
     position: "bottom",
+    formatter: function (seriesName, opts) {
+      const total = opts.w.globals.series.reduce((a: any, b: any) => a + b, 0);
+      const value = opts.w.globals.series[opts.seriesIndex];
+      const percentage = ((value / total) * 100).toFixed(0); // Calculate the percentage
+      return `${seriesName}: ${percentage}%`; // Return the label with the percentage
+    },
   },
 
   plotOptions: {
@@ -31,7 +38,7 @@ const options: ApexOptions = {
     },
   },
   dataLabels: {
-    enabled: false,
+    enabled: true,
   },
   responsive: [
     {
@@ -71,7 +78,11 @@ const ChartThree: React.FC = () => {
   useEffect(() => {
     const tempData = data?.data as any;
     if (tempData?.data) {
-      setSeries([tempData?.data[0].count, tempData?.data[1].count, tempData?.data[3].count]);
+      setSeries([
+        tempData?.data[0].count,
+        tempData?.data[1].count,
+        tempData?.data[3].count,
+      ]);
     }
   }, [data, isLoading]);
 
@@ -80,7 +91,7 @@ const ChartThree: React.FC = () => {
   }, [dateRange]);
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-4">
+    <div className="flex flex-col col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-4">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
@@ -100,30 +111,9 @@ const ChartThree: React.FC = () => {
         </div>
       </div>
 
-      <div className="mb-2">
+      <div className="mb-2 flex-1 flex items-center justify-center">
         <div id="chartThree" className="mx-auto flex justify-center">
           <ReactApexChart options={options} series={series} type="donut" />
-        </div>
-      </div>
-
-      <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        <div className="w-full px-8 sm:w-1/2">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#3d50e0]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Activated Licenses </span>
-              <span> 70% </span>
-            </p>
-          </div>
-        </div>
-        <div className="w-full px-8 sm:w-1/2">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#80c9ed]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Expired Licenses </span>
-              <span> 30% </span>
-            </p>
-          </div>
         </div>
       </div>
     </div>

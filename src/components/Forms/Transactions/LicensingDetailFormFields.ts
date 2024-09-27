@@ -3,6 +3,7 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 const InitialField: InitialFieldConfig[] = [
   {
     name: "osc_part_number",
+    label: "Software Part Number",
     // type: "dropdown",
     type: "autocomplete",
     size: 2,
@@ -52,15 +53,15 @@ export const getFields = (fields: any[], disabledName: string[]) => {
 };
 
 export const LicensingDetailFormFields = {
-  New: getRealFormFields(InitialField),
-  Edit: getRealFormFields(InitialField),
-  Update: getRealFormFields(InitialField),
-  Renewal: getFields(getRealFormFields(InitialField), [
+  New: InitialField,
+  Edit: InitialField,
+  Update: InitialField,
+  Renewal: getFields(InitialField, [
     "osc_part_number",
     "license_type",
     "end_date",
   ]),
-  Revoke: getFields(getRealFormFields(InitialField), [
+  Revoke: getFields(InitialField, [
     "osc_part_number",
     "license_type",
     "start_date",

@@ -178,6 +178,38 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
               )}
             </FormControlWrapper>
           </div>
+          <div className="grid grid-cols-2 gap-4 w-full">
+            <FormControlWrapper
+              name="product_type"
+              control={control}
+              rules={{ required: "Type is required" }}
+              error={errors.type?.message?.toString()}
+            >
+              {(field) => (
+                <Dropdown
+                  {...field}
+                  id="product_type"
+                  label="Product Type"
+                  type="dropdown"
+                  defaultValue={template?.product_type}
+                  resource="lookups/PRODUCT_TYPE/values"
+                  valueKey="value"
+                  labelKey="value"
+                />
+              )}
+            </FormControlWrapper>
+            <FormControlWrapper name="product_family" control={control}>
+              {(field) => (
+                <GeneralInput
+                  {...field}
+                  id="product_family"
+                  label="Product Family"
+                  type="text"
+                  defaultValue={template?.product_family}
+                />
+              )}
+            </FormControlWrapper>
+          </div>
           <div className="">
             <div className="bg-[#dfe6ec] rounded-t-lg border-r-ful font-medium text-sm p-4 text-[#0000009c]">
               Body(HTML)

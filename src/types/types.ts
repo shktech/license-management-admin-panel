@@ -33,6 +33,7 @@ export interface Email_Schedule{
     email_template?: string;
     send_now?: boolean;
     schedule_time?: string;
+    scheduled_time?: string;
     is_sent?: boolean;
     schedule_server?: string;
     periodic_task?: string;
@@ -135,6 +136,10 @@ export interface EmailTemplate {
   body?: string;
   from_email?: string;
   name?: string;
+  product_family?: string;
+  product_type?: string;
+  created_by?: any,
+  updated_by?: any,
 }
 
 export interface Organization {
@@ -290,8 +295,10 @@ export interface Lookup {
   lookup_code?: string;
   lookup_name?: string;
   description?: string;
+  lookup_id?: string;
   type?: string;
   active?: boolean;
+  parent_lookup?: Lookup;
 }
 
 export interface LookupValue {
@@ -304,6 +311,7 @@ export interface LookupValue {
   dependency?: string;
   active?: boolean;
   is_new?: boolean;
+  parent_value?: string;
 }
 
 export interface Reference {

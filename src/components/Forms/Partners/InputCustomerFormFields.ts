@@ -3,12 +3,11 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 
 const InitialCustomerFormFields: InitialFieldConfig[] = [
   {
-    name: "customer_account",
+    name: "customer_name",
     required: "text",
   },
   {
-    name: "customer_name",
-    required: "text",
+    name: "customer_account",
   },
   {
     name: "address1",

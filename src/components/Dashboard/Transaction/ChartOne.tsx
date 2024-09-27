@@ -26,7 +26,7 @@ const options: ApexOptions = {
     position: "top",
     horizontalAlign: "left",
   },
-  colors: ["#28a745", "#6c757d", "#dc3545"],
+  colors: ["#28a745", "#dc3545", "#6c757d"],
   chart: {
     fontFamily: "Satoshi, sans-serif",
     height: 335,
@@ -88,7 +88,7 @@ const options: ApexOptions = {
   markers: {
     size: 4,
     colors: "#fff",
-    strokeColors: ["#28a745", "#6c757d", "#dc3545"],
+    strokeColors: ["#28a745", "#dc3545", "#6c757d"],
     strokeWidth: 3,
     strokeOpacity: 0.9,
     strokeDashArray: 0,
@@ -136,20 +136,16 @@ const ChartOne: React.FC = () => {
   }, [dateRange, categories]);
 
   const { data, isLoading, refetch } = useList<any>({
-    resource: `assets/metrics/timegraph?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}&category=${categories}`,
+    resource: `transactions/metrics/timegraph?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}&category=${categories}`,
     hasPagination: false,
   });
 
   useEffect(() => {
     if (data) {
-      const dateArray = data.data
-        .filter(
-          (item: any) =>
-            item.status == "Active" ||
-            item.status == "Expired" ||
-            item.status == "Revoked"
-        )
-        .map((item: any) => ({ name: item.status, data: item.data }));
+      const dateArray = data.data.map((item: any) => ({
+        name: item.status || "Null",
+        data: item.data,
+      }));
       setSeries(dateArray);
       setMaxNumber(
         Math.ceil(
@@ -180,7 +176,7 @@ const ChartOne: React.FC = () => {
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap pb-6">
-        <div className="text-2xl font-semibold text-[#1f325c]">License</div>
+        <div className="text-2xl font-semibold text-[#1f325c]">Transaction</div>
         <div className="">
           <DateRangePicker
             value={dateRange}
