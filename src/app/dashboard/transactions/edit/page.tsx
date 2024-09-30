@@ -146,7 +146,7 @@ const TransactionEdit = () => {
             </div>
           }
           breadcrumb={false}
-          headerButtons={<></>}
+          headerButtons={<div></div>}
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}

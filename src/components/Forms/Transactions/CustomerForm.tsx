@@ -73,7 +73,6 @@ const CustomerForm = ({
       : { name: ADDLABEL }
   );
 
-  const [inputValue, setInputValue] = useState("");
   const [partners, setPartners] = useState<Partner[]>([]);
   const [addresses, setAddresses] = useState<(Address | undefined)[]>(
     customer.customer?.addresses || []
@@ -89,7 +88,6 @@ const CustomerForm = ({
     setFilters,
   } = useTable<Partner>({
     resource: `partners`,
-    // initialFilter: [{ field: "type", operator: "eq", value: customer.type }],
     syncWithLocation: false,
     pagination: {
       pageSize: DefaultPageSize,
@@ -116,7 +114,6 @@ const CustomerForm = ({
     setFilters([{ field: "searchKey", operator: "contains", value: value }]);
 
   const handleInputChange = (event: any, newInputValue: string) => {
-    setInputValue(newInputValue);
     if (newInputValue == ADDLABEL) {
       handleSearch("");
     } else {
@@ -181,7 +178,6 @@ const CustomerForm = ({
           onChange={handleValueChange}
           disabled={disabledSearch}
           fullWidth
-          inputValue={inputValue}
           onInputChange={handleInputChange}
           options={[
             {

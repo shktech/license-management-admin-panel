@@ -5,10 +5,11 @@ import { BaseInputProps } from "./InputProps";
 import { useTable } from "@refinedev/core";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { DefaultPageSize } from "@data/UtilData";
+import Loader from "@components/common/Loader";
 
 interface DropdownOption {
   value: string;
-  label: string;
+  name: string;
   elseKey?: string;
 }
 
@@ -27,7 +28,7 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
     const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
       []
     );
-    const [val, setVal] = useState<DropdownOption>();
+    const [val, setVal] = useState<DropdownOption | null>(null);
     const {
       tableQueryResult: { data, isLoading },
       setFilters,
@@ -49,7 +50,7 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
         const options =
           data?.data.map((item: any) => ({
             value: item[valueKey],
-            label: item[labelKey],
+            name: item[labelKey],
             elseKey: item[elseKey],
           })) || [];
         setDropdownOptions(options);
@@ -65,11 +66,15 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
       setPageSize(DefaultPageSize);
     };
 
-    // useEffect(() => {
-    //   if (value) {
-    //     handleChange(value as string);
-    //   }
-    // }, [value]);
+    useEffect(() => {
+      if (dropdownOptions.length > 0 && value) {
+        const opts = dropdownOptions as DropdownOption[];
+        const opt = opts.find(
+          (option) => option.value == value
+        ) as DropdownOption;
+        setVal(opt);
+      }
+    }, [value, dropdownOptions]);
 
     const handleChange = (event: any, newValue: DropdownOption | null) => {
       setVal(newValue as DropdownOption);
@@ -98,7 +103,7 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
     return (
       <div className="relative">
         <Autocomplete
-          disablePortal
+          id={props.name2 ? props.name2 : props.name}
           value={val}
           options={dropdownOptions}
           onChange={handleChange}
@@ -107,16 +112,14 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
           ListboxProps={{
             onScroll: handleScroll,
           }}
+          getOptionLabel={(option) => option.name as string}
           renderOption={(props, option) => {
             const { key, ...optionProps } = props;
             return (
               <Box key={key} component="li" {...optionProps}>
                 <div className="flex flex-col">
                   <div className="">{option.value}</div>
-                  <div className="text-sm">
-                    {/* {dropdownOptions.find((op) => op.value == option)?.elseKey} */}
-                    {option.elseKey}
-                  </div>
+                  <div className="text-sm">{option.elseKey}</div>
                 </div>
               </Box>
             );
@@ -136,7 +139,6 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
                 </label>
                 <TextField
                   {...params}
-                  inputRef={ref} // Pass ref to TextField
                   sx={{
                     "& .MuiInputBase-root": {
                       pt: "28px",
