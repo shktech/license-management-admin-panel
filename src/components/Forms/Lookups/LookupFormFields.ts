@@ -23,6 +23,7 @@ const InitialField: InitialFieldConfig[] = [
     resource: "lookups",
     valueKey: "lookup_id",
     labelKey: "lookup_name",
+    disabled: true
   },
 ];
 

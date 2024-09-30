@@ -13,6 +13,7 @@ import {
   getMonthStrings,
   getWeekStrings,
 } from "@utils/utilFunctions";
+import { CircularProgress } from "@mui/material";
 // import DateRangePicker from "./DateRangePicker";
 
 interface ChatOneProps {
@@ -148,7 +149,7 @@ const ChartOne: React.FC<ChatOneProps> = ({
 
   useEffect(() => {
     if (data) {
-      const dateArray = data.data
+      let dateArray = data.data
         .filter(
           (item: any) =>
             item.status == "Active" ||
@@ -156,6 +157,14 @@ const ChartOne: React.FC<ChatOneProps> = ({
             item.status == "Revoked"
         )
         .map((item: any) => ({ name: item.status, data: item.data }));
+      if (dateArray.length == 0) {
+        const states = ["Active", "Expired", "Revoked"];
+        dateArray = states.map((state) => ({
+          name: state,
+          data: Array(yAxis?.length).fill(0),
+        }));
+      }
+
       setSeries(dateArray);
       setMaxNumber(
         Math.ceil(
@@ -187,7 +196,7 @@ const ChartOne: React.FC<ChatOneProps> = ({
     <div className="col-span-12 rounded-sm bg-white px-5 pb-5 pt-7.5 sm:px-7.5 xl:col-span-8">
       <div id="chartOne" className="-ml-5">
         {isLoading ? (
-          <Loader />
+          <CircularProgress />
         ) : (
           <ReactApexChart
             options={{

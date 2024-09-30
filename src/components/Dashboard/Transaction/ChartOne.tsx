@@ -14,6 +14,7 @@ import {
   getMonthStrings,
   getWeekStrings,
 } from "@utils/utilFunctions";
+import { CircularProgress } from "@mui/material";
 // import DateRangePicker from "./DateRangePicker";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -149,10 +150,18 @@ const ChartOne: React.FC<ChatOneProps> = ({
 
   useEffect(() => {
     if (data) {
-      const dateArray = data.data.map((item: any) => ({
+      let dateArray = data.data.map((item: any) => ({
         name: item.status || "Null",
         data: item.data,
       }));
+      if (dateArray.length == 0) {
+        const states = ["Complete", "Error", "Null"];
+        dateArray = states.map((state) => ({
+          name: state,
+          data: Array(yAxis?.length).fill(0),
+        }));
+      }
+
       setSeries(dateArray);
       setMaxNumber(
         Math.ceil(
@@ -184,7 +193,7 @@ const ChartOne: React.FC<ChatOneProps> = ({
     <div className="col-span-12 rounded-sm bg-white px-5 pb-5 pt-7.5 sm:px-7.5 xl:col-span-8">
       <div id="chartOne" className="-ml-5">
         {isLoading ? (
-          <Loader />
+          <CircularProgress />
         ) : (
           <ReactApexChart
             options={{

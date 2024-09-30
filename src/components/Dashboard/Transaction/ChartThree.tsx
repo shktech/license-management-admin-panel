@@ -1,5 +1,6 @@
 import Loader from "@components/common/Loader";
 import { predefinedRanges } from "@data/UtilData";
+import { CircularProgress } from "@mui/material";
 import { useList } from "@refinedev/core";
 import { ApexOptions } from "apexcharts";
 import { subDays } from "date-fns";
@@ -102,7 +103,7 @@ const ChartThree: React.FC<ChatOneProps> = ({
       <div className="mb-2 flex-1 flex items-center justify-center">
         <div id="chartThree" className="mx-auto flex justify-center mt-8">
           {isLoading ? (
-            <Loader />
+            <CircularProgress />
           ) : (
             <ReactApexChart options={options} series={series} type="donut" />
           )}

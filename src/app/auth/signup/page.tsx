@@ -28,7 +28,7 @@ const SignUp: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>({
     mode: "onChange",
-    reValidateMode: "onSubmit"
+    reValidateMode: "onSubmit",
   });
   const { mutate: register } = useRegister<FormData>();
   const [token, setToken] = useState<string>("");
@@ -70,10 +70,6 @@ const SignUp: React.FC = () => {
       });
   }, [router]);
   const onSubmit = (data: any) => {
-    setError("password", {
-      type: "manual",
-      message: getPasswordValidationMessage(data.password),
-    });
     if (data.password !== data.password2) {
       setError("password2", {
         type: "manual",
@@ -163,7 +159,24 @@ const SignUp: React.FC = () => {
                   <FormControlWrapper
                     name="password"
                     control={control}
-                    rules={{ required: "Please enter your password!" }}
+                    rules={{
+                      required: "Please enter your password!",
+                      validate: (value: string) => {
+                        if (value.length < 8) {
+                          return "Password must be at least 8 characters long";
+                        }
+                        if (!/\d/.test(value)) {
+                          return "Password must include at least 1 number";
+                        }
+                        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                          return "Password must include at least 1 special character";
+                        }
+                        if (!/[A-Z]/.test(value)) {
+                          return "Password must include at least 1 uppercase letter";
+                        }
+                        return true;
+                      },
+                    }}
                     error={errors.password?.message?.toString()}
                   >
                     {(field) => (
