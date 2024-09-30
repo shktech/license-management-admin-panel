@@ -77,7 +77,7 @@ const ChartThree: React.FC<ChatOneProps> = ({
     setDateRange(value);
   };
 
-  const { data, isLoading, refetch } = useList({
+  const { data, isLoading, refetch, isSuccess } = useList({
     resource: `transactions/metrics/chart?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}`,
     hasPagination: false,
   });
@@ -86,9 +86,9 @@ const ChartThree: React.FC<ChatOneProps> = ({
     const tempData = data?.data as any;
     if (tempData?.data) {
       setSeries([
-        tempData?.data[0].count,
-        tempData?.data[1].count,
-        tempData?.data[2].count,
+        tempData?.data[0]?.count || 0,
+        tempData?.data[1]?.count || 0,
+        tempData?.data[2]?.count || 0,
       ]);
     }
   }, [data, isLoading]);

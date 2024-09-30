@@ -29,6 +29,12 @@ const ProductTransactionHistoryTable: React.FC<
     setSorters,
   } = useTable<Transaction>({
     resource: `transactions?product=${product_id}`,
+    initialSorter: [
+      {
+        field: "transaction_date",
+        order: "desc",
+      },
+    ],
   });
   const { push } = useNavigation();
 
