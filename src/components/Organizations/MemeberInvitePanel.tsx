@@ -182,14 +182,18 @@ const MemeberInvitePanel: React.FC<MemeberInvitePanelProps> = ({
                     value={value.organization_code}
                     onChange={(e) => handleOrganizationChange(e, index)}
                   >
-                    {orgs.map((org) => (
-                      <MenuItem
-                        key={org.organization_code}
-                        value={org.organization_code}
-                      >
-                        {org.organization_code}
-                      </MenuItem>
-                    )) || []}
+                    {orgs
+                      .filter(
+                        (org) => org.active && org.organization_code != "MASTR"
+                      )
+                      .map((org) => (
+                        <MenuItem
+                          key={org.organization_code}
+                          value={org.organization_code}
+                        >
+                          {org.organization_code}
+                        </MenuItem>
+                      )) || []}
                   </Select>
                 </FormControl>
               ))}

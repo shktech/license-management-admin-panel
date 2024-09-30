@@ -89,11 +89,18 @@ const CreateModal: React.FC<CreateModalProps> = ({
               label="Organization"
               onChange={handleChange}
             >
-              {orgs?.data?.filter(org => org.active).map((org) => (
-                <MenuItem value={org.organization_code} key={org.organization_code}>
-                  {org.organization_code}
-                </MenuItem>
-              ))}
+              {orgs?.data
+                ?.filter(
+                  (org) => org.active && org.organization_code != "MASTR"
+                )
+                .map((org) => (
+                  <MenuItem
+                    value={org.organization_code}
+                    key={org.organization_code}
+                  >
+                    {org.organization_code}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
         </div>
