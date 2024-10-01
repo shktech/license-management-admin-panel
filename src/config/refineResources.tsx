@@ -27,8 +27,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "transactions",
     list: "/dashboard/transactions/list",
     create: "/dashboard/transactions/create",
-    edit: "/dashboard/transactions/edit/:id",
-    show: "/dashboard/transactions/show/:id",
+    edit: "/dashboard/transactions/edit",
+    show: "/dashboard/transactions/show",
     meta: {
       canDelete: true,
       label: "Transactions",
@@ -56,8 +56,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "assets",
     list: "/dashboard/assets/list",
     create: "/dashboard/assets/create",
-    edit: "/dashboard/assets/edit/:id",
-    show: "/dashboard/assets/show/:id",
+    edit: "/dashboard/assets/edit",
+    show: "/dashboard/assets/show",
     meta: {
       canDelete: true,
       label: "Licenses",
@@ -67,7 +67,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "assets_details",
-    list: "/assets/show/:id",
+    list: "/assets/show",
     create: "/assets/show/:assetid/assets_details/create",
     edit: "/assets/show/:assetid/assets_details/edit/:detailsid",
     show: "/assets/show/:assetid/assets_details/show/:detailsid",
@@ -83,8 +83,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "products",
     list: "/dashboard/products/list",
     create: "/dashboard/products/create",
-    edit: "/dashboard/products/edit/:id",
-    show: "/dashboard/products/show/:id",
+    edit: "/dashboard/products/edit",
+    show: "/dashboard/products/show",
     meta: {
       canDelete: true,
       label: "Products",
@@ -96,8 +96,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "references",
     list: "/dashboard/references/list",
     create: "/dashboard/references/create",
-    edit: "/dashboard/references/edit/:id",
-    show: "/dashboard/references/show/:id",
+    edit: "/dashboard/references/edit",
+    show: "/dashboard/references/show",
     meta: {
       canDelete: true,
       label: "References",
@@ -109,8 +109,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "partners",
     list: "/dashboard/partners/list",
     create: "/dashboard/partners/create",
-    edit: "/dashboard/partners/edit/:id",
-    show: "/dashboard/partners/show/:id",
+    edit: "/dashboard/partners/edit",
+    show: "/dashboard/partners/show",
     meta: {
       label: "Partners",
       parent: "mastermgmt",
@@ -130,8 +130,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "lookups",
     list: "/dashboard/lookups/list",
     create: "/dashboard/lookups/create",
-    edit: "/dashboard/lookups/edit/:id",
-    show: "/dashboard/lookups/show/:id",
+    edit: "/dashboard/lookups/edit",
+    show: "/dashboard/lookups/show",
     meta: {
       label: "Lookups",
       canDelete: true,
@@ -161,8 +161,8 @@ export const dashboardResources: ResourceProps[] = [
     name: "schedule",
     list: "/dashboard/notification-schedules/list",
     create: "/dashboard/notification-schedules/create",
-    edit: "/dashboard/notification-schedules/edit/:id",
-    show: "/dashboard/notification-schedules/show/:id",
+    edit: "/dashboard/notification-schedules/edit",
+    show: "/dashboard/notification-schedules/show",
 
     meta: {
       label: "Notification Schedules",
@@ -245,7 +245,7 @@ export const dashboardResources: ResourceProps[] = [
     name: "roles",
     list: "/dashboard/roles/list",
     create: "/dashboard/roles/create",
-    edit: "/dashboard/roles/:id",
+    edit: "/dashboard/roles",
     meta: {
       label: "Roles",
       parent: "settings",
@@ -255,7 +255,7 @@ export const dashboardResources: ResourceProps[] = [
     name: "users",
     list: "/dashboard/users/list",
     create: "/dashboard/users/create",
-    edit: "/dashboard/users/edit/:id",
+    edit: "/dashboard/users/edit",
     meta: {
       label: "User",
       parent: "settings",
@@ -265,7 +265,7 @@ export const dashboardResources: ResourceProps[] = [
     name: "orgs",
     list: "/dashboard/orgs",
     create: "/dashboard/orgs/create",
-    edit: "/dashboard/orgs/edit/:id",
+    edit: "/dashboard/orgs/edit",
     meta: {
       label: "Organizations",
       parent: "settings",
@@ -277,7 +277,7 @@ export const dashboardResources: ResourceProps[] = [
     name: "orgs/key/api-keys",
     list: "/dashboard/api-keys",
     create: "/dashboard/api-keys/create",
-    edit: "/dashboard/api-keys/edit/:id",
+    edit: "/dashboard/api-keys/edit",
     meta: {
       label: "API Keys",
       parent: "settings",

@@ -168,19 +168,19 @@ export const truncateString = (str: string, maxLength: number) => {
   return str;
 };
 
-export const getDurationFromString = (str: string) => {
-  switch (str) {
-    case "EA":
-      return 0;
-    case "1YR":
-      return 1;
-    case "2YR":
-      return 2;
-    case "3YR":
-      return 3;
-    default:
-      return 0;
+export const getEndDate = (startDate: Date, str: string) => {
+  if (!str) return startDate;
+  if (str == "EA") return startDate;
+  const endDate = new Date(startDate);
+  const number = Number(str.match(/\d+/)?.[0]);
+  if (str.includes("YR")) {
+    endDate.setFullYear(endDate.getFullYear() + number);
+  } else if (str.includes("MO")) {
+    endDate.setMonth(endDate.getMonth() + number);
+  } else if (str.includes("D")) {
+    endDate.setDate(endDate.getMonth() + number);
   }
+  return endDate.toISOString().split("T")[0];
 };
 
 export const getInputCustomer = (data: any, type: string) => {

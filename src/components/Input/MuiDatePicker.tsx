@@ -37,6 +37,7 @@ const MuiDatePicker = React.forwardRef<HTMLDivElement, BaseInputProps>(
             onChange={(newValue) => handleChange(newValue as Dayjs)}
             value={props.value ? dayjs(props.value as string) : null}
             disabled={props.disabled}
+            readOnly
             slotProps={{ textField: { size: "small" } }}
           />
         </div>

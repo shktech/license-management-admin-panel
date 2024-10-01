@@ -21,7 +21,7 @@ import {
   useNavigation,
   useOne,
 } from "@refinedev/core";
-import { getDurationFromString, getInputCustomer } from "@utils/utilFunctions";
+import { getEndDate, getInputCustomer } from "@utils/utilFunctions";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 
 interface ShowTransactionProps {
@@ -96,15 +96,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       )?.duration;
     }
     if (start_date) {
-      const originalDate = new Date(start_date);
-      originalDate.setFullYear(
-        originalDate.getFullYear() + getDurationFromString(duration as string)
-      );
-      if (duration != "EA" && osc_part_number) {
-        originalDate.setDate(originalDate.getDate() - 1);
-      }
-
-      const end_date = originalDate.toISOString().split("T")[0];
+      const end_date = getEndDate(start_date, duration as string);
       setValue("end_date", end_date);
     }
   }, [start_date, osc_part_number]);
