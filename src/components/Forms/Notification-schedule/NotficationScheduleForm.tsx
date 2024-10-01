@@ -127,7 +127,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: () => {},
           onSuccess: () => {
-            push("/dashboard/notification-schedules");
+            push("/dashboard/notification-schedules/list");
           },
         }
       );
@@ -140,7 +140,7 @@ const NotificationSchedulesComponent: React.FC<
         {
           onError: (error) => {},
           onSuccess: () => {
-            push("/dashboard/notification-schedules");
+            push("/dashboard/notification-schedules/list");
           },
         }
       );

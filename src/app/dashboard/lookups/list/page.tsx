@@ -1,5 +1,4 @@
 "use client";
-import { Lookup } from "../../../types/types";
 import { MRT_ColumnDef } from "material-react-table";
 import React, { useMemo } from "react";
 import { useNavigation, useTable } from "@refinedev/core";
@@ -7,6 +6,7 @@ import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 import StateComponent from "@components/common/StateComponent";
+import { Lookup } from "@/types/types";
 
 const HomePage: React.FC = () => {
   const {
@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
           columns={columns}
           canCreate={true}
           onRowClick={handleEditClick}
-          totalCount={data?.total}
+          // totalCount={data?.total}
           handleCreate={handleCreate}
           noSearchNeed={true}
           noSortNeed={true}

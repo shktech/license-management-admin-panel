@@ -17,21 +17,32 @@ const InitialField: InitialFieldConfig[] = [
       { value: "Date", label: "Date" },
     ],
   },
-  {
-    name: "parent_lookup",
-    type: 'dropdown',
-    resource: "lookups",
-    valueKey: "lookup_id",
-    labelKey: "lookup_name",
-    disabled: true
-  },
 ];
 
 export const LookupFormFields = {
-  create: getRealFormFields(InitialField),
+  create: getRealFormFields([
+    ...InitialField,
+    {
+      name: "parent_lookup",
+      type: "dropdown",
+      resource: "lookups",
+      valueKey: "lookup_id",
+      labelKey: "lookup_name",
+      // disabled: true
+    },
+  ]),
   edit: getRealFormFields([
     ...InitialField,
+    {
+      name: "parent_lookup",
+      type: 'dropdown',
+      resource: "lookups",
+      valueKey: "lookup_id",
+      labelKey: "lookup_name",
+      disabled: true
+    },
     { name: "active", type: "switch" },
+    
   ]),
 };
 // export default getRealFormFields(InitialField);

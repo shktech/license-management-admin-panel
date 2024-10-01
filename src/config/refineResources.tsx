@@ -25,7 +25,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "transactions",
-    list: "/dashboard/transactions",
+    list: "/dashboard/transactions/list",
     create: "/dashboard/transactions/create",
     edit: "/dashboard/transactions/edit/:id",
     show: "/dashboard/transactions/show/:id",
@@ -54,7 +54,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "assets",
-    list: "/dashboard/assets",
+    list: "/dashboard/assets/list",
     create: "/dashboard/assets/create",
     edit: "/dashboard/assets/edit/:id",
     show: "/dashboard/assets/show/:id",
@@ -81,7 +81,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "products",
-    list: "/dashboard/products",
+    list: "/dashboard/products/list",
     create: "/dashboard/products/create",
     edit: "/dashboard/products/edit/:id",
     show: "/dashboard/products/show/:id",
@@ -94,7 +94,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "references",
-    list: "/dashboard/references",
+    list: "/dashboard/references/list",
     create: "/dashboard/references/create",
     edit: "/dashboard/references/edit/:id",
     show: "/dashboard/references/show/:id",
@@ -107,7 +107,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "partners",
-    list: "/dashboard/partners",
+    list: "/dashboard/partners/list",
     create: "/dashboard/partners/create",
     edit: "/dashboard/partners/edit/:id",
     show: "/dashboard/partners/show/:id",
@@ -128,7 +128,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "lookups",
-    list: "/dashboard/lookups",
+    list: "/dashboard/lookups/list",
     create: "/dashboard/lookups/create",
     edit: "/dashboard/lookups/edit/:id",
     show: "/dashboard/lookups/show/:id",
@@ -149,8 +149,9 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "email-templates",
-    list: "/dashboard/email-templates",
+    list: "/dashboard/email-templates/list",
     create: "/dashboard/email-templates/create",
+    edit: "/dashboard/email-templates/edit",
     meta: {
       label: "Email Templates",
       parent: "maintenance",
@@ -158,7 +159,7 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "schedule",
-    list: "/dashboard/notification-schedules",
+    list: "/dashboard/notification-schedules/list",
     create: "/dashboard/notification-schedules/create",
     edit: "/dashboard/notification-schedules/edit/:id",
     show: "/dashboard/notification-schedules/show/:id",
@@ -242,8 +243,8 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "roles",
-    list: "/dashboard/roles",
-    create: "/dashboard/roles",
+    list: "/dashboard/roles/list",
+    create: "/dashboard/roles/create",
     edit: "/dashboard/roles/:id",
     meta: {
       label: "Roles",
@@ -252,7 +253,9 @@ export const dashboardResources: ResourceProps[] = [
   },
   {
     name: "users",
-    list: "/dashboard/users",
+    list: "/dashboard/users/list",
+    create: "/dashboard/users/create",
+    edit: "/dashboard/users/edit/:id",
     meta: {
       label: "User",
       parent: "settings",
