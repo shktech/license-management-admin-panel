@@ -9,7 +9,6 @@ import { sendEmailBtnStyle } from "@data/MuiStyles";
 import { useBack, useCreate, useList, useNavigation, useParsed } from "@refinedev/core";
 import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
-import { getDurationFromString } from "@utils/utilFunctions";
 import { useEffect } from "react";
 
 const Item = () => {
