@@ -135,7 +135,7 @@ const Item = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <>
+          <div>
             <div className="flex gap-16 px-12 mt-8">
               {summaryfields.map((field) => (
                 <div key={field.key} className="flex flex-col gap-1 text-lg">
@@ -215,28 +215,28 @@ const Item = () => {
                     },
                     {
                       label: "Partner Type",
-                      value: partner?.type
-                      // value: (
-                      //   <span
-                      //     className={`text-xs text-white px-6 py-1 rounded-full text-center font-semibold`}
-                      //     style={{
-                      //       backgroundColor:
-                      //         partnerTypes.find(
-                      //           (type) => type.value === partner?.type
-                      //         )?.color || "#ff3838",
-                      //     }}
-                      //   >
-                      //     {partner?.type}
-                      //   </span>
-                      // ),
+                      value: partner?.type,
                     },
                     {
                       label: "Partner Website",
-                      value: partner?.website,
+                      value: partner?.website && (
+                        <Link
+                          href={partner?.website as string}
+                          className="underline text-[#1b6ef3]"
+                          target="_blank"
+                        >
+                          {partner?.website as string}
+                        </Link>
+                      ),
                     },
                     {
                       label: "Active",
-                      value: <StateComponent active={partner?.active as boolean} withLabel/>,
+                      value: (
+                        <StateComponent
+                          active={partner?.active as boolean}
+                          withLabel
+                        />
+                      ),
                     },
                   ]}
                 ></GeneralInformation>
@@ -260,7 +260,7 @@ const Item = () => {
                 <PartnerTransactionTable partner_id={params?.id} />
               </CustomTabPanel>
             </div>
-          </>
+          </div>
         )}
       </Show>
     </div>

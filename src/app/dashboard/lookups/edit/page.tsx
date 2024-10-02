@@ -19,6 +19,7 @@ const Item = () => {
     control,
     reset,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<Lookup>({
     mode: "onChange",
@@ -30,13 +31,18 @@ const Item = () => {
     },
   });
 
-  const lookup: Lookup = queryResult?.data?.data as Lookup;
+  const lookupData = queryResult?.data?.data as Lookup;
 
   useEffect(() => {
-    if (!formLoading && lookup) {
+    if (!formLoading && lookupData) {
+      const lookup = {
+        ...lookupData,
+        parent_lookup: lookupData?.parent_lookup?.lookup_id as string,
+      };
+      console.log(lookup);
       reset({ ...lookup });
     }
-  }, [formLoading, lookup]);
+  }, [formLoading, lookupData]);
 
   return (
     <div className="flex justify-center py-6">
@@ -53,15 +59,15 @@ const Item = () => {
           }
           canDelete={false}
           title={
-            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]">
+            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]" onClick={() => console.log(getValues())}>
               Edit Lookup
               <div className="text-sm text-[#818f99]">
-                {lookup?.lookup_name}
+                {lookupData?.lookup_name}
               </div>
             </div>
           }
           breadcrumb={false}
-          headerButtons={<></>}
+          headerButtons={<div></div>}
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}

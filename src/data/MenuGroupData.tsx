@@ -40,7 +40,7 @@ export const menuGroups: MenuGroup[] = [
         route: "#",
         children: [
           { label: "Transactions", route: "/dashboard/recent-transactions" },
-          { label: "Transaction History", route: "/dashboard/transactions" },
+          { label: "Transaction History", route: "/dashboard/transactions/list" },
         ]
       },
       {
@@ -48,10 +48,10 @@ export const menuGroups: MenuGroup[] = [
         label: "Master",
         route: "#",
         children: [
-          { label: "Licenses", route: "/dashboard/assets" },
-          { label: "Products", route: "/dashboard/products" },
-          { label: "Partners", route: "/dashboard/partners" },
-          { label: "Reference Code", route: "/dashboard/references" }
+          { label: "Licenses", route: "/dashboard/assets/list" },
+          { label: "Products", route: "/dashboard/products/list" },
+          { label: "Partners", route: "/dashboard/partners/list" },
+          { label: "Reference Code", route: "/dashboard/references/list" }
         ],
       },
       {
@@ -59,11 +59,11 @@ export const menuGroups: MenuGroup[] = [
         label: "Setups",
         route: "#",
         children: [
-          { label: "Lookups", route: "/dashboard/lookups" },
-          { label: "Notification Templates", route: "/dashboard/email-templates" },
-          { label: "Notification Schedules", route: "/dashboard/notification-schedules",is_superuser: true },
-          { label: "Organizations", route: "/dashboard/orgs", is_superuser: true },
-          { label: "Users", route: "/dashboard/users", is_superuser: true },
+          { label: "Lookups", route: "/dashboard/lookups/list" },
+          { label: "Notification Templates", route: "/dashboard/email-templates/list" },
+          { label: "Notification Schedules", route: "/dashboard/notification-schedules/list",is_superuser: true },
+          { label: "Organizations", route: "/dashboard/orgs/list", is_superuser: true },
+          { label: "Users", route: "/dashboard/users/list", is_superuser: true },
           { label: "API Keys", route: "/dashboard/api-keys", is_superuser: true },
         ],
       },
@@ -73,7 +73,7 @@ export const menuGroups: MenuGroup[] = [
         route: "#",
         children: [
           { label: "User profile", route: "/dashboard/user-profile", is_commonuser: true },
-          { label: "Roles & Permissions", route: "/dashboard/roles", is_superuser: true },
+          { label: "Roles & Permissions", route: "/dashboard/roles/list", is_superuser: true },
         ],
       },
       {

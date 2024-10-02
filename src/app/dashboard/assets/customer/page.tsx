@@ -52,7 +52,7 @@ const Page = () => {
       {
         resource: `assets`,
         values: payload,
-        id: params?.asset_id
+        id: params?.asset_id,
       },
       {
         onError: (error) => console.log("error", error),
@@ -75,9 +75,9 @@ const Page = () => {
             </button>
           }
           breadcrumb={false}
-          headerButtons={<></>}
+          headerButtons={<div></div>}
           title={
-            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center">
+            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c] flex items-center" onClick={() => console.log(getValues())}>
               Update Customers
             </div>
           }

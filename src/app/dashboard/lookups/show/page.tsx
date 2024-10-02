@@ -398,6 +398,7 @@ const Page = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         defaultValue={dayjs(renderedCellValue as string)}
+                        readOnly
                         onChange={(newValue) =>
                           setSelectedValue({
                             ...selectedValue,

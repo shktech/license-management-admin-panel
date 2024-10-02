@@ -148,7 +148,7 @@ const Page = () => {
           onRowClick={handleRowClick}
           handleCreate={handleCreate}
           canCreate={true}
-          totalCount={data?.data.length}
+          totalCount={data?.total}
           handlePage={handlePage}
           handleSorting={handleSorting}
           handleSearch={handleSearch}

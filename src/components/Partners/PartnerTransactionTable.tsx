@@ -10,9 +10,6 @@ import {
   convertSortingStateToCrudSort,
   getFormattedDate,
 } from "@utils/utilFunctions";
-import { Box } from "@mui/material";
-import { TxtActionColor, TxtStatusColor, TxtTypeColor } from "@data/ColorData";
-import { tagStyle } from "@data/MuiStyles";
 import { DefaultPageSize } from "@data/UtilData";
 import Loader from "@components/common/Loader";
 
@@ -32,6 +29,12 @@ const PartnerTransactionTable: React.FC<PartnerTransactionTableProps> = ({
     syncWithLocation: false,
     resource: "transactions",
     initialFilter: [{ field: "partner", operator: "eq", value: partner_id }],
+    initialSorter: [
+      {
+        field: "transaction_date",
+        order: "desc",
+      },
+    ],
     pagination: {
       pageSize: DefaultPageSize,
     },

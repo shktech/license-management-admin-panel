@@ -1,5 +1,6 @@
 import Loader from "@components/common/Loader";
 import { predefinedRanges } from "@data/UtilData";
+import { CircularProgress } from "@mui/material";
 import { useList } from "@refinedev/core";
 import { ApexOptions } from "apexcharts";
 import { subDays } from "date-fns";
@@ -77,7 +78,7 @@ const ChartThree: React.FC<ChatOneProps> = ({
     setDateRange(value);
   };
 
-  const { data, isLoading, refetch } = useList({
+  const { data, isLoading, refetch, isSuccess } = useList({
     resource: `transactions/metrics/chart?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}`,
     hasPagination: false,
   });
@@ -86,9 +87,9 @@ const ChartThree: React.FC<ChatOneProps> = ({
     const tempData = data?.data as any;
     if (tempData?.data) {
       setSeries([
-        tempData?.data[0].count,
-        tempData?.data[1].count,
-        tempData?.data[2].count,
+        tempData?.data[0]?.count || 0,
+        tempData?.data[1]?.count || 0,
+        tempData?.data[2]?.count || 0,
       ]);
     }
   }, [data, isLoading]);
@@ -102,7 +103,7 @@ const ChartThree: React.FC<ChatOneProps> = ({
       <div className="mb-2 flex-1 flex items-center justify-center">
         <div id="chartThree" className="mx-auto flex justify-center mt-8">
           {isLoading ? (
-            <Loader />
+            <CircularProgress />
           ) : (
             <ReactApexChart options={options} series={series} type="donut" />
           )}

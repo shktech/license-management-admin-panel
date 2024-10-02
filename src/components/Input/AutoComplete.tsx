@@ -5,10 +5,11 @@ import { BaseInputProps } from "./InputProps";
 import { useTable } from "@refinedev/core";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { DefaultPageSize } from "@data/UtilData";
+import Loader from "@components/common/Loader";
 
 interface DropdownOption {
   value: string;
-  label: string;
+  name: string;
   elseKey?: string;
 }
 
@@ -27,7 +28,7 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
     const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
       []
     );
-    const [val, setVal] = useState<string>("");
+    const [val, setVal] = useState<DropdownOption | null>(null);
     const {
       tableQueryResult: { data, isLoading },
       setFilters,
@@ -49,7 +50,7 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
         const options =
           data?.data.map((item: any) => ({
             value: item[valueKey],
-            label: item[labelKey],
+            name: item[labelKey],
             elseKey: item[elseKey],
           })) || [];
         setDropdownOptions(options);
@@ -65,19 +66,25 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
       setPageSize(DefaultPageSize);
     };
 
+    const [firstFilled, setFirstFilled] = useState(false);
     useEffect(() => {
-      if (value) {
-        handleChange(value as string);
+      if (dropdownOptions.length > 0 && value && !firstFilled) {
+        const opts = dropdownOptions as DropdownOption[];
+        const opt = opts.find(
+          (option) => option.value == value
+        ) as DropdownOption;
+        setVal(opt);
+        setFirstFilled(true);
       }
-    }, [value]);
+    }, [value, dropdownOptions]);
 
-    const handleChange = (newValue: string) => {
-      setVal(newValue);
+    const handleChange = (event: any, newValue: DropdownOption | null) => {
+      setVal(newValue as DropdownOption);
       onChange &&
         onChange({
           target: {
             name: props.name2 ? props.name2 : props.name,
-            value: newValue,
+            value: newValue?.value,
           },
         } as React.ChangeEvent<HTMLInputElement>);
     };
@@ -98,64 +105,64 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
     return (
       <div className="relative">
         <Autocomplete
-          disablePortal
+          id={props.name2 ? props.name2 : props.name}
           value={val}
-          options={dropdownOptions.map((option) => option.value)}
-          onChange={(event, value) => handleChange(value as string)}
+          options={dropdownOptions}
+          onChange={handleChange}
           onInputChange={handleInputChange}
           filterOptions={(options) => options}
           ListboxProps={{
             onScroll: handleScroll,
           }}
+          getOptionLabel={(option) => option.name as string}
           renderOption={(props, option) => {
             const { key, ...optionProps } = props;
             return (
               <Box key={key} component="li" {...optionProps}>
                 <div className="flex flex-col">
-                  <div className="">{option}</div>
-                  <div className="text-sm">
-                    {dropdownOptions.find((op) => op.value == option)?.elseKey}
-                  </div>
+                  <div className="">{option.value}</div>
+                  <div className="text-sm">{option.elseKey}</div>
                 </div>
               </Box>
             );
           }}
-          renderInput={(params) => (
-            <div className="relative">
-              <label
-                htmlFor={props.id}
-                className="mb-1.5 block text-[#000000cc] z-10 absolute text-sm left-4 top-2 flex items-center gap-1"
-              >
-                {label}
-                {props.required && <span className="text-red-500">*</span>}
-                {!props.required && (
-                  <span className="text-gray-500 text-xs">(Optional)</span>
-                )}
-              </label>
-              <TextField
-                {...params}
-                inputRef={ref} // Pass ref to TextField
-                sx={{
-                  "& .MuiInputBase-root": {
-                    pt: "28px",
-                    pb: "0px",
-                    backgroundColor: "#dfe6ec",
-                  },
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "none",
-                  },
-                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                    {
+          renderInput={(params) => {
+            return (
+              <div className="relative">
+                <label
+                  htmlFor={props.id}
+                  className="mb-1.5 block text-[#000000cc] z-10 absolute text-sm left-4 top-2 flex items-center gap-1"
+                >
+                  {label}
+                  {props.required && <span className="text-red-500">*</span>}
+                  {!props.required && (
+                    <span className="text-gray-500 text-xs">(Optional)</span>
+                  )}
+                </label>
+                <TextField
+                  {...params}
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      pt: "28px",
+                      pb: "0px",
+                      backgroundColor: "#dfe6ec",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
                     },
-                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                    {
-                      border: "2px solid #1976d2", // Adjust color as needed for focus state
-                    },
-                }}
-              />
-            </div>
-          )}
+                    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                      {
+                        border: "none",
+                      },
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                      {
+                        border: "2px solid #1976d2", // Adjust color as needed for focus state
+                      },
+                  }}
+                />
+              </div>
+            );
+          }}
         />
       </div>
     );

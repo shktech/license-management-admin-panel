@@ -14,7 +14,7 @@ import {
 } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
-import { getDurationFromString } from "@utils/utilFunctions";
+import { getEndDate } from "@utils/utilFunctions";
 import { useEffect, useState } from "react";
 
 const TransactionEdit = () => {
@@ -114,14 +114,7 @@ const TransactionEdit = () => {
       )?.duration;
     }
     if (start_date) {
-      const originalDate = new Date(start_date);
-      originalDate.setFullYear(
-        originalDate.getFullYear() + getDurationFromString(duration as string)
-      );
-      if (duration != "EA") {
-        originalDate.setDate(originalDate.getDate() - 1);
-      }
-      const end_date = originalDate.toISOString().split("T")[0];
+      const end_date = getEndDate(start_date, duration as string);
       setValue("end_date", end_date);
     }
   }, [start_date, osc_part_number]);
@@ -146,7 +139,7 @@ const TransactionEdit = () => {
             </div>
           }
           breadcrumb={false}
-          headerButtons={<></>}
+          headerButtons={<div></div>}
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
