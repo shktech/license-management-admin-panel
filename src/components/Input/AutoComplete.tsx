@@ -66,13 +66,15 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
       setPageSize(DefaultPageSize);
     };
 
+    const [firstFilled, setFirstFilled] = useState(false);
     useEffect(() => {
-      if (dropdownOptions.length > 0 && value) {
+      if (dropdownOptions.length > 0 && value && !firstFilled) {
         const opts = dropdownOptions as DropdownOption[];
         const opt = opts.find(
           (option) => option.value == value
         ) as DropdownOption;
         setVal(opt);
+        setFirstFilled(true);
       }
     }, [value, dropdownOptions]);
 
