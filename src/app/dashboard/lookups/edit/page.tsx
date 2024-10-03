@@ -86,7 +86,7 @@ const Item = () => {
           ) : (
             <>
               {lookupData?.is_default && (
-                <div className="px-4 py-4 mb-4 bg-[#fdedef] text-black font-semibold flex gap-2 items-center">
+                <div className="px-4 py-4 mb-4 bg-[#fdedef] text-black flex gap-2 items-center">
                   <span className="text-[#ef4d61] pb-0.5"><ErrorIcon /></span>
                   Editing a default lookup is not allowed
                 </div>
