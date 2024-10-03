@@ -91,12 +91,10 @@ const Page = () => {
     isLoading: masterLoading,
     refetch: masterRefetch,
   } = useList<LookupValue>(
-    lookup?.parent_lookup?.lookup_code
-      ? {
-          resource: `lookups/${lookup.parent_lookup.lookup_code}/values`,
-          hasPagination: false,
-        }
-      : { resource: "", hasPagination: false }
+    {
+      resource: `lookups/${lookup?.parent_lookup?.lookup_code}/values`,
+      hasPagination: false,
+    }
   );
 
   const [masterOptions, setMasterOptions] = useState<LookupValue[]>([]);
@@ -607,7 +605,7 @@ const Page = () => {
         getButtonProps(editButtonProps, refreshButtonProps)
       }
     >
-      {isLookupLoading ? (
+      {isLookupLoading || masterLoading ? (
         <Loader />
       ) : (
         <div>
@@ -629,7 +627,7 @@ const Page = () => {
             <div className="col-span-2">
               <div className="text-[#515f72] font-semibold">Master Lookup</div>
               <div className="text-[#687991] mt-2">
-                {lookup?.parent_lookup?.lookup_name || "Null"}
+                {lookup?.parent_lookup?.lookup_name || "None"}
               </div>
             </div>
 
