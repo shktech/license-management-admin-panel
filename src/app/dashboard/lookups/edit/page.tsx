@@ -10,6 +10,8 @@ import { useBack, useParsed } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
+import { getDisabledFields } from "@utils/utilFunctions";
+import ErrorIcon from '@mui/icons-material/Error';
 
 const Item = () => {
   const { params } = useParsed();
@@ -59,11 +61,12 @@ const Item = () => {
           }
           canDelete={false}
           title={
-            <div className="!font-satoshi text-2xl font-semibold text-[#1f325c]" onClick={() => console.log(getValues())}>
-              Edit Lookup
-              <div className="text-sm text-[#818f99]">
-                {lookupData?.lookup_name}
-              </div>
+            <div
+              className="!font-satoshi text-2xl font-semibold text-[#1f325c]"
+              onClick={() => console.log(getValues())}
+            >
+              Edit Lookup:{" "}
+              <span className="text-lg">{lookupData?.lookup_name}</span>
             </div>
           }
           breadcrumb={false}
@@ -72,17 +75,31 @@ const Item = () => {
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
           saveButtonProps={{ ...saveButtonProps, hidden: false }}
-          footerButtons={({ saveButtonProps }) => (
-            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
-          )}
+          footerButtons={({ saveButtonProps }) =>
+            !lookupData?.is_default && (
+              <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+            )
+          }
         >
           {formLoading ? (
             <Loader />
           ) : (
-            <GenericForm
-              {...{ control, errors, trigger }}
-              fields={LookupFormFields.edit}
-            />
+            <>
+              {lookupData?.is_default && (
+                <div className="px-4 py-4 mb-4 bg-[#fdedef] text-black font-semibold flex gap-2 items-center">
+                  <span className="text-[#ef4d61] pb-0.5"><ErrorIcon /></span>
+                  Editing a default lookup is not allowed
+                </div>
+              )}
+              <GenericForm
+                {...{ control, errors, trigger }}
+                fields={
+                  lookupData?.is_default
+                    ? getDisabledFields(LookupFormFields.edit)
+                    : LookupFormFields.edit
+                }
+              />
+            </>
           )}
         </Edit>
       </div>

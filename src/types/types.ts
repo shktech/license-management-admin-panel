@@ -300,6 +300,7 @@ export interface Lookup {
   type?: string;
   active?: boolean;
   parent_lookup?: Lookup;
+  is_default?: boolean;
 }
 
 export interface LookupValue {
