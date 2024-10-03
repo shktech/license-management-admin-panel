@@ -84,7 +84,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
         },
         {
           onError: (error) => console.log(error),
-          onSuccess: () => push(`/dashboard/roles`),
+          onSuccess: () => push(`/dashboard/roles/list`),
         }
       );
     }

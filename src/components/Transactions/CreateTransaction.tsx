@@ -123,7 +123,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
         },
         {
           onError: (error) => console.log("error", error),
-          onSuccess: () => push(`/dashboard/transactions`),
+          onSuccess: () => push(`/dashboard/transactions/list`),
         }
       );
     }
