@@ -1,11 +1,13 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import ChartOne from "./ChartOne";
 import dynamic from "next/dynamic";
 import { DateRangePicker, Stack } from "rsuite";
 import { subDays } from "date-fns";
 import { predefinedRanges } from "@data/UtilData";
 import { FaCalendar } from "react-icons/fa";
+import { useList } from "@refinedev/core";
+import { CircularProgress } from "@mui/material";
 const ChartThree = dynamic(() => import("./ChartThree"), {
   ssr: false,
 });
@@ -34,6 +36,19 @@ const TransactionDashboard: React.FC = () => {
     },
   ];
 
+  const { data, isLoading, refetch } = useList<any>({
+    resource: `transactions/metrics/timegraph?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}&category=${categories}`,
+    hasPagination: false,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [dateRange, categories]);
+
+  const handleKeyDown = (e: any) => {
+    e.preventDefault(); // Prevent keyboard input
+  };
+
   return (
     <div className="mt-4 md:mt-6 2xl:mt-7.5 px-8 py-8 border border-stroke mx-12 shadow-default bg-white">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
@@ -53,6 +68,7 @@ const TransactionDashboard: React.FC = () => {
               caretAs={FaCalendar}
               placement="bottomEnd"
               editable={false}
+              onKeyDown={handleKeyDown}
             />
             {dateRange && (
               <FaCalendar
@@ -86,19 +102,27 @@ const TransactionDashboard: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartOne
-          dateRange={dateRange}
-          categories={categories}
-          setDateRange={setDateRange}
-          setCategories={setCategories}
-        />
-        <ChartThree
-          dateRange={dateRange}
-          categories={categories}
-          setDateRange={setDateRange}
-          setCategories={setCategories}
-        />
+      <div>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <CircularProgress />
+          </div>
+        ) : (
+          <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
+            <ChartOne
+              dateRange={dateRange}
+              categories={categories}
+              data={data}
+              isLoading={isLoading}
+            />
+            <ChartThree
+              dateRange={dateRange}
+              categories={categories}
+              setDateRange={setDateRange}
+              setCategories={setCategories}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
