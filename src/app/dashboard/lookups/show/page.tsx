@@ -91,10 +91,12 @@ const Page = () => {
     isLoading: masterLoading,
     refetch: masterRefetch,
   } = useList<LookupValue>(
-    {
-      resource: `lookups/${lookup?.parent_lookup?.lookup_code}/values`,
-      hasPagination: false,
-    }
+    lookup?.parent_lookup?.lookup_code
+      ? {
+          resource: `lookups/${lookup.parent_lookup.lookup_code}/values`,
+          hasPagination: false,
+        }
+      : { resource: "", hasPagination: false }
   );
 
   const [masterOptions, setMasterOptions] = useState<LookupValue[]>([]);
@@ -104,11 +106,12 @@ const Page = () => {
   }, [lookup]);
 
   useEffect(() => {
-    const options = masterData?.data as LookupValue[];
-
-    if (options && Array.isArray(options) && options.length > 0) {
-      setMasterOptions(options);
-      setParentValue(options[0].id as string);
+    if (lookup?.parent_lookup?.lookup_code) {
+      const options = masterData?.data as LookupValue[];
+      if (options && Array.isArray(options) && options.length > 0) {
+        setMasterOptions(options);
+        setParentValue(options[0].id as string);
+      }
     }
   }, [masterLoading, masterData]);
 
@@ -605,7 +608,7 @@ const Page = () => {
         getButtonProps(editButtonProps, refreshButtonProps)
       }
     >
-      {isLookupLoading || masterLoading ? (
+      {isLookupLoading || (lookup.parent_lookup && !parentValue) ? (
         <Loader />
       ) : (
         <div>
@@ -669,7 +672,10 @@ const Page = () => {
               columns={columns}
               handleCreate={handleAdd}
               data={codes.filter(
-                (code) => !parentValue || code.parent_value == parentValue || code.is_new
+                (code) =>
+                  !parentValue ||
+                  code.parent_value == parentValue ||
+                  code.is_new
               )}
               addText={
                 <div className="flex gap-2">
