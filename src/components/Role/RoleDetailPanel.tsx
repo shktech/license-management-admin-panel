@@ -97,7 +97,7 @@ const RoleDetailPanel: React.FC<RoleDetailPanelProps> = ({ role, isShow }) => {
           href={
             role && !isShow
               ? "/dashboard/roles/show?id=" + role?.role_id
-              : "/dashboard/roles"
+              : "/dashboard/roles/list"
           }
           className="pb-1 hover:text-slate-700"
         >
