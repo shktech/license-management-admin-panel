@@ -19,6 +19,9 @@ import {
   FaCalendarCheck,
   FaClock,
 } from "react-icons/fa";
+import { useList } from "@refinedev/core";
+import Loader from "@components/common/Loader";
+import { CircularProgress } from "@mui/material";
 
 const AssetDashboard: React.FC = () => {
   const [dateRange, setDateRange] = React.useState<[Date, Date]>([
@@ -43,6 +46,16 @@ const AssetDashboard: React.FC = () => {
       value: "month",
     },
   ];
+
+  const { data, isLoading, refetch } = useList<any>({
+    resource: `assets/metrics/timegraph?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}&category=${categories}`,
+    hasPagination: false,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [dateRange, categories]);
+
   const handleKeyDown = (e: any) => {
     e.preventDefault(); // Prevent keyboard input
   };
@@ -98,19 +111,27 @@ const AssetDashboard: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartOne
-          dateRange={dateRange}
-          categories={categories}
-          setDateRange={setDateRange}
-          setCategories={setCategories}
-        />
-        <ChartThree
-          dateRange={dateRange}
-          categories={categories}
-          setDateRange={setDateRange}
-          setCategories={setCategories}
-        />
+      <div>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <CircularProgress />
+          </div>
+        ) : (
+          <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
+            <ChartOne
+              dateRange={dateRange}
+              categories={categories}
+              data={data}
+              isLoading={isLoading}
+            />
+            <ChartThree
+              dateRange={dateRange}
+              categories={categories}
+              setDateRange={setDateRange}
+              setCategories={setCategories}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -19,8 +19,8 @@ import { CircularProgress } from "@mui/material";
 interface ChatOneProps {
   categories: string;
   dateRange: [Date, Date];
-  setCategories: React.Dispatch<React.SetStateAction<string>>;
-  setDateRange: React.Dispatch<React.SetStateAction<[Date, Date]>>;
+  data: any;
+  isLoading: boolean;
 }
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -117,16 +117,13 @@ interface ChartOneState {
 const ChartOne: React.FC<ChatOneProps> = ({
   categories,
   dateRange,
-  setCategories,
-  setDateRange,
+  data,
+  isLoading
 }) => {
   const [series, setSeries] = useState<any[]>([]);
   const [maxNumber, setMaxNumber] = React.useState<number>(200);
 
   const [yAxis, setYAxis] = useState<string[]>();
-  const handleDateRangeChange = (value: any) => {
-    setDateRange(value);
-  };
 
   useEffect(() => {
     switch (categories) {
@@ -142,10 +139,7 @@ const ChartOne: React.FC<ChatOneProps> = ({
     }
   }, [dateRange, categories]);
 
-  const { data, isLoading, refetch } = useList<any>({
-    resource: `assets/metrics/timegraph?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}&category=${categories}`,
-    hasPagination: false,
-  });
+
 
   useEffect(() => {
     if (data) {
@@ -174,9 +168,7 @@ const ChartOne: React.FC<ChatOneProps> = ({
     }
   }, [data, isLoading]);
 
-  useEffect(() => {
-    refetch();
-  }, [dateRange, categories]);
+
 
   const categoryOptions = [
     {

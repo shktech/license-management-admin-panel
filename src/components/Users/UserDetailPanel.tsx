@@ -95,7 +95,7 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
           href={
             user && !isShow
               ? "/dashboard/users/show?id=" + user?.user_id
-              : "/dashboard/users"
+              : "/dashboard/users/list"
           }
           className="pb-1 hover:text-slate-700"
         >

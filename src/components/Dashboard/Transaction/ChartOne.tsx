@@ -112,22 +112,19 @@ interface ChartOneState {
 interface ChatOneProps {
   categories: string;
   dateRange: [Date, Date];
-  setCategories: React.Dispatch<React.SetStateAction<string>>;
-  setDateRange: React.Dispatch<React.SetStateAction<[Date, Date]>>;
+  data: any;
+  isLoading: boolean;
 }
 
 const ChartOne: React.FC<ChatOneProps> = ({
   categories,
   dateRange,
-  setCategories,
-  setDateRange,
+  data,
+  isLoading,
 }) => {
   const [series, setSeries] = useState<any[]>([]);
   const [maxNumber, setMaxNumber] = React.useState<number>(200);
   const [yAxis, setYAxis] = useState<string[]>();
-  const handleDateRangeChange = (value: any) => {
-    setDateRange(value);
-  };
 
   useEffect(() => {
     switch (categories) {
@@ -143,25 +140,25 @@ const ChartOne: React.FC<ChatOneProps> = ({
     }
   }, [dateRange, categories]);
 
-  const { data, isLoading, refetch } = useList<any>({
-    resource: `transactions/metrics/timegraph?start_date=${dateRange[0].toISOString().split("T")[0]}&end_date=${dateRange[1].toISOString().split("T")[0]}&category=${categories}`,
-    hasPagination: false,
-  });
-
   useEffect(() => {
     if (data) {
-      let dateArray = data.data.map((item: any) => ({
-        name: item.status || "Null",
-        data: item.data,
+      const states = ["Completed", "Error", "Null"];
+      let dateArray = states.map((state) => ({
+        name: state,
+        data: Array(yAxis?.length).fill(0),
       }));
-      if (dateArray.length == 0) {
-        const states = ["Complete", "Error", "Null"];
-        dateArray = states.map((state) => ({
-          name: state,
-          data: Array(yAxis?.length).fill(0),
-        }));
-      }
+      const realData = data.data;
 
+      dateArray = states.map((state) => ({
+        name: state,
+        data:
+          realData.find(
+            (item: any) =>
+              item.status === state ||
+              (item.status === null && state === "Null")
+          )?.data || Array(yAxis?.length).fill(0),
+      }));
+      console.log(dateArray, realData);
       setSeries(dateArray);
       setMaxNumber(
         Math.ceil(
@@ -170,10 +167,6 @@ const ChartOne: React.FC<ChatOneProps> = ({
       );
     }
   }, [data, isLoading]);
-
-  useEffect(() => {
-    refetch();
-  }, [dateRange, categories]);
 
   const categoryOptions = [
     {
