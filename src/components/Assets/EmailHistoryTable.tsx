@@ -3,16 +3,40 @@
 import { EmailHistory, Transaction } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { type MRT_ColumnDef } from "material-react-table";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { getFormattedDate } from "@utils/utilFunctions";
 import { useList, useNavigation } from "@refinedev/core";
 import Loader from "@components/common/Loader";
+import { Box, Modal } from "@mui/material";
 
 interface EmailHistoryTableProps {
   assetId: string;
+  asset: any;
 }
 
-const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
+export const modalStyle = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  minWidth: 600,
+  maxHeight: 600,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  borderRadius: "8px",
+  px: 4,
+  py: 4,
+  overflow: "auto",
+  cursor: "default",
+  "&:focus": {
+    outline: "none", // Ensure focus outline is removed
+  },
+};
+
+const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
+  assetId,
+  asset,
+}) => {
   const {
     data: emailHistoryData,
     isLoading,
@@ -21,20 +45,17 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
     resource: `assets/${assetId}/email-logs`,
     hasPagination: false,
   });
-  const emailHistorys = emailHistoryData?.data.map(datum => ({
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState<any>(null);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  const emailHistorys = emailHistoryData?.data.map((datum) => ({
     ...datum,
-    sent_at: getFormattedDate(datum.sent_at)
+    sent_at: getFormattedDate(datum.sent_at),
   })) as EmailHistory[];
   const columns = useMemo<MRT_ColumnDef<EmailHistory>[]>(
     () => [
-      // {
-      //   accessorKey: "sent_at",
-      //   header: "Sent Data",
-      //   size: 50,
-      //   Cell: ({ renderedCellValue }) => {
-      //     return <div className="text-sm">{getFormattedDate(renderedCellValue as string)}</div>;
-      //   }
-      // },
       {
         accessorKey: "email_template.name",
         header: "Template Name",
@@ -60,40 +81,15 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
         header: "Cc",
         size: 50,
       },
-      // {
-      //   accessorKey: "email_template.type",
-      //   header: "Template Type",
-      //   size: 50,
-      // },
-      // {
-      //   accessorKey: "email_template.event_type",
-      //   header: "Event Type",
-      //   size: 50,
-      // },
-      // {
-      //   accessorKey: "status",
-      //   header: "Status",
-      //   size: 50,
-      //   Cell: ({ renderedCellValue }) => {
-      //     return (
-      //       <div>
-      //         <span
-      //           className={`rounded-full text-xs py-2 px-4 ${renderedCellValue == "success" ? "bg-[#11ba82] text-white" : "bg-[#929ea8] text-white"}`}
-      //         >
-      //           {renderedCellValue == "success" ? "Sent" : "Failed"}
-      //         </span>
-      //       </div>
-      //     );
-      //   },
-      // },
     ],
     []
   );
-  
+
   const { push } = useNavigation();
   const handleRowClick = (row: any) => {
-    // console.log(row?.email_template?.email_id);
-    push(`/dashboard/email-templates/edit?id=${row?.email_template?.email_id}`);
+    setOpenModal(true);
+    setSelectedEmail(row);
+    // push(`/dashboard/email-templates/edit?id=${row?.email_template?.email_id}`);
   };
 
   return (
@@ -114,6 +110,49 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({ assetId }) => {
           onRowClick={handleRowClick}
         />
       )}
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              <div className="w-20">From</div>
+              <div className="">
+                : {selectedEmail?.email_template?.from_email || "Default Email"}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div className="w-20">To</div>
+              <div className="">: {selectedEmail?.to}</div>
+            </div>
+            <div className="flex gap-2">
+              <div className="w-20">Cc</div>
+              <div className="">
+                :{" "}
+                {selectedEmail?.email_template.cc &&
+                  selectedEmail?.email_template.cc + "; "}
+                {asset?.bill_customer_contact?.email &&
+                  asset?.bill_customer_contact?.email + "; "}
+                {asset?.reseller_contact?.email}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div className="w-20">Bcc</div>
+              <div className="">: {selectedEmail?.email_template.bcc}</div>
+            </div>
+            <div className="flex gap-2">
+              <div className="w-20">Send At</div>
+              <div className="">: {selectedEmail?.sent_at}</div>
+            </div>
+          </div>
+          <div
+            dangerouslySetInnerHTML={{ __html: selectedEmail?.sent_email_body }}
+          />
+        </Box>
+      </Modal>
     </>
   );
 };

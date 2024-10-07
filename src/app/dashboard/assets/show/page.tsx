@@ -63,9 +63,7 @@ const Page = () => {
     push(path + new URLSearchParams(queryParams).toString());
   };
 
-  const updateCustomerDetail = () => {
-
-  }
+  const updateCustomerDetail = () => {};
 
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
@@ -113,7 +111,9 @@ const Page = () => {
     {
       title: "Status",
       key: "active",
-      value: <StateComponent active={asset && (asset.active as boolean)} withLabel/>,
+      value: (
+        <StateComponent active={asset && (asset.active as boolean)} withLabel />
+      ),
     },
   ];
 
@@ -282,7 +282,12 @@ const Page = () => {
                     },
                     {
                       label: "Status",
-                      value: <StateComponent active={asset && (asset?.active as boolean)} withLabel/>,
+                      value: (
+                        <StateComponent
+                          active={asset && (asset?.active as boolean)}
+                          withLabel
+                        />
+                      ),
                     },
                     {
                       label: "Vendor Name",
@@ -317,7 +322,10 @@ const Page = () => {
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <div className="max-w-full overflow-x-auto">
-                  <TransactionHistoryTable transactions={transactions} asset={asset}/>
+                  <TransactionHistoryTable
+                    transactions={transactions}
+                    asset={asset}
+                  />
                 </div>
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
@@ -325,147 +333,14 @@ const Page = () => {
                   <AssetCustomersInformation asset={asset} />
                 </div>
               </CustomTabPanel>
-              {/* <CustomTabPanel value={value} index={1}>
-                <GeneralInformation
-                  singleColumn={true}
-                  items={[
-                    {
-                      label: "Product Name",
-                      value: asset?.osc_product?.product_name,
-                    },
-                    {
-                      label: "Product Description",
-                      value: asset?.osc_product?.product_description,
-                    },
-                    {
-                      label: "Product Type",
-                      value: asset?.osc_product?.product_type,
-                    },
-                    {
-                      label: "Vender Name",
-                      value: asset?.osc_product?.vendor_name,
-                    },
-                    {
-                      label: "Vendor Part Number",
-                      value: asset?.osc_product?.vendor_part_number,
-                    },
-                    {
-                      label: "Active",
-                      value: (
-                        <div
-                          className={`rounded-full h-4 w-4 ${asset?.osc_product?.active ? "bg-[#11ba82]" : "bg-[#929ea8]"}`}
-                        ></div>
-                      ),
-                    },
-                    {
-                      label: "Duration",
-                      value: asset?.osc_product?.duration,
-                    },
-                    {
-                      label: "Eval Set name",
-                      value: asset?.osc_product?.eval_set_name,
-                    },
-                    {
-                      label: "License Source Set",
-                      value: asset?.osc_product?.license_source_set,
-                    },
-                    {
-                      label: "New Set Name",
-                      value: asset?.osc_product?.new_set_name,
-                    },
-                    {
-                      label: "Attribute1",
-                      value: asset?.osc_product?.attribute1,
-                    },
-                    {
-                      label: "Attribute2",
-                      value: asset?.osc_product?.attribute2,
-                    },
-                    {
-                      label: "Attribute3",
-                      value: asset?.osc_product?.attribute3,
-                    },
-                    {
-                      label: "Attribute4",
-                      value: asset?.osc_product?.attribute4,
-                    },
-                    {
-                      label: "Attribute5",
-                      value: asset?.osc_product?.attribute5,
-                    },
-                  ]}
-                />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                <GeneralInformation
-                  singleColumn={true}
-                  items={[
-                    {
-                      label: "Account",
-                      value: asset?.owner?.account_id,
-                    },
-                    {
-                      label: "Address1",
-                      value: asset?.ship_customer_address?.address1,
-                    },
-                    {
-                      label: "Address2",
-                      value: asset?.ship_customer_address?.address2,
-                    },
-                    {
-                      label: "City",
-                      value: asset?.ship_customer_address?.city,
-                    },
-                    {
-                      label: "Country",
-                      value: asset?.ship_customer_address?.country,
-                    },
-                    {
-                      label: "Postal Code",
-                      value: asset?.ship_customer_address?.postal_code,
-                    },
-                    {
-                      label: "State",
-                      value: asset?.ship_customer_address?.state,
-                    },
-                    {
-                      label: "Contact Email",
-                      value: asset?.ship_customer_contact?.email,
-                    },
-                    {
-                      label: "Contact Phone",
-                      value: asset?.ship_customer_contact?.phone,
-                    },
-                    {
-                      label: "Contact First Name",
-                      value: asset?.ship_customer_contact?.first_name,
-                    },
-                    {
-                      label: "Contact Last Name",
-                      value: asset?.ship_customer_contact?.last_name,
-                    },
-                  ]}
-                />
-              </CustomTabPanel> */}
               <CustomTabPanel value={value} index={3}>
                 <div className="max-w-full overflow-x-auto">
-                  <EmailHistoryTable assetId={asset.asset_id as string} />
-                </div>
-              </CustomTabPanel>
-              {/* <CustomTabPanel value={value} index={5}>
-                <div className="max-w-full overflow-x-auto">
-                  <GenericTable
-                    data={seats}
-                    title={
-                      <div className="!font-satoshi px-12 py-4 text-2xl font-semibold text-[#1f325c] flex items-center gap-2">
-                        <FontAwesomeIcon icon={faCube} />
-                        Seats
-                      </div>
-                    }
-                    columns={SeatsColumns}
+                  <EmailHistoryTable
+                    assetId={asset.asset_id as string}
+                    asset={asset}
                   />
                 </div>
-              </CustomTabPanel> */}
+              </CustomTabPanel>
             </div>
           </>
         )}
