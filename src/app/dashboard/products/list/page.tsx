@@ -100,6 +100,11 @@ const Page = () => {
         size: 200,
       },
       {
+        accessorKey: "product_name",
+        header: "Product Name",
+        size: 300,
+      },
+      {
         accessorKey: "product_type",
         header: "Part Type",
         size: 150,

@@ -2,6 +2,7 @@ import subDays from "date-fns/subDays";
 import { subMonths, subYears } from "date-fns";
 
 export const DefaultPageSize = 12;
+export const realAPI_URL = "https://license-management-server.vercel.app/api";
 
 export const predefinedStyle = {
   width: "100px",
