@@ -20,7 +20,7 @@ export const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   minWidth: 600,
-  maxHeight: 600,
+  maxHeight: 'calc(100% - 60px)',
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
@@ -52,6 +52,9 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
   };
   const emailHistorys = emailHistoryData?.data.map((datum) => ({
     ...datum,
+    cc: (datum?.email_template?.cc ? datum?.email_template?.cc + "; " : "") +
+      (asset?.bill_customer_contact?.email ? asset?.bill_customer_contact?.email + "; " : '') +
+      asset?.reseller_contact?.email,
     sent_at: getFormattedDate(datum.sent_at),
   })) as EmailHistory[];
   const columns = useMemo<MRT_ColumnDef<EmailHistory>[]>(
@@ -77,7 +80,12 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
         size: 50,
       },
       {
-        accessorKey: "email_template.cc",
+        accessorKey: "email_template.bcc",
+        header: "Bcc",
+        size: 50,
+      },
+      {
+        accessorKey: "cc",
         header: "Cc",
         size: 50,
       },
@@ -117,40 +125,42 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <div className="w-20">From</div>
-              <div className="">
-                : {selectedEmail?.email_template?.from_email || "Default Email"}
+          <div className="pointer-events-none">
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <div className="w-20">From</div>
+                <div className="">
+                  : {selectedEmail?.email_template?.from_email || "Default Email"}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <div className="w-20">To</div>
+                <div className="">: {selectedEmail?.to}</div>
+              </div>
+              <div className="flex gap-2">
+                <div className="w-20">Cc</div>
+                <div className="">
+                  :{" "}
+                  {selectedEmail?.email_template.cc &&
+                    selectedEmail?.email_template.cc + "; "}
+                  {asset?.bill_customer_contact?.email &&
+                    asset?.bill_customer_contact?.email + "; "}
+                  {asset?.reseller_contact?.email}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <div className="w-20">Bcc</div>
+                <div className="">: {selectedEmail?.email_template.bcc}</div>
+              </div>
+              <div className="flex gap-2">
+                <div className="w-20">Send At</div>
+                <div className="">: {selectedEmail?.sent_at}</div>
               </div>
             </div>
-            <div className="flex gap-2">
-              <div className="w-20">To</div>
-              <div className="">: {selectedEmail?.to}</div>
-            </div>
-            <div className="flex gap-2">
-              <div className="w-20">Cc</div>
-              <div className="">
-                :{" "}
-                {selectedEmail?.email_template.cc &&
-                  selectedEmail?.email_template.cc + "; "}
-                {asset?.bill_customer_contact?.email &&
-                  asset?.bill_customer_contact?.email + "; "}
-                {asset?.reseller_contact?.email}
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <div className="w-20">Bcc</div>
-              <div className="">: {selectedEmail?.email_template.bcc}</div>
-            </div>
-            <div className="flex gap-2">
-              <div className="w-20">Send At</div>
-              <div className="">: {selectedEmail?.sent_at}</div>
-            </div>
+            <div
+              dangerouslySetInnerHTML={{ __html: selectedEmail?.sent_email_body }}
+            />
           </div>
-          <div
-            dangerouslySetInnerHTML={{ __html: selectedEmail?.sent_email_body }}
-          />
         </Box>
       </Modal>
     </>
