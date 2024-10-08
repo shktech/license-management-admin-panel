@@ -80,13 +80,13 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
         size: 50,
       },
       {
-        accessorKey: "email_template.bcc",
-        header: "Bcc",
+        accessorKey: "cc",
+        header: "Cc",
         size: 50,
       },
       {
-        accessorKey: "cc",
-        header: "Cc",
+        accessorKey: "email_template.bcc",
+        header: "Bcc",
         size: 50,
       },
     ],
