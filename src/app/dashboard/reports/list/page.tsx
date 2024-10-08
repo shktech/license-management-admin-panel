@@ -33,7 +33,9 @@ const HomePage: React.FC = () => {
     end_date: getFormattedDate(d?.end_date),
   })) as Report[];
 
-  const handleDownload = async (id: string) => {
+  const handleDownload = async (report: Report) => {
+    const id = report.id;
+    const title = report.title;
     try {
       const token = localStorage.getItem("accessToken");
       const response = await fetch(`${realAPI_URL}/reports/${id}`, {
@@ -52,7 +54,7 @@ const HomePage: React.FC = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'reports.csv'; // Set the desired filename
+      a.download = `${title}.csv`; // Set the desired filename
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -74,7 +76,7 @@ const HomePage: React.FC = () => {
         Cell: ({ row }) => (
           <div className="flex gap-4">
             <DownloadIcon
-              onClick={() => handleDownload(row.original.id as string)}
+              onClick={() => handleDownload(row.original)}
               fontSize="small"
               className="text-[#818f99] hover:text-black cursor-pointer"
             />
