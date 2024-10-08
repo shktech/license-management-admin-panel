@@ -292,6 +292,18 @@ export interface Customer {
   phone?: string;
 }
 
+export interface Report {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+  title?: string;
+  start_date?: string;
+  end_date?: string;
+  organization?: string;
+  created_by?: any;
+  updated_by?: any;
+}
+
 export interface Lookup {
   lookup_code?: string;
   lookup_name?: string;

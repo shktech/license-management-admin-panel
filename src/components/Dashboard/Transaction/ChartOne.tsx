@@ -158,7 +158,6 @@ const ChartOne: React.FC<ChatOneProps> = ({
               (item.status === null && state === "Null")
           )?.data || Array(yAxis?.length).fill(0),
       }));
-      console.log(dateArray, realData);
       setSeries(dateArray);
       setMaxNumber(
         Math.ceil(

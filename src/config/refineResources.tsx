@@ -93,6 +93,17 @@ export const dashboardResources: ResourceProps[] = [
     },
   },
   {
+    name: "reports",
+    list: "/dashboard/reports/list",
+    create: "/dashboard/reports/create",
+    meta: {
+      canDelete: true,
+      label: "Reports",
+      parent: "mastermgmt",
+      warnWhenUnsavedChanges: true,
+    },
+  },
+  {
     name: "references",
     list: "/dashboard/references/list",
     create: "/dashboard/references/create",

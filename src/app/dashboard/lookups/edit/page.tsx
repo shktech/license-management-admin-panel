@@ -41,7 +41,6 @@ const Item = () => {
         ...lookupData,
         parent_lookup: lookupData?.parent_lookup?.lookup_id as string,
       };
-      console.log(lookup);
       reset({ ...lookup });
     }
   }, [formLoading, lookupData]);
