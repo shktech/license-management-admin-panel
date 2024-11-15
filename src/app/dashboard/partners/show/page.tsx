@@ -1,9 +1,9 @@
 "use client";
 
-import { Partner } from "@/types/types";
+import { Partner, Permission } from "@/types/types";
 import Loader from "@components/common/Loader";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
-import { useNavigation, useShow } from "@refinedev/core";
+import { useNavigation, usePermissions, useShow } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
 import {
@@ -36,6 +36,9 @@ const Item = () => {
     resource: "partners",
     id: params?.id,
   });
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "partner" },
+  });
   const { data, isLoading } = queryResult;
 
   const [value, setValue] = useState(0);
@@ -50,7 +53,7 @@ const Item = () => {
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
-      <div className="flex gap-2 px-12">
+      permissionsData?.update && <div className="flex gap-2 px-12">
         <EditButton
           {...editButtonProps}
           onClick={() => push(`/dashboard/partners/edit?id=${params?.id}`)}
@@ -95,7 +98,7 @@ const Item = () => {
     <div className="no-padding-card">
       <Show
         goBack={null}
-        isLoading={isLoading}
+        isLoading={isLoading || isPermissionsLoading}
         breadcrumb={false}
         wrapperProps={{
           className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
@@ -132,7 +135,7 @@ const Item = () => {
           getButtonProps(editButtonProps, refreshButtonProps)
         }
       >
-        {isLoading ? (
+        {isLoading || isPermissionsLoading ? (
           <Loader />
         ) : (
           <div>
@@ -245,12 +248,14 @@ const Item = () => {
                 <ContactTable
                   data={partner?.contacts ?? []}
                   partner_id={params?.id}
+                  can_create={permissionsData?.create || false}
                 />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
                 <AddressTable
                   data={partner?.addresses ?? []}
                   partner_id={params?.id}
+                  can_create={permissionsData?.create || false}
                 />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>

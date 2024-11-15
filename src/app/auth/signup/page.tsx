@@ -169,7 +169,7 @@ const SignUp: React.FC = () => {
                           return "Password must include at least 1 number";
                         }
                         if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-                          return "Password must include at least 1 special character";
+                          return "Password must contain at least one special character from the following: ! @ # $ % ^ & * ( ) , . ? \" : { } | < >";
                         }
                         if (!/[A-Z]/.test(value)) {
                           return "Password must include at least 1 uppercase letter";

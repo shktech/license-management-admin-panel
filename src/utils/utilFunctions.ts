@@ -2,32 +2,32 @@ import { FieldConfig } from "@components/Forms/FormControlWrapper";
 import { InitialFieldConfig } from "@components/Forms/InitialFieldConfig";
 import { CrudSort } from "@refinedev/core";
 import { Customer } from "../types/types";
-import { format } from "date-fns";
+// import { format } from 'date-fns-tz';
 import { MRT_SortingState } from "material-react-table";
 import { matchIsValidTel } from "mui-tel-input";
 
-export const getFormattedDate = (timestamp: any) => {
-  if (timestamp === null || timestamp === undefined) {
+import { format } from 'date-fns';
+
+export const getFormattedDate = (timestamp: any): string => {
+  if (!timestamp) {
     return "";
   }
-  const date = new Date(timestamp);
+
+  let date: Date;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(timestamp)) {
+    const [year, month, day] = timestamp.split('-').map(Number);
+    date = new Date(Date.UTC(year, month - 1, day));
+  } else {
+    date = new Date(timestamp);
+  }
+
   if (!isNaN(date.getTime())) {
-    const formattedDate = format(date, "d-MMM-yyyy"); // Updated format to "9-May-2025"
+    const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+    const formattedDate = format(utcDate, "d-MMM-yyyy");
     return formattedDate;
   }
-  return timestamp;
-};
 
-export const getReadableDate = (dateString: any) => {
-  const date = new Date(dateString);
-
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-
-  return date.toLocaleDateString("en-US", options);
+  return "";
 };
 
 export const getTitleCase = (inputString: string) => {

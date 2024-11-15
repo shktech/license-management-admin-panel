@@ -10,9 +10,10 @@ import StateComponent from "@components/common/StateComponent";
 interface ContactTableProps {
   data: Partial<Contact[]>;
   partner_id: string;
+  can_create: boolean;
 }
 
-const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
+const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id, can_create }) => {
   const { push } = useNavigation();
 
   const columns = useMemo<MRT_ColumnDef<Contact>[]>(
@@ -91,7 +92,7 @@ const ContactTable: React.FC<ContactTableProps> = ({ data, partner_id }) => {
       }
       data={filteredData}
       columns={columns}
-      canCreate={true}
+      canCreate={can_create}
       totalCount={data?.length || 0}
       noSearchNeed
       onRowClick={handleRowClick}

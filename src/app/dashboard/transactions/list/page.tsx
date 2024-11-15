@@ -52,7 +52,7 @@ const Page = () => {
   const handleRowClick = (row: Transaction) =>
     push(`/dashboard/transactions/show?id=${row.transaction_id}`);
 
-  const { data: permissionsData } = usePermissions<Permission>({
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
     params: { codename: "transaction" },
   });
 
@@ -166,7 +166,7 @@ const Page = () => {
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {isLoading ? (
+      {isLoading || isPermissionsLoading ? (
         <Loader />
       ) : (
         <GenericTable
@@ -180,7 +180,7 @@ const Page = () => {
           columns={columns}
           onRowClick={handleRowClick}
           handleCreate={handleCreate}
-          // canCreate={permissionsData?.create}
+          canCreate={permissionsData?.create}
           totalCount={data?.total}
           handlePage={handlePage}
           handleSorting={handleSorting}

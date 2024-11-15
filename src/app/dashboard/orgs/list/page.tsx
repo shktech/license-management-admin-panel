@@ -30,8 +30,8 @@ const Page = () => {
 
   const orgsData = orgs?.data.sort(
     (a, b) =>
-      new Date(b.created_at as string).getTime() -
-      new Date(a.created_at as string).getTime()
+      new Date(b?.created_at as string).getTime() -
+      new Date(a?.created_at as string).getTime()
   );
 
   const { push } = useNavigation();

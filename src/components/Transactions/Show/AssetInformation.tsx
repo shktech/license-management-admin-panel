@@ -2,6 +2,7 @@
 
 import { Transaction } from "@/types/types";
 import GeneralInformation from "@components/common/View/GeneralInformation";
+import { getFormattedDate } from "@utils/utilFunctions";
 interface AssetInformationProps {
   transaction?: Transaction;
 }
@@ -41,11 +42,11 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
         },
         {
           label: "Start Date",
-          value: transaction?.asset?.start_date,
+          value: getFormattedDate(transaction?.asset?.start_date),
         },
         {
           label: "End Date",
-          value: transaction?.asset?.end_date,
+          value: getFormattedDate(transaction?.asset?.end_date),
         },
         {
           label: "License Integration Status",

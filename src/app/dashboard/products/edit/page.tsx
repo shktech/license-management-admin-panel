@@ -1,11 +1,11 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product } from "@/types/types";
+import { Permission, Product } from "@/types/types";
 import ProductForm from "@components/Forms/Products/ProductForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useParsed, usePermissions } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
@@ -28,6 +28,10 @@ const Item = () => {
       resource: "products",
       id: params?.id,
     },
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "product" },
   });
 
   const product: Product = queryResult?.data?.data as Product;
@@ -65,12 +69,12 @@ const Item = () => {
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.update }}
           footerButtons={({ saveButtonProps }) => (
             <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
           )}
         >
-          {formLoading ? (
+          {formLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <ProductForm {...{ control, errors, trigger, watch }} product={product} />

@@ -8,6 +8,7 @@ import {
 } from "material-react-table";
 import { Transaction } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { getFormattedDate } from "@utils/utilFunctions";
 
 interface TransactionTableProps {
   transactions?: Transaction[];
@@ -29,6 +30,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         accessorKey: "transaction_date",
         header: "Txn Date",
         size: 150,
+        Cell: ({ renderedCellValue }) =>
+          getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "transaction_source",
@@ -59,6 +62,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         accessorKey: "source_reference_date",
         header: "Source Ref Date",
         size: 150,
+        Cell: ({ renderedCellValue }) =>
+          getFormattedDate(renderedCellValue as string),
       },
       {
         accessorKey: "transaction_status",

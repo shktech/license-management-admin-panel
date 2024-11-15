@@ -1,7 +1,7 @@
 import { Box, Button, Modal, SnackbarCloseReason } from "@mui/material";
 import { useCreate, useCustomMutation, useList } from "@refinedev/core";
 import React, { useState } from "react";
-import { getReadableDate } from "@utils/utilFunctions";
+import { getFormattedDate } from "@utils/utilFunctions";
 import { modalOkBtnStyle, modalStyle } from "@data/MuiStyles";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import { APIKey } from "../../types/types";
@@ -77,7 +77,7 @@ const APIKeyPanel: React.FC<APIKeyPanelProps> = () => {
     {
       key: "created",
       label: "Created at",
-      value: getReadableDate(apiKey?.created),
+      value: getFormattedDate(apiKey?.created),
     },
     {
       key: "revoked",

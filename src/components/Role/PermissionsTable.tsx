@@ -14,11 +14,14 @@ interface PermissionsTableProps {
 }
 
 const checkboxGroupInfo = [
-  { title: "Users", key: "user" },
-  { title: "Role", key: "role" },
-  { title: "Licenses", key: "asset" },
   { title: "Transactions", key: "transaction" },
+  { title: "Licenses", key: "asset" },
   { title: "Products", key: "product" },
+  { title: "Partners", key: "partner" },
+  { title: "Reference", key: "reference"},
+  { title: "Lookups", key: "lookup" },
+  { title: "Notification Templates", key: "emailtemplate"},
+  { title: "Reports", key: "report"},
 ];
 
 const MyCheckbox = ({

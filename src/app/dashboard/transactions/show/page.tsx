@@ -31,7 +31,7 @@ const TransactionShow = () => {
     id: params?.id,
   });
   const { data, isLoading, refetch } = queryResult;
-  const { data: permissionsData } = usePermissions<Permission>({
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
     params: { codename: "transaction" },
   });
 
@@ -60,7 +60,7 @@ const TransactionShow = () => {
     return (
       <div className="flex gap-2 px-12">
         {transaction?.transaction_status != "Completed" && (
-          // permissionsData?.update &&
+          permissionsData?.update &&
           <>
             <EditButton
               {...editButtonProps}
@@ -85,7 +85,7 @@ const TransactionShow = () => {
     <div className="no-padding-card">
       <Show
         goBack={null}
-        isLoading={isLoading}
+        isLoading={isLoading || isPermissionsLoading}
         breadcrumb={false}
         wrapperProps={{
           className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
@@ -97,36 +97,6 @@ const TransactionShow = () => {
                 <FontAwesomeIcon icon={faRightLeft} />
                 Transaction
               </div>
-              {/* <Box
-                component="span"
-                sx={{
-                  backgroundColor:
-                    TxtTypeColor[transaction?.asset?.license_type as string],
-                  ...tagStyle,
-                }}
-              >
-                {transaction?.asset?.license_type}
-              </Box>
-              <Box
-                component="span"
-                sx={{
-                  backgroundColor:
-                    TxtActionColor[transaction?.transaction_action as string],
-                  ...tagStyle,
-                }}
-              >
-                {transaction?.transaction_action}
-              </Box>
-              <Box
-                component="span"
-                sx={{
-                  backgroundColor:
-                    TxtStatusColor[transaction?.transaction_status as string],
-                  ...tagStyle,
-                }}
-              >
-                {transaction?.transaction_status}
-              </Box> */}
             </div>
           </div>
         }
@@ -134,7 +104,7 @@ const TransactionShow = () => {
           getButtonProps(editButtonProps, refreshButtonProps)
         }
       >
-        {isLoading ? <Loader /> : <ShowTransaction transaction={transaction} />}
+        {isLoading || isPermissionsLoading ? <Loader /> : <ShowTransaction transaction={transaction} />}
       </Show>
     </div>
   );

@@ -27,8 +27,8 @@ const GeneralInput = forwardRef<HTMLInputElement, BaseInputProps>(
           className="mb-1.5 block text-[#000000cc] dark:text-white absolute text-sm left-4 top-2 flex items-center gap-1"
         >
           {label}
-          {props.required && <span className="text-red-500">*</span>}
-          {!props.required && (
+          {!props.disabled && props.required && <span className="text-red-500">*</span>}
+          {!props.disabled && !props.required && (
             <span className="text-gray-500 text-xs">(Optional)</span>
           )}
         </label>

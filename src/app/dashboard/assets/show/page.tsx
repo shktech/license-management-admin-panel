@@ -1,6 +1,6 @@
 "use client";
 
-import { Asset, Seat, Transaction } from "@/types/types";
+import { Asset, Permission, Seat, Transaction } from "@/types/types";
 import TransactionHistoryTable from "@components/Assets/TransactionHistoryTable";
 import Loader from "@components/common/Loader";
 import GeneralInformation from "@components/common/View/GeneralInformation";
@@ -12,7 +12,7 @@ import {
 import GenericTable from "@components/Table/GenericTable";
 import { refreshRefineBtnStyle } from "@data/MuiStyles";
 import { Button } from "@mui/material";
-import { useNavigation, useParsed, useShow } from "@refinedev/core";
+import { useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
@@ -47,6 +47,10 @@ const Page = () => {
     id: params?.id,
   });
   const { data, isLoading } = queryResult;
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "asset" },
+  });
 
   const asset: Asset = data?.data as Asset;
   const transactions: Transaction[] = data?.data?.transactions as Transaction[];
@@ -106,8 +110,8 @@ const Page = () => {
     { title: "Seat Count", key: "osc_seat_count" },
     { title: "Owner", key: "owner.name" },
     { title: "Vender Part", key: "osc_product.vendor_name" },
-    { title: "Start Date", key: "start_date" },
-    { title: "End Date", key: "end_date" },
+    { title: "Start Date", key: "start_date", date: true },
+    { title: "End Date", key: "end_date", date: true },
     {
       title: "Status",
       key: "active",
@@ -125,7 +129,7 @@ const Page = () => {
     <div className="no-padding-card">
       <Show
         goBack={null}
-        isLoading={isLoading}
+        isLoading={isLoading || isPermissionsLoading}
         breadcrumb={false}
         wrapperProps={{
           className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
@@ -143,34 +147,34 @@ const Page = () => {
         }
         headerButtons={({ refreshButtonProps }) => (
           <div className="flex gap-2 pr-10">
-            <Button
+            {permissionsData?.update && <Button
               sx={refreshRefineBtnStyle}
               href={`/dashboard/assets/customer?asset_id=${params?.id}`}
               // onClick={() => updateCustomerDetail()}
             >
               <AutorenewIcon fontSize="small" />
               Update Customer
-            </Button>
-            <Button
+            </Button>}
+            {permissionsData?.create && <Button
               sx={refreshRefineBtnStyle}
               onClick={() => handleReActionBtn("Renewal")}
             >
               <AutorenewIcon fontSize="small" />
               Renew
-            </Button>
-            <Button
+            </Button>}
+            {permissionsData?.create && <Button
               sx={refreshRefineBtnStyle}
               onClick={() => handleReActionBtn("Revoke")}
             >
               <AutorenewIcon fontSize="small" />
               Revoke
-            </Button>
+            </Button>}
 
             {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
           </div>
         )}
       >
-        {isLoading ? (
+        {isLoading || isPermissionsLoading ? (
           <Loader />
         ) : (
           <>
@@ -181,7 +185,7 @@ const Page = () => {
                     {field.title}
                   </div>
                   <div className="text-[#687991]">
-                    {field.value || getNestedValue(asset, field.key)}
+                    {field.value || (field.date ? getFormattedDate(getNestedValue(asset, field.key)) : getNestedValue(asset, field.key))}
                   </div>
                 </div>
               ))}

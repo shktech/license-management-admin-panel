@@ -4,7 +4,7 @@ import useStore from "@hooks/globalStore";
 import { AuthProvider } from "@refinedev/core";
 import { Organization, Permission, Role, User } from "@/types/types";
 import crypto from "crypto";
-const realAPI_URL = "https://license-management-server.vercel.app/api";
+const realAPI_URL = "https://calmtpy.pfuapps.com/api";
 const API_URL = process.env.API_URL;
 
 export interface LoginResponse {
@@ -43,6 +43,7 @@ const aggregatePermissionsByCodename = (
       }
     });
   });
+  console.log(aggregatedPermission)
 
   return aggregatedPermission;
 };

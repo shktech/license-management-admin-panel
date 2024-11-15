@@ -1,18 +1,22 @@
 "use client";
 import { MRT_ColumnDef } from "material-react-table";
 import React, { useMemo } from "react";
-import { useNavigation, useTable } from "@refinedev/core";
+import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 import StateComponent from "@components/common/StateComponent";
-import { Lookup } from "@/types/types";
+import { Lookup, Permission } from "@/types/types";
 
 const HomePage: React.FC = () => {
   const {
     tableQueryResult: { data, isLoading, refetch },
   } = useTable<Lookup>({
     hasPagination: false,
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "lookup" },
   });
 
   const { push } = useNavigation();
@@ -65,7 +69,7 @@ const HomePage: React.FC = () => {
   );
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {isLoading ? (
+      {isLoading || isPermissionsLoading ? (
         <Loader />
       ) : (
         <GenericTable
@@ -77,7 +81,7 @@ const HomePage: React.FC = () => {
           }
           data={data?.data}
           columns={columns}
-          canCreate={true}
+          canCreate={permissionsData?.create}
           onRowClick={handleEditClick}
           // totalCount={data?.total}
           handleCreate={handleCreate}

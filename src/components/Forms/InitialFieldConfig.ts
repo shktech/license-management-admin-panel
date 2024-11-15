@@ -25,4 +25,5 @@ export interface InitialFieldConfig {
   dependency?: string;
   validation?: string;
   manualValidation?: true;
+  nested?: boolean;
 }

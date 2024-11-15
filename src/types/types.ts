@@ -302,6 +302,7 @@ export interface Report {
   organization?: string;
   created_by?: any;
   updated_by?: any;
+  owner?: any;
 }
 
 export interface Lookup {

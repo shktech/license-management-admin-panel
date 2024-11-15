@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo } from "react";
-import { useTable, useDelete, useNavigation } from "@refinedev/core";
-import { Product } from "@/types/types";
+import { useTable, useDelete, useNavigation, usePermissions } from "@refinedev/core";
+import { Permission, Product } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import Loader from "@components/common/Loader";
@@ -31,6 +31,10 @@ const Page = () => {
         order: "desc",
       },
     ],
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "product" },
   });
 
   const { push } = useNavigation();
@@ -151,7 +155,7 @@ const Page = () => {
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {isLoading ? (
+      {isLoading || isPermissionsLoading ? (
         <Loader />
       ) : (
         <GenericTable
@@ -163,7 +167,8 @@ const Page = () => {
           }
           data={data?.data}
           columns={columns}
-          canCreate={true}
+          canCreate={permissionsData?.create}
+          canEdit={permissionsData?.update}
           totalCount={data?.total}
           handlePage={handlePage}
           onRowClick={handleRowClick}

@@ -1,12 +1,12 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Lookup } from "@/types/types";
+import { Lookup, Permission } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
 import { LookupFormFields } from "@components/Forms/Lookups/LookupFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useParsed, usePermissions } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
@@ -31,6 +31,10 @@ const Item = () => {
       resource: "lookups",
       id: params?.id,
     },
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "lookup" },
   });
 
   const lookupData = queryResult?.data?.data as Lookup;
@@ -73,14 +77,14 @@ const Item = () => {
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.update }}
           footerButtons={({ saveButtonProps }) =>
             !lookupData?.is_default && (
               <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
             )
           }
         >
-          {formLoading ? (
+          {formLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <>

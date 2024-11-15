@@ -1,11 +1,11 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product } from "@/types/types";
+import { Permission, Product } from "@/types/types";
 import ProductForm from "@components/Forms/Products/ProductForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed } from "@refinedev/core";
+import { useBack, useParsed, usePermissions } from "@refinedev/core";
 import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 
@@ -28,6 +28,10 @@ const Item = () => {
     },
   });
 
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "product" },
+  });
+
   return (
     <div className="flex justify-center py-6">
       <div className="w-2/3">
@@ -48,7 +52,7 @@ const Item = () => {
               Create Product
             </div>
           }
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.create }}
           footerButtons={({ saveButtonProps }) => (
             <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
           )}
@@ -56,7 +60,7 @@ const Item = () => {
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
         >
-          {formLoading ? (
+          {formLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <ProductForm {...{ control, errors, trigger, watch }} />

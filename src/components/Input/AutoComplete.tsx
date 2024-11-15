@@ -22,7 +22,7 @@ type DropdownProps = BaseInputProps & {
 
 const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
   (
-    { label, onChange, value, resource, valueKey, labelKey, elseKey, ...props },
+    { label, onChange, value, resource, valueKey, labelKey, elseKey, nested, ...props },
     ref
   ) => {
     const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>(
@@ -45,12 +45,23 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
       },
     });
 
+    function getNestedValue(obj: any, keyPath: string): any {
+      return keyPath.split('.').reduce((acc, key) => {
+        const arrayMatch = key.match(/(\w+)\[(\d+)\]/);
+        if (arrayMatch) {
+          const [, arrayKey, index] = arrayMatch;
+          return acc ? acc[arrayKey][Number(index)] : undefined;
+        }
+        return acc ? acc[key] : undefined;
+      }, obj);
+    }    
+
     useEffect(() => {
       if (data && valueKey && labelKey) {
         const options =
           data?.data.map((item: any) => ({
-            value: item[valueKey],
-            name: item[labelKey],
+            value: nested ? getNestedValue(item, valueKey) : item[valueKey],
+            name: nested ? getNestedValue(item, labelKey) : item[labelKey],
             elseKey: item[elseKey],
           })) || [];
         setDropdownOptions(options);
@@ -118,9 +129,9 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
           renderOption={(props, option) => {
             const { key, ...optionProps } = props;
             return (
-              <Box key={key} component="li" {...optionProps}>
+              <Box key={optionProps.id} component="li" {...optionProps}>
                 <div className="flex flex-col">
-                  <div className="">{option.value}</div>
+                  <div className="">{nested ? option.name : option.value}</div>
                   <div className="text-sm">{option.elseKey}</div>
                 </div>
               </Box>

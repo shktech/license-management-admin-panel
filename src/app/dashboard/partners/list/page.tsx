@@ -1,12 +1,12 @@
 "use client";
 
-import { useNavigation, useTable } from "@refinedev/core";
+import { useNavigation, usePermissions, useTable } from "@refinedev/core";
 import React, { useEffect, useMemo } from "react";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
 import GenericTable from "@components/Table/GenericTable";
 import Loader from "@components/common/Loader";
 import { convertSortingStateToCrudSort } from "@utils/utilFunctions";
-import { Partner } from "@/types/types";
+import { Partner, Permission } from "@/types/types";
 import StateComponent from "@components/common/StateComponent";
 import {
   FormControl,
@@ -36,6 +36,10 @@ const Page = () => {
         order: "desc",
       },
     ],
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "partner" },
   });
 
   const handleRowClick = (row: Partner) => {
@@ -147,7 +151,7 @@ const Page = () => {
           columns={columns}
           onRowClick={handleRowClick}
           handleCreate={handleCreate}
-          canCreate={true}
+          canCreate={permissionsData?.create}
           totalCount={data?.total}
           handlePage={handlePage}
           handleSorting={handleSorting}

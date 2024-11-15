@@ -1,6 +1,6 @@
 "use client";
 
-import { Lookup, LookupValue } from "@/types/types";
+import { Lookup, LookupValue, Permission } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
@@ -16,6 +16,7 @@ import {
   useList,
   useNavigation,
   useParsed,
+  usePermissions,
   useShow,
   useTable,
 } from "@refinedev/core";
@@ -47,6 +48,10 @@ const Page = () => {
   } = useTable<LookupValue>({
     resource: `lookups/${params?.id}/values`,
     hasPagination: false,
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "lookup" },
   });
 
   const [codes, setCodes] = useState<LookupValue[]>([]);
@@ -121,7 +126,7 @@ const Page = () => {
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
-      <div className="flex gap-2 px-12">
+      permissionsData?.update && <div className="flex gap-2 px-12">
         <EditButton
           {...editButtonProps}
           onClick={() => push(`/dashboard/lookups/edit?id=${params?.id}`)}
@@ -506,7 +511,7 @@ const Page = () => {
           return {
             ...column,
             Cell: ({ row }) => (
-              <div className="flex gap-4">
+              permissionsData?.update && (<div className="flex gap-4">
                 {row.original.id == selectedValue?.id ? (
                   <div className="flex gap-2">
                     <SaveIcon
@@ -529,7 +534,7 @@ const Page = () => {
                     />
                   )
                 )}
-              </div>
+              </div>)
             ),
           };
         }
@@ -581,7 +586,7 @@ const Page = () => {
   return (
     <Show
       goBack={null}
-      isLoading={isLookupLoading}
+      isLoading={isLookupLoading || isPermissionsLoading}
       breadcrumb={false}
       wrapperProps={{
         className: "rounded-none bg-[#f2f6fa] shadow-none p-0",
@@ -608,7 +613,7 @@ const Page = () => {
         getButtonProps(editButtonProps, refreshButtonProps)
       }
     >
-      {isLookupLoading || (lookup.parent_lookup && !parentValue) ? (
+      {isLookupLoading || isPermissionsLoading  ? (
         <Loader />
       ) : (
         <div>
@@ -683,7 +688,7 @@ const Page = () => {
                 </div>
               }
               noSearchNeed={true}
-              canCreate={!selectedValue?.is_new}
+              canCreate={permissionsData?.create && !selectedValue?.is_new}
             />
           </div>
         </div>

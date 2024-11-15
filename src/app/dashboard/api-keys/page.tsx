@@ -43,7 +43,7 @@ const Page = () => {
       new Date(a.created as string).getTime()
   ).map(datum => ({
     ...datum,
-    created: getFormattedDate(datum.created)
+    created: getFormattedDate(datum.created as string)
   }))
   const handleRevoke = (row: APIKey) => {
     setSelectedAPIKey(row);

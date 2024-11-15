@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Product, Transaction } from "@/types/types";
+import { Permission, Product, Transaction } from "@/types/types";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
@@ -10,6 +10,7 @@ import {
   useList,
   useNavigation,
   useParsed,
+  usePermissions,
   useUpdate,
 } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
@@ -47,6 +48,10 @@ const TransactionEdit = () => {
   } = useList<Product>({
     resource: "products",
     hasPagination: false,
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "transaction" },
   });
 
   const transaction: Transaction = queryResult?.data?.data as Transaction;
@@ -143,12 +148,12 @@ const TransactionEdit = () => {
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.update }}
           footerButtons={({ saveButtonProps }) => (
             <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
           )}
         >
-          {formLoading || productLoading ? (
+          {formLoading || productLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <TransactionForm

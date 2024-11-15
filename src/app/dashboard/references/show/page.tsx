@@ -1,10 +1,10 @@
 "use client";
 
-import { Reference, ReferenceCode } from "@/types/types";
+import { Permission, Reference, ReferenceCode } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
-import { useNavigation, useParsed, useShow, useTable } from "@refinedev/core";
+import { useNavigation, useParsed, usePermissions, useShow, useTable } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import {
   convertSortingStateToCrudSort,
@@ -32,6 +32,11 @@ const Page = () => {
     resource: "references",
     id: params?.id,
   });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "reference" },
+  });
+
   const { data, isLoading } = queryResult;
 
   const {
@@ -85,7 +90,7 @@ const Page = () => {
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
-      <div className="flex gap-2 px-12">
+      permissionsData?.update && <div className="flex gap-2 px-12">
         <EditButton
           {...editButtonProps}
           onClick={() => push(`/dashboard/references/edit?id=${params?.id}`)}
@@ -181,12 +186,12 @@ const Page = () => {
 
   return (
     <>
-      {isLoading || codeIsLoading ? (
+      {isLoading || codeIsLoading || isPermissionsLoading ? (
         <Loader />
       ) : (
         <Show
           goBack={null}
-          isLoading={isLoading || codeIsLoading}
+          isLoading={isLoading || codeIsLoading || isPermissionsLoading}
           breadcrumb={false}
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none p-0",
@@ -304,7 +309,7 @@ const Page = () => {
                 handlePage={handlePage}
                 handleSorting={handleSorting}
                 handleSearch={handleSearch}
-                canCreate={true}
+                canCreate={permissionsData?.create}
               />
             </CustomTabPanel>
           </div>

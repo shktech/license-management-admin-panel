@@ -117,6 +117,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
                           elseKey={field?.elseKey}
                           disabled={field.disabled}
                           required={field.required}
+                          nested={field?.nested}
                           // fetchOptions={field.fetchOptions}
                         />
                       );

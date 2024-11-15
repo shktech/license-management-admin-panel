@@ -26,6 +26,7 @@ import { modalStyle, tagStyle } from "@data/MuiStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import StateComponent from "@components/common/StateComponent";
+import { DefaultPageSize } from "@data/UtilData";
 
 const Page = () => {
   const {
@@ -33,12 +34,15 @@ const Page = () => {
     setCurrent,
     setFilters,
     setSorters,
-  } = useTable<User>({});
+  } = useTable<User>({
+    pagination: {
+      pageSize: DefaultPageSize
+    }
+  });
   const { push } = useNavigation();
   const {
     data: rolesData,
     isLoading: isRolesLoading,
-    isError: isRolesError,
   } = useList<Role, HttpError>({
     resource: "roles",
     hasPagination: false,
@@ -46,8 +50,6 @@ const Page = () => {
 
   const {
     data: orgs,
-    isLoading: isOrgLoading,
-    refetch: refetchOrgs,
   } = useList<Organization, HttpError>({
     resource: "orgs",
     hasPagination: false,
@@ -99,7 +101,12 @@ const Page = () => {
   const handlePage = (value: number) => setCurrent(value);
 
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
-  const handleCloseSuccessModal = () => setOpenSuccessModal(false);
+  const handleCloseSuccessModal = () => {
+    refetch();
+    setOpenSuccessModal(false);
+  }
+
+  console.log(data)
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [

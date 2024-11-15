@@ -1,9 +1,9 @@
 "use client";
 
-import { Product } from "@/types/types";
+import { Permission, Product } from "@/types/types";
 import Loader from "@components/common/Loader";
 import { editRefineBtnStyle, refreshRefineBtnStyle } from "@data/MuiStyles";
-import { useNavigation, useShow } from "@refinedev/core";
+import { useNavigation, usePermissions, useShow } from "@refinedev/core";
 import { EditButton, RefreshButton, Show } from "@refinedev/mui";
 import { useParsed } from "@refinedev/core";
 import {
@@ -25,6 +25,9 @@ const Item = () => {
     resource: "products",
     id: params?.id,
   });
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "product" },
+  });
   const { data, isLoading } = queryResult;
 
   const [value, setValue] = useState(0);
@@ -39,13 +42,12 @@ const Item = () => {
 
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
-      <div className="flex gap-2 px-12">
+      permissionsData?.update && <div className="flex gap-2 px-12">
         <EditButton
           {...editButtonProps}
           onClick={() => push(`/dashboard/products/edit?id=${params?.id}`)}
           sx={editRefineBtnStyle}
         />
-        {/* <RefreshButton {...refreshButtonProps} sx={refreshRefineBtnStyle} /> */}
       </div>
     );
   };
@@ -67,7 +69,7 @@ const Item = () => {
     <div className="no-padding-card">
       <Show
         goBack={null}
-        isLoading={isLoading}
+        isLoading={isLoading || isPermissionsLoading}
         breadcrumb={false}
         wrapperProps={{
           className: "rounded-none bg-[#f2f6fa] shadow-none pt-10 pb-2.5",
@@ -88,7 +90,7 @@ const Item = () => {
           getButtonProps(editButtonProps, refreshButtonProps)
         }
       >
-        {isLoading ? (
+        {isLoading || isPermissionsLoading ? (
           <Loader />
         ) : (
           <>

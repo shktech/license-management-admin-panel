@@ -1,11 +1,11 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { EmailTemplate } from "@/types/types";
+import { EmailTemplate, Permission } from "@/types/types";
 import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack } from "@refinedev/core";
+import { useBack, usePermissions } from "@refinedev/core";
 import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
@@ -23,6 +23,10 @@ const Item = () => {
   } = useForm<EmailTemplate>({
     mode: "onChange",
     reValidateMode: "onSubmit"
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "emailtemplate" },
   });
 
   const [emailBody, setEmailBody] = useState<string>("");
@@ -51,7 +55,7 @@ const Item = () => {
               Create Notification Template
             </div>
           }
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.create }}
           footerButtons={({ saveButtonProps }) => (
             <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
           )}
@@ -59,7 +63,7 @@ const Item = () => {
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
         >
-          {formLoading ? (
+          {formLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <EmailTemplateComponent

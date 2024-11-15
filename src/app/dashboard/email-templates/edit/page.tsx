@@ -1,11 +1,11 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { EmailTemplate } from "@/types/types";
+import { EmailTemplate, Permission } from "@/types/types";
 import EmailTemplateComponent from "@components/Forms/EmailTemplates/EmailTemplate";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useParsed, useUpdate } from "@refinedev/core";
+import { useBack, useParsed, usePermissions, useUpdate } from "@refinedev/core";
 import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect, useState } from "react";
@@ -29,6 +29,10 @@ const Item = () => {
     },
   });
 
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "emailtemplate" },
+  });
+
   const emailTemplate: EmailTemplate = queryResult?.data?.data as EmailTemplate;
   const [emailBody, setEmailBody] = useState<string>(
     emailTemplate?.body as string
@@ -36,8 +40,8 @@ const Item = () => {
 
   useEffect(() => {
     if (!formLoading && emailTemplate) {
-      const { created_by, updated_by, ...templateWithoutMeta } = emailTemplate; // Exclude fields
-      reset({ ...templateWithoutMeta }); // Reset without created_by and updated_by
+      const { ...templateWithoutMeta } = emailTemplate;
+      reset({ ...templateWithoutMeta });
     }
   }, [formLoading, emailTemplate]);
 
@@ -65,7 +69,7 @@ const Item = () => {
               Edit notification template
             </div>
           }
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.update }}
           footerButtons={({ saveButtonProps }) => (
             <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
           )}
@@ -73,7 +77,7 @@ const Item = () => {
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
         >
-          {formLoading ? (
+          {formLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <EmailTemplateComponent

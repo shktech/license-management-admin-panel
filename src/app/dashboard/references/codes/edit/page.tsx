@@ -1,12 +1,12 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Reference, ReferenceCode } from "@/types/types";
+import { Permission, Reference, ReferenceCode } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
 import { ReferenceCodeFormFields } from "@components/Forms/References/ReferenceCodeFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack, useNavigation, useParsed, useUpdate } from "@refinedev/core";
+import { useBack, useNavigation, useParsed, usePermissions, useUpdate } from "@refinedev/core";
 import { Create, Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { useEffect } from "react";
@@ -30,6 +30,10 @@ const Item = () => {
       resource: `references/${params?.reference_id}/codes`,
       id: params?.code_id,
     },
+  });
+
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "reference" },
   });
 
   const referenceCode: ReferenceCode = queryResult?.data?.data as ReferenceCode;
@@ -88,12 +92,12 @@ const Item = () => {
           wrapperProps={{
             className: "rounded-none bg-[#f2f6fa] shadow-none",
           }}
-          saveButtonProps={{ ...saveButtonProps, hidden: false }}
+          saveButtonProps={{ ...saveButtonProps, hidden: !permissionsData?.update }}
           footerButtons={({ saveButtonProps }) => (
             <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
           )}
         >
-          {formLoading ? (
+          {formLoading || isPermissionsLoading ? (
             <Loader />
           ) : (
             <GenericForm

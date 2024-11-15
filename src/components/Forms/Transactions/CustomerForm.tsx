@@ -95,6 +95,7 @@ const CustomerForm = ({
   });
 
   const handleValueChange = (event: any, newValue: Partner | null) => {
+    console.log("SETTING PARTNER", newValue)
     setValue(newValue as Partner);
     setAddresses(newValue?.addresses || []);
     setContacts(newValue?.contacts || []);
@@ -200,8 +201,8 @@ const CustomerForm = ({
                   <div className="text-sm flex flex-col gap-2 py-2">
                     <div className="flex flex-col gap-2">
                       <div className="">
-                        <span className="font-bold">Account: </span>
-                        {option.account_id}
+                        <span className="font-bold">Partner ID: </span>
+                        {option.partner_number}
                       </div>
                       <div className="">
                         <span className="font-bold">Name: </span>

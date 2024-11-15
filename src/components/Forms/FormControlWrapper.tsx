@@ -34,6 +34,7 @@ export interface FieldConfig {
   disabled?: boolean;
   required?: string;
   prefix?: string;
+  nested?: boolean;
 }
 
 export interface GenericFormProps {

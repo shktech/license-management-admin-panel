@@ -3,15 +3,16 @@ import { InitialFieldConfig } from "../InitialFieldConfig";
 const InitialField: InitialFieldConfig[] = [
   {
     name: "osc_part_number",
-    label: "Software Part Number",
+    label: "Product Name",
     // type: "dropdown",
     type: "autocomplete",
     size: 2,
     resource: "products",
     valueKey: "product_part_number",
     labelKey: "product_name",
-    elseKey: "product_name",
+    elseKey: "product_part_number",
     required: "text",
+    nested: true
   },
   {
     name: "license_type",

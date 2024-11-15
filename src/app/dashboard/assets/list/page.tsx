@@ -41,7 +41,7 @@ const Page = () => {
 
   const handlePage = (value: number) => setCurrent(value);
 
-  const { data: permissionsData } = usePermissions<Permission>({
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
     params: { codename: "asset" },
   });
 
@@ -66,8 +66,8 @@ const Page = () => {
         size: 200,
       },
       {
-        accessorKey: "osc_product.product_part_number",
-        header: "Part Number",
+        accessorKey: "osc_product.product_name",
+        header: "Product Name",
         size: 200,
       },
       {
@@ -83,13 +83,13 @@ const Page = () => {
       {
         accessorKey: "start_date",
         header: "Start Date",
-        Cell: ({ row }) => getFormattedDate(row.original.start_date),
+        Cell: ({ row }) => getFormattedDate(row.original.start_date as string),
         size: 150,
       },
       {
         accessorKey: "end_date",
         header: "End Date",
-        Cell: ({ row }) => getFormattedDate(row.original.end_date),
+        Cell: ({ row }) => getFormattedDate(row.original.end_date as string),
         size: 150,
       },
       {
@@ -110,7 +110,7 @@ const Page = () => {
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {isLoading ? (
+      {isLoading || isPermissionsLoading ? (
         <Loader />
       ) : (
         <GenericTable

@@ -1,8 +1,8 @@
 "use client";
 
-import { useList, useNavigation } from "@refinedev/core";
+import { useList, useNavigation, usePermissions } from "@refinedev/core";
 import React, { useMemo } from "react";
-import { EmailTemplate } from "@/types/types";
+import { EmailTemplate, Permission } from "@/types/types";
 import Loader from "@components/common/Loader";
 import GenericTable from "@components/Table/GenericTable";
 import { MRT_ColumnDef, MRT_SortingState } from "material-react-table";
@@ -24,6 +24,9 @@ const Types = [
 const Page = () => {
   const { data: emailTemplateData, isLoading } = useList<EmailTemplate>({
     hasPagination: false,
+  });
+  const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
+    params: { codename: "emailtemplate" },
   });
 
   const emails = emailTemplateData?.data.map(datum => ({
@@ -70,7 +73,7 @@ const Page = () => {
 
   return (
     <div className="pt-6 pb-2.5 xl:pb-1 overflow-x-auto">
-      {isLoading ? (
+      {isLoading || isPermissionsLoading ? (
         <Loader />
       ) : (
         <GenericTable
@@ -82,7 +85,7 @@ const Page = () => {
           }
           data={emails}
           columns={columns}
-          canCreate={true}
+          canCreate={permissionsData?.create}
           onRowClick={handleRowClick}
           noSearchNeed={true}
           noSortNeed={true}

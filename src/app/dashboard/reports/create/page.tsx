@@ -1,31 +1,53 @@
 "use client";
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
-import { Lookup } from "@/types/types";
+import { Lookup, Permission } from "@/types/types";
 import GenericForm from "@components/Forms/GenericForm";
-import { LookupFormFields } from "@components/Forms/Lookups/LookupFormFields";
 import { ReportFormFields } from "@components/Forms/Reports/ReportFormFields";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
-import { useBack } from "@refinedev/core";
+import { useBack, usePermissions, useCreate, useNavigation } from "@refinedev/core";
 import { Create, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
-import { useEffect } from "react";
 
 const Item = () => {
   const {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
     control,
-    reset,
     trigger,
+    getValues,
     formState: { errors },
-  } = useForm<Lookup>({
+  } = useForm({
     mode: "onChange",
     reValidateMode: "onSubmit"
   });
+  const { push } = useNavigation();
+  const { mutate } = useCreate();
 
-  const lookup: Lookup = queryResult?.data?.data as Lookup;
+  const onSubmit = async () => {
+    const valid = await trigger();
+    if (valid) {
+      const formValues = getValues();
+      const payload = {
+        start_date: formValues.start_date,
+        end_date: formValues.end_date,
+        partner_id: formValues.owner
+      }
+      mutate(
+        {
+          resource: "reports",
+          values: payload,
+        },
+        {
+          onError: (error) => {},
+          onSuccess: () => {
+            push("/dashboard/reports/list");
+          },
+        }
+      );
+    }
+  }
 
   return (
     <div className="flex justify-center py-6">
@@ -52,16 +74,18 @@ const Item = () => {
           }}
           saveButtonProps={{ ...saveButtonProps, hidden: false }}
           footerButtons={({ saveButtonProps }) => (
-            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} />
+            <SaveButton {...saveButtonProps} sx={sendEmailBtnStyle} onClick={onSubmit} />
           )}
         >
           {formLoading ? (
             <Loader />
           ) : (
-            <GenericForm
-              {...{ control, errors, trigger }}
-              fields={ReportFormFields.create}
-            />
+            <div>
+              <GenericForm
+                {...{ control, errors, trigger }}
+                fields={ReportFormFields.create}
+              />
+            </div>
           )}
         </Create>
       </div>

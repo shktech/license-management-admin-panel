@@ -4,10 +4,11 @@ import { Role, User, Permission } from "../../types/types";
 import GeneralInput from "@components/Input/GeneralInput";
 import { modalCancelBtnStyle, modalOkBtnStyle } from "@data/MuiStyles";
 import { RoleColors } from "@data/ColorData";
-import { useList, useUpdate } from "@refinedev/core";
+import { useList, useNavigation, useUpdate } from "@refinedev/core";
 import PermissionsTable from "@components/Role/PermissionsTable";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Link from "next/link";
+import GeneralSwitch from "@components/Input/GeneralSwitch";
 
 interface UserDrawerProps {
   user: User;
@@ -25,10 +26,13 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
   });
   const userRoles = rolesData?.data || [];
   const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
+  const [userActive, setUserActive] = useState<boolean>();
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const { mutate } = useUpdate();
+  const { push } = useNavigation();
 
   useEffect(() => {
+    setUserActive(user?.is_active);
     setSelectedRoles(user?.roles ?? []);
   }, [user]);
 
@@ -72,6 +76,27 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
   };
 
   const handleSave = () => {
+    saveUser();
+    saveRoles();
+  };
+
+  const saveUser = () => {
+    const payload = {
+      is_active: userActive
+    }
+    mutate(
+      {
+        resource: "users",
+        id: `${user.user_id}`,
+        values: payload,
+      },
+      {
+        onSuccess: () => push(`/dashboard/users/list`)
+      }
+    )
+  }
+
+  const saveRoles = () => {
     const payload = {
       role_ids: selectedRoles.map((role) => role.role_id),
     };
@@ -80,13 +105,14 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
         resource: "users",
         id: `${user.user_id}/roles`,
         values: payload,
+        successNotification: false,
+        errorNotification: false,
       },
       {
-        onError: (error) => console.log(error),
-        onSuccess: () => console.log("success"),
+        onSuccess: () => push(`/dashboard/users/list`)
       }
     );
-  };
+  }
 
   return (
     <div className="bg-white px-8 py-8 font-med flex flex-col">
@@ -171,10 +197,23 @@ const UserDetailPanel: React.FC<UserDrawerProps> = ({ user, isShow }) => {
             <GeneralInput
               id="organization"
               name="organization"
-              label="Organization"
+              label="Organizations"
               type="text"
-              defaultValue={user?.organization}
+              defaultValue={user?.organizations?.join(",")}
               disabled={true}
+            />
+          </FormControl>
+        </div>
+        <div className="flex gap-6">
+        <FormControl className="w-full">
+            <GeneralSwitch
+              id="is_active"
+              name="active"
+              label="Active"
+              defaultValue={user?.is_active}
+              value={userActive}
+              disabled={isShow}
+              onChange={(event:any) => {setUserActive(event?.target?.value)}}
             />
           </FormControl>
         </div>
