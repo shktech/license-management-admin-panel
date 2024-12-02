@@ -39,7 +39,7 @@ export const menuGroups: MenuGroup[] = [
         label: "Transaction",
         route: "#",
         children: [
-          { label: "Transactions", route: "/dashboard/recent-transactions" },
+          { label: "Open", route: "/dashboard/recent-transactions" },
           { label: "Transaction History", route: "/dashboard/transactions/list" },
         ]
       },
