@@ -3,7 +3,7 @@
 import { EmailHistory, Transaction } from "@/types/types";
 import GenericTable from "@components/Table/GenericTable";
 import { type MRT_ColumnDef } from "material-react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getFormattedDate } from "@utils/utilFunctions";
 import { useList, useNavigation } from "@refinedev/core";
 import Loader from "@components/common/Loader";
@@ -12,6 +12,7 @@ import { Box, Modal } from "@mui/material";
 interface EmailHistoryTableProps {
   assetId: string;
   asset: any;
+  refetchCount: number;
 }
 
 export const modalStyle = {
@@ -36,6 +37,7 @@ export const modalStyle = {
 const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
   assetId,
   asset,
+  refetchCount,
 }) => {
   const {
     data: emailHistoryData,
@@ -45,6 +47,10 @@ const EmailHistoryTable: React.FC<EmailHistoryTableProps> = ({
     resource: `assets/${assetId}/email-logs`,
     hasPagination: false,
   });
+  
+  useEffect(() => {
+    refetch();
+  }, [refetchCount]);
   const [openModal, setOpenModal] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState<any>(null);
   const handleCloseModal = () => {
