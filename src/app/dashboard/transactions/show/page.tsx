@@ -26,6 +26,7 @@ import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 
 const TransactionShow = () => {
   const { params } = useParsed();
+  const { mutate: CreateMutate } = useCreate();
   const { queryResult } = useShow<Transaction>({
     resource: "transactions",
     id: params?.id,
@@ -56,9 +57,35 @@ const TransactionShow = () => {
     );
   };
 
+  const resendEmailBtnClick = () => {
+    CreateMutate(
+      {
+        resource: `transactions/${params?.id}/resend-email`,
+        values: {},
+        // successNotification: false,
+        successNotification: {
+          message: "Email has been resent successfully",
+          type: "success",
+          description: "The license information has been sent to the customer",
+        },
+      },
+      {
+        onSuccess: () => {
+          // refetch();
+        },
+      }
+    );
+  };
+
   const getButtonProps = (editButtonProps: any, refreshButtonProps: any) => {
     return (
       <div className="flex gap-2 px-12">
+        {transaction?.transaction_status == "Completed" && (
+          <Button onClick={resendEmailBtnClick} sx={editRefineBtnStyle}>
+            <AutorenewIcon />
+            Resend email
+          </Button>
+        )}
         {transaction?.transaction_status != "Completed" && (
           permissionsData?.update &&
           <>

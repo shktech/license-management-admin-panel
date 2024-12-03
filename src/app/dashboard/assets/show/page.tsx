@@ -12,7 +12,7 @@ import {
 import GenericTable from "@components/Table/GenericTable";
 import { refreshRefineBtnStyle } from "@data/MuiStyles";
 import { Button } from "@mui/material";
-import { useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
+import { useCreate, useNavigation, useParsed, usePermissions, useShow } from "@refinedev/core";
 import { RefreshButton, Show } from "@refinedev/mui";
 import { MRT_ColumnDef } from "material-react-table";
 import { useMemo, useState } from "react";
@@ -46,7 +46,7 @@ const Page = () => {
     resource: "assets",
     id: params?.id,
   });
-  const { data, isLoading } = queryResult;
+  const { data, isLoading, refetch: refetchAssets } = queryResult;
 
   const { data: permissionsData, isLoading: isPermissionsLoading } = usePermissions<Permission>({
     params: { codename: "asset" },
@@ -55,7 +55,7 @@ const Page = () => {
   const asset: Asset = data?.data as Asset;
   const transactions: Transaction[] = data?.data?.transactions as Transaction[];
   const seats: Seat[] = data?.data?.seats as Seat[];
-
+  const [refetchCount, setRefetchCount] = useState(0);
   const handleReActionBtn = (action: string) => {
     const path = "/dashboard/transactions/create?"; // your target route
     const queryParams = {
@@ -66,8 +66,26 @@ const Page = () => {
     // Navigate to the path with the query parameters
     push(path + new URLSearchParams(queryParams).toString());
   };
-
-  const updateCustomerDetail = () => {};
+  const { mutate: CreateMutate } = useCreate();
+  const resendEmail = () => {
+    CreateMutate(
+      {
+        resource: `assets/${params?.id}/resend-email`,
+        values: {},
+        // successNotification: false,
+        successNotification: {
+          message: "Email has been resent successfully",
+          type: "success",
+          description: "The license information has been sent to the customer",
+        },
+      },
+      {
+        onSuccess: () => {
+          setRefetchCount(refetchCount + 1);
+        },
+      }
+    );
+  };
 
   const SeatsColumns = useMemo<MRT_ColumnDef<Seat>[]>(
     () => [
@@ -147,14 +165,18 @@ const Page = () => {
         }
         headerButtons={({ refreshButtonProps }) => (
           <div className="flex gap-2 pr-10">
-            {permissionsData?.update && <Button
+            {/* <Button sx={refreshRefineBtnStyle} onClick={() => resendEmail()}>
+              <AutorenewIcon fontSize="small" />
+              Resend Email
+            </Button> */}
+            <Button
               sx={refreshRefineBtnStyle}
               href={`/dashboard/assets/customer?asset_id=${params?.id}`}
-              // onClick={() => updateCustomerDetail()}
+              // onClick={() => resendEmail()}
             >
               <AutorenewIcon fontSize="small" />
               Update Customer
-            </Button>}
+            </Button>
             {permissionsData?.create && <Button
               sx={refreshRefineBtnStyle}
               onClick={() => handleReActionBtn("Renewal")}
@@ -342,6 +364,7 @@ const Page = () => {
                   <EmailHistoryTable
                     assetId={asset.asset_id as string}
                     asset={asset}
+                    refetchCount={refetchCount}
                   />
                 </div>
               </CustomTabPanel>
