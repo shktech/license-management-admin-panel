@@ -161,10 +161,10 @@ const Page = () => {
         }
         headerButtons={({ refreshButtonProps }) => (
           <div className="flex gap-2 pr-10">
-            <Button sx={refreshRefineBtnStyle} onClick={() => resendEmail()}>
+            {/* <Button sx={refreshRefineBtnStyle} onClick={() => resendEmail()}>
               <AutorenewIcon fontSize="small" />
               Resend Email
-            </Button>
+            </Button> */}
             <Button
               sx={refreshRefineBtnStyle}
               href={`/dashboard/assets/customer?asset_id=${params?.id}`}

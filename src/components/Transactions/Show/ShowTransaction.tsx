@@ -45,12 +45,20 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
     { title: "Txn Source", key: "transaction_source" },
     { title: "Txn Action", key: "transaction_action" },
     { title: "Bill Customer", key: "bill_customer.name" },
+    // {
+    //   title: "Product Part Number",
+    //   key: "asset.osc_product.product_part_number",
+    //   value:
+    //     transaction?.asset?.osc_product?.product_part_number ||
+    //     transaction?.product_part_number,
+    // },
     {
-      title: "Product Part Number",
-      key: "asset.osc_product.product_part_number",
+      title: "Product",
+      key: "asset.osc_product.product_name",
       value:
-        transaction?.asset?.osc_product?.product_part_number ||
-        transaction?.product_part_number,
+        transaction?.asset?.osc_product?.product_name ||
+        transaction?.product_name ||
+        "",
     },
     {
       title: "Seat Count",
