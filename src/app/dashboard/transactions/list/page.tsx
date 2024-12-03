@@ -96,12 +96,11 @@ const Page = () => {
         Cell: ({ row }) => row.original.license_type,
       },
       {
-        accessorKey: "product_part_number",
-        header: "Product Part Number",
+        accessorKey: "product_name",
+        header: "Product",
         size: 100,
         Cell: ({ row }) =>
-          row.original.product_part_number ||
-          row.original.asset?.osc_product?.product_part_number,
+          row.original.asset?.osc_product?.product_name || "Null",
       },
       {
         accessorKey: "osc_seat_count",

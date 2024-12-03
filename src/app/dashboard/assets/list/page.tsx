@@ -66,8 +66,8 @@ const Page = () => {
         size: 200,
       },
       {
-        accessorKey: "osc_product.product_part_number",
-        header: "Part Number",
+        accessorKey: "osc_product.product_name",
+        header: "Product",
         size: 200,
       },
       {

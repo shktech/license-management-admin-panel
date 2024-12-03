@@ -120,8 +120,8 @@ const AutoComplete = React.forwardRef<HTMLInputElement, DropdownProps>(
             return (
               <Box key={key} component="li" {...optionProps}>
                 <div className="flex flex-col">
-                  <div className="text-sm">{option.elseKey}</div>
                   <div className="">{option.value}</div>
+                  <div className="text-sm">{option.elseKey}</div>
                 </div>
               </Box>
             );
