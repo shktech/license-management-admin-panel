@@ -24,6 +24,7 @@ const GenericForm: React.FC<GenericFormProps> = ({
   setValue,
   watch,
 }) => {
+  console.log(control)
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-6">
       {fields?.map((field) => (
