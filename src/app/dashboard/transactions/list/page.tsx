@@ -100,7 +100,9 @@ const Page = () => {
         header: "Product",
         size: 100,
         Cell: ({ row }) =>
-          row.original.asset?.osc_product?.product_name || "Null",
+          row.original.asset?.osc_product?.product_name ||
+          row.original.product_name ||
+          "",
       },
       {
         accessorKey: "osc_seat_count",

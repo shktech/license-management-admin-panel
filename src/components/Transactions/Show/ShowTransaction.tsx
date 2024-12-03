@@ -54,8 +54,11 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
     // },
     {
       title: "Product",
-      key: "asset.osc_product.product_part_number",
-      value: transaction?.asset?.osc_product?.product_part_number || "Null",
+      key: "asset.osc_product.product_name",
+      value:
+        transaction?.asset?.osc_product?.product_name ||
+        transaction?.product_name ||
+        "",
     },
     {
       title: "Seat Count",

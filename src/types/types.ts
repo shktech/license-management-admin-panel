@@ -206,6 +206,7 @@ export interface Transaction {
   transaction_id: string;
   transaction_date?: string;
   product_part_number?: string;
+  product_name?: string;
   transaction_source?: string;
   transaction_status?: string;
   transaction_action?: string;
