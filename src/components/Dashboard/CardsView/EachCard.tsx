@@ -1,5 +1,4 @@
 "use client";
-import { PieChart } from "@mui/x-charts/PieChart";
 import React from "react";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
