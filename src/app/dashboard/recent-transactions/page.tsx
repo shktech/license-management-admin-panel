@@ -140,7 +140,7 @@ const Page = () => {
       {
         accessorKey: "transaction_status",
         header: "Txn Status",
-        size: 100,
+        size: 200,
         Cell: ({ renderedCellValue }) => (
           <Box
             component="span"
@@ -195,7 +195,7 @@ const Page = () => {
           handleSearch={handleSearch}
           canDelete={false}
           canEdit={permissionsData?.update}
-          // initialSorter={initialSorter}
+        // initialSorter={initialSorter}
         />
       )}
     </div>
