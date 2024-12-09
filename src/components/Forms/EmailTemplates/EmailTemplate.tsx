@@ -173,6 +173,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
                     { value: "license_created", label: "License Created" },
                     { value: "license_revoked", label: "License Revoked" },
                     { value: "license_renewed", label: "License Renewed" },
+                    { value: "terms_and_conditions", label: "Terms and Conditions" },
                   ]}
                 />
               )}
