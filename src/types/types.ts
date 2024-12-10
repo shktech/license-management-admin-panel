@@ -192,6 +192,7 @@ export interface Transaction {
   id?: string;
   transaction_number?: number;
   asset?: Partial<Asset>;
+  product?: Partial<Product>;
   bill_customer?: Partial<Customer>;
   bill_customer_address?: Partial<Address>;
   bill_customer_contact?: Partial<Contact>;

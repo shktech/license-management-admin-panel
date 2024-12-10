@@ -94,7 +94,10 @@ const Page = () => {
         accessorKey: "product_type",
         header: "Product Type",
         size: 100,
-        Cell: ({ row }) => row.original.asset?.osc_product?.product_type,
+        Cell: ({ row }) =>
+          row.original.product?.product_type ||
+          row.original.asset?.osc_product?.product_type ||
+          "",
       },
       {
         accessorKey: "license_type",
@@ -107,6 +110,7 @@ const Page = () => {
         header: "Product",
         size: 100,
         Cell: ({ row }) =>
+          row.original.product?.product_name ||
           row.original.asset?.osc_product?.product_name ||
           row.original.product_name ||
           "",
