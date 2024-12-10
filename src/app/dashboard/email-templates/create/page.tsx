@@ -25,7 +25,7 @@ const Item = () => {
     reValidateMode: "onSubmit"
   });
 
-  const [emailBody, setEmailBody] = useState<string>("");
+  const [emailBody, setEmailBody] = useState<string>("<body></body>");
 
   useEffect(() => {
     setValue("body", emailBody);
