@@ -196,6 +196,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
                   resource="lookups/PRODUCT_TYPE/values"
                   valueKey="value"
                   labelKey="value"
+                  required={true}
                 />
               )}
             </FormControlWrapper>
@@ -213,10 +214,10 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
           </div>
           <div className="">
             <div className="bg-[#dfe6ec] rounded-t-lg border-r-ful font-medium text-sm p-4 text-[#0000009c]">
-              Body(HTML)
+              Body(HTML) <span className="text-red-500">*</span>
             </div>
             <Editor
-              defaultValue={template?.body}
+              defaultValue={template?.body || "<body></body>"}
               height="300px"
               defaultLanguage="html"
               options={editorOptions}
