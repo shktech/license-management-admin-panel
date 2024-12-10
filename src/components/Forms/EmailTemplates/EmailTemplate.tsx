@@ -183,7 +183,7 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
             <FormControlWrapper
               name="product_type"
               control={control}
-              rules={{ required: "Type is required" }}
+              // rules={{ required: "Type is required" }}
               error={errors.type?.message?.toString()}
             >
               {(field) => (
@@ -196,7 +196,9 @@ const EmailTemplateComponent: React.FC<EmailTemplateComponentProps> = ({
                   resource="lookups/PRODUCT_TYPE/values"
                   valueKey="value"
                   labelKey="value"
-                  required={true}
+                  required={false}
+                  selectNoneOption={true}
+                  // required={true}
                 />
               )}
             </FormControlWrapper>

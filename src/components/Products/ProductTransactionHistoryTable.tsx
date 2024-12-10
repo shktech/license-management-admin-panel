@@ -14,6 +14,7 @@ import {
 } from "@utils/utilFunctions";
 import { useNavigation, useTable } from "@refinedev/core";
 import Loader from "@components/common/Loader";
+import { DefaultPageSize } from "@data/UtilData";
 
 interface ProductTransactionHistoryTableProps {
   product: string;
@@ -35,6 +36,9 @@ const ProductTransactionHistoryTable: React.FC<
         order: "desc",
       },
     ],
+    pagination: {
+      pageSize: DefaultPageSize,
+    },
   });
   const { push } = useNavigation();
 
@@ -170,6 +174,7 @@ const ProductTransactionHistoryTable: React.FC<
               Transaction History
             </div>
           }
+          totalCount={transactionData?.total}
           handlePage={handlePage}
           handleSorting={handleSorting}
           handleSearch={handleSearch}
