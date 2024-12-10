@@ -17,19 +17,26 @@ const AssetInformation: React.FC<AssetInformationProps> = ({ transaction }) => {
         },
         {
           label: "Product Part Number",
-          value: transaction?.asset?.osc_product?.product_part_number || transaction?.product_part_number,
+          value:
+            transaction?.product?.product_part_number ||
+            transaction?.product_part_number ||
+            transaction?.asset?.osc_product?.product_part_number,
         },
         {
           label: "Product Duration",
-          value: transaction?.asset?.osc_product?.duration,
+          value:
+            transaction?.product?.duration ||
+            transaction?.asset?.osc_product?.duration,
         },
         {
           label: "Vendor Name",
-          value: transaction?.asset?.osc_product?.vendor_name,
+          value:
+            transaction?.asset?.osc_product?.vendor_name ||
+            transaction?.product?.vendor_name,
         },
         {
           label: "Vendor Part Name",
-          value: transaction?.asset?.osc_product?.vendor_part_number,
+          value: transaction?.asset?.osc_product?.vendor_part_number || transaction?.product?.vendor_part_number,
         },
         {
           label: "License Key",
