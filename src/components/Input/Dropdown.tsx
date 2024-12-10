@@ -153,14 +153,17 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
             {loading ? (
               <MenuItem key="loading">Loading...</MenuItem>
             ) : (
-              [{ value: "", label: "None" }, ...dropdownOptions].map(
-                (option, index) => (
-                  <MenuItem key={index} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                )
+              selectNoneOption && (
+                <MenuItem key="none" value="">
+                  None
+                </MenuItem>
               )
             )}
+            {dropdownOptions.map((option, index) => (
+              <MenuItem key={index} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>
