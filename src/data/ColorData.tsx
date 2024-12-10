@@ -25,8 +25,10 @@ export const TxtStatusColor: { [key: string]: string } = {
     "Error": "#db3545",
     "Cancelled": "#db3545",
     "Hold": "#fac107",
+    "Waiting for Acceptance": "#fac107",
+    "Accepted": "#11ba82",
+    "Rejected": "#db3545",
 }
-
 export const ProductActiveColor = (status: boolean) => status ? '#11ba82' : '#c2c2c2'
 export const ScheduleActiveColor = (status: boolean) => status ? '#11ba82' : '#ed0e42'
 

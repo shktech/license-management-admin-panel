@@ -96,7 +96,8 @@ const TransactionEdit = () => {
       setValue(
         "osc_part_number",
         transaction.product_part_number ||
-          transaction.asset?.osc_product?.product_part_number
+          transaction.asset?.osc_product?.product_part_number ||
+          transaction.product?.product_part_number
       );
       setValue("quantity", transaction.quantity);
       setValue("start_date", transaction.start_date);
@@ -107,7 +108,9 @@ const TransactionEdit = () => {
   const start_date = watch("start_date");
   const osc_part_number = watch("osc_part_number");
   useEffect(() => {
-    let duration = transaction?.asset?.osc_product?.duration;
+    let duration =
+      transaction?.asset?.osc_product?.duration ||
+      transaction?.product?.duration;
     if (productData?.data) {
       duration = productData.data.find(
         (p) => p.product_part_number == osc_part_number
