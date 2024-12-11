@@ -30,7 +30,10 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import StateComponent from "@components/common/StateComponent";
-import { getFormattedDate, getFormattedDateWithTime } from "@utils/utilFunctions";
+import {
+  getFormattedDate,
+  getFormattedDateWithTime,
+} from "@utils/utilFunctions";
 import AssetCustomersInformation from "@components/Assets/AssetCustomersInformation";
 
 const Page = () => {
@@ -333,7 +336,9 @@ const Page = () => {
                     },
                     {
                       label: "Agreement Accepted",
-                      value: asset?.agreement_accepted ? "Yes" : "No",
+                      value: asset?.agreement_accepted
+                        ? "Accepted"
+                        : "Waiting for Acceptance",
                     },
                     {
                       label: "Agreement Accepted Date",

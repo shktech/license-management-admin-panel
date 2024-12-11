@@ -55,7 +55,13 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
                 ...tagStyle,
               }}
             >
-              {transaction?.transaction_status}
+              {transaction?.asset
+                ? transaction.asset.agreement_accepted
+                  ? "Accepted"
+                  : "Waiting for Acceptance"
+                : transaction?.transaction_status == "Waiting for Acceptance"
+                  ? "Waiting for Acceptance"
+                  : ""}
             </Box>
           ),
         },
@@ -93,7 +99,9 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
         },
         {
           label: "Agreement Accepted",
-          value: transaction?.asset?.agreement_accepted ? "Yes" : "No",
+          value: transaction?.asset?.agreement_accepted
+            ? "Accepted"
+            : "Waiting for Acceptance",
         },
         {
           label: "Agreement Accepted Date",
@@ -101,7 +109,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
             ? getFormattedDateWithTime(
                 transaction?.asset?.agreement_accepted_datetime
               )
-            : "No",
+            : "",
         },
       ]}
     ></GeneralInformation>
