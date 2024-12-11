@@ -24,11 +24,12 @@ export const getFormattedDateWithTime = (timestamp: any) => {
   }
   const date = new Date(timestamp);
   if (!isNaN(date.getTime())) {
-    const formattedDate = format(date, "d-MMM-yyyy HH:mm"); // Updated format to "9-May-2025 14:30"
-    return formattedDate;
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    return format(utcDate, "dd-MMM-yyyy HH:mm:ss 'UTC'"); // Will return UTC time
   }
   return timestamp;
 };
+
 export const getReadableDate = (dateString: any) => {
   const date = new Date(dateString);
 
