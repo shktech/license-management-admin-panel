@@ -18,12 +18,18 @@ import FormControlWrapper from "@components/Forms/FormControlWrapper";
 import { useForm } from "@refinedev/react-hook-form";
 import EmailIcon from "@/assets/icons/email.svg?icon";
 import Link from "next/link";
+import { useOne } from "@refinedev/core";
+import { jwtDecode } from "jwt-decode";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const Page: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token")?.split("?to=")?.[0] || "";
+  const decodedToken = jwtDecode(token) as any;
+  const firstName = decodedToken?.first_name;
+  const lastName = decodedToken?.last_name;
+  const email = decodedToken?.email;
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [agree, setAgree] = useState(false);
@@ -31,10 +37,16 @@ const Page: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+  useEffect(() => {
+    setValue("firstName", firstName);
+    setValue("lastName", lastName);
+    setValue("email", email);
+  }, [firstName, lastName, email]);
   // Add email validation function
   const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,6 +56,23 @@ const Page: React.FC = () => {
   useEffect(() => {
     validateToken(token);
   }, [router]);
+
+  const {
+    data,
+    isLoading: tokenValidationLoading,
+    isError,
+  } = useOne({
+    resource: "validate-token",
+    id: token,
+    queryOptions: {
+      enabled: !!token,
+    },
+    meta: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
 
   const validateToken = async (token: string) => {
     setIsLoading(true);
@@ -172,30 +201,35 @@ const Page: React.FC = () => {
                 />
               )}
             </FormControlWrapper>
-            <FormGroup className="mt-4">
-              <FormControlLabel
+            <FormGroup className="mt-2">
+              {/* <FormControlLabel
                 control={
                   <Checkbox
                     checked={agree}
                     onChange={(e) => setAgree(e.target.checked)}
                   />
                 }
-                label={
-                  <div>
-                    I agree to the{" "}
-                    <Link href="#" className="underline" target="_blank">
-                      Terms and Conditions
-                    </Link>{" "}
-                    and authorize the use of the provided information as
-                    outlined therein.
-                  </div>
-                }
+                label=""
                 sx={{
                   "& .MuiFormControlLabel-label": {
                     color: "#10132b", // This matches the color you're using for other labels
                   },
                 }}
-              />
+              /> */}
+              <div className="flex items-start">
+                <Checkbox
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                />
+                <div className="text-sm text-[#10132b] mt-2.5">
+                  I agree to the{" "}
+                  <Link href="#" className="underline" target="_blank">
+                    Terms and Conditions
+                  </Link>{" "}
+                  and authorize the use of the provided information as outlined
+                  therein.
+                </div>
+              </div>
             </FormGroup>
             <Button
               type="submit"
