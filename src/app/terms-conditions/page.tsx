@@ -57,23 +57,6 @@ const Page: React.FC = () => {
     validateToken(token);
   }, [router]);
 
-  const {
-    data,
-    isLoading: tokenValidationLoading,
-    isError,
-  } = useOne({
-    resource: "validate-token",
-    id: token,
-    queryOptions: {
-      enabled: !!token,
-    },
-    meta: {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  });
-
   const validateToken = async (token: string) => {
     setIsLoading(true);
     const response = await fetch(`${API_URL ?? realAPI_URL}/validate-token`, {
