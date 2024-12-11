@@ -24,8 +24,7 @@ export const getFormattedDateWithTime = (timestamp: any) => {
   }
   const date = new Date(timestamp);
   if (!isNaN(date.getTime())) {
-    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-    return format(utcDate, "dd-MMM-yyyy HH:mm:ss 'UTC'"); // Will return UTC time
+    return format(date, "dd-MMM-yyyy HH:mm:ss"); // Will return local browser time
   }
   return timestamp;
 };
