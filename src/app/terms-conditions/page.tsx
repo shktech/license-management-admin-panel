@@ -18,12 +18,31 @@ import FormControlWrapper from "@components/Forms/FormControlWrapper";
 import { useForm } from "@refinedev/react-hook-form";
 import EmailIcon from "@/assets/icons/email.svg?icon";
 import Link from "next/link";
+import { useOne } from "@refinedev/core";
+import { jwtDecode } from "jwt-decode";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const Page: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token")?.split("?to=")?.[0] || "";
+
+  // Add error handling for token decoding
+  let decodedToken: any = {};
+  try {
+    if (!token) {
+      router.push("/link-expired");
+      return null;
+    }
+    decodedToken = jwtDecode(token);
+  } catch (error) {
+    router.push("/link-expired");
+    return null;
+  }
+
+  const firstName = decodedToken?.first_name;
+  const lastName = decodedToken?.last_name;
+  const email = decodedToken?.email;
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [agree, setAgree] = useState(false);
@@ -31,10 +50,16 @@ const Page: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+  useEffect(() => {
+    setValue("firstName", firstName);
+    setValue("lastName", lastName);
+    setValue("email", email);
+  }, [firstName, lastName, email]);
   // Add email validation function
   const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -106,8 +131,12 @@ const Page: React.FC = () => {
   return (
     <div className="flex justify-center h-screen items-center nobody knows">
       <div className="w-[600px] py-10 bg-white rounded-lg px-8 mt-10">
-        <div className="text-4xl font-semibold text-[#10132b] pb-6">
-          Terms and Conditions
+        <div className="text-2xl font-semibold text-[#10132b] mb-4">
+          Terms, Conditions, and Accept the Agreement
+        </div>
+        <div className="text-sm mb-6 text-black">
+          Please review below contact information where future communications
+          will be sent and update if changes are needed:
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-4">
@@ -172,16 +201,28 @@ const Page: React.FC = () => {
                 />
               )}
             </FormControlWrapper>
-            <FormGroup className="mt-4">
-              <FormControlLabel
+            <FormGroup className="mt-2">
+              {/* <FormControlLabel
                 control={
                   <Checkbox
                     checked={agree}
                     onChange={(e) => setAgree(e.target.checked)}
                   />
                 }
-                label={
-                  <div>
+                label=""
+                sx={{
+                  "& .MuiFormControlLabel-label": {
+                    color: "#10132b", // This matches the color you're using for other labels
+                  },
+                }}
+              /> */}
+              <div className="flex items-start mt-3">
+                <Checkbox
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                />
+                <div>
+                  <div className="text-sm text-[#10132b] mt-2.5">
                     I agree to the{" "}
                     <Link href="#" className="underline" target="_blank">
                       Terms and Conditions
@@ -189,14 +230,19 @@ const Page: React.FC = () => {
                     and authorize the use of the provided information as
                     outlined therein.
                   </div>
-                }
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    color: "#10132b", // This matches the color you're using for other labels
-                  },
-                }}
-              />
+                </div>
+              </div>
             </FormGroup>
+            <div className="text-sm text-[#10132b] mt-4 italic">
+              For any queries, please contact us at{" "}
+              <a
+                href="mailto:paisupprt@pfu-us.ricoh.com"
+                className="text-primary hover:underline"
+              >
+                paisupprt@pfu-us.ricoh.com
+              </a>
+              .
+            </div>
             <Button
               type="submit"
               disabled={!agree}

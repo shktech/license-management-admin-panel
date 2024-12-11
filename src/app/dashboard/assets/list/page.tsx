@@ -93,6 +93,18 @@ const Page = () => {
         size: 150,
       },
       {
+        accessorKey: "agreement_accepted",
+        header: "Agreement Accepted",
+        size: 150,
+        Cell: ({ renderedCellValue }) => (
+          <StateComponent
+            active={renderedCellValue as boolean}
+            withLabel
+            type="YES"
+          />
+        ),
+      },
+      {
         accessorKey: "active",
         header: "Status",
         size: 150,

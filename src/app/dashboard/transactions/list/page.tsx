@@ -139,17 +139,26 @@ const Page = () => {
         accessorKey: "transaction_status",
         header: "Txn Status",
         size: 200,
-        Cell: ({ renderedCellValue }) => (
-          <Box
-            component="span"
-            sx={(theme) => ({
-              backgroundColor: TxtStatusColor[renderedCellValue as string],
-              ...tagStyle,
-            })}
-          >
-            {renderedCellValue}
-          </Box>
-        ),
+        Cell: ({ row }) => {
+          const status = row.original?.asset
+            ? row.original.asset.agreement_accepted
+              ? "Accepted"
+              : "Waiting for Acceptance"
+            : row.original.transaction_status == "Waiting for Acceptance"
+              ? "Waiting for Acceptance"
+              : "";
+          return (
+            <Box
+              component="span"
+              sx={(theme) => ({
+                backgroundColor: TxtStatusColor[status as string],
+                ...tagStyle,
+              })}
+            >
+              {status}
+            </Box>
+          );
+        },
       },
       {
         accessorKey: "bill_customer.name",

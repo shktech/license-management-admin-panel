@@ -92,6 +92,8 @@ export interface Asset {
   renew_due_notification_date?: string;
   expired_notification_date?: string;
   last_email_date?: string;
+  agreement_accepted_datetime?: string;
+  agreement_accepted?: boolean;
 }
 
 export type SeatStatus = {

@@ -5,7 +5,10 @@ import GeneralInformation from "@components/common/View/GeneralInformation";
 import { TxtActionColor, TxtStatusColor } from "@data/ColorData";
 import { tagStyle } from "@data/MuiStyles";
 import { Box } from "@mui/material";
-import { getFormattedDate } from "@utils/utilFunctions";
+import {
+  getFormattedDate,
+  getFormattedDateWithTime,
+} from "@utils/utilFunctions";
 
 interface BasicInformationProps {
   transaction?: Transaction;
@@ -26,7 +29,7 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
         },
         {
           label: "Transaction Action",
-          value: transaction?.transaction_action
+          value: transaction?.transaction_action,
           // value: (
           //   <Box
           //     component="span"
@@ -52,7 +55,13 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
                 ...tagStyle,
               }}
             >
-              {transaction?.transaction_status}
+              {transaction?.asset
+                ? transaction.asset.agreement_accepted
+                  ? "Accepted"
+                  : "Waiting for Acceptance"
+                : transaction?.transaction_status == "Waiting for Acceptance"
+                  ? "Waiting for Acceptance"
+                  : ""}
             </Box>
           ),
         },
@@ -87,6 +96,20 @@ const BasicInformation: React.FC<BasicInformationProps> = ({ transaction }) => {
         {
           label: "Error Message",
           value: transaction?.error_message || "No Error",
+        },
+        {
+          label: "Agreement Accepted",
+          value: transaction?.asset?.agreement_accepted
+            ? "Accepted"
+            : "Waiting for Acceptance",
+        },
+        {
+          label: "Agreement Accepted Date",
+          value: transaction?.asset?.agreement_accepted_datetime
+            ? getFormattedDateWithTime(
+                transaction?.asset?.agreement_accepted_datetime
+              )
+            : "",
         },
       ]}
     ></GeneralInformation>

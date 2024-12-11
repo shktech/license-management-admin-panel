@@ -18,6 +18,17 @@ export const getFormattedDate = (timestamp: any) => {
   return timestamp;
 };
 
+export const getFormattedDateWithTime = (timestamp: any) => {
+  if (timestamp === null || timestamp === undefined) {
+    return "";
+  }
+  const date = new Date(timestamp);
+  if (!isNaN(date.getTime())) {
+    return format(date, "dd-MMM-yyyy HH:mm:ss"); // Will return local browser time
+  }
+  return timestamp;
+};
+
 export const getReadableDate = (dateString: any) => {
   const date = new Date(dateString);
 

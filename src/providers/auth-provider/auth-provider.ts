@@ -204,27 +204,27 @@ export const authProvider: AuthProvider = {
   check: async () => {
     const queryParams = new URLSearchParams(window.location.search);
     if (queryParams.get("accept_license_token")) {
-      const token = queryParams.get("accept_license_token");
-      const response = await fetch(`${API_URL ?? realAPI_URL}/validate-token`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        return {
-          authenticated: false,
-          redirectTo:
-            "/terms-conditions?token=" +
-            queryParams.get("accept_license_token"),
-        };
-      } else {
-        return {
-          authenticated: false,
-          redirectTo: "/link-expired",
-        };
-      }
+      // const token = queryParams.get("accept_license_token");
+      // const response = await fetch(`${API_URL ?? realAPI_URL}/validate-token`, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // if (response.ok) {
+      //   return {
+      //     authenticated: false,
+      //     redirectTo:
+      //       "/terms-conditions?token=" +
+      //       queryParams.get("accept_license_token"),
+      //   };
+      // } else {
+      //   return {
+      //     authenticated: false,
+      //     redirectTo: "/link-expired",
+      //   };
+      // }
       return {
         authenticated: false,
         redirectTo:
