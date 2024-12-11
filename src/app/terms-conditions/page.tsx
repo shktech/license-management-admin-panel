@@ -26,7 +26,20 @@ const Page: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token")?.split("?to=")?.[0] || "";
-  const decodedToken = jwtDecode(token) as any;
+
+  // Add error handling for token decoding
+  let decodedToken: any = {};
+  try {
+    if (!token) {
+      router.push("/link-expired");
+      return null;
+    }
+    decodedToken = jwtDecode(token);
+  } catch (error) {
+    router.push("/link-expired");
+    return null;
+  }
+
   const firstName = decodedToken?.first_name;
   const lastName = decodedToken?.last_name;
   const email = decodedToken?.email;
@@ -118,8 +131,12 @@ const Page: React.FC = () => {
   return (
     <div className="flex justify-center h-screen items-center nobody knows">
       <div className="w-[600px] py-10 bg-white rounded-lg px-8 mt-10">
-        <div className="text-4xl font-semibold text-[#10132b] pb-6">
-          Terms and Conditions
+        <div className="text-2xl font-semibold text-[#10132b] mb-4">
+          Terms, Conditions, and Accept the Agreement
+        </div>
+        <div className="text-sm mb-6 text-black">
+          Please review below contact information where future communications
+          will be sent and update if changes are needed:
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-4">
@@ -199,21 +216,33 @@ const Page: React.FC = () => {
                   },
                 }}
               /> */}
-              <div className="flex items-start">
+              <div className="flex items-start mt-3">
                 <Checkbox
                   checked={agree}
                   onChange={(e) => setAgree(e.target.checked)}
                 />
-                <div className="text-sm text-[#10132b] mt-2.5">
-                  I agree to the{" "}
-                  <Link href="#" className="underline" target="_blank">
-                    Terms and Conditions
-                  </Link>{" "}
-                  and authorize the use of the provided information as outlined
-                  therein.
+                <div>
+                  <div className="text-sm text-[#10132b] mt-2.5">
+                    I agree to the{" "}
+                    <Link href="#" className="underline" target="_blank">
+                      Terms and Conditions
+                    </Link>{" "}
+                    and authorize the use of the provided information as
+                    outlined therein.
+                  </div>
                 </div>
               </div>
             </FormGroup>
+            <div className="text-sm text-[#10132b] mt-4 italic">
+              For any queries, please contact us at{" "}
+              <a
+                href="mailto:paisupprt@pfu-us.ricoh.com"
+                className="text-primary hover:underline"
+              >
+                paisupprt@pfu-us.ricoh.com
+              </a>
+              .
+            </div>
             <Button
               type="submit"
               disabled={!agree}
