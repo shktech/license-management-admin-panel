@@ -18,6 +18,17 @@ export const getFormattedDate = (timestamp: any) => {
   return timestamp;
 };
 
+export const getFormattedDateWithTime = (timestamp: any) => {
+  if (timestamp === null || timestamp === undefined) {
+    return "";
+  }
+  const date = new Date(timestamp);
+  if (!isNaN(date.getTime())) {
+    const formattedDate = format(date, "d-MMM-yyyy HH:mm"); // Updated format to "9-May-2025 14:30"
+    return formattedDate;
+  }
+  return timestamp;
+};
 export const getReadableDate = (dateString: any) => {
   const date = new Date(dateString);
 
