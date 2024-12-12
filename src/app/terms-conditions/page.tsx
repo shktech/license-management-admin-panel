@@ -9,6 +9,7 @@ import {
   FormGroup,
   TextField,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -20,6 +21,7 @@ import EmailIcon from "@/assets/icons/email.svg?icon";
 import Link from "next/link";
 import { useOne } from "@refinedev/core";
 import { jwtDecode } from "jwt-decode";
+import { SaveButton } from "@refinedev/mui";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const Page: React.FC = () => {
@@ -44,6 +46,7 @@ const Page: React.FC = () => {
   const lastName = decodedToken?.last_name;
   const email = decodedToken?.email;
   const [isLoading, setIsLoading] = useState(true);
+  const [acceptLoading, setAcceptLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [agree, setAgree] = useState(false);
   const {
@@ -87,6 +90,7 @@ const Page: React.FC = () => {
   };
   const onSubmit = async (data: any) => {
     try {
+      setAcceptLoading(true);
       const response = await fetch(`${API_URL ?? realAPI_URL}/accept-license`, {
         method: "POST",
         headers: {
@@ -102,6 +106,7 @@ const Page: React.FC = () => {
       if (response.ok) {
         setIsSuccess(true);
       }
+      setAcceptLoading(false);
     } catch (error) {
       // Handle error
     }
@@ -243,15 +248,22 @@ const Page: React.FC = () => {
               </a>
               .
             </div>
-            <Button
+            <LoadingButton
               type="submit"
+              loading={acceptLoading}
               disabled={!agree}
-              className={`text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90 ${
-                !agree ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              // className={`text-center w-full block mb-5 cursor-pointer rounded-lg border border-primary bg-primary p-2 text-white transition hover:bg-opacity-90 ${
+              //   !agree ? "opacity-50 cursor-not-allowed" : ""
+              // }`}
+              variant="contained"
+              sx={{
+                width: "100%",
+                marginBottom: "20px",
+                backgroundColor: "#4580FF", // Replace with your desired color
+              }}
             >
               Accept
-            </Button>
+            </LoadingButton>
           </div>
         </form>
       </div>

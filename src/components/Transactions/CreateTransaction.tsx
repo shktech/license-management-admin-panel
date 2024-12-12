@@ -44,6 +44,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (initialInfo.transaction_action == "New") {
       const yesterday = new Date();
@@ -116,14 +117,21 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       }
     }
     if (isValid) {
+      setIsLoading(true);
       createCode(
         {
           resource: `transactions`,
           values: payload,
         },
         {
-          onError: (error) => console.log("error", error),
-          onSuccess: () => push(`/dashboard/transactions/list`),
+          onError: (error) => {
+            console.log("error", error);
+            setIsLoading(false);
+          },
+          onSuccess: () => {
+            push(`/dashboard/transactions/list`);
+            setIsLoading(false);
+          },
         }
       );
     }
@@ -154,7 +162,7 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       }}
       saveButtonProps={{ ...saveButtonProps, hidden: false }}
       footerButtons={({ saveButtonProps }) => (
-        <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
+        <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} loading={isLoading}/>
       )}
     >
       {formLoading ||
