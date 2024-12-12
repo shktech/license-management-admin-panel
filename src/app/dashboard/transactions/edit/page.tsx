@@ -2,6 +2,8 @@
 
 import ArrowIcon from "@/assets/icons/arrow.svg?icon";
 import { Product, Transaction } from "@/types/types";
+import { InitialLicensingDetailFormFields } from "@components/Forms/Transactions/LicensingDetailFormFields";
+import { InitialGeneralTxnFormFields } from "@components/Forms/Transactions/GeneralTxnFormField";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
 import Loader from "@components/common/Loader";
 import { sendEmailBtnStyle } from "@data/MuiStyles";
@@ -16,9 +18,14 @@ import { Edit, SaveButton } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { getEndDate } from "@utils/utilFunctions";
 import { useEffect, useState } from "react";
+import { Alert } from "@mui/material";
 
 const TransactionEdit = () => {
   const { params } = useParsed();
+  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>(
+    { Transaction: true }
+  );
+  const [errorText, setErrorText] = useState<string | null>(null);
   const {
     saveButtonProps,
     refineCore: { formLoading, queryResult },
@@ -53,6 +60,12 @@ const TransactionEdit = () => {
 
   const { mutate: updateCode } = useUpdate();
   const { push } = useNavigation();
+  const handleAccordionOpen = (panel: string) => {
+    setExpandedPanels((prev: any) => ({
+      ...prev,
+      [panel]: true,
+    }));
+  };
   const handleSubmit = async () => {
     const payload = getValues();
     const isValid = await trigger(); // Triggers validation for all fields
@@ -78,6 +91,35 @@ const TransactionEdit = () => {
             push(`/dashboard/transactions/show?id=${params?.id}`),
         }
       );
+    } else {
+      setErrorText(
+        "There was a problem creating the transaction. Please try again."
+      );
+
+      setTimeout(() => {
+        const errorAlert = document.querySelector(".MuiAlert-root");
+        if (errorAlert) {
+          errorAlert.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+
+      for (const field in errors) {
+        if (field.includes("ship")) {
+          handleAccordionOpen("Shipping Parter Information");
+        }
+        if (field.includes("bill")) {
+          handleAccordionOpen("Disty/Billing Partner Information");
+        }
+        if (field.includes("reseller")) {
+          handleAccordionOpen("Reseller Information");
+        }
+        if (InitialGeneralTxnFormFields.some((f) => f.name == field)) {
+          handleAccordionOpen("Transaction");
+        }
+        if (InitialLicensingDetailFormFields.some((f) => f.name == field)) {
+          handleAccordionOpen("Licensing Details");
+        }
+      }
     }
   };
 
@@ -151,6 +193,11 @@ const TransactionEdit = () => {
             <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
           )}
         >
+          {errorText && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {errorText}
+            </Alert>
+          )}
           {formLoading || productLoading ? (
             <Loader />
           ) : (
@@ -160,6 +207,8 @@ const TransactionEdit = () => {
               transaction={transaction}
               setValue={setValue}
               watch={watch}
+              expandedPanels={expandedPanels}
+              setExpandedPanels={setExpandedPanels}
             />
           )}
         </Edit>
