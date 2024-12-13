@@ -146,6 +146,25 @@ const Page = () => {
         header: "Txn Status",
         size: 200,
         Cell: ({ row }) => {
+          const status = row.original.transaction_status;
+          return (
+            <Box
+              component="span"
+              sx={(theme) => ({
+                backgroundColor: TxtStatusColor[status as string],
+                ...tagStyle,
+              })}
+            >
+              {status}
+            </Box>
+          );
+        },
+      },
+      {
+        accessorKey: "agreement_accepted",
+        header: "Agreement Accepted",
+        size: 200,
+        Cell: ({ row }) => {
           const status = row.original?.asset
             ? row.original.asset.agreement_accepted
               ? "Accepted"
@@ -166,6 +185,7 @@ const Page = () => {
           );
         },
       },
+
       {
         accessorKey: "bill_customer.name",
         header: "Bill Customer",
