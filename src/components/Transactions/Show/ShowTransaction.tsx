@@ -77,13 +77,14 @@ const ShowTransaction: React.FC<ShowTransactionProps> = ({ transaction }) => {
             ...tagStyle,
           }}
         >
-          {transaction?.asset
+          {transaction?.transaction_status}
+          {/* {transaction?.asset
             ? transaction.asset.agreement_accepted
               ? "Accepted"
               : "Waiting for Acceptance"
             : transaction?.transaction_status == "Waiting for Acceptance"
               ? "Waiting for Acceptance"
-              : ""}
+              : ""} */}
         </Box>
       ),
     },
