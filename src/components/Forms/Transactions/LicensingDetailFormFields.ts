@@ -52,6 +52,8 @@ export const getFields = (fields: any[], disabledName: string[]) => {
   });
 };
 
+export const InitialLicensingDetailFormFields = getRealFormFields(InitialField);
+
 export const LicensingDetailFormFields = {
   New: InitialField,
   Edit: InitialField,

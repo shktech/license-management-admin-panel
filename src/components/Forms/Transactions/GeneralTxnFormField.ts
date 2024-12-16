@@ -58,6 +58,8 @@ export const getRequiredFields = (fields: any[], requiredName: string[]) => {
   });
 };
 
+export const InitialGeneralTxnFormFields = getRealFormFields(InitialField);
+
 export const GeneralTxnFormFields = {
   New: (InitialField),
   Renewal: (getFields(InitialField, ["license_key"])),

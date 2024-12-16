@@ -23,6 +23,9 @@ import {
 } from "@refinedev/core";
 import { getEndDate, getInputCustomer } from "@utils/utilFunctions";
 import TransactionForm from "@components/Forms/Transactions/TransactionForm";
+import { InitialGeneralTxnFormFields } from "@components/Forms/Transactions/GeneralTxnFormField";
+import { InitialLicensingDetailFormFields } from "@components/Forms/Transactions/LicensingDetailFormFields";
+import { Alert } from "@mui/material";
 
 interface ShowTransactionProps {
   initialInfo: any;
@@ -44,6 +47,12 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
     mode: "onChange",
     reValidateMode: "onSubmit",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>(
+    { Transaction: true }
+  );
+  const [errorText, setErrorText] = useState<string | null>(null);
+
   useEffect(() => {
     if (initialInfo.transaction_action == "New") {
       const yesterday = new Date();
@@ -103,9 +112,16 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
 
   const { mutate: createCode } = useCreate();
   const { push } = useNavigation();
+  const handleAccordionOpen = (panel: string) => {
+    setExpandedPanels((prev: any) => ({
+      ...prev,
+      [panel]: true,
+    }));
+  };
   const handleSubmit = async () => {
     const payload = getValues();
     const isValid = await trigger(); // Triggers validation for all fields
+
     if (payload.transaction_source == "Prod Reg") {
       if (!payload.source_reference_number) {
         setError("source_reference_number", {
@@ -122,10 +138,45 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
           values: payload,
         },
         {
-          onError: (error) => console.log("error", error),
-          onSuccess: () => push(`/dashboard/transactions/list`),
+          onError: (error) => {
+            console.log("error", error);
+            setIsLoading(false);
+          },
+          onSuccess: () => {
+            push(`/dashboard/transactions/list`);
+            setIsLoading(false);
+          },
         }
       );
+    } else {
+      setErrorText(
+        "There was a problem creating the transaction. Please try again."
+      );
+
+      setTimeout(() => {
+        const errorAlert = document.querySelector('.MuiAlert-root');
+        if (errorAlert) {
+          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+
+      for (const field in errors) {
+        if (field.includes("ship")) {
+          handleAccordionOpen("Shipping Parter Information");
+        }
+        if (field.includes("bill")) {
+          handleAccordionOpen("Disty/Billing Partner Information");
+        }
+        if (field.includes("reseller")) {
+          handleAccordionOpen("Reseller Information");
+        }
+        if (InitialGeneralTxnFormFields.some((f) => f.name == field)) {
+          handleAccordionOpen("Transaction");
+        }
+        if (InitialLicensingDetailFormFields.some((f) => f.name == field)) {
+          handleAccordionOpen("Licensing Details");
+        }
+      }
     }
   };
   return (
@@ -154,9 +205,20 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
       }}
       saveButtonProps={{ ...saveButtonProps, hidden: false }}
       footerButtons={({ saveButtonProps }) => (
-        <SaveButton onClick={handleSubmit} sx={sendEmailBtnStyle} />
+        <div className="flex justify-end">
+          <SaveButton
+            onClick={handleSubmit}
+            sx={sendEmailBtnStyle}
+            loading={isLoading}
+          />
+        </div>
       )}
     >
+      {errorText && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {errorText}
+        </Alert>
+      )}
       {formLoading ||
       productLoading ||
       (initialInfo.transaction_action != "New" && assetLoading) ? (
@@ -170,6 +232,8 @@ const CreateTransaction: React.FC<ShowTransactionProps> = ({ initialInfo }) => {
             reset={reset}
             watch={watch}
             transaction={transaction}
+            expandedPanels={expandedPanels}
+            setExpandedPanels={setExpandedPanels}
             // customers={{
             //     bill_customers: billCustomer,
             //     ship_customers: shipCustomer,

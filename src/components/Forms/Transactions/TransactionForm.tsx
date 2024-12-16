@@ -33,15 +33,17 @@ export type TransactionFormProps = GenericFormProps & {
   reset?: any;
   customers?: any;
   watch?: any;
+  expandedPanels?: any;
+  setExpandedPanels?: any;
 };
 
 const TransactionForm = (props: TransactionFormProps) => {
-  const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>(
-    { Transaction: true }
-  );
+  // const [expandedPanels, setExpandedPanels] = useState<Record<string, boolean>>(
+  //   { Transaction: true }
+  // );
 
   const handleAccordionChange = (panel: string) => {
-    setExpandedPanels((prev) => ({
+    props.setExpandedPanels((prev: any) => ({
       ...prev,
       [panel]: !prev[panel],
     }));
@@ -170,7 +172,7 @@ const TransactionForm = (props: TransactionFormProps) => {
       {FormGroups.map((formGroup, i) => (
         <Accordion
           key={formGroup.title}
-          expanded={expandedPanels[formGroup.title] || false}
+          expanded={props.expandedPanels[formGroup.title] || false}
           onChange={() => handleAccordionChange(formGroup.title)}
           sx={{
             borderTop: "2px solid #1f325c",
